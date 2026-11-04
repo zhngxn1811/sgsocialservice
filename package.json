@@ -1,0 +1,11 @@
+{
+  "name": "sg-social-services",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.60.0",
+    "@netlify/blobs": "^8.1.0"
+  }
+}

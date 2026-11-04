@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Submissions · SG Social Services</title>
+<style>
+:root{--bg:#F4F6F4;--surface:#fff;--ink:#18262B;--muted:#5A6A6E;--line:#D9E0DD;--accent:#B8322A;--teal:#1D6A66;--teal-soft:#E2EFED}
+@media (prefers-color-scheme:dark){:root{--bg:#101719;--surface:#172124;--ink:#E6ECEA;--muted:#9AAAAD;--line:#2A383C;--accent:#E2574C;--teal:#5FB8B1;--teal-soft:#1B3433;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+input,select,button{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+button{cursor:pointer;font-weight:600}
+button.primary{background:var(--teal);border-color:var(--teal);color:var(--bg)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.muted{color:var(--muted);font-size:13px}
+.pill{font-size:12px;font-weight:700;border-radius:4px;padding:2px 8px;background:var(--teal-soft);color:var(--teal)}
+.pill.update{background:#FBEAE7;color:var(--accent)}
+#msg{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Submissions</h1>
+  <form class="row" id="login">
+    <input id="key" type="password" placeholder="Admin key" autocomplete="current-password" aria-label="Admin key">
+    <button class="primary">Load</button>
+    <select id="filter" aria-label="Filter"><option value="new">New</option><option value="all">All</option><option value="done">Done</option><option value="rejected">Rejected</option></select>
+    <span id="msg"></span>
+  </form>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Date</th><th>Type</th><th>Service</th><th>Details</th><th>From</th><th>Status</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="6" class="muted">Enter your admin key to load submissions.</td></tr></tbody>
+  </table></div>
+  <p class="muted">When you act on a submission, edit services.json in GitHub and mark it done here. The site redeploys automatically.</p>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let data=[];
+try{$("#key").value=sessionStorage.getItem("ssk")||""}catch{}
+async function load(){
+  $("#msg").textContent="";
+  const r=await fetch("/api/submissions",{headers:{"x-admin-key":$("#key").value}});
+  if(!r.ok){$("#msg").textContent=(await r.json().catch(()=>({}))).error||"Couldn't load.";return;}
+  try{sessionStorage.setItem("ssk",$("#key").value)}catch{}
+  data=await r.json();render();
+}
+function render(){
+  const f=$("#filter").value;
+  const list=data.filter(d=>f==="all"||(d.status||"new")===f);
+  $("#rows").innerHTML=list.length?list.map(d=>`<tr>
+    <td>${esc((d.created_at||"").slice(0,10))}</td>
+    <td><span class="pill ${d.kind==="update"?"update":""}">${d.kind==="update"?"Update":"New"}</span></td>
+    <td>${esc(d.name)}${d.org?`<div class="muted">${esc(d.org)}</div>`:""}${d.category?`<div class="muted">${esc(d.category)}</div>`:""}</td>
+    <td>${esc(d.details)}${d.phone?`<div class="muted">Phone: ${esc(d.phone)}</div>`:""}${d.web?`<div class="muted">${esc(d.web)}</div>`:""}</td>
+    <td class="muted">${esc(d.role||"—")}</td>
+    <td><select data-id="${esc(d.id)}">${["new","done","rejected"].map(s=>`<option ${s===(d.status||"new")?"selected":""}>${s}</option>`).join("")}</select></td>
+  </tr>`).join(""):`<tr><td colspan="6" class="muted">Nothing here.</td></tr>`;
+}
+$("#login").addEventListener("submit",e=>{e.preventDefault();load();});
+$("#filter").addEventListener("change",render);
+$("#rows").addEventListener("change",async e=>{
+  const sel=e.target.closest("select[data-id]");if(!sel)return;
+  const r=await fetch("/api/submissions/"+encodeURIComponent(sel.dataset.id),{method:"PATCH",headers:{"Content-Type":"application/json","x-admin-key":$("#key").value},body:JSON.stringify({status:sel.value})});
+  if(r.ok){const d=data.find(x=>String(x.id)===sel.dataset.id);if(d)d.status=sel.value;render();}else $("#msg").textContent="Couldn't update.";
+});
+</script>
+</body>
+</html>

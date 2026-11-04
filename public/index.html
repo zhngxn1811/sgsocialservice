@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SG Social Services</title>
+<meta name="description" content="SG Social Services: a free directory of social and family services in Singapore for counsellors and social workers, with an AI assistant that suggests resources by presenting issue.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a referral desk. Crisis strip pinned up top, case assistant as the working surface, directory below filtered by presenting issue. */
+:root{
+  --bg:#F4F6F4; --surface:#FFFFFF; --ink:#18262B; --muted:#5A6A6E; --line:#D9E0DD;
+  --accent:#B8322A; --accent-ink:#FFFFFF; --teal:#1D6A66; --teal-soft:#E2EFED; --warn-soft:#FBEAE7;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101719; --surface:#172124; --ink:#E6ECEA; --muted:#9AAAAD; --line:#2A383C;
+  --accent:#E2574C; --accent-ink:#1A0B09; --teal:#5FB8B1; --teal-soft:#1B3433; --warn-soft:#3A1E1B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101719; --surface:#172124; --ink:#E6ECEA; --muted:#9AAAAD; --line:#2A383C;
+  --accent:#E2574C; --accent-ink:#1A0B09; --teal:#5FB8B1; --teal-soft:#1B3433; --warn-soft:#3A1E1B; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--teal)}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* crisis strip */
+.crisis{background:var(--ink);color:var(--bg);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.crisis .wrap{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;padding-block:8px;font-size:14px}
+.crisis b{font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:12px;color:var(--accent)}
+:root[data-theme="dark"] .crisis b{color:var(--accent)}
+.crisis span{white-space:nowrap}
+.crisis .mono{font-size:14px}
+
+header.top .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding-block:22px 8px}
+.brand{display:flex;gap:12px;align-items:center}
+.mark{width:40px;height:40px;border-radius:10px;background:var(--accent);display:grid;place-items:center;flex:none}
+.brand h1{font-size:24px;font-weight:700}
+.brand p{margin:0;color:var(--muted);font-size:14px}
+.btn{font:600 15px var(--body);border-radius:8px;padding:10px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.teal{background:var(--teal);border-color:var(--teal);color:var(--bg)}
+.btn:disabled{opacity:.55;cursor:wait}
+
+/* assistant */
+.desk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;padding-block:16px 28px}
+@media (max-width:860px){.desk{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:700;margin:0 0 6px}
+.desk h2{font-size:26px;font-weight:700;margin-bottom:8px}
+.desk p.lede{color:var(--muted);margin:0 0 14px;max-width:60ch}
+label{font-weight:600;font-size:14px;display:block;margin-bottom:6px}
+textarea,input,select{width:100%;font:16px/1.45 var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+textarea{min-height:150px;resize:vertical}
+.privacy{background:var(--warn-soft);border-radius:8px;padding:10px 12px;font-size:14px;margin:10px 0 14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.out{min-height:260px}
+.out .placeholder{color:var(--muted)}
+.out h4{font-family:var(--display);font-size:17px;margin:16px 0 6px}
+.out h4:first-child{margin-top:0}
+.out p{margin:0 0 8px}
+.out ul{margin:0 0 10px;padding-left:20px}
+.out li{margin-bottom:4px}
+.out .err{color:var(--accent)}
+.disclaim{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+
+/* directory */
+.dir-head{display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between;margin-bottom:14px}
+.dir-head h2{font-size:28px}
+.dir-head .meta{color:var(--muted);font-size:14px;margin:4px 0 0}
+#q{max-width:340px}
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip .n{font-family:var(--mono);font-size:12px;opacity:.7;margin-left:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;padding-bottom:40px}
+@media (max-width:420px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card.crisis-card{border-left:4px solid var(--accent)}
+.card h3{font-size:18px;font-weight:700}
+.card .org{color:var(--muted);font-size:14px;margin:0}
+.card p{margin:0;font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;background:var(--teal-soft);color:var(--teal);border-radius:4px;padding:2px 8px;font-weight:600}
+.tag.h24{background:var(--warn-soft);color:var(--accent)}
+.contact{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;font-size:14px;margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
+.contact dt{color:var(--muted)}
+.contact dd{margin:0;overflow-wrap:anywhere}
+.card .foot{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.linkbtn{background:none;border:none;color:var(--muted);font:600 13px var(--body);cursor:pointer;padding:0;text-decoration:underline}
+.empty{color:var(--muted);padding:20px 0}
+
+/* modal */
+dialog{border:none;border-radius:14px;padding:0;max-width:560px;width:calc(100% - 32px);background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgb(10 20 22 / .55)}
+.modal{padding:22px;display:grid;gap:14px}
+.modal h2{font-size:22px}
+.seg{display:flex;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{flex:1;font:600 14px var(--body);padding:9px;border:none;background:var(--bg);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--teal);color:var(--bg)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.two{grid-template-columns:1fr}}
+.note{font-size:14px;color:var(--muted);margin:0}
+.ok{background:var(--teal-soft);color:var(--teal);border-radius:8px;padding:10px 12px;font-weight:600}
+.inbox{padding-bottom:40px}
+.inbox table{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface)}
+.inbox th,.inbox td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer .wrap{padding-block:18px 28px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<meta property="og:title" content="SG Social Services">
+<meta property="og:description" content="Free directory of Singapore social and family services for counsellors and social workers, with an AI case-resourcing assistant.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23B8322A'/%3E%3Cpath d='M12 19s-6-3.8-6-8.8A3.7 3.7 0 0 1 12 8a3.7 3.7 0 0 1 6 2.2C18 15.2 12 19 12 19Z' fill='white'/%3E%3C/svg%3E">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="crisis" role="region" aria-label="Crisis lines">
+  <div class="wrap">
+    <b>Immediate risk</b>
+    <span>Emergency <span class="mono">995</span> / Police <span class="mono">999</span></span>
+    <span>SOS <span class="mono">1767</span></span>
+    <span>National mindline <span class="mono">1771</span></span>
+    <span>Anti-Violence &amp; Sexual Harassment <span class="mono">1800 777 0000</span></span>
+  </div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.4-7-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7 2.8C19 16.6 12 21 12 21Z" fill="var(--accent-ink)"/></svg>
+      </div>
+      <div>
+        <h1>SG Social Services</h1>
+        <p>Referral directory for counsellors and social workers in Singapore</p>
+      </div>
+    </div>
+    <button class="btn primary" id="openForm" type="button">Recommend a service or report an update</button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap desk" aria-labelledby="asstTitle">
+    <div class="panel">
+      <p class="eyebrow">Case resourcing assistant</p>
+      <h2 id="asstTitle">Describe the presenting issues</h2>
+      <p class="lede">The assistant reads the directory below and suggests which services fit this case, in what order, and what to check before referring.</p>
+      <label for="caseText">Case summary (de-identified)</label>
+      <textarea id="caseText">Example: 42F, sole caregiver to two primary-school kids. Husband's gambling has led to about $18k in debt, utilities in arrears. Reports he shouts and once pushed her during an argument last month. Low mood, poor sleep, no current suicidal ideation reported. Prefers Mandarin.</textarea>
+      <div class="privacy"><strong>No identifying details.</strong> Leave out names, NRIC, addresses, phone numbers and school names. Age, gender and circumstances are enough.</div>
+      <div class="row">
+        <button class="btn teal" id="askBtn" type="button">Find relevant services</button>
+        <button class="btn" id="clearBtn" type="button">Clear</button>
+      </div>
+    </div>
+    <div class="panel out" id="out" aria-live="polite">
+      <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. The example case on the left is filled in so you can try it.</p>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="dirTitle">
+    <div class="dir-head">
+      <div>
+        <h2 id="dirTitle">Directory</h2>
+        <p class="meta"><span id="count"></span> · Contact details last checked Nov 2026. Confirm hours and eligibility before referring.</p>
+      </div>
+      <input id="q" type="search" placeholder="Search services, e.g. gambling, Mandarin, debt" aria-label="Search services">
+    </div>
+    <div class="cats" id="cats" role="group" aria-label="Filter by presenting issue"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+</main>
+
+<footer><div class="wrap">SG Social Services is an independent, volunteer-run directory. It is not affiliated with MSF or any listed agency. The assistant gives suggestions, not clinical or legal advice. Use your professional judgement and your agency's protocols, especially for risk. <a href="/privacy.html">Privacy</a></div></footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <form class="modal" id="subForm" novalidate>
+    <h2 id="dlgTitle">Help keep this directory useful</h2>
+    <div class="seg" role="group" aria-label="Submission type">
+      <button type="button" data-kind="recommend" aria-pressed="true">Recommend a service</button>
+      <button type="button" data-kind="update" aria-pressed="false">Report an update</button>
+    </div>
+    <div id="fRecommend">
+      <div class="two">
+        <div><label for="fName">Service or programme name</label><input id="fName" required></div>
+        <div><label for="fOrg">Organisation</label><input id="fOrg"></div>
+      </div>
+      <div style="margin-top:12px"><label for="fCat">Best fits under</label><select id="fCat"></select></div>
+      <div class="two" style="margin-top:12px">
+        <div><label for="fPhone">Phone / hotline</label><input id="fPhone"></div>
+        <div><label for="fWeb">Website</label><input id="fWeb" placeholder="https://"></div>
+      </div>
+    </div>
+    <div id="fUpdate" hidden>
+      <label for="fWhich">Which listing?</label><select id="fWhich"></select>
+    </div>
+    <div><label for="fDetails" id="fDetailsLabel">Why is it helpful? Who is it for?</label><textarea id="fDetails" style="min-height:100px" required></textarea></div>
+    <div><label for="fRole">Your role (optional)</label><input id="fRole" placeholder="e.g. FSC caseworker, school counsellor"></div>
+    <input id="fHp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+    <p class="note">Please don't include any client information.</p>
+    <div id="fMsg" hidden></div>
+    <div class="row" style="justify-content:flex-end">
+      <button type="button" class="btn" id="cancelForm">Close</button>
+      <button type="submit" class="btn primary" id="sendForm">Submit</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+let CATS=[], S=[];
+
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let active="all";
+
+function renderCats(){
+  const counts={all:S.length};CATS.forEach(c=>counts[c.id]=S.filter(s=>s.cats.includes(c.id)).length);
+  $("#cats").innerHTML=[{id:"all",label:"All"},...CATS].map(c=>`<button class="chip" type="button" data-cat="${c.id}" aria-pressed="${c.id===active}">${esc(c.label)}<span class="n">${counts[c.id]}</span></button>`).join("");
+}
+function card(s){
+  const tags=(s.h24?'<span class="tag h24">24 hours</span>':"")+s.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("");
+  return `<article class="card${s.cats.includes("crisis")?" crisis-card":""}">
+    <h3>${esc(s.name)}</h3><p class="org">${esc(s.org)}</p><p>${esc(s.desc)}</p><div class="tags">${tags}</div>
+    <dl class="contact">${s.phone?`<dt>Call</dt><dd class="mono">${esc(s.phone)}</dd>`:""}${s.other?`<dt>Also</dt><dd>${esc(s.other)}</dd>`:""}<dt>Web</dt><dd><a href="${esc(s.web)}" target="_blank" rel="noopener">${esc(s.web.replace(/^https?:\/\//,""))}</a></dd></dl>
+    <div class="foot"><span></span><button class="linkbtn" type="button" data-report="${s.id}">Report an update</button></div></article>`;
+}
+function renderGrid(){
+  const q=$("#q").value.trim().toLowerCase();
+  const list=S.filter(s=>(active==="all"||s.cats.includes(active))&&(!q||[s.name,s.org,s.desc,...s.tags].join(" ").toLowerCase().includes(q)));
+  $("#grid").innerHTML=list.length?list.map(card).join(""):`<p class="empty">Nothing matches that yet. Know a service that should be here? <button class="linkbtn" type="button" data-open="1">Recommend it</button>.</p>`;
+  $("#count").textContent=`${list.length} of ${S.length} services`;
+}
+$("#cats").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;active=b.dataset.cat;renderCats();renderGrid();});
+$("#q").addEventListener("input",renderGrid);
+fetch("/api/services").then(r=>r.json()).then(d=>{CATS=d.categories;S=d.services;renderCats();renderGrid();fillFormLists();})
+  .catch(()=>{$("#grid").innerHTML='<p class="empty">The directory didn\'t load. Refresh the page to try again.</p>';});
+
+/* ---------- AI assistant ---------- */
+const DISCLAIM='<p class="disclaim">AI suggestions from the directory above. Verify details and use your professional judgement before referring.</p>';
+function md(t){
+  const lines=t.split("\n");let html="",inList=false;
+  const inline=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+  for(const raw of lines){const l=raw.trim();
+    if(/^#{1,4}\s/.test(l)){if(inList){html+="</ul>";inList=false}html+=`<h4>${inline(l.replace(/^#+\s*/,""))}</h4>`;}
+    else if(/^[-*]\s/.test(l)){if(!inList){html+="<ul>";inList=true}html+=`<li>${inline(l.slice(2))}</li>`;}
+    else if(l){if(inList){html+="</ul>";inList=false}html+=`<p>${inline(l)}</p>`;}
+  }
+  if(inList)html+="</ul>";return html;
+}
+let abortCtl=null;
+$("#askBtn").addEventListener("click",async()=>{
+  const text=$("#caseText").value.trim();const out=$("#out");
+  if(text.length<15){out.innerHTML='<p class="err">Add a bit more about the case: age, presenting issues, risk, language or other needs.</p>';return;}
+  const btn=$("#askBtn");btn.disabled=true;btn.textContent="Thinking…";
+  out.innerHTML='<p class="placeholder">Reading the directory and matching services…</p>';
+  abortCtl?.abort();abortCtl=new AbortController();
+  let acc="";
+  try{
+    const r=await fetch("/api/assistant",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({caseText:text}),signal:abortCtl.signal});
+    if(!r.ok){const e=await r.json().catch(()=>({}));out.innerHTML=`<p class="err">${esc(e.error||"Something went wrong getting suggestions. Try again in a moment.")}</p>`;return;}
+    const reader=r.body.getReader(),dec=new TextDecoder();
+    for(;;){const {done,value}=await reader.read();if(done)break;acc+=dec.decode(value,{stream:true});out.innerHTML=md(acc)+DISCLAIM;}
+    out.innerHTML=md(acc)+DISCLAIM;
+  }catch(err){
+    if(err.name!=="AbortError")out.innerHTML=(acc?md(acc):"")+'<p class="err">The connection dropped. Try again in a moment.</p>';
+  }finally{btn.disabled=false;btn.textContent="Find relevant services";}
+});
+$("#clearBtn").addEventListener("click",()=>{$("#caseText").value="";$("#caseText").focus();});
+
+/* ---------- Submission form ---------- */
+let kind="recommend";
+const dlg=$("#dlg");
+function fillFormLists(){
+  $("#fCat").innerHTML=CATS.map(c=>`<option value="${c.id}">${esc(c.label)}</option>`).join("");
+  $("#fWhich").innerHTML=S.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
+}
+function setKind(k){
+  kind=k;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.kind===k));
+  $("#fRecommend").hidden=k!=="recommend";$("#fUpdate").hidden=k!=="update";
+  $("#fDetailsLabel").textContent=k==="recommend"?"Why is it helpful? Who is it for?":"What's changed? (new number, hours, closed, moved)";
+}
+function openForm(k="recommend",which){
+  setKind(k);if(which)$("#fWhich").value=which;$("#fMsg").hidden=true;
+  try{dlg.showModal()}catch{dlg.setAttribute("open","")}
+}
+$("#openForm").addEventListener("click",()=>openForm());
+document.addEventListener("click",e=>{const r=e.target.closest("[data-report]");if(r)openForm("update",r.dataset.report);if(e.target.closest("[data-open]"))openForm();});
+document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>setKind(b.dataset.kind)));
+$("#cancelForm").addEventListener("click",()=>dlg.close());
+function showMsg(html,cls){const m=$("#fMsg");m.className=cls||"";m.innerHTML=html;m.hidden=false;}
+
+$("#subForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const details=$("#fDetails").value.trim();
+  if(kind==="recommend"&&!$("#fName").value.trim()){showMsg("Add the service or programme name.","note");$("#fName").focus();return;}
+  if(!details){showMsg("Add a short description so we know what to change or add.","note");$("#fDetails").focus();return;}
+  const rec={kind,details,role:$("#fRole").value.trim(),website:$("#fHp").value,
+    ...(kind==="recommend"?{name:$("#fName").value.trim(),org:$("#fOrg").value.trim(),category:$("#fCat").value,phone:$("#fPhone").value.trim(),web:$("#fWeb").value.trim()}:{serviceId:$("#fWhich").value,name:S.find(s=>s.id===$("#fWhich").value)?.name||""})};
+  const btn=$("#sendForm");btn.disabled=true;
+  try{
+    const r=await fetch("/api/submissions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(rec)});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok){showMsg(esc(d.error||"That didn't go through. Try again in a moment."),"note");return;}
+    showMsg("Thanks. Your submission is in and will be reviewed before the directory is updated.","ok");
+    ["fName","fOrg","fPhone","fWeb","fDetails"].forEach(i=>$("#"+i).value="");
+  }catch{showMsg("That didn't go through. Check your connection and try again.","note");}
+  finally{btn.disabled=false;}
+});
+</script>
+
+</body>
+</html>

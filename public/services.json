@@ -1,0 +1,573 @@
+{
+  "updated": "2026-11",
+  "categories": [
+    {
+      "id": "crisis",
+      "label": "Suicide prevention & crisis"
+    },
+    {
+      "id": "mental",
+      "label": "Mental health & counselling"
+    },
+    {
+      "id": "addictions",
+      "label": "Addictions (gambling, alcohol, gaming)"
+    },
+    {
+      "id": "substance",
+      "label": "Substance abuse"
+    },
+    {
+      "id": "trauma",
+      "label": "Trauma & sexual violence"
+    },
+    {
+      "id": "violence",
+      "label": "Domestic & family violence"
+    },
+    {
+      "id": "financial",
+      "label": "Financial assistance & debt"
+    },
+    {
+      "id": "family",
+      "label": "Family, parenting & pregnancy"
+    },
+    {
+      "id": "youth",
+      "label": "Children & youth"
+    },
+    {
+      "id": "seniors",
+      "label": "Seniors & caregivers"
+    },
+    {
+      "id": "disability",
+      "label": "Disability"
+    },
+    {
+      "id": "migrant",
+      "label": "Migrant workers"
+    },
+    {
+      "id": "legal",
+      "label": "Legal help"
+    }
+  ],
+  "services": [
+    {
+      "id": "sos",
+      "name": "Samaritans of Singapore (SOS)",
+      "org": "SOS",
+      "cats": [
+        "crisis"
+      ],
+      "h24": true,
+      "desc": "24-hour emotional support for people in crisis or with thoughts of suicide or self-harm. Also supports those bereaved by suicide.",
+      "phone": "1767",
+      "other": "WhatsApp 9151 1767",
+      "web": "https://www.sos.org.sg",
+      "tags": [
+        "Suicide",
+        "Self-harm",
+        "Postvention"
+      ]
+    },
+    {
+      "id": "mindline",
+      "name": "National mindline 1771",
+      "org": "Ministry of Health",
+      "cats": [
+        "crisis",
+        "mental"
+      ],
+      "h24": true,
+      "desc": "National 24/7 mental health line for distress or crisis. Call, text or chat, and get linked to further care.",
+      "phone": "1771",
+      "other": "WhatsApp 6669 1771",
+      "web": "https://www.mindline.sg",
+      "tags": [
+        "Distress",
+        "Triage"
+      ]
+    },
+    {
+      "id": "imh",
+      "name": "IMH Emergency Services",
+      "org": "Institute of Mental Health",
+      "cats": [
+        "crisis",
+        "mental"
+      ],
+      "h24": true,
+      "desc": "24-hour psychiatric emergency service and helpline for acute risk or severe symptoms.",
+      "phone": "6389 2222",
+      "web": "https://www.imh.com.sg",
+      "tags": [
+        "Psychiatric emergency"
+      ]
+    },
+    {
+      "id": "emergency",
+      "name": "Emergency services",
+      "org": "SCDF / SPF",
+      "cats": [
+        "crisis",
+        "violence"
+      ],
+      "h24": true,
+      "desc": "Ambulance 995 for medical emergencies or imminent risk to life. Police 999 for immediate danger.",
+      "phone": "995 / 999",
+      "web": "https://www.scdf.gov.sg",
+      "tags": [
+        "Imminent risk"
+      ]
+    },
+    {
+      "id": "samh",
+      "name": "SAMH Helpline",
+      "org": "Singapore Association for Mental Health",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Counselling, community mental health and recovery services for adults and youth.",
+      "phone": "1800 283 7019",
+      "web": "https://www.samhealth.org.sg",
+      "tags": [
+        "Community care"
+      ]
+    },
+    {
+      "id": "silver-ribbon",
+      "name": "Silver Ribbon (Singapore)",
+      "org": "Silver Ribbon",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Mental health literacy, anti-stigma work and counselling support.",
+      "phone": "6386 1928",
+      "web": "https://www.silverribbonsingapore.com",
+      "tags": [
+        "Stigma",
+        "Psychoeducation"
+      ]
+    },
+    {
+      "id": "carecorner",
+      "name": "Care Corner Counselling Helpline",
+      "org": "Care Corner Singapore",
+      "cats": [
+        "mental",
+        "family"
+      ],
+      "desc": "Counselling helpline, with support for Mandarin speakers. 10am to 10pm.",
+      "phone": "1800 3535 800",
+      "web": "https://www.carecorner.org.sg",
+      "tags": [
+        "Mandarin",
+        "Counselling"
+      ]
+    },
+    {
+      "id": "chat",
+      "name": "CHAT",
+      "org": "Institute of Mental Health",
+      "cats": [
+        "mental",
+        "youth"
+      ],
+      "desc": "Mental health check-ins and assessment for young people aged 16 to 30.",
+      "phone": "6493 6500",
+      "web": "https://www.chat.mentalhealth.sg",
+      "tags": [
+        "Youth 16–30",
+        "Assessment"
+      ]
+    },
+    {
+      "id": "nams",
+      "name": "All Addictions Helpline",
+      "org": "National Addictions Management Service (NAMS)",
+      "cats": [
+        "addictions",
+        "substance"
+      ],
+      "desc": "Assessment and treatment for drug, alcohol, gambling, gaming and other addictions. Helpline 8am to 11pm daily.",
+      "phone": "6732 6837",
+      "web": "https://www.nams.sg",
+      "tags": [
+        "Treatment",
+        "Gambling",
+        "Alcohol",
+        "Drugs"
+      ]
+    },
+    {
+      "id": "gambling",
+      "name": "National Problem Gambling Helpline",
+      "org": "National Council on Problem Gambling",
+      "cats": [
+        "addictions",
+        "financial"
+      ],
+      "desc": "Help for people with gambling problems and their families, including information on exclusion orders.",
+      "phone": "1800 666 8668",
+      "web": "https://www.ncpg.org.sg",
+      "tags": [
+        "Gambling",
+        "Family exclusion"
+      ]
+    },
+    {
+      "id": "aa",
+      "name": "Alcoholics Anonymous Singapore",
+      "org": "AA Singapore",
+      "cats": [
+        "addictions",
+        "substance"
+      ],
+      "h24": true,
+      "desc": "Peer support groups for people who want to stop drinking.",
+      "phone": "8112 8089",
+      "web": "https://www.aasingapore.org",
+      "tags": [
+        "Peer support",
+        "Alcohol"
+      ]
+    },
+    {
+      "id": "sana",
+      "name": "Singapore Anti-Narcotics Association (SANA)",
+      "org": "SANA",
+      "cats": [
+        "substance"
+      ],
+      "desc": "Aftercare, counselling and reintegration support for people recovering from drug use, and their families.",
+      "web": "https://www.sana.org.sg",
+      "tags": [
+        "Aftercare",
+        "Reintegration"
+      ]
+    },
+    {
+      "id": "sacc",
+      "name": "Sexual Assault Care Centre (SACC)",
+      "org": "AWARE",
+      "cats": [
+        "trauma",
+        "violence"
+      ],
+      "desc": "Support for survivors of sexual assault and harassment of any gender: helpline, case management, and accompaniment to police and medical services.",
+      "phone": "6779 0282",
+      "web": "https://sacc.aware.org.sg",
+      "tags": [
+        "Sexual assault",
+        "Case support"
+      ]
+    },
+    {
+      "id": "navh",
+      "name": "National Anti-Violence and Sexual Harassment Helpline",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "violence",
+        "trauma"
+      ],
+      "h24": true,
+      "desc": "24-hour helpline to report or get help for family violence, sexual violence, and harassment.",
+      "phone": "1800 777 0000",
+      "web": "https://www.msf.gov.sg",
+      "tags": [
+        "Reporting",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "aware",
+      "name": "AWARE Women's Care Centre Helpline",
+      "org": "AWARE",
+      "cats": [
+        "violence",
+        "legal"
+      ],
+      "desc": "Helpline, counselling and legal clinic for women facing abuse or discrimination. Weekdays 10am to 6pm.",
+      "phone": "1800 777 5555",
+      "web": "https://www.aware.org.sg",
+      "tags": [
+        "Women",
+        "Legal clinic"
+      ]
+    },
+    {
+      "id": "pave",
+      "name": "PAVe",
+      "org": "Centre for Promoting Alternatives to Violence",
+      "cats": [
+        "violence"
+      ],
+      "desc": "Family violence specialist centre offering counselling for survivors, children and people who use violence.",
+      "phone": "6555 0390",
+      "web": "https://www.pave.org.sg",
+      "tags": [
+        "FV specialist",
+        "Perpetrator work"
+      ]
+    },
+    {
+      "id": "comcare",
+      "name": "ComCare Hotline",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family"
+      ],
+      "desc": "Financial assistance for low-income households and links to the nearest Social Service Office or Family Service Centre.",
+      "phone": "1800 222 0000",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "SSO referral"
+      ]
+    },
+    {
+      "id": "ccs",
+      "name": "Credit Counselling Singapore",
+      "org": "CCS",
+      "cats": [
+        "financial"
+      ],
+      "desc": "Free debt counselling and debt management programmes for individuals with unsecured debt.",
+      "phone": "1800 2255 227",
+      "web": "https://www.ccs.org.sg",
+      "tags": [
+        "Debt",
+        "Budgeting"
+      ]
+    },
+    {
+      "id": "fsc",
+      "name": "Family Service Centres",
+      "org": "MSF network, run by various agencies",
+      "cats": [
+        "family",
+        "financial",
+        "violence"
+      ],
+      "desc": "Neighbourhood centres for casework, counselling and coordinated help for families. Find the nearest one through ComCare or MSF.",
+      "web": "https://www.msf.gov.sg/what-we-do/family-service-centres",
+      "tags": [
+        "Casework",
+        "Islandwide"
+      ]
+    },
+    {
+      "id": "supportgowhere",
+      "name": "SupportGoWhere",
+      "org": "Government of Singapore",
+      "cats": [
+        "financial",
+        "seniors",
+        "disability"
+      ],
+      "desc": "Searchable list of government support schemes and services with an eligibility checker.",
+      "web": "https://supportgowhere.life.gov.sg",
+      "tags": [
+        "Schemes",
+        "Eligibility"
+      ]
+    },
+    {
+      "id": "babes",
+      "name": "BABES Pregnancy Crisis Support",
+      "org": "Babes",
+      "cats": [
+        "family",
+        "youth"
+      ],
+      "h24": true,
+      "desc": "Support for teenagers and young women facing unplanned pregnancy.",
+      "phone": "8111 3535",
+      "web": "https://www.babes.org.sg",
+      "tags": [
+        "Teen pregnancy"
+      ]
+    },
+    {
+      "id": "pcs",
+      "name": "Pregnancy Crisis Service",
+      "org": "Family Life Society",
+      "cats": [
+        "family"
+      ],
+      "h24": true,
+      "desc": "Counselling and practical support for women in crisis pregnancy.",
+      "phone": "6339 9770",
+      "web": "https://www.familylife.sg",
+      "tags": [
+        "Pregnancy"
+      ]
+    },
+    {
+      "id": "touchline",
+      "name": "TOUCHline",
+      "org": "TOUCH Community Services",
+      "cats": [
+        "youth",
+        "mental"
+      ],
+      "desc": "Counselling helpline for youth and their parents.",
+      "phone": "1800 377 2252",
+      "web": "https://www.touch.org.sg",
+      "tags": [
+        "Youth",
+        "Parents"
+      ]
+    },
+    {
+      "id": "tinkle",
+      "name": "Tinkle Friend",
+      "org": "Singapore Children's Society",
+      "cats": [
+        "youth"
+      ],
+      "desc": "Helpline and chat for primary-school-aged children who feel lonely, worried or unsafe.",
+      "phone": "1800 274 4788",
+      "web": "https://www.tinklefriend.sg",
+      "tags": [
+        "Children"
+      ]
+    },
+    {
+      "id": "aic",
+      "name": "Agency for Integrated Care",
+      "org": "AIC",
+      "cats": [
+        "seniors",
+        "disability"
+      ],
+      "desc": "Care options and caregiver support for seniors, including home care, day care and respite.",
+      "phone": "1800 650 6060",
+      "web": "https://www.aic.sg",
+      "tags": [
+        "Caregivers",
+        "Eldercare"
+      ]
+    },
+    {
+      "id": "sage",
+      "name": "Seniors Helpline",
+      "org": "SAGE Counselling Centre",
+      "cats": [
+        "seniors",
+        "mental"
+      ],
+      "desc": "Counselling and information helpline for seniors and their caregivers.",
+      "phone": "1800 555 5555",
+      "web": "https://www.sagecc.org.sg",
+      "tags": [
+        "Seniors"
+      ]
+    },
+    {
+      "id": "sgenable",
+      "name": "SG Enable",
+      "org": "SG Enable",
+      "cats": [
+        "disability"
+      ],
+      "desc": "First stop for disability services, schemes, employment support and assistive tech.",
+      "phone": "1800 8585 885",
+      "web": "https://www.sgenable.sg",
+      "tags": [
+        "Disability schemes"
+      ]
+    },
+    {
+      "id": "mwc",
+      "name": "Migrant Workers' Centre",
+      "org": "MWC",
+      "cats": [
+        "migrant"
+      ],
+      "h24": true,
+      "desc": "Help for migrant workers with employment disputes, welfare and emergencies.",
+      "phone": "6536 2692",
+      "web": "https://www.mwc.org.sg",
+      "tags": [
+        "Work permit holders"
+      ]
+    },
+    {
+      "id": "home",
+      "name": "HOME",
+      "org": "Humanitarian Organisation for Migration Economics",
+      "cats": [
+        "migrant",
+        "violence"
+      ],
+      "desc": "Shelter, legal and welfare support for migrant workers, including domestic workers facing abuse.",
+      "phone": "6344 0224",
+      "web": "https://www.home.org.sg",
+      "tags": [
+        "Domestic workers",
+        "Shelter"
+      ]
+    },
+    {
+      "id": "mom",
+      "name": "MOM Helpline",
+      "org": "Ministry of Manpower",
+      "cats": [
+        "migrant"
+      ],
+      "desc": "Employment and work pass enquiries. Weekdays 8.30am to 5.30pm.",
+      "phone": "1800 339 5505",
+      "web": "https://www.mom.gov.sg",
+      "tags": [
+        "Employment"
+      ]
+    },
+    {
+      "id": "lab",
+      "name": "Legal Aid Bureau",
+      "org": "Ministry of Law",
+      "cats": [
+        "legal",
+        "family"
+      ],
+      "desc": "Civil legal aid, including divorce, custody and maintenance, for people who meet the means test.",
+      "web": "https://lab.mlaw.gov.sg",
+      "tags": [
+        "Divorce",
+        "Means-tested"
+      ]
+    },
+    {
+      "id": "probono",
+      "name": "Pro Bono SG",
+      "org": "Pro Bono SG",
+      "cats": [
+        "legal"
+      ],
+      "desc": "Free legal clinics and help for people who can't afford a lawyer.",
+      "web": "https://www.probono.sg",
+      "tags": [
+        "Legal clinic"
+      ]
+    },
+    {
+      "id": "fjc",
+      "name": "Family Justice Courts: Personal Protection Orders",
+      "org": "Family Justice Courts",
+      "cats": [
+        "legal",
+        "violence"
+      ],
+      "desc": "How to apply for a PPO or Expedited Order against family violence.",
+      "web": "https://www.judiciary.gov.sg/family",
+      "tags": [
+        "PPO"
+      ]
+    }
+  ]
+}
