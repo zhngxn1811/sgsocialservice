@@ -60,6 +60,7 @@ header.top .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify
 label{font-weight:600;font-size:14px;display:block;margin-bottom:6px}
 textarea,input,select{width:100%;font:16px/1.45 var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
 textarea{min-height:150px;resize:vertical}
+#caseText::placeholder{color:var(--ink);opacity:0.45}
 .privacy{background:var(--warn-soft);border-radius:8px;padding:10px 12px;font-size:14px;margin:10px 0 14px}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .out{min-height:260px}
@@ -144,7 +145,7 @@ footer .wrap{padding-block:18px 28px}
       </div>
       <div>
         <h1>SG Social Services</h1>
-        <p>Referral directory for counsellors and social workers in Singapore</p>
+        <p>Referral directory for Social Services in Singapore</p>
       </div>
     </div>
     <button class="btn primary" id="openForm" type="button">Recommend a service or report an update</button>
@@ -158,7 +159,7 @@ footer .wrap{padding-block:18px 28px}
       <h2 id="asstTitle">Describe the presenting issues</h2>
       <p class="lede">The assistant reads the directory below and suggests which services fit this case, in what order, and what to check before referring.</p>
       <label for="caseText">Case summary (de-identified)</label>
-      <textarea id="caseText">Example: 42F, sole caregiver to two primary-school kids. Husband's gambling has led to about $18k in debt, utilities in arrears. Reports he shouts and once pushed her during an argument last month. Low mood, poor sleep, no current suicidal ideation reported. Prefers Mandarin.</textarea>
+      <textarea id="caseText" placeholder="Example: 42F, sole caregiver to two primary-school kids. Husband's gambling has led to about $18k in debt, utilities in arrears. Reports he shouts and once pushed her during an argument last month. Low mood, poor sleep, no current suicidal ideation reported. Prefers Mandarin."></textarea>
       <div class="privacy"><strong>No identifying details.</strong> Leave out names, NRIC, addresses, phone numbers and school names. Age, gender and circumstances are enough.</div>
       <div class="row">
         <button class="btn teal" id="askBtn" type="button">Find relevant services</button>
@@ -166,7 +167,7 @@ footer .wrap{padding-block:18px 28px}
       </div>
     </div>
     <div class="panel out" id="out" aria-live="polite">
-      <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. The example case on the left is filled in so you can try it.</p>
+      <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. Enter your case summary on the left to get started.</p>
     </div>
   </section>
 
