@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Layout: a referral desk. Crisis strip pinned up top, case assistant as the working surface, directory below filtered by presenting issue. */
+/* Layout: directory on the left, case assistant on the right; stacked on smaller screens. */
 :root{
   --bg:#F4F6F4; --surface:#FFFFFF; --ink:#18262B; --muted:#5A6A6E; --line:#D9E0DD;
   --accent:#B8322A; --accent-ink:#FFFFFF; --teal:#1D6A66; --teal-soft:#E2EFED; --warn-soft:#FBEAE7;
@@ -50,9 +50,13 @@ header.top .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify
 .btn.teal{background:var(--teal);border-color:var(--teal);color:var(--bg)}
 .btn:disabled{opacity:.55;cursor:wait}
 
+/* directory and assistant layout */
+.page-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:start;padding-block:16px 28px}
+.page-layout>section{min-width:0}
+.desk{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+@media (max-width:860px){.page-layout{grid-template-columns:minmax(0,1fr)}}
+
 /* assistant */
-.desk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;padding-block:16px 28px}
-@media (max-width:860px){.desk{grid-template-columns:1fr}}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
 .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:700;margin:0 0 6px}
 .desk h2{font-size:26px;font-weight:700;margin-bottom:8px}
@@ -81,7 +85,7 @@ textarea{min-height:150px;resize:vertical}
 .chip{font:600 14px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .chip .n{font-family:var(--mono);font-size:12px;opacity:.7;margin-left:4px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;padding-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;padding-bottom:40px}
 @media (max-width:420px){.grid{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .card.crisis-card{border-left:4px solid var(--accent)}
@@ -151,26 +155,8 @@ footer .wrap{padding-block:18px 28px}
   </div>
 </header>
 
-<main>
-  <section class="wrap desk" aria-labelledby="asstTitle">
-    <div class="panel">
-      <p class="eyebrow">Case resourcing assistant</p>
-      <h2 id="asstTitle">Describe the presenting issues</h2>
-      <p class="lede">The assistant reads the directory below and suggests which services fit this case, in what order, and what to check before referring.</p>
-      <label for="caseText">Case summary (de-identified)</label>
-      <textarea id="caseText">Example: 42F, sole caregiver to two primary-school kids. Husband's gambling has led to about $18k in debt, utilities in arrears. Reports he shouts and once pushed her during an argument last month. Low mood, poor sleep, no current suicidal ideation reported. Prefers Mandarin.</textarea>
-      <div class="privacy"><strong>No identifying details.</strong> Leave out names, NRIC, addresses, phone numbers and school names. Age, gender and circumstances are enough.</div>
-      <div class="row">
-        <button class="btn teal" id="askBtn" type="button">Find relevant services</button>
-        <button class="btn" id="clearBtn" type="button">Clear</button>
-      </div>
-    </div>
-    <div class="panel out" id="out" aria-live="polite">
-      <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. The example case on the left is filled in so you can try it.</p>
-    </div>
-  </section>
-
-  <section class="wrap" aria-labelledby="dirTitle">
+<main class="wrap page-layout">
+  <section class="directory" aria-labelledby="dirTitle">
     <div class="dir-head">
       <div>
         <h2 id="dirTitle">Directory</h2>
@@ -180,6 +166,24 @@ footer .wrap{padding-block:18px 28px}
     </div>
     <div class="cats" id="cats" role="group" aria-label="Filter by presenting issue"></div>
     <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="desk" aria-labelledby="asstTitle">
+    <div class="panel">
+      <p class="eyebrow">Case resourcing assistant</p>
+      <h2 id="asstTitle">Describe the presenting issues</h2>
+      <p class="lede">The assistant reads the directory and suggests which services fit this case, in what order, and what to check before referring.</p>
+      <label for="caseText">Case summary (de-identified)</label>
+      <textarea id="caseText">Example: 42F, sole caregiver to two primary-school kids. Husband's gambling has led to about $18k in debt, utilities in arrears. Reports he shouts and once pushed her during an argument last month. Low mood, poor sleep, no current suicidal ideation reported. Prefers Mandarin.</textarea>
+      <div class="privacy"><strong>No identifying details.</strong> Leave out names, NRIC, addresses, phone numbers and school names. Age, gender and circumstances are enough.</div>
+      <div class="row">
+        <button class="btn teal" id="askBtn" type="button">Find relevant services</button>
+        <button class="btn" id="clearBtn" type="button">Clear</button>
+      </div>
+    </div>
+    <div class="panel out" id="out" aria-live="polite">
+      <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. The example case above is filled in so you can try it.</p>
+    </div>
   </section>
 
 </main>
@@ -249,7 +253,7 @@ fetch("/api/services").then(r=>r.json()).then(d=>{CATS=d.categories;S=d.services
   .catch(()=>{$("#grid").innerHTML='<p class="empty">The directory didn\'t load. Refresh the page to try again.</p>';});
 
 /* ---------- AI assistant ---------- */
-const DISCLAIM='<p class="disclaim">AI suggestions from the directory above. Verify details and use your professional judgement before referring.</p>';
+const DISCLAIM='<p class="disclaim">AI suggestions from the directory. Verify details and use your professional judgement before referring.</p>';
 function md(t){
   const lines=t.split("\n");let html="",inList=false;
   const inline=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
