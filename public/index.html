@@ -304,6 +304,7 @@ $("#subForm").addEventListener("submit",async e=>{
   e.preventDefault();
   const details=$("#fDetails").value.trim();
   if(kind==="recommend"&&!$("#fName").value.trim()){showMsg("Add the service or programme name.","note");$("#fName").focus();return;}
+  if(kind==="update"&&!$("#fWhich").value){showMsg("Choose the listing to update.","note");$("#fWhich").focus();return;}
   if(!details){showMsg("Add a short description so we know what to change or add.","note");$("#fDetails").focus();return;}
   const rec={kind,details,role:$("#fRole").value.trim(),website:$("#fHp").value,
     ...(kind==="recommend"?{name:$("#fName").value.trim(),org:$("#fOrg").value.trim(),category:$("#fCat").value,phone:$("#fPhone").value.trim(),web:$("#fWeb").value.trim()}:{serviceId:$("#fWhich").value,name:S.find(s=>s.id===$("#fWhich").value)?.name||""})};

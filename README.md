@@ -8,12 +8,16 @@ public/                    the website
   services.json            THE DIRECTORY: edit this to add or update listings
 netlify/functions/
   assistant.mjs            AI assistant API  (/api/assistant)
-  submissions.mjs          form + inbox API  (/api/submissions)
+  submissions.mts          form + inbox API  (/api/submissions)
 netlify.toml               Netlify settings
 package.json               dependencies (Netlify installs these for you)
 ```
 
-Submissions are saved with **Netlify Blobs**, Netlify's built-in storage. There's no database to set up.
+Submissions are saved in **Netlify Database** (managed PostgreSQL). Each record stores the submission type, service name, organisation, category, phone, website, selected listing ID, details, and optional role, along with its ID, submission date and review status. Recommendations require a service name and details; updates require a selected listing and details. Other fields remain optional.
+
+Netlify provisions the database and applies the migrations in `netlify/database/migrations` during deployment. The schema is defined in `db/schema.ts`; after schema changes, generate a migration with `npx drizzle-kit generate --name describe_change`. Do not apply migrations manually.
+
+The existing `/admin` inbox reads and updates database records using the existing admin key. Opening the inbox also copies any older submissions from Netlify Blobs into the database without deleting the originals or overwriting reviewed database records.
 
 ---
 
