@@ -353,8 +353,14 @@
         "financial",
         "violence"
       ],
-      "desc": "Neighbourhood centres for casework, counselling and coordinated help for families. Find the nearest one through ComCare or MSF.",
+      "desc": "Neighbourhood centres for casework, counselling and coordinated help for families. Find the nearest one through MSF.",
       "web": "https://www.msf.gov.sg/directories#familytab",
+      "links": [
+        {
+          "label": "Full list of FSCs in Operation",
+          "url": "https://files.app.optical.gov.sg/msf/production/assets/475b4678-246a-43d9-9f33-9d1f93953875.pdf"
+        }
+      ],
       "tags": [
         "Casework",
         "Islandwide"
