@@ -12,9 +12,10 @@ const SYSTEM = `You are a referral assistant for counsellors and social workers 
 Rules:
 - If there is any risk of suicide, self-harm, harm to others, or immediate danger, start with a "Risk first" section naming 995/999, SOS 1767, mindline 1771, IMH 6389 2222 and NAVH 1800 777 0000, and remind them to follow their agency's risk protocol.
 - Group suggestions by presenting issue. For each: name, why it fits this case, and one thing to check before referring (eligibility, language, hours, consent).
-- At most 8 services, in priority order.
+- Include as many relevant services as the case needs, in priority order.
 - If a need isn't covered, list it under "Gaps" with the type of service to look for. Never invent services, phone numbers or links.
-- Brief and practical, written for trained professionals. Singapore English.
+- Practical and thorough, written for trained professionals. Singapore English.
+- There is no word-count limit. Provide the detail needed to fully address the case and respect any length requested by the user.
 - Only answer questions about resourcing a case. If asked for anything else, say this tool only helps match cases to services.
 - Format: "## " headings, "- " bullets, **bold** for service names only.
 
@@ -29,7 +30,6 @@ const json = (status, body) => new Response(JSON.stringify(body), {
 
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "Use POST." });
-  if (!process.env.ANTHROPIC_API_KEY) return json(500, { error: "The assistant isn't set up yet (missing API key)." });
 
   let caseText = "";
   try { caseText = ((await req.json())?.caseText || "").toString().trim(); }
@@ -41,27 +41,46 @@ export default async (req) => {
 
   const anthropic = new Anthropic();
   const enc = new TextEncoder();
-  const stream = anthropic.messages.stream({
-    model: MODEL,
-    max_tokens: 1500,
-    system: SYSTEM,
-    messages: [{ role: "user", content: caseText }],
-  });
+  const messages = [{ role: "user", content: caseText }];
+  let stream;
+  let cancelled = false;
 
   const body = new ReadableStream({
     async start(controller) {
       try {
-        for await (const ev of stream) {
-          if (ev.type === "content_block_delta" && ev.delta?.type === "text_delta") controller.enqueue(enc.encode(ev.delta.text));
+        while (!cancelled) {
+          stream = anthropic.messages.stream({
+            model: MODEL,
+            // Anthropic requires a per-request token budget. This is a chunk
+            // size, not a total response limit: truncated chunks continue below.
+            max_tokens: 4096,
+            system: SYSTEM,
+            messages,
+          });
+          for await (const ev of stream) {
+            if (cancelled) return;
+            if (ev.type === "content_block_delta" && ev.delta?.type === "text_delta") controller.enqueue(enc.encode(ev.delta.text));
+          }
+          const message = await stream.finalMessage();
+          if (cancelled || message.stop_reason !== "max_tokens") break;
+          messages.push(
+            { role: "assistant", content: message.content },
+            { role: "user", content: "Continue the previous response exactly where it stopped, including mid-sentence or mid-word. Do not repeat earlier text or add a continuation preamble. Finish when the case has been fully addressed." },
+          );
         }
-      } catch (err) {
-        console.error("assistant error:", err?.status || "", err?.message || err); // never log caseText
-        controller.enqueue(enc.encode("\n\n[The assistant couldn't finish. Try again in a moment.]"));
+      } catch {
+        if (!cancelled) {
+          console.error("assistant generation failed"); // never log case text or provider details
+          controller.enqueue(enc.encode("\n\n[The assistant couldn't finish. Try again in a moment.]"));
+        }
       } finally {
-        controller.close();
+        if (!cancelled) controller.close();
       }
     },
-    cancel() { stream.abort(); },
+    cancel() {
+      cancelled = true;
+      stream?.abort();
+    },
   });
 
   return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } });

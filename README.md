@@ -110,10 +110,10 @@ Category ids are `crisis`, `mental`, `addictions`, `substance`, `trauma`, `viole
 
 ## Costs
 - **Netlify:** the free plan should cover a site like this at the start. Check netlify.com/pricing for current limits on function calls.
-- **Anthropic:** you pay per assistant query, roughly a few cents at most. Your spend limit caps the total.
+- **Anthropic:** usage is billed by tokens, including automatic continuations for longer answers. Longer answers cost more. Your spend limit caps the total.
 
 ## Troubleshooting
-- **The assistant says "isn't set up yet":** `ANTHROPIC_API_KEY` is missing. Add it, then trigger a new deploy.
-- **Answers cut off partway:** Netlify functions have a time limit, so long answers can get cut. Try a shorter case summary. If it keeps happening, lower `max_tokens` in `assistant.mjs`.
+- **The assistant cannot finish:** check function logs and AI Gateway usage for provider errors or exhausted credits.
+- **Response length:** the assistant has no application word-count or service-count cap. It automatically continues when a generation reaches the per-request token budget, streaming the continuation into the same answer. Provider context, rate and account limits, and Netlify execution-time and response-size limits still apply; truly unlimited output is not possible. If a connection drops, the displayed partial answer is preserved; try again or request a more focused answer.
 - **Too many requests:** Netlify's rate limit is set to 10 assistant calls per person per minute. Change `rateLimit` in the function files to adjust it.
 - **Function logs:** in Netlify, go to *Logs → Functions*. Case text is never logged.
