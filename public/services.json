@@ -65,7 +65,7 @@
       "h24": true,
       "desc": "24-hour emotional support for people in crisis or with thoughts of suicide or self-harm. Also supports those bereaved by suicide.",
       "phone": "1767",
-      "other": "WhatsApp 9151 1767",
+      "other": "WhatsApp: 9151 1767 (24 hours); Email: pat@sos.org.sg",
       "web": "https://www.sos.org.sg",
       "tags": [
         "Suicide",
@@ -105,6 +105,12 @@
       "web": "https://www.imh.com.sg",
       "tags": [
         "Psychiatric emergency"
+      ],
+      "links": [
+        {
+          "label": "IMH clinical services",
+          "url": "https://www.imh.com.sg/Clinical-Services/Pages/Message-by-CMB.aspx"
+        }
       ]
     },
     {
@@ -121,7 +127,8 @@
       "web": "https://www.scdf.gov.sg",
       "tags": [
         "Imminent risk"
-      ]
+      ],
+      "other": "Police SMS: 70999; SCDF fire or medical emergency SMS: 70995"
     },
     {
       "id": "samh",
@@ -130,7 +137,7 @@
       "cats": [
         "mental"
       ],
-      "desc": "Counselling, community mental health and recovery services for adults and youth.",
+      "desc": "Counselling, community mental health and recovery services for adults and youth. Provides information and assistance on mental health and psychosocial issues. Helpline: Monday to Friday 9am to 6pm.",
       "phone": "1800 283 7019",
       "web": "https://www.samhealth.org.sg",
       "tags": [
@@ -160,12 +167,18 @@
         "mental",
         "family"
       ],
-      "desc": "Counselling helpline, with support for Mandarin speakers. 10am to 10pm.",
+      "desc": "Mandarin counselling for individuals, couples and families on mental health, personal challenges, grief, pre-marital, marital, family and relationship issues. Helpline: daily 10am to 10pm.",
       "phone": "1800 3535 800",
       "web": "https://www.carecorner.org.sg",
       "tags": [
         "Mandarin",
         "Counselling"
+      ],
+      "links": [
+        {
+          "label": "Mandarin counselling hotline",
+          "url": "https://www.carecorner.org.sg/services/toll-free-counselling-hotline/"
+        }
       ]
     },
     {
@@ -176,12 +189,19 @@
         "mental",
         "youth"
       ],
-      "desc": "Mental health check-ins and assessment for young people aged 16 to 30.",
+      "desc": "Mental health check-ins and assessment for young people aged 16 to 30. webCHAT offers in-the-moment text-based support for emotional concerns, clarity and help finding support. webCHAT: Tuesday to Saturday 1pm to 8pm (hours from the October 2024 contributed resource list; check before referring).",
       "phone": "6493 6500",
       "web": "https://www.chat.mentalhealth.sg",
       "tags": [
         "Youth 16–30",
-        "Assessment"
+        "Assessment",
+        "Webchat"
+      ],
+      "links": [
+        {
+          "label": "webCHAT",
+          "url": "https://www.imh.com.sg/CHAT/Get-Help/webCHAT/Pages/default.aspx"
+        }
       ]
     },
     {
@@ -192,7 +212,7 @@
         "addictions",
         "substance"
       ],
-      "desc": "Assessment and treatment for drug, alcohol, gambling, gaming and other addictions. Helpline 8am to 11pm daily.",
+      "desc": "Assessment and treatment for drug, alcohol, gambling, gaming and other addictions. All Addictions Helpline (6-RECOVER): 24 hours.",
       "phone": "6732 6837",
       "web": "https://www.nams.sg",
       "tags": [
@@ -200,7 +220,8 @@
         "Gambling",
         "Alcohol",
         "Drugs"
-      ]
+      ],
+      "h24": true
     },
     {
       "id": "gambling",
@@ -257,7 +278,7 @@
         "trauma",
         "violence"
       ],
-      "desc": "Support for survivors of sexual assault and harassment of any gender: helpline, case management, and accompaniment to police and medical services.",
+      "desc": "Support for survivors of sexual assault and harassment of any gender: helpline, case management, and accompaniment to police and medical services. Helpline: Monday to Friday 10am to 6pm.",
       "phone": "6779 0282",
       "web": "https://sacc.aware.org.sg",
       "tags": [
@@ -274,7 +295,7 @@
         "trauma"
       ],
       "h24": true,
-      "desc": "24-hour helpline to report or get help for family violence, sexual violence, and harassment.",
+      "desc": "24-hour helpline to report or get help for family violence, sexual violence, harassment, abuse and neglect. Provides psychological support to callers in distress.",
       "phone": "1800 777 0000",
       "web": "https://www.msf.gov.sg",
       "tags": [
@@ -290,12 +311,16 @@
         "violence",
         "legal"
       ],
-      "desc": "Helpline, counselling and legal clinic for women facing abuse or discrimination. Weekdays 10am to 6pm.",
+      "desc": "Helpline, counselling and legal clinic for women facing abuse or discrimination. Offers emotional support, information and encouragement in English, Mandarin, Malay and Tamil. Helpline: Monday to Friday 10am to 6pm.",
       "phone": "1800 777 5555",
       "web": "https://www.aware.org.sg",
       "tags": [
         "Women",
-        "Legal clinic"
+        "Legal clinic",
+        "English",
+        "Mandarin",
+        "Malay",
+        "Tamil"
       ]
     },
     {
@@ -321,7 +346,7 @@
         "financial",
         "family"
       ],
-      "desc": "Financial assistance for low-income households and links to the nearest Social Service Office or Family Service Centre.",
+      "desc": "Financial assistance for low-income individuals and families, and links to the nearest Social Service Office or Family Service Centre for case management on family, social and emotional issues. Hotline: daily 7am to midnight.",
       "phone": "1800 222 0000",
       "web": "https://www.msf.gov.sg/what-we-do/comcare",
       "tags": [
@@ -359,6 +384,10 @@
         {
           "label": "Full list of FSCs in Operation",
           "url": "https://files.app.optical.gov.sg/msf/production/assets/475b4678-246a-43d9-9f33-9d1f93953875.pdf"
+        },
+        {
+          "label": "MSF services directory",
+          "url": "https://www.msf.gov.sg/directories"
         }
       ],
       "tags": [
@@ -436,11 +465,12 @@
       "cats": [
         "youth"
       ],
-      "desc": "Helpline and chat for primary-school-aged children who feel lonely, worried or unsafe.",
+      "desc": "Support, advice and information for lonely or distressed primary-school-aged children aged 7 to 12, especially when parents or caregivers are unavailable. Helpline: Monday to Friday 2.30pm to 5pm. Webchat: Monday to Thursday 2.30pm to 7pm; Friday 2.30pm to 5pm.",
       "phone": "1800 274 4788",
       "web": "https://www.tinklefriend.sg",
       "tags": [
-        "Children"
+        "Children 7–12",
+        "Webchat"
       ]
     },
     {
@@ -449,9 +479,10 @@
       "org": "AIC",
       "cats": [
         "seniors",
-        "disability"
+        "disability",
+        "mental"
       ],
-      "desc": "Care options and caregiver support for seniors, including home care, day care and respite.",
+      "desc": "Information on community care services for seniors and caregivers, and for individuals with mental health and emotional needs. Care options include home care, day care and respite. Hotline: Monday to Friday 8.30am to 8.30pm; Saturday 8.30am to 4pm.",
       "phone": "1800 650 6060",
       "web": "https://www.aic.sg",
       "tags": [
@@ -467,7 +498,7 @@
         "seniors",
         "mental"
       ],
-      "desc": "Counselling and information helpline for seniors and their caregivers.",
+      "desc": "Counselling and information helpline for people aged 50 and above on issues and services related to older persons. Free face-to-face counselling for seniors and their caregivers. Helpline: Monday to Friday 9am to 7pm; Saturday 9am to 1pm.",
       "phone": "1800 555 5555",
       "web": "https://www.sagecc.org.sg",
       "tags": [
@@ -486,7 +517,8 @@
       "web": "https://www.sgenable.sg",
       "tags": [
         "Disability schemes"
-      ]
+      ],
+      "other": "Email: contactus@sgenable.sg"
     },
     {
       "id": "mwc",
@@ -573,6 +605,216 @@
       "web": "https://www.judiciary.gov.sg/family",
       "tags": [
         "PPO"
+      ]
+    },
+    {
+      "id": "non-emergency-ambulance",
+      "name": "Non-Emergency Ambulance Service",
+      "org": "Private ambulance operators",
+      "cats": [
+        "mental",
+        "seniors",
+        "disability"
+      ],
+      "desc": "Ambulance transport to hospital for non-emergency situations. Inform the operator of the patient’s condition and behaviour so a suitable nearby service can be activated. For medical emergencies, call 995.",
+      "web": "https://www.scdf.gov.sg",
+      "tags": [
+        "Non-emergency transport"
+      ],
+      "phone": "1777"
+    },
+    {
+      "id": "oogachaga",
+      "name": "Oogachaga Counselling",
+      "org": "Oogachaga",
+      "cats": [
+        "mental",
+        "family"
+      ],
+      "desc": "Counselling for lesbian, gay, bisexual, transgender, questioning and queer (LGBTQ+) individuals, couples and families. WhatsApp support: Tuesday to Thursday 7pm to 10pm; Saturday 2pm to 5pm.",
+      "web": "https://oogachaga.com/",
+      "tags": [
+        "LGBTQ+",
+        "Counselling",
+        "WhatsApp"
+      ],
+      "other": "WhatsApp: 8592 0609; Email: CARE@oogachaga.com"
+    },
+    {
+      "id": "shine-resilience",
+      "name": "ResiL!ence",
+      "org": "SHINE Children & Youth Services",
+      "cats": [
+        "youth",
+        "mental"
+      ],
+      "desc": "Programmes for young people aged 12 to 25 with mental health needs, including emotional support, mentoring, counselling, support groups and mental health screening. Contact: Monday to Friday 9am to 6pm.",
+      "web": "https://www.shine.org.sg/resilience",
+      "tags": [
+        "Youth 12–25",
+        "Counselling",
+        "Screening",
+        "WhatsApp"
+      ],
+      "other": "WhatsApp: 9740 1489; Email: resilience@shine.org.sg"
+    },
+    {
+      "id": "limitless",
+      "name": "Limitless Counselling",
+      "org": "Limitless",
+      "cats": [
+        "youth",
+        "mental",
+        "trauma"
+      ],
+      "desc": "Free and subsidised counselling and psychological services for young people facing relationship issues, trauma, mental health concerns, self-image and behavioural challenges. Apply using the online form.",
+      "web": "https://www.limitless.sg/talk",
+      "tags": [
+        "Youth",
+        "Counselling",
+        "Online referral"
+      ]
+    },
+    {
+      "id": "youthline",
+      "name": "Youthline",
+      "org": "Youthline SG",
+      "cats": [
+        "youth",
+        "mental"
+      ],
+      "desc": "A listening ear and free counselling for anyone up to 35 years old. Phone and WhatsApp: daily 9am to midnight.",
+      "web": "https://youthline.sg/",
+      "tags": [
+        "Up to age 35",
+        "Free counselling",
+        "WhatsApp"
+      ],
+      "phone": "6436 6612",
+      "other": "WhatsApp: 8533 9460; Email: hello@youthline.sg"
+    },
+    {
+      "id": "wysa",
+      "name": "Wysa’s AI Chat / Mindline",
+      "org": "Wysa / Mindline",
+      "cats": [
+        "mental"
+      ],
+      "desc": "24/7 AI chatbot for emotional wellbeing and self-help. This automated chat service is separate from the National mindline 1771 counselling helpline.",
+      "web": "https://www.wysa.com/",
+      "tags": [
+        "AI chatbot",
+        "Self-help"
+      ],
+      "h24": true,
+      "links": [
+        {
+          "label": "Mindline",
+          "url": "https://www.mindline.sg"
+        }
+      ]
+    },
+    {
+      "id": "otr-listens",
+      "name": "OTR Listens",
+      "org": "Over the Rainbow",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Anonymous text-based emotional support from trained volunteers. Chat: Monday to Friday 4pm to midnight; Saturday and Sunday noon to midnight. Contact details and hours are from the October 2024 contributed resource list; check before referring.",
+      "web": "https://overtherainbow.sg/",
+      "tags": [
+        "Anonymous",
+        "Webchat",
+        "Emotional support"
+      ]
+    },
+    {
+      "id": "hear4u",
+      "name": "Hear4U",
+      "org": "CARE Singapore",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Non-crisis psychological first aid and support for anyone in Singapore. WhatsApp: Monday to Friday 10am to 5pm. Contact details and hours are from the October 2024 contributed resource list; check before referring.",
+      "web": "https://www.care.sg/",
+      "tags": [
+        "Non-crisis support",
+        "Psychological first aid",
+        "WhatsApp"
+      ],
+      "other": "WhatsApp: 6978 2728"
+    },
+    {
+      "id": "sadeaf",
+      "name": "Singapore Association for the Deaf — Community Services",
+      "org": "Singapore Association for the Deaf",
+      "cats": [
+        "disability",
+        "family"
+      ],
+      "desc": "Assistance for Deaf, hard-of-hearing and DeafBlind people and their families from social workers, case managers and community services staff. WhatsApp contact during office hours. Contact details and hours are from the October 2024 contributed resource list; check before referring.",
+      "web": "https://sadeaf.org.sg/",
+      "tags": [
+        "Deaf",
+        "Hard of hearing",
+        "DeafBlind",
+        "Casework",
+        "WhatsApp"
+      ],
+      "other": "WhatsApp: 9226 7621; Skype: hotline_442; Email: info@sadeaf.org.sg"
+    },
+    {
+      "id": "touch-silent-club",
+      "name": "TOUCH Silent Club",
+      "org": "TOUCH Community Services",
+      "cats": [
+        "disability"
+      ],
+      "desc": "Programmes supporting Deaf people in education, vocation, recreation, social development and independence. Contact: Tuesday to Friday 10am to noon and 2pm to 4pm; Saturday 10am to 3pm. Contact details and hours are from the October 2024 contributed resource list; check before referring.",
+      "web": "https://www.touch.org.sg",
+      "tags": [
+        "Deaf",
+        "Education",
+        "Employment",
+        "WhatsApp",
+        "SMS"
+      ],
+      "other": "WhatsApp/SMS: 9769 4403; Email: silent.club@touch.org.sg"
+    },
+    {
+      "id": "ncss-resources",
+      "name": "NCSS Community Resources",
+      "org": "National Council of Social Service",
+      "cats": [
+        "mental",
+        "family"
+      ],
+      "desc": "Community resource directory for finding further social service support.",
+      "web": "https://www.ncss.gov.sg/research-and-insights/community-resources/",
+      "tags": [
+        "Resource directory"
+      ],
+      "links": [
+        {
+          "label": "Mental Health Resource Directory",
+          "url": "https://www.ncss.gov.sg/press-room/publications/detail-page/MentalHealthResourceDirectory"
+        }
+      ]
+    },
+    {
+      "id": "iasp-resources",
+      "name": "IASP Suicide Prevention Resources",
+      "org": "International Association for Suicide Prevention",
+      "cats": [
+        "crisis",
+        "mental"
+      ],
+      "desc": "International suicide prevention information and resources for people experiencing suicidal thoughts. For immediate support in Singapore, contact SOS 1767 or National mindline 1771; call 995 or 999 for immediate danger.",
+      "web": "https://www.iasp.info/suicidalthoughts/",
+      "tags": [
+        "Suicide prevention",
+        "International resources"
       ]
     }
   ]
