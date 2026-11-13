@@ -250,7 +250,22 @@ fetch("/api/services").then(r=>r.json()).then(d=>{CATS=d.categories;S=d.services
 const DISCLAIM='<p class="disclaim">AI suggestions from the directory above. Verify details and use your professional judgement before referring.</p>';
 function md(t){
   const lines=t.split("\n");let html="",inList=false;
-  const inline=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+  const inline=s=>{
+    // Parse only bold and links; escape all model-generated text and attributes.
+    const tokens=/\*\*(.+?)\*\*|\[([^\]\n]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)/g;
+    let html="",last=0;
+    for(const match of s.matchAll(tokens)){
+      html+=esc(s.slice(last,match.index));
+      if(match[1]!==undefined){html+=`<strong>${inline(match[1])}</strong>`;}
+      else{
+        let safe=false;
+        try{const url=new URL(match[3]);safe=["https:","http:"].includes(url.protocol);}catch{}
+        html+=safe?`<a href="${esc(match[3])}" target="_blank" rel="noopener noreferrer">${esc(match[2])}</a>`:esc(match[0]);
+      }
+      last=match.index+match[0].length;
+    }
+    return html+esc(s.slice(last));
+  };
   for(const raw of lines){const l=raw.trim();
     if(/^#{1,4}\s/.test(l)){if(inList){html+="</ul>";inList=false}html+=`<h4>${inline(l.replace(/^#+\s*/,""))}</h4>`;}
     else if(/^[-*]\s/.test(l)){if(!inList){html+="<ul>";inList=true}html+=`<li>${inline(l.slice(2))}</li>`;}

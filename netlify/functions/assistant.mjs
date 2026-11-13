@@ -17,11 +17,12 @@ Rules:
 - Practical and thorough, written for trained professionals. Singapore English.
 - There is no word-count limit. Provide the detail needed to fully address the case and respect any length requested by the user.
 - Only answer questions about resourcing a case. If asked for anything else, say this tool only helps match cases to services.
-- Format: "## " headings, "- " bullets, **bold** for service names only.
+- For every recommended service with a website, embed its exact directory URL in its name using **[Service name](URL)**. Use only URLs supplied in the directory; never guess or construct a URL. If no URL is supplied, use a bold service name without a link. Where useful, include the additional directory links with descriptive labels.
+- Format: "## " headings, "- " bullets, **bold** for service names only, and [descriptive label](URL) for hyperlinks.
 
 DIRECTORY:
 ${directory.services.map(s =>
-  `[${s.id}] ${s.name} (${s.org}) | categories: ${s.cats.join(", ")} | ${s.desc} | phone: ${s.phone || "n/a"}${s.h24 ? " | 24h" : ""} | ${s.web}`
+  `[${s.id}] ${s.name} (${s.org}) | categories: ${s.cats.join(", ")} | ${s.desc} | phone: ${s.phone || "n/a"}${s.h24 ? " | 24h" : ""} | website: ${s.web || "n/a"}${(s.links || []).map(link => ` | ${link.label}: ${link.url}`).join("")}`
 ).join("\n")}`;
 
 const json = (status, body) => new Response(JSON.stringify(body), {
