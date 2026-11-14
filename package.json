@@ -20,6 +20,7 @@
     "typescript": "^7.0.2"
   },
   "scripts": {
+    "build": "node scripts/build.mjs",
     "test": "node --import tsx --experimental-test-module-mocks --test tests/*.test.mts",
     "typecheck": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck netlify/functions/submissions.mts db/index.ts db/schema.ts drizzle.config.ts",
     "db:generate": "drizzle-kit generate"

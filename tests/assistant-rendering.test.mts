@@ -4,9 +4,10 @@ import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
 const page = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
-const escapeSource = page.match(/^const esc=.*;$/m)![0];
+// esc lives in the shared renderer (public/render.js), which the page loads first.
+const sharedRenderer = readFileSync(new URL('../public/render.js', import.meta.url), 'utf8');
 const rendererSource = page.slice(page.indexOf('function md(t){'), page.indexOf('let abortCtl=null;'));
-const md = runInNewContext(`${escapeSource}\n${rendererSource}\nmd`, { URL });
+const md = runInNewContext(`${sharedRenderer}\nconst esc=SGSSRender.esc;\n${rendererSource}\nmd`, { URL, window: undefined });
 
 test('renders bold resource links within existing headings and bullets', () => {
   const html = md('## Resources\n- **[Support](https://example.org/help_(adults)?a=1&b=2)**: Why it fits.');

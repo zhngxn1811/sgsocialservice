@@ -9,6 +9,11 @@ public/                    the website
 netlify/functions/
   assistant.mjs            AI assistant API  (/api/assistant)
   submissions.mts          form + inbox API  (/api/submissions)
+netlify/lib/cors.mjs       lets the mobile apps call the API
+scripts/build.mjs          builds dist/: listings in the HTML, issue pages, sitemap
+content/categories.json    titles, Google descriptions and intros for each issue page
+public/render.js           listing card renderer shared by the page and the build
+public/site.css            shared styles for every page
 netlify.toml               Netlify settings
 package.json               dependencies (Netlify installs these for you)
 ```
@@ -117,3 +122,25 @@ Category ids are `crisis`, `mental`, `addictions`, `substance`, `trauma`, `viole
 - **Response length:** the assistant has no application word-count or service-count cap. It automatically continues when a generation reaches the per-request token budget, streaming the continuation into the same answer. Provider context, rate and account limits, and Netlify execution-time and response-size limits still apply; truly unlimited output is not possible. If a connection drops, the displayed partial answer is preserved; try again or request a more focused answer.
 - **Too many requests:** Netlify's rate limit is set to 10 assistant calls per person per minute. Change `rateLimit` in the function files to adjust it.
 - **Function logs:** in Netlify, go to *Logs → Functions*. Case text is never logged.
+- **Assistant or form fails in the mobile app only:** the apps are let in by `netlify/lib/cors.mjs` (tested in `tests/cors.test.mts`). To allow another origin, such as a staging site, add an `ALLOWED_ORIGINS` environment variable (comma-separated). Other websites are still blocked.
+
+## Search and sharing
+
+On every deploy, Netlify runs `scripts/build.mjs`, which copies `public/` into `dist/` and adds the parts search engines need:
+
+- **Listings written into the HTML.** All of `services.json` is in the home page before any JavaScript runs. The page then filters and searches live as before. Built and live cards come from the same file (`public/render.js`), so they always match.
+- **A page per presenting issue** at `/help/<slug>/`, e.g. `/help/domestic-family-violence/`. Each has its own title, Google description and intro, all in `content/categories.json`. Edit the wording there. Avoid changing a `slug` once Google has indexed the page, because it changes the address. A new category in `services.json` gets a page automatically, and categories with no listings are skipped.
+- **`sitemap.xml`**, linked from `robots.txt`.
+- **Share previews**: `public/og-image.png` shows when the site is posted on LinkedIn, WhatsApp or X.
+- **Structured data** (JSON-LD) describing the site, each issue page and its services.
+- **Icons**: favicon, iPhone home-screen icon and `site.webmanifest`, so "Add to Home Screen" looks like an app.
+
+Links in the sitemap and share tags use your site's main address, which Netlify supplies automatically (your custom domain once it's set as primary). To override it, set a `SITE_URL` environment variable.
+
+**Never edit `dist/` by hand.** It's rebuilt from scratch on every deploy. To preview locally, run `npm run build` and open `dist/`.
+
+**After deploying:** add the site to Google Search Console and Bing Webmaster Tools, then submit `https://<your-site>/sitemap.xml` in each.
+
+## Mobile apps
+
+The Android and iOS apps (a separate project) use this site's API: `/api/services` for listings, `/api/assistant` and `/api/submissions`. They need nothing else from this repo. Edits to `public/services.json` reach the apps automatically the next time they open, with no app update needed.

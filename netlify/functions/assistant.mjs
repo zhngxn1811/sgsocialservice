@@ -1,6 +1,7 @@
 // POST /api/assistant  { caseText }  ->  streamed referral suggestions (text/plain)
 import Anthropic from "@anthropic-ai/sdk";
 import directory from "../../public/services.json" with { type: "json" };
+import { withCors } from "../lib/cors.mjs";
 
 const MODEL = process.env.CLAUDE_MODEL || "claude-sonnet-5-5";
 
@@ -29,7 +30,7 @@ const json = (status, body) => new Response(JSON.stringify(body), {
   status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
 });
 
-export default async (req) => {
+export default withCors(async (req) => {
   if (req.method !== "POST") return json(405, { error: "Use POST." });
 
   let caseText = "";
@@ -85,7 +86,7 @@ export default async (req) => {
   });
 
   return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } });
-};
+});
 
 export const config = {
   path: "/api/assistant",

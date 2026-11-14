@@ -7,6 +7,7 @@ import type { Config, Context } from "@netlify/functions";
 import { desc, eq } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { submissions } from "../../db/schema.js";
+import { withCors } from "../lib/cors.mjs";
 
 const json = (status: number, body: unknown) => new Response(JSON.stringify(body), {
   status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
@@ -17,7 +18,7 @@ const isAdmin = (req: Request) => {
   return !!key && req.headers.get("x-admin-key") === key;
 };
 
-export default async (req: Request, context: Context) => {
+export default withCors(async (req: Request, context: Context) => {
   const id = context.params?.id;
 
   if (req.method === "POST" && !id) {
@@ -75,7 +76,7 @@ export default async (req: Request, context: Context) => {
   }
 
   return json(405, { error: "Not supported." });
-};
+});
 
 export const config: Config = {
   path: ["/api/submissions", "/api/submissions/:id"],
