@@ -17,6 +17,8 @@ import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { RULES, SITE_NAME, checkSeo, resolveMeta, validateDirectory } from "./seo.mjs";
+import { seoPreviewHtml } from "./seo-preview.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -41,12 +43,15 @@ export function categoryPages(directory, copy) {
     .map(c => {
       const extra = copy[c.id] || {};
       const services = directory.services.filter(s => s.cats.includes(c.id));
+      const title = (extra.title || "").trim() || `${c.label} services in Singapore`;
+      const description = (extra.description || "").trim() || `${c.label}: services and helplines in Singapore for counsellors and social workers making referrals.`;
       return {
         ...c,
-        slug: extra.slug || slugify(c.label),
-        title: extra.title || `${c.label} services in Singapore`,
-        description: extra.description || `${c.label}: services and helplines in Singapore for counsellors and social workers making referrals.`,
-        intro: extra.intro || `Services and helplines in Singapore for ${c.label.toLowerCase()}.`,
+        slug: (extra.slug || "").trim() || slugify(c.label),
+        title, // the page heading
+        description,
+        intro: (extra.intro || "").trim() || `Services and helplines in Singapore for ${c.label.toLowerCase()}.`,
+        meta: resolveMeta({ ...extra, title, description }), // search and social preview text
         services,
       };
     })
@@ -87,7 +92,7 @@ function categoryHtml({ page, pages, base, crisis, footer, render }) {
       {
         "@type": "CollectionPage",
         name: page.title,
-        description: page.description,
+        description: page.meta.description,
         url,
         inLanguage: "en-SG",
         isPartOf: { "@type": "WebSite", name: "SG Social Services", url: `${base}/` },
@@ -116,8 +121,8 @@ function categoryHtml({ page, pages, base, crisis, footer, render }) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>${esc(page.title)} | SG Social Services</title>
-<meta name="description" content="${esc(page.description)}">
+<title>${esc(page.meta.title)}</title>
+<meta name="description" content="${esc(page.meta.description)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -130,8 +135,8 @@ function categoryHtml({ page, pages, base, crisis, footer, render }) {
 <meta name="theme-color" content="#18262B" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#E6ECEA" media="(prefers-color-scheme: dark)">
 <meta property="og:site_name" content="SG Social Services">
-<meta property="og:title" content="${esc(page.title)}">
-<meta property="og:description" content="${esc(page.description)}">
+<meta property="og:title" content="${esc(page.meta.socialTitle)}">
+<meta property="og:description" content="${esc(page.meta.socialDescription)}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_SG">
 <meta name="twitter:card" content="summary_large_image">
@@ -219,10 +224,22 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
   await import(pathToFileURL(path.join(pub, "render.js")).href + `?v=${Date.now()}`);
   const render = globalThis.SGSSRender;
 
-  const directory = JSON.parse(await readFile(path.join(pub, "services.json"), "utf8"));
-  const copyFile = path.join(root, "content", "categories.json");
-  const copy = existsSync(copyFile) ? JSON.parse(await readFile(copyFile, "utf8")) : {};
+  const readJson = async (file, fallback) => {
+    if (!existsSync(file)) return fallback;
+    try { return JSON.parse(await readFile(file, "utf8")); }
+    catch (e) { throw new Error(`Build stopped: ${path.relative(root, file)} isn't valid JSON (${e.message}). The live site is unchanged.`); }
+  };
+  const directory = await readJson(path.join(pub, "services.json"));
+  const problems = validateDirectory(directory);
+  if (problems.length) {
+    // Stop before deploying, so a broken edit never replaces the working site.
+    throw new Error(`Build stopped: public/services.json has ${problems.length} problem(s). The live site is unchanged.\n - ${problems.join("\n - ")}`);
+  }
+  const copy = await readJson(path.join(root, "content", "categories.json"), {});
+  const site = await readJson(path.join(root, "content", "site.json"), {});
   const pages = categoryPages(directory, copy);
+  const homeMeta = resolveMeta(site.home);
+  const privacyMeta = resolveMeta(site.privacy);
 
   await rm(outDir, { recursive: true, force: true });
   await mkdir(outDir, { recursive: true });
@@ -234,13 +251,13 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
   const footer = between(source, "<footer>", "</footer>", "footer");
   const { esc } = render;
   const total = directory.services.length;
-  let home = source;
+  let home = applyMeta(source, homeMeta, esc);
   home = replaceMarker(home, "head", shareTags(esc, base, `${base}/`) + "\n" + jsonLd({
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "SG Social Services",
+    name: SITE_NAME,
     url: `${base}/`,
-    description: "A free directory of social and family services in Singapore for counsellors and social workers, with an AI assistant that suggests resources by presenting issue.",
+    description: homeMeta.description,
     inLanguage: "en-SG",
   }));
   home = replaceMarker(home, "count", `${total} of ${total} services`);
@@ -256,16 +273,63 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
     await writeFile(path.join(dir, "index.html"), categoryHtml({ page, pages, base, crisis, footer, render }));
   }
 
+  // Privacy page: its own search and preview text, plus a canonical link.
+  if (existsSync(path.join(pub, "privacy.html"))) {
+    let privacy = applyMeta(await readFile(path.join(pub, "privacy.html"), "utf8"), privacyMeta, esc);
+    const extra = `${shareTags(esc, base, `${base}/privacy.html`)}
+<meta property="og:site_name" content="${SITE_NAME}">
+<meta property="og:title" content="${esc(privacyMeta.socialTitle)}">
+<meta property="og:description" content="${esc(privacyMeta.socialDescription)}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+`;
+    privacy = privacy.replace("</head>", () => extra + "</head>");
+    await writeFile(path.join(outDir, "privacy.html"), privacy);
+  }
+
   // Sitemap, and point robots.txt at it.
   await writeFile(path.join(outDir, "sitemap.xml"), sitemap(base, pages, today));
   const robots = existsSync(path.join(pub, "robots.txt")) ? await readFile(path.join(pub, "robots.txt"), "utf8") : "User-agent: *\nAllow: /\n";
   await writeFile(path.join(outDir, "robots.txt"), robots.trimEnd() + `\n\nSitemap: ${base}/sitemap.xml\n`);
 
-  return { base, pages: pages.map(p => ({ id: p.id, slug: p.slug, count: p.services.length })), total };
+  // SEO checks, shown in the deploy log and on /admin/seo. Warnings never stop a deploy.
+  const seoPages = [
+    { name: "Home", path: "/", meta: homeMeta },
+    ...pages.map(p => ({ name: p.label, path: `/help/${p.slug}/`, meta: p.meta })),
+    { name: "Privacy", path: "/privacy.html", meta: privacyMeta },
+  ];
+  const issues = checkSeo(seoPages);
+  await mkdir(path.join(outDir, "admin"), { recursive: true });
+  await writeFile(path.join(outDir, "admin", "seo.html"), seoPreviewHtml({ pages: seoPages, issues, base, rules: RULES, esc, builtAt: today }));
+
+  return { base, pages: pages.map(p => ({ id: p.id, slug: p.slug, count: p.services.length })), total, issues };
+}
+
+// Swaps in a page's title, description and social text, keeping everything else.
+function applyMeta(html, meta, esc) {
+  const set = (re, tag) => { html = re.test(html) ? html.replace(re, () => tag) : html.replace("</head>", () => tag + "\n</head>"); };
+  set(/<title>[\s\S]*?<\/title>/, `<title>${esc(meta.title)}</title>`);
+  set(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(meta.description)}">`);
+  if (/<meta property="og:title"/.test(html)) set(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${esc(meta.socialTitle)}">`);
+  if (/<meta property="og:description"/.test(html)) set(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${esc(meta.socialDescription)}">`);
+  return html;
 }
 
 // Run directly: node scripts/build.mjs
 if (import.meta.url === pathToFileURL(process.argv[1] || "").href) {
-  const result = await build();
-  console.log(`Built ${result.total} listings and ${result.pages.length} presenting-issue pages for ${result.base}`);
+  try {
+    const result = await build();
+    console.log(`Built ${result.total} listings and ${result.pages.length} presenting-issue pages for ${result.base}`);
+    if (result.issues.length) {
+      console.warn(`\nSEO: ${result.issues.length} suggestion(s). See ${result.base}/admin/seo after this deploy.`);
+      for (const i of result.issues) console.warn(` - ${i.page} (${i.path}) ${i.field}: ${i.message}`);
+    } else {
+      console.log("SEO: all titles and descriptions pass the checks.");
+    }
+  } catch (e) {
+    console.error(e.message);
+    process.exit(1);
+  }
 }

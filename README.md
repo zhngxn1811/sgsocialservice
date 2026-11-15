@@ -11,7 +11,11 @@ netlify/functions/
   submissions.mts          form + inbox API  (/api/submissions)
 netlify/lib/cors.mjs       lets the mobile apps call the API
 scripts/build.mjs          builds dist/: listings in the HTML, issue pages, sitemap
-content/categories.json    titles, Google descriptions and intros for each issue page
+content/categories.json    search and preview text for each issue page
+content/site.json          search and preview text for the home and privacy pages
+scripts/seo.mjs            SEO rules and checks, plus the services.json safety check
+scripts/seo-preview.mjs    builds the private /admin/seo preview page
+.pages.yml                 Pages CMS editing forms
 public/render.js           listing card renderer shared by the page and the build
 public/site.css            shared styles for every page
 netlify.toml               Netlify settings
@@ -136,6 +140,23 @@ On every deploy, Netlify runs `scripts/build.mjs`, which copies `public/` into `
 - **Icons**: favicon, iPhone home-screen icon and `site.webmanifest`, so "Add to Home Screen" looks like an app.
 
 Links in the sitemap and share tags use your site's main address, which Netlify supplies automatically (your custom domain once it's set as primary). To override it, set a `SITE_URL` environment variable.
+
+### Editing search and preview text (Pages CMS)
+
+1. Go to **app.pagescms.org**, sign in with GitHub and choose this repository. It works on a phone.
+2. You'll see three sections:
+   - **Search & sharing: home and privacy** (`content/site.json`)
+   - **Search & sharing: presenting-issue pages** (`content/categories.json`)
+   - **Directory listings** (`public/services.json`)
+3. Each page has a **Google title**, a **Google description**, and an optional **social title and description** for LinkedIn and WhatsApp. Leave the social fields empty to reuse the Google text.
+4. Save. Netlify redeploys in about a minute.
+5. Open **`/admin/seo`** on your site to see every page as it appears in Google and as a share card, with character counts and anything to fix.
+
+The rules (in `scripts/seo.mjs`): titles up to 60 characters, descriptions between 70 and 155, social titles up to 70, and every page with its own title and description. The site name is added to a title only when it still fits. Anything outside the rules shows as a suggestion in the deploy log and on `/admin/seo`, but never stops a deploy.
+
+**Safety net:** if an edit breaks `services.json` (a missing name, a category that doesn't exist, a duplicate ID, a bad link, or invalid formatting), the build stops with a clear message and the live site stays as it was. Fix the listing in Pages CMS and save again.
+
+**Adding a new presenting issue:** add it under *Presenting issues* in Directory listings, then add a matching entry to `.pages.yml` in two places (the `issue-pages` list and the `cats` dropdown values). A test checks these stay in step.
 
 **Never edit `dist/` by hand.** It's rebuilt from scratch on every deploy. To preview locally, run `npm run build` and open `dist/`.
 

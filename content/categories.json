@@ -1,81 +1,106 @@
 {
-  "_about": "Search-friendly copy for each presenting-issue page at /help/<slug>/. Keys match the category ids in public/services.json. 'title' is the browser tab and Google headline (keep under ~60 characters). 'description' is the Google snippet (keep under ~155). 'intro' is the paragraph on the page. Changing a slug changes the page's address, so avoid it once the page is indexed. A category with no entry here still gets a page, using its label.",
   "crisis": {
     "slug": "suicide-prevention-crisis",
     "title": "Suicide prevention and crisis support in Singapore",
     "description": "24-hour crisis lines, suicide prevention services and psychiatric emergency care in Singapore, for counsellors and social workers making urgent referrals.",
-    "intro": "Crisis lines, suicide prevention services and emergency psychiatric care in Singapore. If someone is at immediate risk, call 995 and follow your agency's risk protocol."
+    "intro": "Crisis lines, suicide prevention services and emergency psychiatric care in Singapore. If someone is at immediate risk, call 995 and follow your agency's risk protocol.",
+    "social_title": "",
+    "social_description": ""
   },
   "mental": {
     "slug": "mental-health-counselling",
     "title": "Mental health and counselling services in Singapore",
     "description": "Counselling helplines, community mental health services and youth wellbeing support in Singapore, sorted for practitioners making referrals.",
-    "intro": "Counselling helplines, community mental health teams and early-support services in Singapore, from first-line emotional support to clinical care."
+    "intro": "Counselling helplines, community mental health teams and early-support services in Singapore, from first-line emotional support to clinical care.",
+    "social_title": "",
+    "social_description": ""
   },
   "addictions": {
     "slug": "addictions",
     "title": "Gambling, alcohol and gaming addiction help in Singapore",
     "description": "Treatment, helplines and peer support for gambling, alcohol, gaming and other addictions in Singapore, including support for affected families.",
-    "intro": "Assessment, treatment and peer support for gambling, alcohol, gaming and other behavioural addictions in Singapore, including services for affected family members."
+    "intro": "Assessment, treatment and peer support for gambling, alcohol, gaming and other behavioural addictions in Singapore, including services for affected family members.",
+    "social_title": "",
+    "social_description": ""
   },
   "substance": {
     "slug": "substance-abuse",
     "title": "Substance abuse treatment and aftercare in Singapore",
     "description": "Drug and alcohol treatment, aftercare and reintegration support in Singapore for clients in recovery and their families.",
-    "intro": "Treatment, aftercare and reintegration services in Singapore for people affected by drug and alcohol use, and for their families."
+    "intro": "Treatment, aftercare and reintegration services in Singapore for people affected by drug and alcohol use, and for their families.",
+    "social_title": "",
+    "social_description": ""
   },
   "trauma": {
     "slug": "trauma-sexual-violence",
     "title": "Trauma and sexual violence support in Singapore",
     "description": "Support for survivors of sexual assault, harassment and trauma in Singapore: helplines, case support and accompaniment to police and medical services.",
-    "intro": "Helplines, case management and specialist support in Singapore for survivors of sexual violence, harassment and other trauma."
+    "intro": "Helplines, case management and specialist support in Singapore for survivors of sexual violence, harassment and other trauma.",
+    "social_title": "",
+    "social_description": ""
   },
   "violence": {
     "slug": "domestic-family-violence",
     "title": "Domestic and family violence services in Singapore",
     "description": "Family violence helplines, specialist centres, shelters and protection order information in Singapore, for practitioners supporting survivors.",
-    "intro": "Helplines, family violence specialist centres, shelter options and protection order information in Singapore. If someone is in immediate danger, call 999."
+    "intro": "Helplines, family violence specialist centres, shelter options and protection order information in Singapore. If someone is in immediate danger, call 999.",
+    "social_title": "",
+    "social_description": ""
   },
   "financial": {
     "slug": "financial-assistance-debt",
     "title": "Financial assistance and debt help in Singapore",
     "description": "ComCare, debt counselling, government support schemes and other financial assistance in Singapore, for practitioners helping clients in hardship.",
-    "intro": "Financial assistance schemes, debt counselling and practical help for households in Singapore facing hardship, arrears or unmanageable debt."
+    "intro": "Financial assistance schemes, debt counselling and practical help for households in Singapore facing hardship, arrears or unmanageable debt.",
+    "social_title": "",
+    "social_description": ""
   },
   "family": {
     "slug": "family-parenting-pregnancy",
     "title": "Family, parenting and pregnancy support in Singapore",
     "description": "Family Service Centres, parenting support and crisis pregnancy services in Singapore, for counsellors and social workers supporting families.",
-    "intro": "Family Service Centres, parenting support and crisis pregnancy services in Singapore for families going through a difficult time."
+    "intro": "Family Service Centres, parenting support and crisis pregnancy services in Singapore for families going through a difficult time.",
+    "social_title": "",
+    "social_description": ""
   },
   "youth": {
     "slug": "children-youth",
     "title": "Children and youth support services in Singapore",
     "description": "Helplines, counselling and wellbeing services in Singapore for children, teenagers and young adults, and for the adults supporting them.",
-    "intro": "Helplines, counselling and wellbeing services in Singapore for children, teenagers and young adults, and for the parents and professionals around them."
+    "intro": "Helplines, counselling and wellbeing services in Singapore for children, teenagers and young adults, and for the parents and professionals around them.",
+    "social_title": "",
+    "social_description": ""
   },
   "seniors": {
     "slug": "seniors-caregivers",
     "title": "Seniors and caregiver support in Singapore",
     "description": "Eldercare options, caregiver support and counselling for seniors in Singapore, including home care, day care and respite services.",
-    "intro": "Eldercare options, caregiver support and counselling in Singapore for older adults and the people caring for them."
+    "intro": "Eldercare options, caregiver support and counselling in Singapore for older adults and the people caring for them.",
+    "social_title": "",
+    "social_description": ""
   },
   "disability": {
     "slug": "disability",
     "title": "Disability services and support in Singapore",
     "description": "Disability schemes, employment support, assistive technology and care services in Singapore, for practitioners supporting persons with disabilities.",
-    "intro": "Schemes, employment support, assistive technology and care services in Singapore for persons with disabilities and their caregivers."
+    "intro": "Schemes, employment support, assistive technology and care services in Singapore for persons with disabilities and their caregivers.",
+    "social_title": "",
+    "social_description": ""
   },
   "migrant": {
     "slug": "migrant-workers",
     "title": "Migrant worker support services in Singapore",
     "description": "Help for migrant and domestic workers in Singapore with employment disputes, welfare, shelter and emergencies.",
-    "intro": "Support in Singapore for migrant workers and migrant domestic workers facing employment disputes, welfare concerns, abuse or emergencies."
+    "intro": "Support in Singapore for migrant workers and migrant domestic workers facing employment disputes, welfare concerns, abuse or emergencies.",
+    "social_title": "",
+    "social_description": ""
   },
   "legal": {
     "slug": "legal-help",
     "title": "Free and low-cost legal help in Singapore",
     "description": "Legal aid, free legal clinics and protection order information in Singapore, for practitioners helping clients who can't afford a lawyer.",
-    "intro": "Legal aid, free legal clinics and court information in Singapore for clients who need legal help but can't afford a lawyer."
+    "intro": "Legal aid, free legal clinics and court information in Singapore for clients who need legal help but can't afford a lawyer.",
+    "social_title": "",
+    "social_description": ""
   }
 }

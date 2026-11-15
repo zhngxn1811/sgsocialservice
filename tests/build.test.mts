@@ -6,6 +6,7 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { build } from '../scripts/build.mjs';
+import { fullTitle } from '../scripts/seo.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://sgss.example';
@@ -40,8 +41,9 @@ test('each presenting issue gets its own page with only its listings', async () 
     const expected = directory.services.filter((s: any) => s.cats.includes(page.id));
     assert.equal(html.match(/<article class="card/g)!.length, expected.length, page.slug);
     assert.ok(html.includes(`<link rel="canonical" href="${SITE}/help/${page.slug}/">`));
-    assert.match(html, /<title>[^<]+ \| SG Social Services<\/title>/);
-    assert.match(html, /<meta name="description" content="[^"]{40,}">/);
+    const copy = JSON.parse(await readFile(path.join(ROOT, 'content/categories.json'), 'utf8'))[page.id];
+    assert.ok(html.includes(`<title>${esc(fullTitle(copy.title))}</title>`), `${page.slug} title`);
+    assert.ok(html.includes(`<meta name="description" content="${esc(copy.description)}">`), `${page.slug} description`);
     assert.equal(html.match(/<h1\b/g)!.length, 1, 'one h1 per page');
     const [graph] = jsonLdBlocks(html);
     assert.equal(graph['@graph'][1].mainEntity.numberOfItems, expected.length);

@@ -1,0 +1,14 @@
+{
+  "home": {
+    "title": "SG Social Services: Singapore social services directory",
+    "description": "Free directory of social and family services in Singapore for counsellors and social workers, with an AI assistant that matches cases to services.",
+    "social_title": "SG Social Services",
+    "social_description": "Find the right referral, faster. A free directory of Singapore social services for practitioners, with an AI case assistant."
+  },
+  "privacy": {
+    "title": "Privacy | SG Social Services",
+    "description": "How SG Social Services handles case summaries, form submissions and app data. Case text is processed by an AI provider and never stored by us.",
+    "social_title": "",
+    "social_description": ""
+  }
+}
