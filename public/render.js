@@ -25,7 +25,7 @@
   function contactText(value, defaultMode = "") {
     return String(value ?? "").split(/(;|\n)/).map(part => {
       const prefix = part.match(/^(.*?)(?:\+?\d|[A-Z0-9._%+-]+@|https?:\/\/|www\.)/i)?.[1] || "";
-      const modes = prefix.match(/\b(?:WhatsApp|SMS|Call|Phone|Tel|Email|Website|Web)\b/gi) || [defaultMode];
+      const modes = prefix.match(/\b(?:WhatsApp|SMS|Call|Phone|Tel|Email|Website|Web)\b/gi) || defaultMode.split("/");
       return part.replace(/https?:\/\/[^\s<>]+|www\.[^\s<>]+|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|(?:[A-Z0-9-]+\.)+[A-Z]{2,}(?:\/[^\s<>]*)?|\+?\d[\d -]*\d|[^]/gi, token => {
         if (/^[A-Z0-9._%+-]+@/i.test(token)) return anchor(`mailto:${token}`, token);
         if (/^(?:https?:\/\/|www\.|(?:[A-Z0-9-]+\.)+[A-Z]{2,})/i.test(token)) {
@@ -52,12 +52,28 @@
     }).join("");
   }
 
+  // Each recognised communication mode gets the same label/value treatment as Call.
+  function contactRows(value) {
+    return String(value ?? "").split(/[;\n]+/).filter(part => part.trim()).map(part => {
+      const match = part.trim().match(/^(.*?)\b(WhatsApp\s*\/\s*SMS|SMS\s*\/\s*WhatsApp|WhatsApp|SMS|Email|Skype|Call|Phone|Tel|Website|Web)\b\s*:?\s*(.*)$/i);
+      if (!match) return `<dt>Also</dt><dd>${contactText(part.trim())}</dd>`;
+      const [, context, rawMode, detail] = match;
+      const mode = rawMode.replace(/\s/g, "").toLowerCase();
+      const label = ({ whatsapp: "WhatsApp", sms: "SMS", email: "Email", skype: "Skype", call: "Call", phone: "Call", tel: "Call", website: "Website", web: "Website", "whatsapp/sms": "SMS/WhatsApp", "sms/whatsapp": "SMS/WhatsApp" })[mode];
+      const skype = detail.match(/^([^\s<>]+)(.*)$/);
+      const content = mode === "skype" && skype
+        ? anchor(`skype:${encodeURIComponent(skype[1])}?chat`, skype[1]) + esc(skype[2])
+        : contactText(detail, rawMode.replace(/\s/g, ""));
+      return `<dt>${label}</dt><dd>${context ? `${esc(context.trim())}: ` : ""}${content}</dd>`;
+    }).join("");
+  }
+
   function card(s) {
     const tags = (s.h24 ? '<span class="tag h24">24 hours</span>' : "") + (s.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
     const web = website(s.web) ? anchor(website(s.web), s.web.replace(/^https?:\/\//i, ""), true) : esc(s.web || "");
     return `<article class="card${s.cats.includes("crisis") ? " crisis-card" : ""}">
     <h3>${esc(s.name)}</h3><p class="org">${esc(s.org)}</p><p>${esc(s.desc)}</p><div class="tags">${tags}</div>
-    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${contactText(s.phone, "Call")}</dd>` : ""}${s.other ? `<dt>Also</dt><dd>${contactText(s.other)}</dd>` : ""}<dt>Website</dt><dd>${web}${(s.links || []).map(link => `<br>${website(link.url) ? anchor(website(link.url), link.label, true) : esc(link.label)}`).join("")}</dd></dl>
+    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${contactText(s.phone, "Call")}</dd>` : ""}${contactRows(s.other)}<dt>Website</dt><dd>${web}${(s.links || []).map(link => `<br>${website(link.url) ? anchor(website(link.url), link.label, true) : esc(link.label)}`).join("")}</dd></dl>
     <div class="foot"><span></span><button class="linkbtn" type="button" data-report="${esc(s.id)}">Report an update</button></div></article>`;
   }
 

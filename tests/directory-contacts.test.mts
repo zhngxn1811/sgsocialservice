@@ -44,3 +44,16 @@ test('renders every current listing with actionable known contact values', () =>
     if (/Email/i.test(service.other || '')) assert.ok(html.includes('href="mailto:'), service.id);
   }
 });
+
+
+test('presents communication modes as labelled rows alongside Call and Website', () => {
+  const html = render({ phone: '1234', web: 'https://example.org', other: 'Email: help@example.org; SMS/WhatsApp: 9769 4403; Skype: hotline_442; Police SMS: 70999' });
+  for (const label of ['Call', 'Email', 'SMS/WhatsApp', 'Skype', 'SMS', 'Website']) {
+    assert.ok(html.includes(`<dt>${label}</dt>`), label);
+  }
+  assert.ok(!html.includes('<dt>Also</dt>'));
+  assert.match(html, /href="skype:hotline_442\?chat">hotline_442<\/a>/);
+  assert.match(html, /<dt>SMS<\/dt><dd>Police: <a href="sms:70999"/);
+  assert.ok(html.includes('href="sms:97694403"'));
+  assert.ok(html.includes('href="https://wa.me/6597694403"'));
+});
