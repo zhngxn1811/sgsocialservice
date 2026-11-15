@@ -115,6 +115,14 @@ Follow the prompts to create a new site, then add the two environment variables 
 }
 ```
 
+Contact details become clickable automatically in the directory, including future edits. Use `phone` for calls and `web` for the website (a missing `https://` is added). In `other`, label each contact mode and separate entries with semicolons, for example:
+
+```json
+"other": "WhatsApp: 9123 4567; SMS: 70999; Email: support@example.org; Website: https://example.org/help"
+```
+
+Call numbers open the dialler, SMS numbers open messaging, email addresses open an email app, and WhatsApp numbers open a chat. Singapore eight-digit WhatsApp numbers automatically receive country code 65; include the country code for international WhatsApp numbers. `WhatsApp/SMS: 9123 4567` creates both contact options. Keep operating hours and instructions alongside the details; they remain visible as text.
+
 Category ids are `crisis`, `mental`, `addictions`, `substance`, `trauma`, `violence`, `financial`, `family`, `youth`, `seniors`, `disability`, `migrant` and `legal`.
 
 ## Costs
