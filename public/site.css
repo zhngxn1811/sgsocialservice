@@ -47,7 +47,8 @@ textarea{min-height:150px;resize:vertical}
 #caseText::placeholder{color:var(--ink);opacity:0.45}
 .privacy{background:var(--warn-soft);border-radius:8px;padding:10px 12px;font-size:14px;margin:10px 0 14px}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.out{min-height:260px}
+.out{height:520px;overflow-y:auto;overflow-wrap:anywhere;scrollbar-gutter:stable}
+.out:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
 .out .placeholder{color:var(--muted)}
 .out h4{font-family:var(--display);font-size:17px;margin:16px 0 6px}
 .out h4:first-child{margin-top:0}
