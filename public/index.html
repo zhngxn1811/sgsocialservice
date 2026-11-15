@@ -123,6 +123,7 @@
   </form>
 </dialog>
 
+<script src="/track.js" defer></script>
 <script src="/render.js"></script>
 <script>
 let CATS=[], S=[];
@@ -140,8 +141,20 @@ function renderGrid(){
   $("#grid").innerHTML=list.length?list.map(card).join(""):`<p class="empty">Nothing matches that yet. Know a service that should be here? <button class="linkbtn" type="button" data-open="1">Recommend it</button>.</p>`;
   $("#count").textContent=`${list.length} of ${S.length} services`;
 }
-$("#cats").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;active=b.dataset.cat;renderCats();renderGrid();});
-$("#q").addEventListener("input",renderGrid);
+$("#cats").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;active=b.dataset.cat;renderCats();renderGrid();if(active!=="all")window.sgssTrack?.("filter",active);});
+// Count a search once the person stops typing. Only "a search happened" is sent, never the words.
+let searchTimer,lastCounted="";
+$("#q").addEventListener("input",()=>{
+  renderGrid();
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{
+    const q=$("#q").value.trim().toLowerCase();
+    if(q.length<3||q===lastCounted)return;
+    lastCounted=q;
+    window.sgssTrack?.("search");
+    if(!$("#grid .card"))window.sgssTrack?.("search_no_results");
+  },1200);
+});
 fetch("/api/services").then(r=>r.json()).then(d=>{CATS=d.categories;S=d.services;renderCats();renderGrid();fillFormLists();openReportFromLink();})
   .catch(()=>{
     // The listings are already in the page from the build, so only say something if they're missing.

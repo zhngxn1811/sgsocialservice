@@ -2,6 +2,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import directory from "../../public/services.json" with { type: "json" };
 import { withCors } from "../lib/cors.mjs";
+import { countServerUse } from "../lib/usage.mts";
 
 const MODEL = process.env.CLAUDE_MODEL || "claude-sonnet-5-5";
 
@@ -30,7 +31,7 @@ const json = (status, body) => new Response(JSON.stringify(body), {
   status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
 });
 
-export default withCors(async (req) => {
+export default withCors(async (req, context) => {
   if (req.method !== "POST") return json(405, { error: "Use POST." });
 
   let caseText = "";
@@ -40,6 +41,9 @@ export default withCors(async (req) => {
   if (caseText.length < 15) return json(400, { error: "Describe the case in a bit more detail." });
   if (caseText.length > 4000) return json(400, { error: "Keep the case summary under 4,000 characters." });
   if (PII.some(r => r.test(caseText))) return json(422, { error: "This looks like it has an NRIC, phone number or email in it. Remove identifying details and try again." });
+
+  // Count this use for the stats dashboard. Only "+1 assistant use today" is stored, never the case.
+  countServerUse("assistant", p => context?.waitUntil?.(p));
 
   const anthropic = new Anthropic();
   const enc = new TextEncoder();

@@ -1,4 +1,4 @@
-import { check, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { check, date, index, integer, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
 export const submissions = pgTable('submissions', {
@@ -20,4 +20,22 @@ export const submissions = pgTable('submissions', {
   check('submissions_details_required', sql`length(trim(${table.details})) > 0`),
   check('submissions_name_required', sql`${table.kind} <> 'recommend' or length(trim(${table.name})) > 0`),
   index('submissions_created_at_idx').on(table.created_at),
+]);
+
+// Site usage, counted per day. Privacy-friendly by design: only counters are stored.
+// No cookies, IP addresses, browser details, search words or case text are ever saved.
+//   metric: visit, pageview, search, search_no_results, filter, assistant
+//   key:    what the count is about, e.g. "home", "help:legal-help" or a category id ("" if none)
+//   source: "web" for the website ("app" is reserved for the mobile apps)
+export const usageDaily = pgTable('usage_daily', {
+  day: date('day', { mode: 'string' }).notNull(),
+  source: text('source').notNull().default('web'),
+  metric: text('metric').notNull(),
+  key: text('key').notNull().default(''),
+  count: integer('count').notNull().default(0),
+}, table => [
+  primaryKey({ columns: [table.day, table.source, table.metric, table.key] }),
+  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant')`),
+  check('usage_daily_count_positive', sql`${table.count} >= 0`),
+  index('usage_daily_day_idx').on(table.day),
 ]);

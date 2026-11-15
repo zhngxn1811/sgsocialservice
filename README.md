@@ -115,14 +115,6 @@ Follow the prompts to create a new site, then add the two environment variables 
 }
 ```
 
-Contact details become clickable automatically in the directory, including future edits. Use `phone` for calls and `web` for the website (a missing `https://` is added). In `other`, label each contact mode and separate entries with semicolons, for example:
-
-```json
-"other": "WhatsApp: 9123 4567; SMS: 70999; Email: support@example.org; Website: https://example.org/help"
-```
-
-Call numbers open the dialler, SMS numbers open messaging, email addresses open an email app, and WhatsApp numbers open a chat. Singapore eight-digit WhatsApp numbers automatically receive country code 65; include the country code for international WhatsApp numbers. `WhatsApp/SMS: 9123 4567` creates both contact options. Email, SMS, WhatsApp, SMS/WhatsApp, and Skype appear as labelled contact rows alongside Call and Website. Use `Skype: hotline_442` to create a Skype chat link. Keep operating hours and instructions alongside the details; they remain visible as text.
-
 Category ids are `crisis`, `mental`, `addictions`, `substance`, `trauma`, `violence`, `financial`, `family`, `youth`, `seniors`, `disability`, `migrant` and `legal`.
 
 ## Costs
@@ -169,6 +161,28 @@ The rules (in `scripts/seo.mjs`): titles up to 60 characters, descriptions betwe
 **Never edit `dist/` by hand.** It's rebuilt from scratch on every deploy. To preview locally, run `npm run build` and open `dist/`.
 
 **After deploying:** add the site to Google Search Console and Bing Webmaster Tools, then submit `https://<your-site>/sitemap.xml` in each.
+
+## Site numbers dashboard
+
+Open **`/admin/stats`** and sign in with your `ADMIN_KEY` (the same key as the submissions inbox). It shows, for the last 7, 30 or 90 days, each compared with the period before:
+
+- **Visits** (counted once per browser session), **searches**, **assistant uses** and **submissions**
+- page views, and **searches with no results**, a hint at gaps in the directory
+- a **visits per day** chart (hover or tap for that day's details)
+- **interest by presenting issue**: issue page views plus filter uses
+- a daily table, a **CSV download**, and **Copy summary for a report**, a ready-made sentence for funding applications
+
+**How it's counted (privacy-friendly):** `public/track.js` sends anonymous counts to `/api/track`, which adds 1 to a daily counter in the `usage_daily` table. No cookies, IP addresses, device details, search words or case text are stored. Browsers with Do Not Track or Global Privacy Control switched on aren't counted, and search engines and link previewers are filtered out. Assistant uses are counted on the server in `assistant.mjs`, so they can't be inflated from a browser. Submissions come straight from the submissions table.
+
+The `usage_daily` table is created by the migration in `netlify/database/migrations/` the next time Netlify deploys. Numbers start from that deploy; earlier visits weren't counted.
+
+| File | What it does |
+|---|---|
+| `public/track.js` | the counting script on every public page |
+| `netlify/functions/track.mts` | `POST /api/track`: accepts known counters only |
+| `netlify/functions/stats.mts` | `GET /api/stats?days=30`: the numbers, admin key required |
+| `netlify/lib/usage.mts` | shared counting and summary logic |
+| `public/admin/stats.html` | the dashboard |
 
 ## Mobile apps
 

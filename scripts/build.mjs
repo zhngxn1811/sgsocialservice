@@ -144,6 +144,7 @@ ${shareTags(esc, base, url)}
 ${jsonLd(data)}
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
+<script src="/track.js" defer></script>
 </head>
 <body>
 ${crisis}
@@ -303,6 +304,8 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
   const issues = checkSeo(seoPages);
   await mkdir(path.join(outDir, "admin"), { recursive: true });
   await writeFile(path.join(outDir, "admin", "seo.html"), seoPreviewHtml({ pages: seoPages, issues, base, rules: RULES, esc, builtAt: today }));
+  // For the /admin/stats dashboard: which /help/ address belongs to which presenting issue.
+  await writeFile(path.join(outDir, "admin", "issues.json"), JSON.stringify(pages.map(p => ({ id: p.id, label: p.label, slug: p.slug }))));
 
   return { base, pages: pages.map(p => ({ id: p.id, slug: p.slug, count: p.services.length })), total, issues };
 }
