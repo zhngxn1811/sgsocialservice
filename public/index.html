@@ -68,7 +68,7 @@
         <button class="btn" id="clearBtn" type="button">Clear</button>
       </div>
     </div>
-    <div class="panel out" id="out" aria-live="polite">
+    <div class="panel out" id="out" role="region" aria-label="AI service suggestions" aria-live="polite" tabindex="0">
       <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. Enter your case summary on the left to get started.</p>
     </div>
   </section>
@@ -183,6 +183,7 @@ function md(t){
 let abortCtl=null;
 $("#askBtn").addEventListener("click",async()=>{
   const text=$("#caseText").value.trim();const out=$("#out");
+  out.scrollTop=0;
   if(text.length<15){out.innerHTML='<p class="err">Add a bit more about the case: age, presenting issues, risk, language or other needs.</p>';return;}
   const btn=$("#askBtn");btn.disabled=true;btn.textContent="Thinking…";
   out.innerHTML='<p class="placeholder">Reading the directory and matching services…</p>';
