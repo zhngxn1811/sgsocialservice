@@ -19,10 +19,12 @@ const post = (body: unknown) => handler(new Request('https://example.test/api/su
 }), context);
 
 test('saves every recommendation field with review metadata', async () => {
-  const response = await post({ kind: 'recommend', name: ' Programme ', org: 'Agency', category: 'family', phone: '123', web: 'https://example.test', details: 'Support for families', role: 'Caseworker' });
+  const response = await post({ kind: 'recommend', name: ' Programme ', org: 'Agency', category: 'family', phone: '123', sms_whatsapp: ' 9123 4567 ', email: ' help@example.test ', web: 'https://example.test', details: 'Support for families', role: 'Caseworker' });
   assert.equal(response.status, 201);
   assert.equal(saved?.name, 'Programme');
   for (const field of ['org', 'category', 'phone', 'web', 'details', 'role']) assert.ok(saved?.[field]);
+  assert.equal(saved?.sms_whatsapp, '9123 4567');
+  assert.equal(saved?.email, 'help@example.test');
   assert.equal(saved?.status, 'new');
   assert.ok(saved?.id);
   assert.ok(saved?.created_at);

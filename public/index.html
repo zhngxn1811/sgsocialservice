@@ -109,6 +109,10 @@
         <div><label for="fPhone">Phone / hotline</label><input id="fPhone" name="phone"></div>
         <div><label for="fWeb">Website</label><input id="fWeb" name="web" placeholder="https://"></div>
       </div>
+      <div class="two" style="margin-top:12px">
+        <div><label for="fSmsWhatsapp">SMS/WhatsApp</label><input id="fSmsWhatsapp" name="sms_whatsapp" type="tel"></div>
+        <div><label for="fEmail">Email Address</label><input id="fEmail" name="email" type="email"></div>
+      </div>
     </div>
     <div id="fUpdate" hidden>
       <label for="fWhich">Which listing?</label><select id="fWhich" name="serviceId"></select>
@@ -244,14 +248,14 @@ $("#subForm").addEventListener("submit",async e=>{
   if(kind==="update"&&!$("#fWhich").value){showMsg("Choose the listing to update.","note");$("#fWhich").focus();return;}
   if(!details){showMsg("Add a short description so we know what to change or add.","note");$("#fDetails").focus();return;}
   const rec={kind,details,role:$("#fRole").value.trim(),website:$("#fHp").value,
-    ...(kind==="recommend"?{name:$("#fName").value.trim(),org:$("#fOrg").value.trim(),category:$("#fCat").value,phone:$("#fPhone").value.trim(),web:$("#fWeb").value.trim()}:{serviceId:$("#fWhich").value,name:S.find(s=>s.id===$("#fWhich").value)?.name||""})};
+    ...(kind==="recommend"?{name:$("#fName").value.trim(),org:$("#fOrg").value.trim(),category:$("#fCat").value,phone:$("#fPhone").value.trim(),sms_whatsapp:$("#fSmsWhatsapp").value.trim(),email:$("#fEmail").value.trim(),web:$("#fWeb").value.trim()}:{serviceId:$("#fWhich").value,name:S.find(s=>s.id===$("#fWhich").value)?.name||""})};
   const btn=$("#sendForm");btn.disabled=true;
   try{
     const r=await fetch("/api/submissions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(rec)});
     const d=await r.json().catch(()=>({}));
     if(!r.ok){showMsg(esc(d.error||"That didn't go through. Try again in a moment."),"note");return;}
     showMsg("Thanks. Your submission is in and will be reviewed before the directory is updated.","ok");
-    ["fName","fOrg","fPhone","fWeb","fDetails"].forEach(i=>$("#"+i).value="");
+    ["fName","fOrg","fPhone","fSmsWhatsapp","fEmail","fWeb","fDetails"].forEach(i=>$("#"+i).value="");
   }catch{showMsg("That didn't go through. Check your connection and try again.","note");}
   finally{btn.disabled=false;}
 });

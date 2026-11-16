@@ -62,7 +62,7 @@ function render(){
     <td>${esc((d.created_at||"").slice(0,10))}</td>
     <td><span class="pill ${d.kind==="update"?"update":""}">${d.kind==="update"?"Update":"New"}</span></td>
     <td>${esc(d.name)}${d.org?`<div class="muted">${esc(d.org)}</div>`:""}${d.category?`<div class="muted">${esc(d.category)}</div>`:""}</td>
-    <td>${esc(d.details)}${d.phone?`<div class="muted">Phone: ${esc(d.phone)}</div>`:""}${d.web?`<div class="muted">${esc(d.web)}</div>`:""}</td>
+    <td>${esc(d.details)}${d.phone?`<div class="muted">Phone: ${esc(d.phone)}</div>`:""}${d.sms_whatsapp?`<div class="muted">SMS/WhatsApp: ${esc(d.sms_whatsapp)}</div>`:""}${d.email?`<div class="muted">Email Address: ${esc(d.email)}</div>`:""}${d.web?`<div class="muted">${esc(d.web)}</div>`:""}</td>
     <td class="muted">${esc(d.role||"—")}</td>
     <td><select data-id="${esc(d.id)}">${["new","done","rejected"].map(s=>`<option ${s===(d.status||"new")?"selected":""}>${s}</option>`).join("")}</select></td>
   </tr>`).join(""):`<tr><td colspan="6" class="muted">Nothing here.</td></tr>`;
