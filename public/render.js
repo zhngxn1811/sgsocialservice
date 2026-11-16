@@ -8,10 +8,16 @@
 
   function card(s) {
     const tags = (s.h24 ? '<span class="tag h24">24 hours</span>' : "") + (s.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
+    const contacts = (s.other || "").split(/;\s*/).filter(Boolean).map(contact => {
+      const match = contact.match(/^(WhatsApp(?:\/SMS)?|SMS(?:\/WhatsApp)?|Email):?\s+(.+)$/i);
+      return match
+        ? `<dt>${esc(match[1])}</dt><dd>${esc(match[2])}</dd>`
+        : `<dt>Also</dt><dd>${esc(contact)}</dd>`;
+    }).join("");
     const web = s.web ? `<a href="${esc(s.web)}" target="_blank" rel="noopener">${esc(s.web.replace(/^https?:\/\//, ""))}</a>` : "";
     return `<article class="card${s.cats.includes("crisis") ? " crisis-card" : ""}">
     <h3>${esc(s.name)}</h3><p class="org">${esc(s.org)}</p><p>${esc(s.desc)}</p><div class="tags">${tags}</div>
-    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${esc(s.phone)}</dd>` : ""}${s.other ? `<dt>Also</dt><dd>${esc(s.other)}</dd>` : ""}<dt>Web</dt><dd>${web}${(s.links || []).map(link => `<br><a href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)}</a>`).join("")}</dd></dl>
+    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${esc(s.phone)}</dd>` : ""}${contacts}<dt>Web</dt><dd>${web}${(s.links || []).map(link => `<br><a href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)}</a>`).join("")}</dd></dl>
     <div class="foot"><span></span><button class="linkbtn" type="button" data-report="${esc(s.id)}">Report an update</button></div></article>`;
   }
 
