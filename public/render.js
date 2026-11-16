@@ -6,18 +6,58 @@
 (function (root) {
   const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+  const anchor = (href, label, external = false) => `<a href="${esc(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>${esc(label)}</a>`;
+  function website(value, label = value) {
+    try {
+      const url = new URL(/^[\w+.-]+:/.test(value) ? value : `https://${value}`);
+      return /^https?:$/.test(url.protocol) ? anchor(url.href, label, true) : esc(label);
+    } catch { return esc(label); }
+  }
+  function numbers(value, mode) {
+    // Keep hours and annotations outside the link, and preserve visible spacing.
+    const pattern = /\+?\d[\d ]+\d/g;
+    let result = '', start = 0;
+    for (const match of value.matchAll(pattern)) {
+      const number = match[0].trim();
+      const digits = number.replace(/\D/g, '');
+      const whatsapp = () => anchor(`https://wa.me/${digits.length === 8 ? '65' : ''}${digits}`, number, true);
+      const sms = () => anchor(`sms:${number.replace(/ /g, '')}`, number);
+      const linked = /WhatsApp/i.test(mode)
+        ? (/SMS/i.test(mode) ? `${whatsapp()} (SMS: ${sms()})` : whatsapp())
+        : /SMS/i.test(mode) ? sms() : anchor(`tel:${number.replace(/ /g, '')}`, number);
+      result += esc(value.slice(start, match.index)) + linked;
+      start = match.index + number.length;
+    }
+    return result + esc(value.slice(start));
+  }
+  function contactRow(contact) {
+    const match = contact.trim().match(/^(WhatsApp(?:\/SMS)?|SMS(?:\/WhatsApp)?|Email|Skype|Website):?\s+(.+)$/i);
+    const emergency = contact.trim().match(/^(.+?) SMS:\s*(.+)$/i);
+    let label, value, detail;
+    if (match) {
+      label = ({ whatsapp: 'WhatsApp', sms: 'SMS', email: 'Email', skype: 'Skype', website: 'Website', 'whatsapp/sms': 'WhatsApp/SMS', 'sms/whatsapp': 'SMS/WhatsApp' })[match[1].toLowerCase()];
+      value = match[2];
+      if (/WhatsApp|SMS/.test(label)) detail = numbers(value, label);
+      else if (label === 'Email') detail = anchor(`mailto:${value}`, value);
+      else if (label === 'Skype') detail = anchor(`skype:${value}?chat`, value);
+      else detail = website(value);
+    } else if (emergency) {
+      label = 'SMS';
+      detail = `${esc(emergency[1])}: ${numbers(emergency[2], 'SMS')}`;
+    } else {
+      label = 'Also';
+      detail = esc(contact);
+    }
+    return `<dt>${label}</dt><dd>${detail}</dd>`;
+  }
+
   function card(s) {
     const tags = (s.h24 ? '<span class="tag h24">24 hours</span>' : "") + (s.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
-    const contacts = (s.other || "").split(/;\s*/).filter(Boolean).map(contact => {
-      const match = contact.match(/^(WhatsApp(?:\/SMS)?|SMS(?:\/WhatsApp)?|Email):?\s+(.+)$/i);
-      return match
-        ? `<dt>${esc(match[1])}</dt><dd>${esc(match[2])}</dd>`
-        : `<dt>Also</dt><dd>${esc(contact)}</dd>`;
-    }).join("");
-    const web = s.web ? `<a href="${esc(s.web)}" target="_blank" rel="noopener">${esc(s.web.replace(/^https?:\/\//, ""))}</a>` : "";
+    const contacts = (s.other || "").split(/;\s*/).filter(Boolean).map(contactRow).join("");
+    const web = s.web ? website(s.web, s.web.replace(/^https?:\/\//, "")) : "";
     return `<article class="card${s.cats.includes("crisis") ? " crisis-card" : ""}">
     <h3>${esc(s.name)}</h3><p class="org">${esc(s.org)}</p><p>${esc(s.desc)}</p><div class="tags">${tags}</div>
-    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${esc(s.phone)}</dd>` : ""}${contacts}<dt>Web</dt><dd>${web}${(s.links || []).map(link => `<br><a href="${esc(link.url)}" target="_blank" rel="noopener">${esc(link.label)}</a>`).join("")}</dd></dl>
+    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${numbers(s.phone, 'Call')}</dd>` : ""}${contacts}<dt>Website</dt><dd>${web}${(s.links || []).map(link => `<br>${website(link.url, link.label)}`).join("")}</dd></dl>
     <div class="foot"><span></span><button class="linkbtn" type="button" data-report="${esc(s.id)}">Report an update</button></div></article>`;
   }
 
