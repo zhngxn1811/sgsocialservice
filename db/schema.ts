@@ -16,6 +16,8 @@ export const submissions = pgTable('submissions', {
   service_id: text('service_id').notNull().default(''),
   details: text('details').notNull(),
   role: text('role').notNull().default(''),
+  submitter_email: text('submitter_email').notNull().default(''),
+  submitter_org_type: text('submitter_org_type').notNull().default(''),
 }, table => [
   check('submissions_kind', sql`${table.kind} in ('recommend', 'update')`),
   check('submissions_status', sql`${table.status} in ('new', 'done', 'rejected')`),

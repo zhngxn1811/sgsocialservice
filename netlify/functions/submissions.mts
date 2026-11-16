@@ -34,6 +34,7 @@ export default withCors(async (req: Request, context: Context) => {
       name: clean(b.name, 200), org: clean(b.org, 200), category: clean(b.category, 50),
       phone: clean(b.phone, 50), sms_whatsapp: clean(b.sms_whatsapp, 100), email: clean(b.email, 254), web: clean(b.web, 300), service_id: clean(b.serviceId, 50),
       details: clean(b.details, 2000), role: clean(b.role, 200),
+      submitter_email: clean(b.submitter_email, 254), submitter_org_type: clean(b.submitter_org_type, 100),
     };
     if (!rec.details) return json(400, { error: "Add some details." });
     if (kind === "recommend" && !rec.name) return json(400, { error: "Add the service name." });
