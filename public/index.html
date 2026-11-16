@@ -118,7 +118,24 @@
       <label for="fWhich">Which listing?</label><select id="fWhich" name="serviceId"></select>
     </div>
     <div><label for="fDetails" id="fDetailsLabel">Why is it helpful? Who is it for?</label><textarea id="fDetails" name="details" style="min-height:100px" required></textarea></div>
-    <div><label for="fRole">Your role (optional)</label><input id="fRole" name="role" placeholder="e.g. FSC caseworker, school counsellor"></div>
+    <fieldset class="userdetails">
+      <legend>Your details</legend>
+      <div><label for="fUserEmail">Your email address</label><input id="fUserEmail" name="submitter_email" type="email" autocomplete="email" placeholder="So we can follow up if needed" required></div>
+      <div class="two" style="margin-top:12px">
+        <div><label for="fRole">Occupation</label><input id="fRole" name="role" autocomplete="organization-title" placeholder="e.g. caseworker, school counsellor" required></div>
+        <div><label for="fOrgType">Organisation type</label><select id="fOrgType" name="submitter_org_type" required>
+          <option value="">Choose one</option>
+          <option>School</option>
+          <option>Family Service Centre</option>
+          <option>Community Services</option>
+          <option>Social Service Agency</option>
+          <option>Private Practice</option>
+          <option>Hospital</option>
+          <option>Government Agency</option>
+          <option>Other</option>
+        </select></div>
+      </div>
+    </fieldset>
     <input id="fHp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
     <p class="note">Please don't include any client information.</p>
     <div id="fMsg" hidden></div>
@@ -247,7 +264,11 @@ $("#subForm").addEventListener("submit",async e=>{
   if(kind==="recommend"&&!$("#fName").value.trim()){showMsg("Add the service or programme name.","note");$("#fName").focus();return;}
   if(kind==="update"&&!$("#fWhich").value){showMsg("Choose the listing to update.","note");$("#fWhich").focus();return;}
   if(!details){showMsg("Add a short description so we know what to change or add.","note");$("#fDetails").focus();return;}
-  const rec={kind,details,role:$("#fRole").value.trim(),website:$("#fHp").value,
+  const userEmail=$("#fUserEmail").value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)){showMsg("Add your email address.","note");$("#fUserEmail").focus();return;}
+  if(!$("#fRole").value.trim()){showMsg("Add your occupation.","note");$("#fRole").focus();return;}
+  if(!$("#fOrgType").value){showMsg("Choose your organisation type.","note");$("#fOrgType").focus();return;}
+  const rec={kind,details,role:$("#fRole").value.trim(),submitter_email:$("#fUserEmail").value.trim(),submitter_org_type:$("#fOrgType").value,website:$("#fHp").value,
     ...(kind==="recommend"?{name:$("#fName").value.trim(),org:$("#fOrg").value.trim(),category:$("#fCat").value,phone:$("#fPhone").value.trim(),sms_whatsapp:$("#fSmsWhatsapp").value.trim(),email:$("#fEmail").value.trim(),web:$("#fWeb").value.trim()}:{serviceId:$("#fWhich").value,name:S.find(s=>s.id===$("#fWhich").value)?.name||""})};
   const btn=$("#sendForm");btn.disabled=true;
   try{
@@ -255,7 +276,7 @@ $("#subForm").addEventListener("submit",async e=>{
     const d=await r.json().catch(()=>({}));
     if(!r.ok){showMsg(esc(d.error||"That didn't go through. Try again in a moment."),"note");return;}
     showMsg("Thanks. Your submission is in and will be reviewed before the directory is updated.","ok");
-    ["fName","fOrg","fPhone","fSmsWhatsapp","fEmail","fWeb","fDetails"].forEach(i=>$("#"+i).value="");
+    ["fName","fOrg","fPhone","fSmsWhatsapp","fEmail","fWeb","fDetails","fUserEmail","fRole","fOrgType"].forEach(i=>$("#"+i).value="");
   }catch{showMsg("That didn't go through. Check your connection and try again.","note");}
   finally{btn.disabled=false;}
 });

@@ -93,6 +93,8 @@ dialog::backdrop{background:rgb(10 20 22 / .55)}
 .seg button[aria-pressed="true"]{background:var(--teal);color:var(--bg)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:480px){.two{grid-template-columns:1fr}}
+.userdetails{border:none;border-top:1px solid var(--line);margin:4px 0 0;padding:14px 0 0;min-width:0}
+.userdetails legend{font:700 15px var(--body);padding:0 8px 0 0}
 .note{font-size:14px;color:var(--muted);margin:0}
 .ok{background:var(--teal-soft);color:var(--teal);border-radius:8px;padding:10px 12px;font-weight:600}
 .inbox{padding-bottom:40px}
