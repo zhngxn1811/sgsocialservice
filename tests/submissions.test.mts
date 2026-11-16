@@ -14,6 +14,7 @@ const db = {
 mock.module('../db/index.ts', { namedExports: { getDb: () => db } });
 const { default: handler } = await import('../netlify/functions/submissions.mts');
 const context = { params: {} } as Context;
+const you = { submitter_email: 'me@example.test', role: 'Caseworker', submitter_org_type: 'School' };
 const post = (body: unknown) => handler(new Request('https://example.test/api/submissions', {
   method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },
 }), context);
@@ -33,12 +34,12 @@ test('saves every recommendation field with review metadata', async () => {
 });
 
 test('saves selected listing for an update', async () => {
-  assert.equal((await post({ kind: 'update', serviceId: 'listing-1', name: 'Listing', details: 'New hours' })).status, 201);
+  assert.equal((await post({ kind: 'update', serviceId: 'listing-1', name: 'Listing', details: 'New hours', ...you })).status, 201);
   assert.equal(saved?.service_id, 'listing-1');
 });
 
 test('rejects missing required fields and malformed payloads', async () => {
-  for (const body of [null, [], {kind: 'other'}, {kind: 'recommend', details: 'Details'}, {kind: 'recommend', name: 'Name', details: ' '}, {kind: 'update', details: 'Details'}]) {
+  for (const body of [null, [], {kind: 'other'}, {kind: 'recommend', details: 'Details'}, {kind: 'recommend', name: 'Name', details: ' '}, {kind: 'update', details: 'Details'}, {kind: 'update', serviceId: 'x', details: 'D', ...you, submitter_email: ''}, {kind: 'update', serviceId: 'x', details: 'D', ...you, submitter_email: 'not-an-email'}, {kind: 'update', serviceId: 'x', details: 'D', ...you, role: ' '}, {kind: 'update', serviceId: 'x', details: 'D', ...you, submitter_org_type: ''}]) {
     saved = undefined;
     assert.equal((await post(body)).status, 400);
     assert.equal(saved, undefined);
@@ -53,7 +54,7 @@ test('does not save honeypot submissions', async () => {
 
 test('returns an error if persistence fails', async () => {
   fail = true;
-  assert.equal((await post({ kind: 'recommend', name: 'Name', details: 'Details' })).status, 500);
+  assert.equal((await post({ kind: 'recommend', name: 'Name', details: 'Details', ...you })).status, 500);
   fail = false;
 });
 

@@ -39,6 +39,9 @@ export default withCors(async (req: Request, context: Context) => {
     if (!rec.details) return json(400, { error: "Add some details." });
     if (kind === "recommend" && !rec.name) return json(400, { error: "Add the service name." });
     if (kind === "update" && !rec.service_id) return json(400, { error: "Choose the listing to update." });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rec.submitter_email)) return json(400, { error: "Add your email address." });
+    if (!rec.role) return json(400, { error: "Add your occupation." });
+    if (!rec.submitter_org_type) return json(400, { error: "Choose your organisation type." });
     try { await getDb().insert(submissions).values(rec); return json(201, { ok: true }); }
     catch { return json(500, { error: "Couldn't save that. Try again in a moment." }); }
   }
