@@ -224,6 +224,26 @@
       "h24": true
     },
     {
+      "id": "we-care",
+      "name": "Community-Based Addictions Counselling",
+      "org": "We Care Community Services",
+      "cats": [
+        "addictions"
+      ],
+      "h24": false,
+      "desc": "Community-based addictions counselling for individuals struggling with addictive behaviours, including substance use and alcohol, gambling, internet / gaming, and sex and pornography.",
+      "phone": "3165 8017",
+      "other": "WhatsApp: 8391 3023; Email: help@wecare.org.sg",
+      "web": "https://www.wecare.org.sg/services/counselling",
+      "tags": [
+        "Substance use",
+        "Alcohol",
+        "Gambling",
+        "Internet / gaming",
+        "Sex and pornography"
+      ]
+    },
+    {
       "id": "gambling",
       "name": "National Problem Gambling Helpline",
       "org": "National Council on Problem Gambling",
@@ -425,6 +445,36 @@
       "web": "https://www.babes.org.sg",
       "tags": [
         "Teen pregnancy"
+      ]
+    },
+    {
+      "id": "safe-place",
+      "name": "Pregnancy Support and Residential Respite Services",
+      "org": "Safe Place",
+      "cats": [
+        "family"
+      ],
+      "h24": false,
+      "desc": "For pregnant women up to 32 weeks' gestation at intake, of any age and nationality. Social work assessment and case management from discovery of pregnancy onwards includes comprehensive pre- and post-birth assessments, options exploration, resource linkage and collaborative care planning. Residential respite provides safe, temporary accommodation for pregnant mothers; mother and baby may stay up to 4 months after delivery. Residential respite is for Singapore Citizens and PRs only. Parentcraft and wellness coaching offers hands-on pre/postnatal wellness, child development and parenting skills, delivered by staff, trainers and volunteers. Practical support provides essential mother-and-baby items (e.g. milk, diapers, breast pump, baby carrier, stroller, baby clothes) for at least 12 months after birth; eligibility criteria apply. Referral notes: intake cut-off is 32 weeks' gestation – refer early. Confirm residency status if accommodation is required.",
+      "phone": "6817 4202",
+      "other": "WhatsApp: +65 8891 4214; Email: safeplace@lakeside.org.sg",
+      "web": "https://safeplace.org.sg",
+      "tags": [
+        "Pregnancy",
+        "Residential respite",
+        "Case management",
+        "Parentcraft",
+        "Practical support"
+      ],
+      "links": [
+        {
+          "label": "Download Fact Sheet for Community Partners",
+          "url": "https://safeplace.org.sg/wp-content/uploads/2022/11/Safe-Place-FACT-SHEET-FOR-COMMUNITY-PARTNERS-2022.pdf"
+        },
+        {
+          "label": "Download Referral Form",
+          "url": "https://safeplace.org.sg/wp-content/uploads/2026/08/IR_Intake-Assessment-Form-2026.docx-1.pdf"
+        }
       ]
     },
     {
