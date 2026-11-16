@@ -91,7 +91,9 @@
 <footer><div class="wrap">SG Social Services is an independent, volunteer-run directory. It is not affiliated with MSF or any listed agency. The assistant gives suggestions, not clinical or legal advice. Use your professional judgement and your agency's protocols, especially for risk. <a href="/privacy.html">Privacy</a></div></footer>
 
 <dialog id="dlg" aria-labelledby="dlgTitle">
-  <form class="modal" id="subForm" novalidate>
+  <form class="modal" id="subForm" name="service-recommendations-updates" method="POST" data-netlify="true" netlify-honeypot="website" novalidate>
+    <input type="hidden" name="form-name" value="service-recommendations-updates">
+    <input type="hidden" id="fKind" name="kind" value="recommend">
     <h2 id="dlgTitle">Help keep this directory useful</h2>
     <div class="seg" role="group" aria-label="Submission type">
       <button type="button" data-kind="recommend" aria-pressed="true">Recommend a service</button>
@@ -99,20 +101,20 @@
     </div>
     <div id="fRecommend">
       <div class="two">
-        <div><label for="fName">Service or programme name</label><input id="fName" required></div>
-        <div><label for="fOrg">Organisation</label><input id="fOrg"></div>
+        <div><label for="fName">Service or programme name</label><input id="fName" name="name" required></div>
+        <div><label for="fOrg">Organisation</label><input id="fOrg" name="org"></div>
       </div>
-      <div style="margin-top:12px"><label for="fCat">Best fits under</label><select id="fCat"></select></div>
+      <div style="margin-top:12px"><label for="fCat">Best fits under</label><select id="fCat" name="category"></select></div>
       <div class="two" style="margin-top:12px">
-        <div><label for="fPhone">Phone / hotline</label><input id="fPhone"></div>
-        <div><label for="fWeb">Website</label><input id="fWeb" placeholder="https://"></div>
+        <div><label for="fPhone">Phone / hotline</label><input id="fPhone" name="phone"></div>
+        <div><label for="fWeb">Website</label><input id="fWeb" name="web" placeholder="https://"></div>
       </div>
     </div>
     <div id="fUpdate" hidden>
-      <label for="fWhich">Which listing?</label><select id="fWhich"></select>
+      <label for="fWhich">Which listing?</label><select id="fWhich" name="serviceId"></select>
     </div>
-    <div><label for="fDetails" id="fDetailsLabel">Why is it helpful? Who is it for?</label><textarea id="fDetails" style="min-height:100px" required></textarea></div>
-    <div><label for="fRole">Your role (optional)</label><input id="fRole" placeholder="e.g. FSC caseworker, school counsellor"></div>
+    <div><label for="fDetails" id="fDetailsLabel">Why is it helpful? Who is it for?</label><textarea id="fDetails" name="details" style="min-height:100px" required></textarea></div>
+    <div><label for="fRole">Your role (optional)</label><input id="fRole" name="role" placeholder="e.g. FSC caseworker, school counsellor"></div>
     <input id="fHp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
     <p class="note">Please don't include any client information.</p>
     <div id="fMsg" hidden></div>
@@ -221,7 +223,7 @@ function fillFormLists(){
   $("#fWhich").innerHTML=S.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
 }
 function setKind(k){
-  kind=k;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.kind===k));
+  kind=k;$("#fKind").value=k;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.kind===k));
   $("#fRecommend").hidden=k!=="recommend";$("#fUpdate").hidden=k!=="update";
   $("#fDetailsLabel").textContent=k==="recommend"?"Why is it helpful? Who is it for?":"What's changed? (new number, hours, closed, moved)";
 }
