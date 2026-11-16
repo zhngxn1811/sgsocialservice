@@ -10,6 +10,8 @@ export const submissions = pgTable('submissions', {
   org: text('org').notNull().default(''),
   category: text('category').notNull().default(''),
   phone: text('phone').notNull().default(''),
+  sms_whatsapp: text('sms_whatsapp').notNull().default(''),
+  email: text('email').notNull().default(''),
   web: text('web').notNull().default(''),
   service_id: text('service_id').notNull().default(''),
   details: text('details').notNull(),

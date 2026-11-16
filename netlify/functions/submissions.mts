@@ -32,7 +32,7 @@ export default withCors(async (req: Request, context: Context) => {
       id: crypto.randomUUID(),
       created_at: new Date().toISOString(), status: "new", kind,
       name: clean(b.name, 200), org: clean(b.org, 200), category: clean(b.category, 50),
-      phone: clean(b.phone, 50), web: clean(b.web, 300), service_id: clean(b.serviceId, 50),
+      phone: clean(b.phone, 50), sms_whatsapp: clean(b.sms_whatsapp, 100), email: clean(b.email, 254), web: clean(b.web, 300), service_id: clean(b.serviceId, 50),
       details: clean(b.details, 2000), role: clean(b.role, 200),
     };
     if (!rec.details) return json(400, { error: "Add some details." });
