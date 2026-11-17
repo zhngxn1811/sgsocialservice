@@ -104,7 +104,7 @@ test('includes the 55 revised FSC entries with the supplied contact fields', () 
   assert.equal(services.filter((s: any) => s.id === 'fsc').length, 1);
   assert.ok(services.find((s: any) => s.id === 'fsc').cats.includes('msf-fsc'));
   for (const centre of centres) {
-    assert.deepEqual(Object.keys(centre), ['id', 'name', 'org', 'cats', 'h24', 'desc', 'phone', 'other', 'web', 'tags']);
+    assert.deepEqual(Object.keys(centre), ['id', 'name', 'org', 'cats', 'h24', 'desc', 'phone', 'other', 'web', 'tags', 'address', 'mapsUrl']);
     assert.equal(centre.h24, false);
     assert.match(centre.phone, /^(?:\d{4} \d{4}|1800 \d{3} \d{4})$/);
     assert.ok(centre.desc.length > 0);
@@ -112,6 +112,12 @@ test('includes the 55 revised FSC entries with the supplied contact fields', () 
     assert.ok(centre.cats.includes('family'));
     assert.ok(centre.cats.includes('msf-fsc'));
     assert.ok(card(centre).includes('<dt>Website</dt>'));
+    assert.match(centre.address, /Singapore \d{6}$/);
+    const maps = new URL(centre.mapsUrl);
+    assert.equal(maps.origin, 'https://www.google.com');
+    assert.equal(maps.pathname, '/maps/search/');
+    assert.equal(maps.searchParams.get('query'), centre.address);
+    assert.ok(card(centre).includes(`<dt>Address</dt><dd><a href="${centre.mapsUrl.replaceAll('&', '&amp;')}" target="_blank" rel="noopener">${centre.address}</a></dd>`), centre.id);
     if (centre.other) assert.ok(card(centre).includes('href="mailto:'));
   }
 });
