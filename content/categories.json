@@ -102,5 +102,13 @@
     "intro": "Legal aid, free legal clinics and court information in Singapore for clients who need legal help but can't afford a lawyer.",
     "social_title": "",
     "social_description": ""
+  },
+  "msf-fsc": {
+    "slug": "msf-family-service-centres",
+    "title": "MSF Family Service Centres in Singapore",
+    "description": "Find Family Service Centres in the MSF network across Singapore, with phone numbers, email contacts and websites for family support and referrals.",
+    "intro": "Family Service Centres in the MSF network provide community-based casework, counselling and referrals for individuals and families. Browse the centres below or use the MSF locator to find your nearest centre.",
+    "social_title": "",
+    "social_description": ""
   }
 }

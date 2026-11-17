@@ -77,12 +77,13 @@ export function validateDirectory(d) {
   d.services.forEach((s, i) => {
     const where = s && clean(s.name) ? `"${s.name}"` : `Listing ${i + 1}`;
     if (!s || typeof s !== "object") { problems.push(`${where} is not a valid listing.`); return; }
-    for (const f of ["id", "name", "org", "desc"]) if (!clean(s[f])) problems.push(`${where} is missing ${f}.`);
+    for (const f of ["id", "name", "org"]) if (!clean(s[f])) problems.push(`${where} is missing ${f}.`);
+    if (s.desc !== undefined && !clean(s.desc)) problems.push(`${where} has an empty description.`);
     if (clean(s.id)) { if (ids.has(s.id)) problems.push(`Listing id "${s.id}" is used twice.`); ids.add(s.id); }
     if (!Array.isArray(s.cats) || !s.cats.length) problems.push(`${where} needs at least one category.`);
     else s.cats.filter(c => !catIds.has(c)).forEach(c => problems.push(`${where} uses category "${c}", which doesn't exist.`));
     if (s.tags !== undefined && !Array.isArray(s.tags)) problems.push(`${where}: tags must be a list.`);
-    for (const url of [s.web, ...(Array.isArray(s.links) ? s.links.map(l => l && l.url) : [])].filter(Boolean)) {
+    for (const url of [s.web, s.mapsUrl, ...(Array.isArray(s.links) ? s.links.map(l => l && l.url) : [])].filter(Boolean)) {
       try { if (!["https:", "http:"].includes(new URL(url).protocol)) throw 0; } catch { problems.push(`${where} has a link that isn't a web address: ${url}`); }
     }
   });

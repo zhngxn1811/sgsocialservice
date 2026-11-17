@@ -160,7 +160,7 @@ function renderCats(){
 }
 function renderGrid(){
   const q=$("#q").value.trim().toLowerCase();
-  const list=S.filter(s=>(active==="all"||s.cats.includes(active))&&(!q||[s.name,s.org,s.desc,...s.tags].join(" ").toLowerCase().includes(q)));
+  const list=S.filter(s=>(active==="all"||s.cats.includes(active))&&(!q||[s.name,s.org,s.desc,s.address,s.other,...s.tags].join(" ").toLowerCase().includes(q)));
   $("#grid").innerHTML=list.length?list.map(card).join(""):`<p class="empty">Nothing matches that yet. Know a service that should be here? <button class="linkbtn" type="button" data-open="1">Recommend it</button>.</p>`;
   $("#count").textContent=`${list.length} of ${S.length} services`;
 }

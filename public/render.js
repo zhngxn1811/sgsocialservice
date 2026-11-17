@@ -31,15 +31,16 @@
     return result + esc(value.slice(start));
   }
   function contactRow(contact) {
-    const match = contact.trim().match(/^(WhatsApp(?:\/SMS)?|SMS(?:\/WhatsApp)?|Email|Skype|Website):?\s+(.+)$/i);
+    const match = contact.trim().match(/^(WhatsApp(?:\/SMS)?|SMS(?:\/WhatsApp)?|Email|Skype|Website|Address):?\s+(.+)$/i);
     const emergency = contact.trim().match(/^(.+?) SMS:\s*(.+)$/i);
     let label, value, detail;
     if (match) {
-      label = ({ whatsapp: 'WhatsApp', sms: 'SMS', email: 'Email', skype: 'Skype', website: 'Website', 'whatsapp/sms': 'WhatsApp/SMS', 'sms/whatsapp': 'SMS/WhatsApp' })[match[1].toLowerCase()];
+      label = ({ whatsapp: 'WhatsApp', sms: 'SMS', email: 'Email', skype: 'Skype', website: 'Website', address: 'Address', 'whatsapp/sms': 'WhatsApp/SMS', 'sms/whatsapp': 'SMS/WhatsApp' })[match[1].toLowerCase()];
       value = match[2];
       if (/WhatsApp|SMS/.test(label)) detail = numbers(value, label);
       else if (label === 'Email') detail = anchor(`mailto:${value}`, value);
       else if (label === 'Skype') detail = anchor(`skype:${value}?chat`, value);
+      else if (label === 'Address') detail = esc(value);
       else detail = website(value);
     } else if (emergency) {
       label = 'SMS';
@@ -53,11 +54,13 @@
 
   function card(s) {
     const tags = (s.h24 ? '<span class="tag h24">24 hours</span>' : "") + (s.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
-    const contacts = (s.other || "").split(/;\s*/).filter(Boolean).map(contactRow).join("");
+    const address = s.address ? `<dt>Address</dt><dd>${s.mapsUrl ? website(s.mapsUrl, s.address) : esc(s.address)}</dd>` : '';
+    const contacts = address + (s.other || "").split(/;\s*/).filter(Boolean).map(contactRow).join("");
     const web = s.web ? website(s.web, s.web.replace(/^https?:\/\//, "")) : "";
+    const webLinks = [web, ...(s.links || []).map(link => website(link.url, link.label))].filter(Boolean).join('<br>');
     return `<article class="card${s.cats.includes("crisis") ? " crisis-card" : ""}">
-    <h3>${esc(s.name)}</h3><p class="org">${esc(s.org)}</p><p>${esc(s.desc)}</p><div class="tags">${tags}</div>
-    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${numbers(s.phone, 'Call')}</dd>` : ""}${contacts}<dt>Website</dt><dd>${web}${(s.links || []).map(link => `<br>${website(link.url, link.label)}`).join("")}</dd></dl>
+    <h3>${esc(s.name)}</h3><p class="org">${esc(s.org)}</p>${s.desc ? `<p>${esc(s.desc)}</p>` : ''}<div class="tags">${tags}</div>
+    <dl class="contact">${s.phone ? `<dt>Call</dt><dd class="mono">${numbers(s.phone, 'Call')}</dd>` : ""}${contacts}${webLinks ? `<dt>Website</dt><dd>${webLinks}</dd>` : ''}</dl>
     <div class="foot"><span></span><button class="linkbtn" type="button" data-report="${esc(s.id)}">Report an update</button></div></article>`;
   }
 
