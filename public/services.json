@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11",
+  "updated": "2026-11-17",
   "categories": [
     {
       "id": "crisis",
@@ -32,6 +32,10 @@
     {
       "id": "family",
       "label": "Family, parenting & pregnancy"
+    },
+    {
+      "id": "msf-fsc",
+      "label": "MSF Family Service Centres"
     },
     {
       "id": "youth",
@@ -390,13 +394,30 @@
       ]
     },
     {
+      "id": "supportgowhere",
+      "name": "SupportGoWhere",
+      "org": "Government of Singapore",
+      "cats": [
+        "financial",
+        "seniors",
+        "disability"
+      ],
+      "desc": "Searchable list of government support schemes and services with an eligibility checker.",
+      "web": "https://supportgowhere.life.gov.sg",
+      "tags": [
+        "Schemes",
+        "Eligibility"
+      ]
+    },
+    {
       "id": "fsc",
       "name": "Family Service Centres",
       "org": "MSF network, run by various agencies",
       "cats": [
         "family",
         "financial",
-        "violence"
+        "violence",
+        "msf-fsc"
       ],
       "desc": "Neighbourhood centres for casework, counselling and coordinated help for families. Find the nearest one through MSF.",
       "web": "https://www.msf.gov.sg/directories#familytab",
@@ -413,22 +434,6 @@
       "tags": [
         "Casework",
         "Islandwide"
-      ]
-    },
-    {
-      "id": "supportgowhere",
-      "name": "SupportGoWhere",
-      "org": "Government of Singapore",
-      "cats": [
-        "financial",
-        "seniors",
-        "disability"
-      ],
-      "desc": "Searchable list of government support schemes and services with an eligibility checker.",
-      "web": "https://supportgowhere.life.gov.sg",
-      "tags": [
-        "Schemes",
-        "Eligibility"
       ]
     },
     {
@@ -865,6 +870,1074 @@
       "tags": [
         "Suicide prevention",
         "International resources"
+      ]
+    },
+    {
+      "id": "fsc-allkin-amk-230",
+      "name": "Allkin Family Service Centre @ Ang Mo Kio 230",
+      "org": "Allkin Singapore",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Allkin's Ang Mo Kio centre, run by the agency that opened Singapore's first FSC. Social workers and counsellors help residents with emotional, money and family difficulties, and link them to other community services.",
+      "phone": "6038 4100",
+      "other": "Email fscamk@allkin.org.sg",
+      "web": "https://www.allkin.org.sg/services/family-service-centres",
+      "tags": [
+        "FSC",
+        "Ang Mo Kio",
+        "Family conflict"
+      ]
+    },
+    {
+      "id": "fsc-allkin-yck-643",
+      "name": "Allkin Family Service Centre @ Yio Chu Kang 643",
+      "org": "Allkin Singapore",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Allkin service point for residents around Yio Chu Kang and Ang Mo Kio Avenue 5. Offers casework and counselling for family, financial and emotional issues, plus support groups and neighbourhood programmes.",
+      "phone": "6038 4110",
+      "other": "Email fscamk@allkin.org.sg",
+      "web": "https://www.allkin.org.sg/services/family-service-centres",
+      "tags": [
+        "FSC",
+        "Yio Chu Kang",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-allkin-cheng-san-445",
+      "name": "Allkin Family Service Centre @ Cheng San 445",
+      "org": "Allkin Singapore",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Allkin centre for residents in the Cheng San area of Ang Mo Kio. Helps individuals and families work through family conflict, money worries and emotional stress, and connects them to community partners.",
+      "phone": "6038 4120",
+      "other": "Email fsccs@allkin.org.sg",
+      "web": "https://www.allkin.org.sg/services/family-service-centres",
+      "tags": [
+        "FSC",
+        "Ang Mo Kio",
+        "Family conflict"
+      ]
+    },
+    {
+      "id": "fsc-allkin-punggol-616",
+      "name": "Allkin Family Service Centre @ Punggol 616",
+      "org": "Allkin Singapore",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Allkin's Punggol centre, offering casework and counselling for family, financial and emotional issues. Also runs intake, support groups and community programmes for local residents.",
+      "phone": "6038 4140",
+      "other": "Email fscpg@allkin.org.sg",
+      "web": "https://www.allkin.org.sg/services/family-service-centres",
+      "tags": [
+        "FSC",
+        "Punggol",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-allkin-sengkang-223d",
+      "name": "Allkin Family Service Centre @ Sengkang 223D",
+      "org": "Allkin Singapore",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Allkin's Sengkang centre for individuals and families facing emotional, financial or family challenges. Provides casework, counselling, support groups and referrals to community services.",
+      "phone": "6038 4150",
+      "other": "Email fscsk@allkin.org.sg",
+      "web": "https://www.allkin.org.sg/services/family-service-centres",
+      "tags": [
+        "FSC",
+        "Sengkang",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-awwa-towner",
+      "name": "AWWA Family Service Centre",
+      "org": "AWWA",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Long-running FSC at Towner Road supporting individuals and families through hardship, including financial difficulty and instability. Offers practical and emotional casework, peer support groups and community talks and outreach.",
+      "phone": "6511 9456",
+      "other": "Email contactus@awwa.org.sg",
+      "web": "https://awwa.org.sg/our-services/family-service-centre/",
+      "tags": [
+        "FSC",
+        "Towner / Kallang",
+        "Financial hardship"
+      ]
+    },
+    {
+      "id": "fsc-care-corner-admiralty",
+      "name": "Care Corner Family Service Centre (Admiralty)",
+      "org": "Care Corner Singapore",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Care Corner centre serving Admiralty and Woodlands residents. Case management for family, financial, housing, mental health and parenting concerns, with immediate support where there are safety risks such as family violence.",
+      "phone": "6365 8751",
+      "other": "Email am.fsc@carecorner.org.sg",
+      "web": "https://www.carecorner.org.sg/services/family-service-centre/",
+      "tags": [
+        "FSC",
+        "Admiralty",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-care-corner-punggol",
+      "name": "Care Corner Family Service Centre (Punggol)",
+      "org": "Care Corner Singapore",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Care Corner's Punggol service point, sharing premises with Allkin's Punggol centre. Case management for family, financial, housing and emotional difficulties, with immediate help when there are safety concerns such as family violence.",
+      "phone": "6978 6594",
+      "other": "Email pg.fsc@carecorner.org.sg",
+      "web": "https://www.carecorner.org.sg/services/family-service-centre/",
+      "tags": [
+        "FSC",
+        "Punggol",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-care-corner-queenstown",
+      "name": "Care Corner Family Service Centre (Queenstown)",
+      "org": "Care Corner Singapore",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Care Corner centre at Tanglin Halt serving Queenstown residents. Supports families with financial strain, relationship conflict, mental health concerns and parenting, including immediate safety support for family violence.",
+      "phone": "6476 1481",
+      "other": "Email qt.fsc@carecorner.org.sg",
+      "web": "https://www.carecorner.org.sg/services/family-service-centre/",
+      "tags": [
+        "FSC",
+        "Queenstown",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-care-corner-tampines",
+      "name": "Care Corner Family Service Centre (Tampines)",
+      "org": "Care Corner Singapore",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Care Corner centre serving Tampines residents. Case management for family, financial, housing and emotional issues, group programmes, and immediate support where there are safety risks such as family violence.",
+      "phone": "6786 6225",
+      "other": "Email tm.fsc@carecorner.org.sg",
+      "web": "https://www.carecorner.org.sg/services/family-service-centre/",
+      "tags": [
+        "FSC",
+        "Tampines",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-care-corner-toa-payoh",
+      "name": "Care Corner Family Service Centre (Toa Payoh)",
+      "org": "Care Corner Singapore",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Care Corner centre at Lorong 1 Toa Payoh. Case management for family, financial, housing, mental health and parenting concerns, with immediate support where there are safety risks such as family violence.",
+      "phone": "6356 1622",
+      "other": "Email tp.fsc@carecorner.org.sg",
+      "web": "https://www.carecorner.org.sg/services/family-service-centre/",
+      "tags": [
+        "FSC",
+        "Toa Payoh",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-care-corner-woodlands",
+      "name": "Care Corner Family Service Centre (Woodlands)",
+      "org": "Care Corner Singapore",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Care Corner centre serving Woodlands residents from Woodlands Street 32. Helps families with money stress, relationship conflict, housing and emotional difficulties, and gives immediate safety support for family violence.",
+      "phone": "6362 2481",
+      "other": "Email wl.fsc@carecorner.org.sg",
+      "web": "https://www.carecorner.org.sg/services/family-service-centre/",
+      "tags": [
+        "FSC",
+        "Woodlands",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-fei-yue-bukit-batok",
+      "name": "Fei Yue Family Service Centre (Bukit Batok)",
+      "org": "Fei Yue Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Fei Yue's main Bukit Batok centre, from one of Singapore's earliest counselling agencies. Social workers assess each family's situation and offer casework, counselling, group programmes and referrals, working with SSOs and schools where needed.",
+      "phone": "6569 0381",
+      "other": "Email enquiry_FeiYueBBFSC@fycs.org",
+      "web": "https://fycs.org/family/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Bukit Batok",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-fei-yue-bukit-batok-west",
+      "name": "Fei Yue Family Service Centre (Bukit Batok West)",
+      "org": "Fei Yue Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Extension office of Fei Yue's Bukit Batok centre, on the same phone line. Offers casework and counselling for personal, family and social difficulties, plus support groups and referrals.",
+      "phone": "6569 0381",
+      "other": "Email enquiry_FeiYueBBFSC@fycs.org",
+      "web": "https://fycs.org/family/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Bukit Batok",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-fei-yue-champions-way",
+      "name": "Fei Yue Family Service Centre (Champions Way)",
+      "org": "Fei Yue Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Fei Yue centre in Woodlands at Champions Way. Supports individuals and families coping with emotional, personal and social challenges through casework, counselling, groups and community programmes.",
+      "phone": "6690 1000",
+      "other": "Email enquiry_FeiYueCWFSC@fycs.org",
+      "web": "https://fycs.org/family/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Woodlands",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-fei-yue-choa-chu-kang",
+      "name": "Fei Yue Family Service Centre (Choa Chu Kang)",
+      "org": "Fei Yue Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Fei Yue centre for Choa Chu Kang residents, offering casework, counselling, groups and referrals. Fei Yue's MSF-appointed Strengthening Families Programme for marriage, divorce and family counselling is next door at Blk 281.",
+      "phone": "6762 5215",
+      "other": "Email enquiry_FeiYueCCKFSC@fycs.org",
+      "web": "https://fycs.org/family/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Choa Chu Kang",
+        "Marriage & divorce support"
+      ]
+    },
+    {
+      "id": "fsc-fei-yue-yew-tee",
+      "name": "Fei Yue Family Service Centre (Yew Tee)",
+      "org": "Fei Yue Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Fei Yue centre serving the Yew Tee side of Choa Chu Kang. Social workers help families work through personal, social and emotional difficulties, with group programmes and referrals to community resources.",
+      "phone": "6416 2162",
+      "other": "Email enquiry_FeiYueYTFSC@fycs.org",
+      "web": "https://fycs.org/family/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Yew Tee",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-fei-yue-sso-taman-jurong",
+      "name": "Fei Yue Family Services at SSO @ Taman Jurong",
+      "org": "Fei Yue Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Fei Yue family services based inside the Social Service Office at Corporation Drive, so families can get counselling and casework alongside SSO financial help in one place.",
+      "phone": "6267 2900",
+      "other": "Email enquiry_FeiYueTJFST@fycs.org",
+      "web": "https://fycs.org/family/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Taman Jurong",
+        "Co-located with SSO"
+      ]
+    },
+    {
+      "id": "fsc-frcs-clementi",
+      "name": "FRCS Family Service Centre (Clementi)",
+      "org": "Foundation of Rotary Clubs (Singapore)",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Serves Clementi, West Coast and parts of Bukit Timah and Ulu Pandan, formerly Rotary FSC. Offers individual and family counselling for marital stress, parenting and anxiety, groups for children to seniors, and specialised help with reintegration and addiction recovery.",
+      "phone": "6779 9488",
+      "other": "Email ask@frcsfsc.sg",
+      "web": "https://frcsfsc.sg/",
+      "tags": [
+        "FSC",
+        "Clementi",
+        "Reintegration support"
+      ]
+    },
+    {
+      "id": "fsc-frcs-west-coast",
+      "name": "FRCS Family Service Centre (West Coast)",
+      "org": "Foundation of Rotary Clubs (Singapore)",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "FRCS branch opened in 2020 to make its services easier to reach for West Coast residents. Offers individual and family counselling, group programmes, and specialised help with reintegration and addiction recovery.",
+      "phone": "6779 9488",
+      "other": "Email ask@frcsfsc.sg",
+      "web": "https://frcsfsc.sg/",
+      "tags": [
+        "FSC",
+        "West Coast",
+        "Reintegration support"
+      ]
+    },
+    {
+      "id": "fsc-good-news-pasir-ris",
+      "name": "Good News Family Service Centre @ Pasir Ris",
+      "org": "Good News Community Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Neighbourhood FSC for Pasir Ris residents, offering casework, counselling, information and referral, and group and community programmes for individuals and families with social and emotional difficulties.",
+      "phone": "6581 2159",
+      "other": "Email gnfsc@goodnews.org.sg",
+      "web": "https://www.goodnews.org.sg/",
+      "tags": [
+        "FSC",
+        "Pasir Ris",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-hougang-sheng-hong",
+      "name": "Hougang Sheng Hong Family Service Centre",
+      "org": "Sheng Hong Welfare Services",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Hougang centre offering individual, couple and family sessions, including home visits. Covers family violence, parenting and relationship issues, caregiver stress and money worries, and has run support groups for women recovering from family violence.",
+      "phone": "6289 5022",
+      "other": "Email fsc@shenghong.org.sg",
+      "web": "https://shenghong.org.sg/family-services/",
+      "tags": [
+        "FSC",
+        "Hougang",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-kampong-kapor",
+      "name": "Kampong Kapor Family Service Centre",
+      "org": "Kampong Kapor Community Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Serves Jalan Besar, Kampong Glam, Tekka and Owen, with an extended area covering Mountbatten and Geylang. Social workers and counsellors help with financial, marital, parenting and personal concerns, alongside group and community work.",
+      "phone": "6485 4720",
+      "other": "Email kkfsc@kkcs.org.sg",
+      "web": "https://www.kkcs.org.sg/we-can-help/kampong-kapor-family-service-centre/",
+      "tags": [
+        "FSC",
+        "Jalan Besar",
+        "Marital & parenting"
+      ]
+    },
+    {
+      "id": "fsc-lakeside-jurong-east",
+      "name": "Lakeside Family Centre (Jurong East)",
+      "org": "Lakeside Family Services",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "One of Singapore's early FSCs, serving Jurong East. Helps with financial assessment and aid, marital, parenting and family disputes, and runs the Mandatory Counselling Programme for people with a Personal Protection Order.",
+      "phone": "6564 9722",
+      "other": "Email lfsje@lakeside.org.sg",
+      "web": "https://lakeside.org.sg/our-services/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Jurong East",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-lakeside-jurong-west",
+      "name": "Lakeside Family Centre (Jurong West)",
+      "org": "Lakeside Family Services",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Lakeside's Jurong West centre. Casework and counselling for money, marital, parenting and family conflict issues, including the Mandatory Counselling Programme for people with a Personal Protection Order.",
+      "phone": "6567 1908",
+      "other": "Email lfsjw@lakeside.org.sg",
+      "web": "https://lakeside.org.sg/our-services/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Jurong West",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-montfort-kreta-ayer",
+      "name": "Montfort Care Family Service (Kreta Ayer)",
+      "org": "Montfort Care",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Montfort Care's FSC at Kreta Ayer Community Centre in Chinatown. Social workers help families with relationship and parenting challenges, stress, money difficulties and concerns about children or elderly members, and refer on where needed.",
+      "phone": "6200 2111",
+      "other": "Email familyservice@montfortcare.org.sg",
+      "web": "https://montfortcare.org.sg/services/families/",
+      "tags": [
+        "FSC",
+        "Chinatown / Kreta Ayer",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-montfort-marine-parade",
+      "name": "Montfort Care Family Service (Marine Parade)",
+      "org": "Montfort Care",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Montfort Care's Marine Terrace centre for Marine Parade residents. Supports families through relationship and parenting challenges, stress, financial difficulty and caregiving concerns, with referrals to other services.",
+      "phone": "6445 0100",
+      "other": "Email familyservice@montfortcare.org.sg",
+      "web": "https://montfortcare.org.sg/services/families/",
+      "tags": [
+        "FSC",
+        "Marine Parade",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-montfort-telok-blangah",
+      "name": "Montfort Care Family Service (Telok Blangah)",
+      "org": "Montfort Care",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Montfort Care's Telok Blangah centre. Helps families facing relationship or parenting difficulties, stress, money problems and concerns about children or older family members, and links them to further support.",
+      "phone": "6200 2111",
+      "other": "Email familyservice@montfortcare.org.sg",
+      "web": "https://montfortcare.org.sg/services/families/",
+      "tags": [
+        "FSC",
+        "Telok Blangah",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-mws-covenant-hougang",
+      "name": "MWS Covenant Family Service Centre – Hougang",
+      "org": "Methodist Welfare Services",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "MWS's main FSC and regional hub for Hougang, Sengkang and Serangoon, next to its marriage, divorce and parenting services on Hougang Ave 8. Handles family and marital conflict, parenting, financial difficulty and domestic violence using trauma-informed care.",
+      "phone": "6282 8558",
+      "other": "Email MWScfsc@mws.sg",
+      "web": "https://mws.sg/centre-location/famfsc/",
+      "tags": [
+        "FSC",
+        "Hougang",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-mws-covenant-buangkok",
+      "name": "MWS Covenant Family Service Centre – Buangkok",
+      "org": "Methodist Welfare Services",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Satellite office of MWS's Hougang centre, serving Buangkok residents. Offers information and referral, casework, counselling and group work for family and marital conflict, parenting, money difficulties and domestic violence.",
+      "phone": "6843 9660",
+      "other": "Email MWScfsc@mws.sg",
+      "web": "https://mws.sg/centre-location/famfsc/",
+      "tags": [
+        "FSC",
+        "Buangkok",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-mws-sengkang-west",
+      "name": "MWS Family Service Centre – Sengkang West",
+      "org": "Methodist Welfare Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "MWS's newest FSC, opened in August 2025 and operating for now from Allkin's Sengkang centre at Compassvale Walk. Provides casework, counselling, group work and referrals for Sengkang West residents.",
+      "phone": "6485 5500",
+      "other": "Email MWSfscsk@mws.sg",
+      "web": "https://mws.sg/centre-location/famfsc/",
+      "tags": [
+        "FSC",
+        "Sengkang",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-mws-tampines",
+      "name": "MWS Family Service Centre – Tampines",
+      "org": "Methodist Welfare Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "MWS centre at Tampines Street 44. Social workers and counsellors provide casework, counselling, group work and community programmes for individuals and families facing personal or family difficulties.",
+      "phone": "6787 2001",
+      "other": "Email intake.mwsfsct@mws.sg",
+      "web": "https://mws.sg/centre-location/famfsc/",
+      "tags": [
+        "FSC",
+        "Tampines",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-mws-yishun",
+      "name": "MWS Family Service Centre – Yishun",
+      "org": "Methodist Welfare Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "MWS centre at Yishun Ring Road. Offers information and referral, casework and counselling, group work and community development for residents with personal or family-related issues.",
+      "phone": "6756 4995",
+      "other": "Email MWSfscy@mws.sg",
+      "web": "https://mws.sg/centre-location/famfsc/",
+      "tags": [
+        "FSC",
+        "Yishun",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-ppis-east",
+      "name": "PPIS Family Service Centre (East)",
+      "org": "PPIS",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "PPIS centre at Wisma Geylang Serai. Free, secular casework and counselling for relationship difficulties, family violence, child management and parenting, at the centre, by home visit or over the phone, plus groups for women and children.",
+      "phone": "6015 6970",
+      "other": "Email fsceast@ppis.sg",
+      "web": "https://ppis.sg/fsc",
+      "tags": [
+        "FSC",
+        "Geylang Serai",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-ppis-west",
+      "name": "PPIS Family Service Centre (West)",
+      "org": "PPIS",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "PPIS centre in Bukit Batok. Free, secular casework and counselling for relationship problems, family violence, parenting and child management, with group programmes for women and children.",
+      "phone": "6561 3462",
+      "other": "Email fscwest@ppis.sg",
+      "web": "https://ppis.sg/fsc",
+      "tags": [
+        "FSC",
+        "Bukit Batok",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-reach-bishan",
+      "name": "REACH Family Service Centre",
+      "org": "REACH Community Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "REACH's original FSC in Bishan, running since 1999. Provides casework, counselling and information and referral to families, with night sessions by appointment.",
+      "phone": "6252 2566",
+      "other": "Email family@reach.org.sg",
+      "web": "https://www.reach.org.sg/",
+      "tags": [
+        "FSC",
+        "Bishan",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-reach-sin-ming",
+      "name": "REACH @ Sin Ming",
+      "org": "REACH Community Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "REACH's second FSC touchpoint, serving Sin Ming and Thomson residents. Casework, counselling and referrals for families, run by the same team as REACH Bishan.",
+      "phone": "6252 2566",
+      "other": "Email family@reach.org.sg",
+      "web": "https://www.reach.org.sg/",
+      "tags": [
+        "FSC",
+        "Sin Ming",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-sembawang",
+      "name": "Sembawang Family Service Centre",
+      "org": "Sembawang Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Independent FSC at Sembawang Crescent. Offers casework, group work and community programmes, with a dedicated inbox for case referrals.",
+      "phone": "6754 7050",
+      "other": "Email referral@sfsc.org.sg",
+      "web": "https://www.sfsc.org.sg/",
+      "tags": [
+        "FSC",
+        "Sembawang",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-serangoon-moral",
+      "name": "Serangoon Moral Family Service Centre",
+      "org": "Serangoon Moral Family Service Centre",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Neighbourhood FSC for Serangoon residents. Offers one-to-one casework, group programmes and community projects such as a children's tuition programme.",
+      "phone": "6284 7123",
+      "other": "Email contact@smfsc.org.sg",
+      "web": "https://www.smfsc.org.sg/",
+      "tags": [
+        "FSC",
+        "Serangoon",
+        "Casework & counselling"
+      ]
+    },
+    {
+      "id": "fsc-sinda",
+      "name": "SINDA Family Service Centre",
+      "org": "SINDA",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "FSC run by the Indian community self-help group at Beatty Road, for Indian Singapore Citizens and PRs. Social work practitioners help with financial, marital, parenting and other family or relationship challenges; meetings are by appointment.",
+      "phone": "1800 295 3333",
+      "other": "Email queries@sinda.org.sg",
+      "web": "https://www.sinda.org.sg/",
+      "tags": [
+        "FSC",
+        "Farrer Park",
+        "Indian community"
+      ]
+    },
+    {
+      "id": "fsc-south-central-delta",
+      "name": "South Central Community Family Service Centre",
+      "org": "South Central Community Family Service Centre",
+      "cats": [
+        "family",
+        "financial",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Formerly Bukit Ho Swee FSC, serving low-income families in central Singapore, especially rental communities. Combines social work with livelihood support, child learning programmes and a home-ownership pathway, using an assets-based community approach.",
+      "phone": "6461 9200",
+      "other": "Email hello@sccfsc.org.sg",
+      "web": "https://www.sccfsc.sg/",
+      "tags": [
+        "FSC",
+        "Bukit Merah",
+        "Rental communities"
+      ]
+    },
+    {
+      "id": "fsc-south-central-hoy-fatt",
+      "name": "SCC@Hoy Fatt",
+      "org": "South Central Community Family Service Centre",
+      "cats": [
+        "family",
+        "financial",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Branch of South Central Community FSC at Hoy Fatt Road. Supports low-income and rental-flat families with social work, livelihood support, children's learning and help towards home ownership.",
+      "phone": "6461 9200",
+      "other": "Email hello@sccfsc.org.sg",
+      "web": "https://www.sccfsc.sg/",
+      "tags": [
+        "FSC",
+        "Redhill",
+        "Rental communities"
+      ]
+    },
+    {
+      "id": "fsc-sbl-vision",
+      "name": "The SBL Vision Family Service Centre",
+      "org": "Singapore Buddhist Lodge Welfare Foundation",
+      "cats": [
+        "family",
+        "financial",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Tampines FSC open to all, offering secular counselling and casework, groups and outreach. Also runs practical help such as milk and diaper, furniture and back-to-school assistance, money management workshops and family violence prevention talks.",
+      "phone": "6544 2263",
+      "other": "Email sbl@sblvisionfsc.org.sg",
+      "web": "http://www.sblvisionfsc.org.sg/",
+      "tags": [
+        "FSC",
+        "Tampines",
+        "Practical assistance"
+      ]
+    },
+    {
+      "id": "fsc-thk-bedok-north",
+      "name": "THK Family Service Centre @ Bedok North",
+      "org": "Thye Hua Kwan Moral Charities",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "THK centre serving Bedok North. Casework and counselling on family dynamics and emotional or behavioural concerns, including families affected by violence, abuse or neglect, plus groups such as programmes for men dealing with violence.",
+      "phone": "6449 1440",
+      "other": "Email bnfsc@thkmc.org.sg",
+      "web": "https://www.thkmc.org.sg/for-the-families/thk-family-service-centres/",
+      "tags": [
+        "FSC",
+        "Bedok",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-thk-bukit-panjang",
+      "name": "THK Family Service Centre @ Bukit Panjang",
+      "org": "Thye Hua Kwan Moral Charities",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "THK centre at Petir Road for Bukit Panjang residents. Offers casework, counselling and referrals, including work with families affected by violence, abuse or neglect, alongside parenting and support groups.",
+      "phone": "6767 1740",
+      "other": "Email bpfsc@thkmc.org.sg",
+      "web": "https://www.thkmc.org.sg/for-the-families/thk-family-service-centres/",
+      "tags": [
+        "FSC",
+        "Bukit Panjang",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-thk-jurong",
+      "name": "THK Family Service Centre @ Jurong",
+      "org": "Thye Hua Kwan Moral Charities",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "THK centre at Boon Lay Avenue serving Jurong and Boon Lay. Casework and counselling for family, emotional and behavioural issues, including violence, abuse and neglect, with group programmes and community partnerships.",
+      "phone": "6716 9466",
+      "other": "Email jurongfsc@thkmc.org.sg",
+      "web": "https://www.thkmc.org.sg/for-the-families/thk-family-service-centres/",
+      "tags": [
+        "FSC",
+        "Boon Lay",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-thk-macpherson",
+      "name": "THK Family Service Centre @ MacPherson",
+      "org": "Thye Hua Kwan Moral Charities",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "THK centre on Paya Lebar Way serving MacPherson. Provides casework, counselling, information and referral, including support for families dealing with violence, abuse or neglect.",
+      "phone": "6741 4255",
+      "other": "Email macfsc@thkmc.org.sg",
+      "web": "https://www.thkmc.org.sg/for-the-families/thk-family-service-centres/",
+      "tags": [
+        "FSC",
+        "MacPherson",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-thk-tanjong-pagar",
+      "name": "THK Family Service Centre @ Tanjong Pagar",
+      "org": "Thye Hua Kwan Moral Charities",
+      "cats": [
+        "family",
+        "violence",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "THK centre at Jalan Membina serving the Tanjong Pagar and Tiong Bahru area. Casework and counselling on family, emotional and behavioural concerns, including violence, abuse and neglect, plus parenting and support groups.",
+      "phone": "6270 6711",
+      "other": "Email tpfsc@thkmc.org.sg",
+      "web": "https://www.thkmc.org.sg/for-the-families/thk-family-service-centres/",
+      "tags": [
+        "FSC",
+        "Tiong Bahru",
+        "Family violence"
+      ]
+    },
+    {
+      "id": "fsc-trans-bedok-reservoir",
+      "name": "TRANS Family Service Centre (Bedok Reservoir)",
+      "org": "TRANS Family Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "TRANS centre near Kaki Bukit with multilingual social workers and counsellors. Helps with money difficulties, mental health, employment, marital problems, child management and relationships through casework, groups and outreach.",
+      "phone": "6747 3202",
+      "other": "Email transbr@trans.org.sg",
+      "web": "https://www.trans.org.sg/services/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Bedok Reservoir",
+        "Multilingual counselling"
+      ]
+    },
+    {
+      "id": "fsc-trans-bedok",
+      "name": "TRANS Family Service Centre (Bedok)",
+      "org": "TRANS Family Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "TRANS centre at Bedok North Avenue 2, near Bedok MRT, with multilingual social workers and counsellors. Helps with money difficulties, mental health, employment, marital problems, child management and relationships.",
+      "phone": "6449 0762",
+      "other": "Email transbd@trans.org.sg",
+      "web": "https://www.trans.org.sg/services/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Bedok",
+        "Multilingual counselling"
+      ]
+    },
+    {
+      "id": "fsc-trans-bukit-timah",
+      "name": "TRANS Family Service Centre (Bukit Timah)",
+      "org": "TRANS Family Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "TRANS centre at Toh Yi Drive near Beauty World. Multilingual team offering intake, casework, counselling, groups and outreach for financial, mental health, employment, marital and parenting concerns.",
+      "phone": "6466 2287",
+      "other": "Email transbt@trans.org.sg",
+      "web": "https://www.trans.org.sg/services/family-service-centres/",
+      "tags": [
+        "FSC",
+        "Bukit Timah",
+        "Multilingual counselling"
+      ]
+    },
+    {
+      "id": "fsc-viriya-potong-pasir",
+      "name": "Viriya Family Service Centre",
+      "org": "Viriya Community Services",
+      "cats": [
+        "family",
+        "seniors",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Serves Potong Pasir, Joo Seng and Bidadari. Casework and counselling for family, health, marital and money struggles, with active ageing, caregiver and grief support groups, and evening hours on Tuesdays and Thursdays.",
+      "phone": "6285 8033",
+      "other": "Email vfsc@viriya.org.sg",
+      "web": "https://viriya.org.sg/services/viriya-family-service-centre/",
+      "tags": [
+        "FSC",
+        "Potong Pasir",
+        "Caregiver & grief support"
+      ]
+    },
+    {
+      "id": "fsc-whampoa",
+      "name": "Whampoa Family Service Centre",
+      "org": "Kampong Kapor Community Services",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Kampong Kapor Community Services' second FSC, serving Whampoa, Balestier and Novena. Casework and counselling for financial, marital, parenting and personal concerns, plus group and community work.",
+      "phone": "6485 4750",
+      "other": "",
+      "web": "https://www.kkcs.org.sg/we-can-help/whampoa-family-service-centre/",
+      "tags": [
+        "FSC",
+        "Whampoa / Balestier",
+        "Marital & parenting"
+      ]
+    },
+    {
+      "id": "fsc-whispering-hearts",
+      "name": "Whispering Hearts Family Service Centre",
+      "org": "Viriya Community Services",
+      "cats": [
+        "family",
+        "youth",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "Viriya's Jurong West centre for Boon Lay, Nanyang and Pioneer residents. Casework and counselling for parenting, marital, health, money and job challenges, with mental wellness and grief groups, a youth support group and children's mentoring.",
+      "phone": "6795 1008",
+      "other": "Email whfsc@viriya.org.sg",
+      "web": "https://viriya.org.sg/services/whispering-hearts-family-service-centre/",
+      "tags": [
+        "FSC",
+        "Jurong West",
+        "Youth & children"
+      ]
+    },
+    {
+      "id": "fsc-yishun-childrens-society",
+      "name": "Yishun Family Service @ Children's Society",
+      "org": "Singapore Children's Society",
+      "cats": [
+        "family",
+        "msf-fsc"
+      ],
+      "h24": false,
+      "desc": "FSC run by Singapore Children's Society at Yishun Ring Road. Its casework commonly focuses on keeping family members safe, financial stability, mental health and strengthening how families function.",
+      "phone": "6753 7331",
+      "other": "Email yishunfsc@childrensociety.org.sg",
+      "web": "https://www.childrensociety.org.sg/",
+      "tags": [
+        "FSC",
+        "Yishun",
+        "Child & family safety"
       ]
     }
   ]

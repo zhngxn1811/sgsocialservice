@@ -57,3 +57,36 @@ test('presents communication modes as labelled rows alongside Call and Website',
   assert.ok(html.includes('href="sms:97694403"'));
   assert.ok(html.includes('href="https://wa.me/6597694403"'));
 });
+
+test('presents addresses as contact rows with optional safe map links', () => {
+  const address = 'Blk 230 Ang Mo Kio Avenue 3, #01-1264, Singapore 560230';
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const linked = render({ address, mapsUrl });
+  assert.ok(linked.includes(`<dt>Address</dt><dd><a href="${mapsUrl.replaceAll('&', '&amp;')}" target="_blank" rel="noopener">${address}</a></dd>`));
+  assert.ok(render({ address }).includes(`<dt>Address</dt><dd>${address}</dd>`));
+  assert.ok(render({ other: `Address: ${address}` }).includes(`<dt>Address</dt><dd>${address}</dd>`));
+  const unsafe = render({ address: '<unsafe>', mapsUrl: 'javascript:alert(1)' });
+  assert.ok(unsafe.includes('<dt>Address</dt><dd>&lt;unsafe&gt;</dd>'));
+  assert.ok(!unsafe.includes('href='));
+});
+
+test('includes the 55 revised FSC entries with the supplied contact fields', () => {
+  const { services } = JSON.parse(readFileSync(new URL('../public/services.json', import.meta.url), 'utf8'));
+  const centres = services.filter((s: any) => s.id.startsWith('fsc-'));
+  assert.equal(centres.length, 55);
+  assert.equal(new Set(centres.map((s: any) => s.id)).size, 55);
+  assert.ok(!centres.some((s: any) => s.name === 'Fei Yue Family Service Centre (Bukit Panjang)'));
+  assert.equal(services.filter((s: any) => s.id === 'fsc').length, 1);
+  assert.ok(services.find((s: any) => s.id === 'fsc').cats.includes('msf-fsc'));
+  for (const centre of centres) {
+    assert.deepEqual(Object.keys(centre), ['id', 'name', 'org', 'cats', 'h24', 'desc', 'phone', 'other', 'web', 'tags']);
+    assert.equal(centre.h24, false);
+    assert.match(centre.phone, /^(?:\d{4} \d{4}|1800 \d{3} \d{4})$/);
+    assert.ok(centre.desc.length > 0);
+    assert.ok(new URL(centre.web));
+    assert.ok(centre.cats.includes('family'));
+    assert.ok(centre.cats.includes('msf-fsc'));
+    assert.ok(card(centre).includes('<dt>Website</dt>'));
+    if (centre.other) assert.ok(card(centre).includes('href="mailto:'));
+  }
+});
