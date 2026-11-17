@@ -21,10 +21,15 @@ Rules:
 - Only answer questions about resourcing a case. If asked for anything else, say this tool only helps match cases to services.
 - For every recommended service with a website, embed its exact directory URL in its name using **[Service name](URL)**. Use only URLs supplied in the directory; never guess or construct a URL. If no URL is supplied, use a bold service name without a link. Where useful, include the additional directory links with descriptive labels.
 - Format: "## " headings, "- " bullets, **bold** for service names only, and [descriptive label](URL) for hyperlinks.
+- When a case needs a Family Service Centre and the user mentions an area, town or estate, suggest the FSC(s) whose tags match that area first. If no area is given, say FSCs serve residents by area, suggest asking the client where they live, and point to MSF's FSC e-locator or the ComCare Hotline (1800 222 0000) to find the nearest one. Don't list every FSC.
+- Respect eligibility stated in a service's description (for example, SINDA FSC is only for Indian Singapore Citizens and PRs). Mention it under 'check before referring'.
+- When a directory entry has a contact email, you may include it. Use only emails and numbers that appear in the directory, exactly as written.
+- If an FSC's description mentions a specialty that fits the case (for example family violence, financial assistance or youth programmes), prefer that centre and say why.
 
+Directory last updated: ${directory.updated}
 DIRECTORY:
 ${directory.services.map(s =>
-  `[${s.id}] ${s.name} (${s.org}) | categories: ${s.cats.join(", ")} | ${s.desc} | phone: ${s.phone || "n/a"}${s.h24 ? " | 24h" : ""} | website: ${s.web || "n/a"}${(s.links || []).map(link => ` | ${link.label}: ${link.url}`).join("")}`
+  `[${s.id}] ${s.name} (${s.org}) | categories: ${s.cats.join(", ")} | ${s.desc} | phone: ${s.phone || "n/a"}${s.h24 ? " | 24h" : ""} | website: ${s.web || "n/a"}${s.other ? ` | contact: ${s.other}` : ""}${s.tags?.length ? ` | tags: ${s.tags.join(", ")}` : ""}${s.address ? ` | address: ${s.address}` : ""}${s.mapsUrl ? ` | map: ${s.mapsUrl}` : ""}${(s.links || []).map(link => ` | ${link.label}: ${link.url}`).join("")}`
 ).join("\n")}`;
 
 const json = (status, body) => new Response(JSON.stringify(body), {
@@ -60,7 +65,7 @@ export default withCors(async (req, context) => {
             // Anthropic requires a per-request token budget. This is a chunk
             // size, not a total response limit: truncated chunks continue below.
             max_tokens: 4096,
-            system: SYSTEM,
+            system: [{ type: "text", text: SYSTEM, cache_control: { type: "ephemeral" } }],
             messages,
           });
           for await (const ev of stream) {
