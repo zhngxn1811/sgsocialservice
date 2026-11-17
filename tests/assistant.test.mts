@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import { test, mock } from 'node:test';
+import { readFile } from 'node:fs/promises';
+
+const directory = JSON.parse(await readFile(new URL('../public/services.json', import.meta.url), 'utf8'));
 
 let replies: { text: string; stop: string }[] = [];
 let calls: any[] = [];
@@ -37,7 +40,8 @@ test('streams long answers and continues every token-limited chunk until complet
   assert.equal(calls.length, 3);
   assert.equal(calls[1].messages[1].content[0].text, first);
   assert.equal(calls[2].messages[3].content[0].text, 'More guidance.');
-  assert.match(calls[0].system, /no word-count limit/);
+  assert.match(calls[0].system[0].text, /no word-count limit/);
+  for (const call of calls) assert.deepEqual(call.system, calls[0].system);
 });
 
 test('does not continue an answer that ends normally', async () => {
@@ -56,4 +60,42 @@ test('cancelling the response aborts generation', async () => {
   await reader.cancel();
   assert.equal(aborted, true);
   assert.equal(calls.length, 1);
+});
+
+
+test('cached system prompt includes the current directory with FSC contacts and locations', async () => {
+  replies = [{ text: 'Complete answer.', stop: 'end_turn' }];
+  calls = [];
+  await (await post()).text();
+  const blocks = calls[0].system;
+  assert.equal(blocks.length, 1);
+  assert.equal(blocks[0].type, 'text');
+  assert.deepEqual(blocks[0].cache_control, { type: 'ephemeral' });
+  const system = blocks[0].text;
+  assert.ok(system.includes(`Directory last updated: ${directory.updated}\nDIRECTORY:`));
+  const lines = system.split('\nDIRECTORY:\n')[1].split('\n');
+  assert.equal(lines.length, directory.services.length);
+  for (const service of directory.services) {
+    const line = lines.find((line: string) => line.startsWith(`[${service.id}] `));
+    assert.ok(line, `missing service ${service.id}`);
+    for (const value of [service.name, service.org, service.desc, service.cats.join(', '),
+      `phone: ${service.phone || 'n/a'}`, `website: ${service.web || 'n/a'}`]) {
+      assert.ok(line.includes(value), `${service.id}: missing ${value}`);
+    }
+    if (service.h24) assert.ok(line.includes(' | 24h'));
+    if (service.other) assert.ok(line.includes(` | contact: ${service.other}`));
+    else assert.ok(!line.includes(' | contact:'));
+    if (service.tags?.length) assert.ok(line.includes(` | tags: ${service.tags.join(', ')}`));
+    else assert.ok(!line.includes(' | tags:'));
+    if (service.address) assert.ok(line.includes(` | address: ${service.address}`));
+    if (service.mapsUrl) assert.ok(line.includes(` | map: ${service.mapsUrl}`));
+    for (const link of service.links || []) assert.ok(line.includes(` | ${link.label}: ${link.url}`));
+  }
+  const tamanJurong = lines.find((line: string) => line.startsWith('[fsc-fei-yue-sso-taman-jurong] '));
+  assert.ok(tamanJurong.includes('contact: Email enquiry_FeiYueTJFST@fycs.org'));
+  assert.ok(tamanJurong.includes('tags: FSC, Taman Jurong, Co-located with SSO'));
+  assert.ok(system.includes("suggest the FSC(s) whose tags match that area first"));
+  assert.ok(system.includes("SINDA FSC is only for Indian Singapore Citizens and PRs"));
+  assert.ok(system.includes("Use only emails and numbers that appear in the directory, exactly as written."));
+  assert.ok(system.includes("prefer that centre and say why."));
 });
