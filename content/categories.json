@@ -10,7 +10,7 @@
   "mental": {
     "slug": "mental-health-counselling",
     "title": "Mental health and counselling services in Singapore",
-    "description": "Counselling helplines, community mental health services and youth wellbeing support in Singapore, sorted for practitioners making referrals.",
+    "description": "Find mental health services and counselling in Singapore, with helplines, community support and youth services to guide your next referral.",
     "intro": "Counselling helplines, community mental health teams and early-support services in Singapore, from first-line emotional support to clinical care.",
     "social_title": "",
     "social_description": ""
@@ -57,8 +57,8 @@
   },
   "family": {
     "slug": "family-parenting-pregnancy",
-    "title": "Family, parenting and pregnancy support in Singapore",
-    "description": "Family Service Centres, parenting support and crisis pregnancy services in Singapore, for counsellors and social workers supporting families.",
+    "title": "Family Services in Singapore | Parenting & Pregnancy",
+    "description": "Find family services in Singapore, including Family Service Centres, counselling, parenting and pregnancy support, with contacts for your next referral.",
     "intro": "Family Service Centres, parenting support and crisis pregnancy services in Singapore for families going through a difficult time.",
     "social_title": "",
     "social_description": ""
@@ -106,7 +106,7 @@
   "msf-fsc": {
     "slug": "msf-family-service-centres",
     "title": "MSF Family Service Centres in Singapore",
-    "description": "Find Family Service Centres in the MSF network across Singapore, with phone numbers, email contacts and websites for family support and referrals.",
+    "description": "Find MSF Family Service Centres in Singapore for counselling, family services and referral support, with addresses, phone numbers and email contacts.",
     "intro": "Family Service Centres in the MSF network provide community-based casework, counselling and referrals for individuals and families. Browse the centres below or use the MSF locator to find your nearest centre.",
     "social_title": "",
     "social_description": ""
@@ -114,7 +114,7 @@
   "msf-sso": {
     "slug": "msf-social-service-offices",
     "title": "MSF Social Service Offices in Singapore",
-    "description": "Find MSF Social Service Offices in Singapore for ComCare financial assistance and social support, with addresses, Google Maps links and remote service notices.",
+    "description": "Find MSF Social Service Offices in Singapore for ComCare and social support, with addresses, Google Maps links and remote service notices.",
     "intro": "Social Service Offices run by the Ministry of Social and Family Development for ComCare financial assistance and social support. Find office addresses and Google Maps links below. Chua Chu Kang and Sembawang operate remotely with no walk-in services.",
     "social_title": "",
     "social_description": ""
