@@ -58,16 +58,41 @@ test('presents communication modes as labelled rows alongside Call and Website',
   assert.ok(html.includes('href="https://wa.me/6597694403"'));
 });
 
-test('presents addresses as contact rows with optional safe map links', () => {
+test('presents addresses as contact rows with safe map links and automatic Google Maps fallback', () => {
   const address = 'Blk 230 Ang Mo Kio Avenue 3, #01-1264, Singapore 560230';
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   const linked = render({ address, mapsUrl });
   assert.ok(linked.includes(`<dt>Address</dt><dd><a href="${mapsUrl.replaceAll('&', '&amp;')}" target="_blank" rel="noopener">${address}</a></dd>`));
-  assert.ok(render({ address }).includes(`<dt>Address</dt><dd>${address}</dd>`));
-  assert.ok(render({ other: `Address: ${address}` }).includes(`<dt>Address</dt><dd>${address}</dd>`));
+  assert.equal(render({ address }), linked);
+  assert.ok(render({ other: `Address: ${address}` }).includes(`<dt>Address</dt><dd><a href="${mapsUrl.replaceAll('&', '&amp;')}" target="_blank" rel="noopener">${address}</a></dd>`));
   const unsafe = render({ address: '<unsafe>', mapsUrl: 'javascript:alert(1)' });
   assert.ok(unsafe.includes('<dt>Address</dt><dd>&lt;unsafe&gt;</dd>'));
   assert.ok(!unsafe.includes('href='));
+});
+
+test('includes all 24 supplied Social Service Offices with 22 map-linked addresses and two remote offices', () => {
+  const { services, categories } = JSON.parse(readFileSync(new URL('../public/services.json', import.meta.url), 'utf8'));
+  assert.equal(categories.find((c: any) => c.id === 'msf-sso')?.label, 'MSF Social Service Offices');
+  const offices = services.filter((s: any) => s.id.startsWith('sso-'));
+  assert.equal(offices.length, 24);
+  assert.equal(new Set(offices.map((s: any) => s.id)).size, 24);
+  assert.equal(offices.filter((s: any) => s.address).length, 22);
+  for (const office of offices) {
+    assert.ok(office.cats.includes('financial'));
+    assert.ok(office.cats.includes('msf-sso'));
+    if (office.address) {
+      const url = new URL(office.mapsUrl);
+      assert.equal(url.origin, 'https://www.google.com');
+      assert.equal(url.searchParams.get('query'), office.address);
+      assert.match(office.address, /Singapore \d{6}$/);
+      assert.ok(card(office).includes('<dt>Address</dt><dd><a href="https://www.google.com/maps/'));
+    } else {
+      assert.ok(['sso-chua-chu-kang', 'sso-sembawang'].includes(office.id));
+      assert.match(office.desc, /remotely with no walk-in services/);
+      assert.ok(!office.mapsUrl);
+      assert.ok(!card(office).includes('<dt>Address</dt>'));
+    }
+  }
 });
 
 test('includes the 55 revised FSC entries with the supplied contact fields', () => {

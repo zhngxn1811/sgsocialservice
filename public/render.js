@@ -7,6 +7,7 @@
   const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   const anchor = (href, label, external = false) => `<a href="${esc(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>${esc(label)}</a>`;
+  const mapLink = (address, url) => website(url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, address);
   function website(value, label = value) {
     try {
       const url = new URL(/^[\w+.-]+:/.test(value) ? value : `https://${value}`);
@@ -40,7 +41,7 @@
       if (/WhatsApp|SMS/.test(label)) detail = numbers(value, label);
       else if (label === 'Email') detail = anchor(`mailto:${value}`, value);
       else if (label === 'Skype') detail = anchor(`skype:${value}?chat`, value);
-      else if (label === 'Address') detail = esc(value);
+      else if (label === 'Address') detail = mapLink(value);
       else detail = website(value);
     } else if (emergency) {
       label = 'SMS';
@@ -54,7 +55,7 @@
 
   function card(s) {
     const tags = (s.h24 ? '<span class="tag h24">24 hours</span>' : "") + (s.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
-    const address = s.address ? `<dt>Address</dt><dd>${s.mapsUrl ? website(s.mapsUrl, s.address) : esc(s.address)}</dd>` : '';
+    const address = s.address ? `<dt>Address</dt><dd>${mapLink(s.address, s.mapsUrl)}</dd>` : '';
     const contacts = address + (s.other || "").split(/;\s*/).filter(Boolean).map(contactRow).join("");
     const web = s.web ? website(s.web, s.web.replace(/^https?:\/\//, "")) : "";
     const webLinks = [web, ...(s.links || []).map(link => website(link.url, link.label))].filter(Boolean).join('<br>');
