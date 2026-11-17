@@ -110,5 +110,13 @@
     "intro": "Family Service Centres in the MSF network provide community-based casework, counselling and referrals for individuals and families. Browse the centres below or use the MSF locator to find your nearest centre.",
     "social_title": "",
     "social_description": ""
+  },
+  "msf-sso": {
+    "slug": "msf-social-service-offices",
+    "title": "MSF Social Service Offices in Singapore",
+    "description": "Find MSF Social Service Offices in Singapore for ComCare financial assistance and social support, with addresses, Google Maps links and remote service notices.",
+    "intro": "Social Service Offices run by the Ministry of Social and Family Development for ComCare financial assistance and social support. Find office addresses and Google Maps links below. Chua Chu Kang and Sembawang operate remotely with no walk-in services.",
+    "social_title": "",
+    "social_description": ""
   }
 }

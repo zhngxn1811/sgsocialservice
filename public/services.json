@@ -38,6 +38,10 @@
       "label": "MSF Family Service Centres"
     },
     {
+      "id": "msf-sso",
+      "label": "MSF Social Service Offices"
+    },
+    {
       "id": "youth",
       "label": "Children & youth"
     },
@@ -1938,6 +1942,438 @@
         "FSC",
         "Yishun",
         "Child & family safety"
+      ]
+    },
+    {
+      "id": "sso-ang-mo-kio",
+      "name": "Social Service Office @ Ang Mo Kio",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "AMK Hub, 53 Ang Mo Kio Ave 3, #04-02, Singapore 569933",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=AMK%20Hub%2C%2053%20Ang%20Mo%20Kio%20Ave%203%2C%20%2304-02%2C%20Singapore%20569933",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-bedok",
+      "name": "Social Service Office @ Bedok",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "21 Bedok North St 1, #01-02, Singapore 469659",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=21%20Bedok%20North%20St%201%2C%20%2301-02%2C%20Singapore%20469659",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-boon-lay",
+      "name": "Social Service Office @ Boon Lay",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "NKF Integrated Renal Centre, 500 Corporation Road, #01-01, Singapore 649808",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=NKF%20Integrated%20Renal%20Centre%2C%20500%20Corporation%20Road%2C%20%2301-01%2C%20Singapore%20649808",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-bukit-batok",
+      "name": "Social Service Office @ Bukit Batok",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Blk 369 Bukit Batok St 31, #01-505, Singapore 650369",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20369%20Bukit%20Batok%20St%2031%2C%20%2301-505%2C%20Singapore%20650369",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-bukit-merah",
+      "name": "Social Service Office @ Bukit Merah",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Bukit Merah Community Hub, 3779 Jalan Bukit Merah, #01-01, Singapore 159462",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Bukit%20Merah%20Community%20Hub%2C%203779%20Jalan%20Bukit%20Merah%2C%20%2301-01%2C%20Singapore%20159462",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-bukit-panjang",
+      "name": "Social Service Office @ Bukit Panjang",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Blk 232 Pending Road, #01-29, Singapore 670232",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20232%20Pending%20Road%2C%20%2301-29%2C%20Singapore%20670232",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-clementi",
+      "name": "Social Service Office @ Clementi",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Blk 358 Clementi Ave 2, #01-285, Singapore 120358",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20358%20Clementi%20Ave%202%2C%20%2301-285%2C%20Singapore%20120358",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-chua-chu-kang",
+      "name": "Social Service Office @ Chua Chu Kang",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Operates remotely with no walk-in services from 2 November 2026. Contact the ComCare Hotline for assistance. Information from the MSF contact list, updated October 2026.",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office",
+        "Remote service",
+        "No walk-ins"
+      ]
+    },
+    {
+      "id": "sso-geylang-serai",
+      "name": "Social Service Office @ Geylang Serai",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "10 Eunos Road 8, Singapore Post Centre, #12-02, Singapore 408600",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=10%20Eunos%20Road%208%2C%20Singapore%20Post%20Centre%2C%20%2312-02%2C%20Singapore%20408600",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-hougang",
+      "name": "Social Service Office @ Hougang",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Blk 662 Hougang Ave 4, #01-413, Singapore 530662",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20662%20Hougang%20Ave%204%2C%20%2301-413%2C%20Singapore%20530662",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-jalan-besar",
+      "name": "Social Service Office @ Jalan Besar",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Jalan Besar Community Club, 69 Jellicoe Road, #01-03, Singapore 208737",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jalan%20Besar%20Community%20Club%2C%2069%20Jellicoe%20Road%2C%20%2301-03%2C%20Singapore%20208737",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-jurong-east",
+      "name": "Social Service Office @ Jurong East",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Devan Nair Institute for Employment and Employability, 80 Jurong East Street 21, #01-07, Singapore 609607",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Devan%20Nair%20Institute%20for%20Employment%20and%20Employability%2C%2080%20Jurong%20East%20Street%2021%2C%20%2301-07%2C%20Singapore%20609607",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-kreta-ayer",
+      "name": "Social Service Office @ Kreta Ayer",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Kreta Ayer Community Club, 28A Kreta Ayer Road, #01-03, Singapore 088995",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kreta%20Ayer%20Community%20Club%2C%2028A%20Kreta%20Ayer%20Road%2C%20%2301-03%2C%20Singapore%20088995",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-pasir-ris",
+      "name": "Social Service Office @ Pasir Ris",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Pasir Ris East Community Building, 1 Pasir Ris Drive 4, #01-11, Singapore 519457",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pasir%20Ris%20East%20Community%20Building%2C%201%20Pasir%20Ris%20Drive%204%2C%20%2301-11%2C%20Singapore%20519457",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-punggol",
+      "name": "Social Service Office @ Punggol",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "ServiceSG Centre One Punggol, One Punggol Drive, #01-01, Singapore 828629",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=ServiceSG%20Centre%20One%20Punggol%2C%20One%20Punggol%20Drive%2C%20%2301-01%2C%20Singapore%20828629",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-queenstown",
+      "name": "Social Service Office @ Queenstown",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Block 40 Margaret Drive, #02-01, Singapore 140040",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Block%2040%20Margaret%20Drive%2C%20%2302-01%2C%20Singapore%20140040",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-sembawang",
+      "name": "Social Service Office @ Sembawang",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Operates remotely with no walk-in services from 24 August 2026. Contact the ComCare Hotline for assistance. Information from the MSF contact list, updated October 2026.",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office",
+        "Remote service",
+        "No walk-ins"
+      ]
+    },
+    {
+      "id": "sso-sengkang",
+      "name": "Social Service Office @ Sengkang",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Blk 261C Sengkang East Way, #01-506, Singapore 543261",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20261C%20Sengkang%20East%20Way%2C%20%2301-506%2C%20Singapore%20543261",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-serangoon",
+      "name": "Social Service Office @ Serangoon",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Blk 332 Serangoon Ave 3, #01-257, Singapore 550332",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20332%20Serangoon%20Ave%203%2C%20%2301-257%2C%20Singapore%20550332",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-taman-jurong",
+      "name": "Social Service Office @ Taman Jurong",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "301A Corporation Drive, Singapore 619773",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=301A%20Corporation%20Drive%2C%20Singapore%20619773",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-tampines",
+      "name": "Social Service Office @ Tampines",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "ServiceSG Centre Our Tampines Hub, 1 Tampines Walk, #01-21, Singapore 528523",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=ServiceSG%20Centre%20Our%20Tampines%20Hub%2C%201%20Tampines%20Walk%2C%20%2301-21%2C%20Singapore%20528523",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-toa-payoh",
+      "name": "Social Service Office @ Toa Payoh",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "490 Lor 6 Toa Payoh, HDB Hub Bizthree, #07-11, Singapore 310490",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=490%20Lor%206%20Toa%20Payoh%2C%20HDB%20Hub%20Bizthree%2C%20%2307-11%2C%20Singapore%20310490",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-woodlands",
+      "name": "Social Service Office @ Woodlands",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "ServiceSG Centre, 900 South Woodlands Drive, Woodlands Civic Centre, #03-01A, Singapore 730900",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=ServiceSG%20Centre%2C%20900%20South%20Woodlands%20Drive%2C%20Woodlands%20Civic%20Centre%2C%20%2303-01A%2C%20Singapore%20730900",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
+      ]
+    },
+    {
+      "id": "sso-yishun",
+      "name": "Social Service Office @ Yishun",
+      "org": "Ministry of Social and Family Development",
+      "cats": [
+        "financial",
+        "family",
+        "msf-sso"
+      ],
+      "desc": "ComCare financial assistance and social support. Location from the MSF Social Service Office contact list, updated October 2026.",
+      "address": "Blk 746 Yishun Street 72, #01-127, Singapore 760746",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20746%20Yishun%20Street%2072%2C%20%2301-127%2C%20Singapore%20760746",
+      "web": "https://www.msf.gov.sg/what-we-do/comcare",
+      "tags": [
+        "Financial aid",
+        "Social Service Office"
       ]
     }
   ]
