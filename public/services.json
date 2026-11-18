@@ -625,6 +625,27 @@
       ]
     },
     {
+      "id": "healthserve-24-hour-helpline",
+      "name": "HealthServe 24-Hour Helpline",
+      "org": "HealthServe",
+      "cats": [
+        "migrant",
+        "crisis",
+        "mental"
+      ],
+      "h24": true,
+      "desc": "A charity that gives migrant workers in Singapore affordable healthcare, mental health support and social assistance. It runs a 24-hour, multilingual crisis helpline for workers in mental distress, plus counselling, casework and help with work injury compensation claims.",
+      "phone": "+65 3129 5000",
+      "web": "https://healthserve.org.sg/serving-migrant-workers-in-distress/",
+      "tags": [
+        "Migrant workers",
+        "Multilingual helpline",
+        "Counselling",
+        "Casework",
+        "Work injury compensation"
+      ]
+    },
+    {
       "id": "mwc",
       "name": "Migrant Workers' Centre",
       "org": "MWC",
