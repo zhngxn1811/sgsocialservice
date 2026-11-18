@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-17",
+  "updated": "2026-11-18",
   "categories": [
     {
       "id": "crisis",
@@ -698,6 +698,26 @@
         "WhatsApp"
       ],
       "other": "WhatsApp: 8592 0609; Email: CARE@oogachaga.com"
+    },
+    {
+      "id": "grovve",
+      "name": "grovve",
+      "org": "NCSS, Shine Children & Youth Services and National Mindline",
+      "cats": [
+        "youth",
+        "mental"
+      ],
+      "desc": "Singapore’s first integrated wellness centre designed with youths for youths and their caregivers. grovve offers well-being activities, mental health screening, fringe and intervention services. Opening hours: Monday to Saturday, 11am–8pm.",
+      "address": "*SCAPE, 2 Orchard Link #04-06, Singapore 237978",
+      "web": "https://mindline.sg/grovve",
+      "tags": [
+        "Youth",
+        "Caregivers",
+        "Well-being",
+        "Screening",
+        "WhatsApp"
+      ],
+      "other": "WhatsApp: 9691 6678; Email: grovve@shine.org.sg"
     },
     {
       "id": "shine-resilience",
