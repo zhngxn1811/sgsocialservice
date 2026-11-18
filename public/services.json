@@ -58,6 +58,10 @@
       "label": "Migrant workers"
     },
     {
+      "id": "faith-based",
+      "label": "Faith-Based"
+    },
+    {
       "id": "legal",
       "label": "Legal help"
     }
@@ -582,6 +586,24 @@
         "Disability schemes"
       ],
       "other": "Email: contactus@sgenable.sg"
+    },
+    {
+      "id": "salvation-army-sojourn",
+      "name": "The Salvation Army Sojourn",
+      "org": "The Salvation Army",
+      "cats": [
+        "migrant",
+        "faith-based"
+      ],
+      "desc": "Befriending and outreach for male migrant workers, mainly in dormitories, to improve their wellbeing and help them connect with the local community.",
+      "phone": "(+65) 6631 8900",
+      "other": "Email: sojourn@smmt.salvationarmy.org",
+      "address": "6 Flanders Square, Singapore 209297",
+      "tags": [
+        "Male migrant workers",
+        "Befriending",
+        "Outreach"
+      ]
     },
     {
       "id": "mwc",
