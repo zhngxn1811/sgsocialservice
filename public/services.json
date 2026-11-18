@@ -606,6 +606,25 @@
       ]
     },
     {
+      "id": "salvation-army-carehaven",
+      "name": "The Salvation Army Carehaven",
+      "org": "The Salvation Army",
+      "cats": [
+        "migrant",
+        "violence",
+        "faith-based"
+      ],
+      "desc": "Residential shelter care for migrant domestic workers in difficult circumstances, including abuse or neglect. Carehaven is run in partnership with the Centre for Domestic Employees (CDE) and offers care and wellbeing programmes for residents.",
+      "phone": "(+65) 6555 0188",
+      "other": "Email: carehaven@smm.salvationarmy.org",
+      "address": "C/O The Salvation Army Territorial Headquarters, 20 Bishan Street 22 Singapore 579768",
+      "tags": [
+        "Migrant domestic workers",
+        "Shelter",
+        "Wellbeing"
+      ]
+    },
+    {
       "id": "mwc",
       "name": "Migrant Workers' Centre",
       "org": "MWC",
