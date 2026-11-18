@@ -95,6 +95,14 @@
     "social_title": "",
     "social_description": ""
   },
+  "faith-based": {
+    "slug": "faith-based",
+    "title": "Faith-Based services in Singapore",
+    "description": "Find Faith-Based social services in Singapore, including befriending and outreach for migrant workers, with contact details for referrals.",
+    "intro": "Social services provided by faith-based organisations in Singapore, including befriending, outreach and community support.",
+    "social_title": "",
+    "social_description": ""
+  },
   "legal": {
     "slug": "legal-help",
     "title": "Free and low-cost legal help in Singapore",
