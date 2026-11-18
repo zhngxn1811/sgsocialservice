@@ -99,3 +99,23 @@ test('cached system prompt includes the current directory with FSC contacts and 
   assert.ok(system.includes("Use only emails and numbers that appear in the directory, exactly as written."));
   assert.ok(system.includes("prefer that centre and say why."));
 });
+
+test('accepts referral-letter requests with drafting instructions and factual safeguards', async () => {
+  const caseText = 'Draft a referral letter from a case manager to a family service centre. Adult caregiver reports family conflict and needs support.';
+  replies = [{ text: '## Draft referral letter\n\n[Date]\n\nDear [Receiving professional / service],', stop: 'end_turn' }];
+  calls = [];
+  const response = await handler(new Request('https://example.test/api/assistant', {
+    method: 'POST', body: JSON.stringify({ caseText }),
+  }));
+  assert.equal(response.status, 200);
+  assert.match(await response.text(), /Draft referral letter/);
+  assert.equal(calls[0].messages[0].content, caseText);
+  const system = calls[0].system[0].text;
+  assert.match(system, /social workers, case managers, counsellors, psychologists and psychiatrists/);
+  assert.match(system, /produce an editable draft rather than only a list of services/);
+  assert.match(system, /Use only case facts the user supplies/);
+  assert.match(system, /An unmentioned risk is unknown/);
+  assert.match(system, /complete identifiers locally/);
+  assert.match(system, /verify accuracy, consent, recipient requirements and urgency/);
+  assert.doesNotMatch(system, /this tool only helps match cases to services/);
+});
