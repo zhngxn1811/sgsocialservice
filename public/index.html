@@ -59,17 +59,17 @@
     <div class="panel">
       <p class="eyebrow">Case resourcing assistant</p>
       <h2 id="asstTitle">Describe the presenting issues</h2>
-      <p class="lede">The assistant reads the directory below and suggests which services fit this case, in what order, and what to check before referring.</p>
-      <label for="caseText">Case summary (de-identified)</label>
-      <textarea id="caseText" placeholder="Example: 42F, sole caregiver to two primary-school kids. Husband's gambling has led to about $18k in debt, utilities in arrears. Reports he shouts and once pushed her during an argument last month. Low mood, poor sleep, no current suicidal ideation reported. Prefers Mandarin."></textarea>
+      <p class="lede">The assistant reads the directory below and suggests which services fit this case, in what order, and what to check before referring. You can also ask it to draft referral letters for you.</p>
+      <label for="caseText">Case summary and request (de-identified)</label>
+      <textarea id="caseText" placeholder="Example: 42F, sole caregiver to two primary-school kids. Husband's gambling has led to about $18k in debt, utilities in arrears. Reports he shouts and once pushed her during an argument last month. Low mood, poor sleep, no current suicidal ideation reported. Prefers Mandarin. You can also ask: Draft a referral letter to a family service centre based on this summary."></textarea>
       <div class="privacy"><strong>No identifying details.</strong> Leave out names, NRIC, addresses, phone numbers and school names. Age, gender and circumstances are enough.</div>
       <div class="row">
-        <button class="btn teal" id="askBtn" type="button">Find relevant services</button>
+        <button class="btn teal" id="askBtn" type="button">Find services or draft a letter</button>
         <button class="btn" id="clearBtn" type="button">Clear</button>
       </div>
     </div>
     <div class="panel out" id="out" aria-live="polite">
-      <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. Enter your case summary on the left to get started.</p>
+      <p class="placeholder">Suggestions will appear here, grouped by presenting issue, with risk flags first. You can also request a referral-letter draft. Enter your de-identified case summary and request on the left to get started.</p>
     </div>
   </section>
 
@@ -190,7 +190,7 @@ function openReportFromLink(){
 }
 
 /* ---------- AI assistant ---------- */
-const DISCLAIM='<p class="disclaim">AI suggestions from the directory above. Verify details and use your professional judgement before referring.</p>';
+const DISCLAIM='<p class="disclaim">AI-generated service guidance or referral-letter draft. Verify details, consent and recipient requirements, complete any placeholders locally, and use your professional judgement before referring or sending.</p>';
 function md(t){
   const lines=t.split("\n");let html="",inList=false;
   const inline=s=>{
@@ -221,7 +221,7 @@ $("#askBtn").addEventListener("click",async()=>{
   const text=$("#caseText").value.trim();const out=$("#out");
   if(text.length<15){out.innerHTML='<p class="err">Add a bit more about the case: age, presenting issues, risk, language or other needs.</p>';return;}
   const btn=$("#askBtn");btn.disabled=true;btn.textContent="Thinking…";
-  out.innerHTML='<p class="placeholder">Reading the directory and matching services…</p>';
+  out.innerHTML='<p class="placeholder">Preparing service guidance or a referral-letter draft…</p>';
   abortCtl?.abort();abortCtl=new AbortController();
   let acc="";
   try{
@@ -232,7 +232,7 @@ $("#askBtn").addEventListener("click",async()=>{
     out.innerHTML=md(acc)+DISCLAIM;
   }catch(err){
     if(err.name!=="AbortError")out.innerHTML=(acc?md(acc):"")+'<p class="err">The connection dropped. Try again in a moment.</p>';
-  }finally{btn.disabled=false;btn.textContent="Find relevant services";}
+  }finally{btn.disabled=false;btn.textContent="Find services or draft a letter";}
 });
 $("#clearBtn").addEventListener("click",()=>{$("#caseText").value="";$("#caseText").focus();});
 
