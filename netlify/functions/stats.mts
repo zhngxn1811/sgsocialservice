@@ -1,9 +1,9 @@
 // GET /api/stats?days=30   site numbers for the /admin/stats dashboard (admin key required)
 import type { Config } from "@netlify/functions";
-import { and, gte, lte } from "drizzle-orm";
+import { and, eq, gte, lte, sql } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { submissions, usageDaily } from "../../db/schema.js";
-import { periodFor, summarise } from "../lib/usage.mjs";
+import { assistantDailyCap, periodFor, sgDay, summarise } from "../lib/usage.mjs";
 
 const json = (status: number, body: unknown) => new Response(JSON.stringify(body), {
   status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
@@ -22,10 +22,15 @@ export default async (req: Request) => {
   try {
     const db = getDb();
     const rows = await db.select().from(usageDaily)
-      .where(and(gte(usageDaily.day, period.prevFrom), lte(usageDaily.day, period.to)));
+      .where(and(gte(usageDaily.day, period.readFrom), lte(usageDaily.day, period.to)));
     const subs = await db.select({ created_at: submissions.created_at, kind: submissions.kind }).from(submissions)
       .where(gte(submissions.created_at, `${period.prevFrom}T00:00:00+08:00`));
-    return json(200, { ...summarise(rows, subs, period), generatedAt: new Date().toISOString() });
+    // All-time count of recommendations and updates you haven't reviewed yet.
+    const [waiting] = await db.select({ n: sql<number>`count(*)::int` }).from(submissions).where(eq(submissions.status, "new"));
+    const summary = summarise(rows, subs, period);
+    const today = sgDay();
+    const usedToday = rows.filter(r => r.day === today && r.metric === "assistant").reduce((s, r) => s + (Number(r.count) || 0), 0);
+    return json(200, { ...summary, assistantCap: { limit: assistantDailyCap(), usedToday }, waitingReview: Number(waiting?.n ?? 0), generatedAt: new Date().toISOString() });
   } catch {
     return json(500, { error: "Couldn't load the numbers. Try again in a moment." });
   }

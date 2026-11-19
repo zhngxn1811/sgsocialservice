@@ -21,8 +21,9 @@
 .seg button{border:none;background:none;padding:8px 14px;white-space:nowrap;font:600 14px var(--body);color:var(--ink);cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .msg{color:var(--accent);font-size:14px;margin:0}
-.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-@media (max-width:820px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:980px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:620px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px;min-width:0}
 .tile .label{font-size:14px;color:var(--muted);font-weight:600}
 .tile .value{font-family:var(--body);font-weight:700;font-size:34px;line-height:1.1}
@@ -49,6 +50,13 @@ table{border-collapse:collapse;width:100%;font-size:14px}
 th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 th:first-child,td:first-child{text-align:left}
 th{color:var(--muted);font-weight:600}
+.pair2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+@media (max-width:820px){.pair2{grid-template-columns:1fr}}
+.h3{font-family:var(--body);font-size:15px;font-weight:700;margin:0 0 8px}
+.tiles3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.capwarn{color:var(--accent);font-weight:700}
+@media (max-width:820px){.tiles3{grid-template-columns:1fr}}
+.tile a{font-size:13px}
 .note{font-size:13px;color:var(--muted);max-width:75ch;margin:0}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:999px;font-weight:600;font-size:14px}
 </style>
@@ -79,6 +87,8 @@ th{color:var(--muted);font-weight:600}
       <p class="lead" id="period" style="margin:0"></p>
       <div class="tiles" id="tiles"></div>
       <div class="minor" id="minor"></div>
+      <div class="minor" id="visitorsLine"></div>
+      <div class="minor" id="capLine"></div>
 
       <div class="card">
         <h2>Visits per day</h2>
@@ -87,9 +97,35 @@ th{color:var(--muted);font-weight:600}
       </div>
 
       <div class="card">
+        <h2>Where visits come from</h2>
+        <p class="sub">Country of each visit, worked out by Netlify. Only the country is counted; IP addresses are never stored.</p>
+        <div class="chart" id="countriesChart"></div>
+      </div>
+
+      <div class="card">
         <h2>Interest by presenting issue</h2>
         <p class="sub">Views of each issue page plus uses of its filter on the home page. Useful for showing where demand is.</p>
         <div class="chart" id="issuesChart"></div>
+      </div>
+
+      <div class="card">
+        <h2>Who's using it</h2>
+        <p class="sub">From the optional two-question pop-up, asked once per browser. Anonymous totals only.</p>
+        <div class="minor" id="audienceStats" style="margin-bottom:14px"></div>
+        <div class="pair2">
+          <div><h3 class="h3">By role</h3><div class="chart" id="rolesChart"></div></div>
+          <div><h3 class="h3">By where they work</h3><div class="chart" id="agenciesChart"></div></div>
+        </div>
+        <h3 class="h3" style="margin-top:20px">Assistant uses by role</h3>
+        <p class="sub" style="margin-top:2px">Only counted for people who answered the pop-up.</p>
+        <div class="chart" id="assistantRoleChart"></div>
+        <details style="margin-top:16px"><summary>Most common combinations</summary><div class="tablewrap"><table id="comboTable"></table></div></details>
+      </div>
+
+      <div class="card">
+        <h2>Recommendations and updates</h2>
+        <p class="sub">Sent by practitioners through the form on the site.</p>
+        <div class="tiles tiles3" id="subTiles"></div>
       </div>
 
       <div class="actions">
@@ -102,7 +138,7 @@ th{color:var(--muted);font-weight:600}
         <div class="tablewrap"><table id="table"></table></div>
       </details>
 
-      <p class="note">People who switch on Do Not Track or Global Privacy Control in their browser aren't counted, and search engines are filtered out, so real use is a little higher than shown. Assistant uses are counted on the server each time a case is sent; the case text is never stored.</p>
+      <p class="note">Unique visitors are counted per browser without cookies: the browser only remembers the date it was last counted. Someone using two devices, a private window, or who clears their browser data is counted again, so treat these as close estimates. People who switch on Do Not Track or Global Privacy Control in their browser aren't counted, and search engines are filtered out, so real use is a little higher than shown. Assistant uses are counted on the server each time a case is sent; the case text is never stored.</p>
     </div>
   </section>
 </main>
@@ -152,10 +188,16 @@ function render(){
   const {totals:t,previous:p,range}=data;
   $("#report").hidden=false;
   $("#period").textContent=`${dayLabel(range.from,{day:"numeric",month:"short",year:"numeric"})} to ${dayLabel(range.to,{day:"numeric",month:"short",year:"numeric"})}`;
+  const v=data.visitors||{thisMonth:0,newInPeriod:0,returningDays:0,averagePerDay:0,monthFrom:range.to};
   const tiles=[["Visits","visits"],["Searches","searches"],["Assistant uses","assistant"],["Submissions","submissions"]];
-  $("#tiles").innerHTML=tiles.map(([label,k])=>`<div class="tile"><span class="label">${label}</span><span class="value">${fmt(t[k])}</span><span class="delta">${delta(t[k],p[k])}</span></div>`).join("");
+  $("#tiles").innerHTML=`<div class="tile"><span class="label">Unique visitors this month</span><span class="value">${fmt(v.thisMonth)}</span><span class="delta">since ${esc(dayLabel(v.monthFrom,{day:"numeric",month:"short"}))}</span></div>`+
+    tiles.map(([label,k])=>`<div class="tile"><span class="label">${label}</span><span class="value">${fmt(t[k])}</span><span class="delta">${delta(t[k],p[k])}</span></div>`).join("");
+  $("#visitorsLine").innerHTML=`<span>New visitors <b>${fmt(v.newInPeriod)}</b> (${delta(t.newVisitors,p.newVisitors)})</span><span>Returning visitor-days <b>${fmt(v.returningDays)}</b></span><span>About <b>${fmt(v.averagePerDay)}</b> different visitors a day</span>`;
+  const cap=data.assistantCap;
+  $("#capLine").innerHTML=cap?(cap.limit?`<span>Assistant daily limit: <b>${fmt(cap.usedToday)}</b> of <b>${fmt(cap.limit)}</b> used today${cap.usedToday>=cap.limit?' <span class="capwarn">(limit reached)</span>':""}</span>`:'<span>Assistant daily limit: <b>off</b></span>')+
+    `<span>Turned away by the limit in this period <b>${fmt(t.assistantCapped)}</b></span>`:"";
   $("#minor").innerHTML=`<span>Page views <b>${fmt(t.pageviews)}</b></span><span>Searches with no results <b>${fmt(t.noResults)}</b> (possible gaps in the directory)</span>`;
-  drawVisits(); drawIssues(); drawTable();
+  drawVisits(); drawCountries(); drawIssues(); drawAudience(); drawSubmissions(); drawTable();
 }
 
 /* ---------- Visits per day: one series, 2px line, light wash, end dot + label, crosshair tooltip ---------- */
@@ -190,13 +232,24 @@ function drawVisits(){
     const r=rows[i];
     svg.querySelector("#vx").setAttribute("x1",x(i));svg.querySelector("#vx").setAttribute("x2",x(i));svg.querySelector("#vx").setAttribute("visibility","visible");
     const d=svg.querySelector("#vd");d.setAttribute("cx",x(i));d.setAttribute("cy",y(r.visits));d.setAttribute("visibility","visible");
-    tip.innerHTML=`<b>${esc(dayLabel(r.day,{weekday:"short",day:"numeric",month:"short"}))}</b><br>${fmt(r.visits)} visits · ${fmt(r.pageviews)} page views<br>${fmt(r.searches)} searches · ${fmt(r.assistant)} assistant uses`;
+    tip.innerHTML=`<b>${esc(dayLabel(r.day,{weekday:"short",day:"numeric",month:"short"}))}</b><br>${fmt(r.visits)} visits · ${fmt(r.visitorDays)} visitors (${fmt(r.newVisitors)} new)<br>${fmt(r.pageviews)} page views · ${fmt(r.searches)} searches · ${fmt(r.assistant)} assistant uses`;
     tip.hidden=false;
     const px=x(i)*(rect.width/W), py=y(r.visits)*(rect.height/H);
     tip.style.left=Math.min(Math.max(px,90),rect.width-90)+"px";tip.style.top=py+"px";
   };
   const hide=()=>{tip.hidden=true;svg.querySelector("#vx").setAttribute("visibility","hidden");svg.querySelector("#vd").setAttribute("visibility","hidden");};
   hit.addEventListener("pointermove",show);hit.addEventListener("pointerdown",show);hit.addEventListener("pointerleave",hide);
+}
+
+/* ---------- Where visits come from ---------- */
+let regionNames=null;try{regionNames=new Intl.DisplayNames(["en-SG"],{type:"region"});}catch{}
+const countryName=k=>{if(k==="xx")return"Unknown";try{return regionNames?.of(k.toUpperCase())||k.toUpperCase();}catch{return k.toUpperCase();}};
+function drawCountries(){
+  const list=data.countries||[], total=list.reduce((s,c)=>s+c.count,0);
+  const top=list.slice(0,8), rest=list.slice(8).reduce((s,c)=>s+c.count,0);
+  const rows=top.map(c=>({label:countryName(c.key),value:c.count,tip:`${fmt(c.count)} visits, ${pct(c.count,total)}% of visits`}));
+  if(rest)rows.push({label:"Other countries",value:rest,tip:`${fmt(rest)} visits from ${list.length-8} more countries`});
+  drawBars($("#countriesChart"),rows,"No country counts yet. They start once this update is live.");
 }
 
 /* ---------- Interest by presenting issue: horizontal bars, value at the tip ---------- */
@@ -207,35 +260,61 @@ function issueRows(){
     .map(r=>({...r,total:r.views+r.filters})).filter(r=>r.total>0).sort((a,b)=>b.total-a.total);
 }
 function drawIssues(){
-  const box=$("#issuesChart"), rows=issueRows();
-  if(!rows.length){box.innerHTML='<p class="empty">No issue pages viewed or filters used in this period yet.</p>';return;}
-  const W=Math.max(320,box.clientWidth);
-  // label column fits the longest issue name, measured in the chart's own font
+  drawBars($("#issuesChart"),issueRows().map(r=>({label:r.label,value:r.total,tip:`${fmt(r.views)} page views · ${fmt(r.filters)} filter uses`})),"No issue pages viewed or filters used in this period yet.");
+}
+// Horizontal bars, value at the tip, sorted largest first. Used by every bar chart on this page.
+function drawBars(box,rows,emptyText){
+  if(!rows.length){box.innerHTML=`<p class="empty">${esc(emptyText)}</p>`;return;}
+  const W=Math.max(280,box.clientWidth);
+  // label column fits the longest name, measured in the chart's own font
   const ctx=document.createElement("canvas").getContext("2d");ctx.font="13px "+getComputedStyle(box).getPropertyValue("--body");
   const longest=Math.ceil(Math.max(...rows.map(r=>ctx.measureText(r.label).width)));
   const narrow=W<560||longest>W*.42, labelW=narrow?0:longest+4, rowH=narrow?52:34, bar=16, T=4;
-  const H=T+rows.length*rowH, max=Math.max(...rows.map(r=>r.total)), valW=48, iw=W-labelW-valW-8;
+  const H=T+rows.length*rowH, max=Math.max(...rows.map(r=>r.value),1), valW=48, iw=W-labelW-valW-8;
   const bx=labelW+(narrow?0:12), w=v=>Math.max(8,(v/max)*(iw-(narrow?0:12)));
-  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Interest by presenting issue">
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(rows.map(r=>r.label+": "+r.value).join(", "))}">
     ${rows.map((r,i)=>{
-      const top=T+i*rowH+(narrow?20:(rowH-bar)/2), bw=w(r.total);
+      const top=T+i*rowH+(narrow?20:(rowH-bar)/2), bw=w(r.value);
       return `<g data-i="${i}">
         <rect x="0" y="${T+i*rowH}" width="${W}" height="${rowH}" fill="transparent"/>
         <text class="lbl" x="${narrow?0:labelW}" y="${narrow?T+i*rowH+14:top+bar/2+4}" text-anchor="${narrow?"start":"end"}">${esc(r.label)}</text>
         <path d="M${bx} ${top} h${bw-4} a4 4 0 0 1 4 4 v${bar-8} a4 4 0 0 1 -4 4 h-${bw-4} Z" fill="var(--teal)"/>
-        <text class="val" x="${bx+bw+8}" y="${top+bar/2+4}">${fmt(r.total)}</text>
+        <text class="val" x="${bx+bw+8}" y="${top+bar/2+4}">${fmt(r.value)}</text>
       </g>`;}).join("")}
   </svg><div class="tip" hidden></div>`;
   const svg=box.querySelector("svg"), tip=box.querySelector(".tip");
   svg.querySelectorAll("g[data-i]").forEach(g=>{
     const r=rows[g.dataset.i];
-    const show=ev=>{const rect=box.getBoundingClientRect();tip.innerHTML=`<b>${esc(r.label)}</b><br>${fmt(r.views)} page views · ${fmt(r.filters)} filter uses`;tip.hidden=false;tip.style.left=Math.min(Math.max(ev.clientX-rect.left,100),rect.width-100)+"px";tip.style.top=(ev.clientY-rect.top)+"px";};
+    const show=ev=>{const rect=box.getBoundingClientRect();tip.innerHTML=`<b>${esc(r.label)}</b><br>${esc(r.tip||fmt(r.value))}`;tip.hidden=false;tip.style.left=Math.min(Math.max(ev.clientX-rect.left,100),rect.width-100)+"px";tip.style.top=(ev.clientY-rect.top)+"px";};
     g.addEventListener("pointermove",show);g.addEventListener("pointerdown",show);g.addEventListener("pointerleave",()=>tip.hidden=true);
   });
 }
 
+/* ---------- Who's using it ---------- */
+const pct=(n,of)=>of?Math.round(n/of*100):0;
+function drawAudience(){
+  const a=data.audience||{responses:0,shown:0,skipped:0,roles:[],agencies:[],assistantByRole:[],combos:[]};
+  $("#audienceStats").innerHTML=`<span>Answers <b>${fmt(a.responses)}</b></span><span>Pop-up shown <b>${fmt(a.shown)}</b></span><span>Chose "Not now" <b>${fmt(a.skipped)}</b></span>`+
+    (a.responseRate!==null&&a.responseRate!==undefined?`<span>Answer rate <b>${a.responseRate}%</b></span>`:"");
+  const toRows=list=>list.map(x=>({label:x.label,value:x.count,tip:`${fmt(x.count)} ${x.count===1?"person":"people"}, ${pct(x.count,a.responses)}% of answers`}));
+  drawBars($("#rolesChart"),toRows(a.roles),"No answers yet in this period.");
+  drawBars($("#agenciesChart"),toRows(a.agencies),"No answers yet in this period.");
+  const totalByRole=a.assistantByRole.reduce((s,x)=>s+x.count,0);
+  drawBars($("#assistantRoleChart"),a.assistantByRole.map(x=>({label:x.label,value:x.count,tip:`${fmt(x.count)} assistant uses, ${pct(x.count,totalByRole)}% of uses with a known role`})),"No assistant uses from people who answered the pop-up yet.");
+  $("#comboTable").innerHTML=a.combos.length?`<thead><tr><th scope="col">Role</th><th scope="col" style="text-align:left">Where they work</th><th scope="col">Answers</th></tr></thead><tbody>${a.combos.map(c=>`<tr><td>${esc(c.role)}</td><td style="text-align:left">${esc(c.agency)}</td><td>${fmt(c.count)}</td></tr>`).join("")}</tbody>`:'<tbody><tr><td>No answers yet in this period.</td></tr></tbody>';
+}
+
+/* ---------- Recommendations and updates ---------- */
+function drawSubmissions(){
+  const k=data.submissionsByKind||{recommend:0,update:0};
+  $("#subTiles").innerHTML=
+    `<div class="tile"><span class="label">New services recommended</span><span class="value">${fmt(k.recommend)}</span><span class="delta">in this period</span></div>`+
+    `<div class="tile"><span class="label">Listing updates reported</span><span class="value">${fmt(k.update)}</span><span class="delta">in this period</span></div>`+
+    `<div class="tile"><span class="label">Waiting for your review</span><span class="value">${fmt(data.waitingReview||0)}</span><span class="delta"><a href="/admin">Open the inbox</a> · all time</span></div>`;
+}
+
 /* ---------- Table, CSV and report summary ---------- */
-const COLS=[["day","Day"],["visits","Visits"],["pageviews","Page views"],["searches","Searches"],["noResults","No-result searches"],["assistant","Assistant uses"],["submissions","Submissions"]];
+const COLS=[["day","Day"],["visits","Visits"],["visitorDays","Visitors"],["newVisitors","New visitors"],["pageviews","Page views"],["searches","Searches"],["noResults","No-result searches"],["assistant","Assistant uses"],["submissions","Submissions"],["profiles","Pop-up answers"]];
 function drawTable(){
   $("#table").innerHTML=`<thead><tr>${COLS.map(c=>`<th scope="col">${c[1]}</th>`).join("")}</tr></thead><tbody>${[...data.daily].reverse().map(r=>`<tr>${COLS.map(([k],i)=>i?`<td>${fmt(r[k])}</td>`:`<td>${esc(dayLabel(r.day,{weekday:"short",day:"numeric",month:"short"}))}</td>`).join("")}</tr>`).join("")}</tbody>
   <tfoot><tr><th scope="row">Total</th>${COLS.slice(1).map(([k])=>`<td><b>${fmt(data.totals[k])}</b></td>`).join("")}</tr></tfoot>`;
@@ -252,12 +331,19 @@ $("#copySummary").addEventListener("click",async()=>{
   if(!data)return;
   const t=data.totals, top=issueRows().slice(0,3).map(r=>r.label);
   const text=`SG Social Services, ${dayLabel(data.range.from,{day:"numeric",month:"long",year:"numeric"})} to ${dayLabel(data.range.to,{day:"numeric",month:"long",year:"numeric"})}: `+
-    `${fmt(t.visits)} visits, ${fmt(t.searches)} directory searches, ${fmt(t.assistant)} cases resourced with the AI assistant, and ${fmt(t.submissions)} service recommendations or updates from practitioners.`+
-    (top.length?` Most-viewed presenting issues: ${top.join(", ")}.`:"");
+    `${fmt(t.visits)} visits (${fmt(t.newVisitors)} by first-time visitors), ${fmt(t.searches)} directory searches, ${fmt(t.assistant)} cases resourced with the AI assistant, and ${fmt(t.submissions)} service recommendations or updates from practitioners.`+
+    (top.length?` Most-viewed presenting issues: ${top.join(", ")}.`:"")+
+    audienceSentence();
   try{await navigator.clipboard.writeText(text);toast("Summary copied");}
   catch{const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Summary copied");}catch{toast("Couldn't copy. Select the text in the table instead.");}ta.remove();}
 });
-let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(data){drawVisits();drawIssues();}},150);});
+function audienceSentence(){
+  const a=data.audience; if(!a||!a.responses)return"";
+  const known=a.roles.filter(r=>r.key!=="undisclosed"), top=known.slice(0,2);
+  if(!top.length)return"";
+  return ` Of the ${fmt(a.responses)} people who answered our optional question, the most common ${top.length===1?"role was":"roles were"} ${top.map(r=>`${r.label.toLowerCase()} (${pct(r.count,a.responses)}%)`).join(" and ")}.`;
+}
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(data){drawVisits();drawCountries();drawIssues();drawAudience();}},150);});
 </script>
 </body>
 </html>

@@ -10,14 +10,10 @@ export const submissions = pgTable('submissions', {
   org: text('org').notNull().default(''),
   category: text('category').notNull().default(''),
   phone: text('phone').notNull().default(''),
-  sms_whatsapp: text('sms_whatsapp').notNull().default(''),
-  email: text('email').notNull().default(''),
   web: text('web').notNull().default(''),
   service_id: text('service_id').notNull().default(''),
   details: text('details').notNull(),
   role: text('role').notNull().default(''),
-  submitter_email: text('submitter_email').notNull().default(''),
-  submitter_org_type: text('submitter_org_type').notNull().default(''),
 }, table => [
   check('submissions_kind', sql`${table.kind} in ('recommend', 'update')`),
   check('submissions_status', sql`${table.status} in ('new', 'done', 'rejected')`),
@@ -28,7 +24,10 @@ export const submissions = pgTable('submissions', {
 
 // Site usage, counted per day. Privacy-friendly by design: only counters are stored.
 // No cookies, IP addresses, browser details, search words or case text are ever saved.
-//   metric: visit, pageview, search, search_no_results, filter, assistant
+//   metric: visit, pageview, search, search_no_results, filter, assistant,
+//           profile (optional pop-up answer, key "role:agency"), profile_shown, profile_skip, assistant_role,
+//           visitor_day / visitor_new / visitor_month (one per browser per day, ever, or month),
+//           country (key: two-letter country of a visit, from Netlify; no IP stored), assistant_capped
 //   key:    what the count is about, e.g. "home", "help:legal-help" or a category id ("" if none)
 //   source: "web" for the website ("app" is reserved for the mobile apps)
 export const usageDaily = pgTable('usage_daily', {
@@ -39,7 +38,7 @@ export const usageDaily = pgTable('usage_daily', {
   count: integer('count').notNull().default(0),
 }, table => [
   primaryKey({ columns: [table.day, table.source, table.metric, table.key] }),
-  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant')`),
+  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped')`),
   check('usage_daily_count_positive', sql`${table.count} >= 0`),
   index('usage_daily_day_idx').on(table.day),
 ]);

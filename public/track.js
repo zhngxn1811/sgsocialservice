@@ -1,6 +1,7 @@
 // Privacy-friendly visit counting for SG Social Services.
 // Sends anonymous counts to /api/track: a visit, which page, that a search happened, which issue filter was used.
 // No cookies. No search words, case text, IP addresses or device details are stored.
+// Unique visitors: the browser keeps only the date it was last counted, so it isn't counted twice in a day or month.
 // People who switch on "Do Not Track" or Global Privacy Control are not counted at all.
 (function () {
   var noop = function () {};
@@ -35,6 +36,18 @@
 
     if (firstPage) window.sgssTrack("visit");
     window.sgssTrack("pageview", page);
+
+    // Unique visitors without cookies: the browser remembers only the last day and month it was counted
+    // (e.g. {"d":"2026-11-19","m":"2026-11"}). That date stays on the device; just "+1 visitor" is sent.
+    try {
+      var today = new Date(Date.now() + 8 * 3600 * 1000).toISOString().slice(0, 10), month = today.slice(0, 7);
+      var seen = null;
+      try { seen = JSON.parse(localStorage.getItem("sgss.seen") || "null"); } catch (e) {}
+      if (!seen || typeof seen !== "object") { seen = null; window.sgssTrack("visitor_new"); }
+      if (!seen || seen.d !== today) window.sgssTrack("visitor_day");
+      if (!seen || seen.m !== month) window.sgssTrack("visitor_month");
+      localStorage.setItem("sgss.seen", JSON.stringify({ d: today, m: month }));
+    } catch (e) {}
   } catch (e) {
     window.sgssTrack = noop;
   }

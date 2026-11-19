@@ -6,6 +6,7 @@ let writes: { values: any; conflict: any }[] = [];
 let usageRows: any[] = [];
 let submissionRows: any[] = [];
 let fail = false;
+let waitingN = 0;
 const db = {
   insert: () => ({
     values: (values: any) => ({
@@ -13,7 +14,7 @@ const db = {
     }),
   }),
   select: (cols?: any) => ({
-    from: () => ({ where: async () => (cols ? submissionRows : usageRows) }),
+    from: () => ({ where: async () => (cols?.n ? [{ n: waitingN }] : cols ? submissionRows : usageRows) }),
   }),
 };
 mock.module('../db/index.ts', { namedExports: { getDb: () => db } });
@@ -109,7 +110,8 @@ test('requests the assistant turns away are not counted', async () => {
 
 test('periods line up: current ends today, previous is the same length just before', () => {
   const p = usage.periodFor(7, '2026-11-15');
-  assert.deepEqual(p, { days: 7, from: '2026-11-09', to: '2026-11-15', prevFrom: '2026-11-02', prevTo: '2026-11-08' });
+  assert.deepEqual(p, { days: 7, from: '2026-11-09', to: '2026-11-15', prevFrom: '2026-11-02', prevTo: '2026-11-08', monthFrom: '2026-11-01', readFrom: '2026-11-01' });
+  assert.equal(usage.periodFor(30, '2026-11-15').readFrom, '2026-09-17', 'reads back far enough for the previous period too');
 });
 
 test('summary adds up totals, the previous period, daily rows, pages and filters', () => {
@@ -130,7 +132,8 @@ test('summary adds up totals, the previous period, daily rows, pages and filters
     { created_at: '2026-11-03T01:00:00Z', kind: 'update' }, // previous period
   ];
   const s = usage.summarise(rows, subs, p);
-  assert.deepEqual(s.totals, { visits: 8, pageviews: 9, searches: 0, noResults: 0, assistant: 6, submissions: 2 });
+  assert.deepEqual(s.totals, { visits: 8, pageviews: 9, searches: 0, noResults: 0, assistant: 6, submissions: 2, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0 });
+  assert.deepEqual(s.submissionsByKind, { recommend: 1, update: 1 });
   assert.equal(s.previous.visits, 10);
   assert.equal(s.previous.submissions, 1);
   assert.equal(s.daily.length, 7);
@@ -154,4 +157,158 @@ test('the dashboard gets a full summary for 7, 30 or 90 days', async () => {
   assert.equal(s.daily.length, 7);
   assert.equal(s.totals.visits, 12);
   assert.equal((await get('?days=365')).range.days, 30, 'unknown periods fall back to 30 days');
+});
+
+test('pop-up answers must come from the fixed lists', () => {
+  const ok = usage.cleanEvents({ events: [
+    { metric: 'profile', key: 'counsellor:fsc' },
+    { metric: 'profile_shown' },
+    { metric: 'profile_skip' },
+    { metric: 'assistant_role', key: 'social-worker' },
+  ] });
+  assert.equal(ok.length, 4);
+  const bad = usage.cleanEvents({ events: [
+    { metric: 'profile', key: 'ceo:fsc' },            // not a listed role
+    { metric: 'profile', key: 'counsellor:my-agency' }, // not a listed workplace type
+    { metric: 'profile', key: 'counsellor:fsc:extra' },
+    { metric: 'assistant_role', key: 'boss' },
+    { metric: 'profile_shown', key: 'something' },
+  ] });
+  assert.deepEqual(bad, []);
+});
+
+test('the pop-up offers exactly the options the server accepts', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const src = await readFile(new URL('../public/profile.js', import.meta.url), 'utf8');
+  const list = (name: string) => Function(`return ${src.match(new RegExp(`var ${name} = (\\[[\\s\\S]*?\\]);`))![1]}`)() as [string, string][];
+  assert.deepEqual(Object.fromEntries(list('ROLES')), usage.ROLES);
+  assert.deepEqual(Object.fromEntries(list('AGENCIES')), usage.AGENCIES);
+});
+
+test('summary breaks answers down by role, workplace and assistant use', () => {
+  const p = usage.periodFor(7, '2026-11-15');
+  const r = (metric: string, key: string, count: number) => ({ day: '2026-11-15', source: 'web', metric, key, count });
+  const s = usage.summarise([
+    r('profile_shown', '', 10), r('profile_skip', '', 2),
+    r('profile', 'counsellor:fsc', 3), r('profile', 'counsellor:hospital', 1), r('profile', 'social-worker:fsc', 2),
+    r('assistant_role', 'counsellor', 5),
+  ], [], p);
+  assert.equal(s.audience.responses, 6);
+  assert.equal(s.audience.shown, 10);
+  assert.equal(s.audience.responseRate, 60);
+  assert.deepEqual(s.audience.roles.map(x => [x.label, x.count]), [['Counsellor', 4], ['Social worker', 2]]);
+  assert.deepEqual(s.audience.agencies.map(x => [x.label, x.count]), [['Family Service Centre', 5], ['Hospital or healthcare', 1]]);
+  assert.deepEqual(s.audience.assistantByRole.map(x => [x.label, x.count]), [['Counsellor', 5]]);
+  assert.deepEqual(s.audience.combos[0], { role: 'Counsellor', agency: 'Family Service Centre', count: 3 });
+});
+
+test('the dashboard also gets how many submissions are waiting for review', async () => {
+  usageRows = []; submissionRows = []; waitingN = 4;
+  const res = await stats(new Request('https://example.test/api/stats?days=7', { headers: { 'x-admin-key': 'test-key' } }));
+  const s = await res.json();
+  assert.equal(s.waitingReview, 4);
+  assert.deepEqual(s.submissionsByKind, { recommend: 0, update: 0 });
+  waitingN = 0;
+});
+
+// ---------- unique visitors, countries and the assistant's daily limit ----------
+
+test('visitor counters come from the browser with no key; country and limit counts only from the server', () => {
+  assert.deepEqual(usage.cleanEvents({ events: [
+    { metric: 'visitor_day' }, { metric: 'visitor_new' }, { metric: 'visitor_month' },
+    { metric: 'visitor_day', key: 'someone' },   // no keys allowed on visitor counts
+    { metric: 'country', key: 'sg' },            // the browser can't claim a country
+  ] }), [{ metric: 'visitor_day', key: '' }, { metric: 'visitor_new', key: '' }, { metric: 'visitor_month', key: '' }]);
+  assert.deepEqual(usage.cleanEvents({ events: [{ metric: 'assistant_capped' }] }), []);
+});
+
+test('only a two-letter country is kept', () => {
+  assert.equal(usage.countryKey('SG'), 'sg');
+  assert.equal(usage.countryKey(undefined), 'xx');
+  assert.equal(usage.countryKey('1.2.3.4'), 'xx');
+  assert.equal(usage.countryKey('Singapore'), 'xx');
+});
+
+test('a visit also counts its country, from Netlify, and nothing finer', async () => {
+  writes = [];
+  const req = () => new Request('https://example.test/api/track', { method: 'POST', body: JSON.stringify({ events: [{ metric: 'visit' }, { metric: 'pageview', key: 'home' }] }), headers: { 'user-agent': BROWSER } });
+  await track(req(), { geo: { country: { code: 'SG', name: 'Singapore' }, city: 'Singapore', latitude: 1.3 }, ip: '203.0.113.7' } as any);
+  const c = writes.find(w => w.values.metric === 'country')!;
+  assert.equal(c.values.key, 'sg');
+  const stored = JSON.stringify(writes.map(w => w.values));
+  assert.ok(!stored.includes('203.0.113.7') && !stored.includes('1.3') && !stored.includes('Singapore'), 'no IP or location stored');
+  writes = [];
+  await track(req(), {} as any);
+  assert.equal(writes.find(w => w.values.metric === 'country')!.values.key, 'xx');
+  writes = [];
+  await send({ events: [{ metric: 'pageview', key: 'home' }] });
+  assert.equal(writes.filter(w => w.values.metric === 'country').length, 0, 'page views alone do not count a country');
+});
+
+test('the daily limit reads ASSISTANT_DAILY_CAP, with 150 as the default and 0 to switch it off', () => {
+  assert.equal(usage.assistantDailyCap(undefined), 150);
+  assert.equal(usage.assistantDailyCap(''), 150);
+  assert.equal(usage.assistantDailyCap('40'), 40);
+  assert.equal(usage.assistantDailyCap('0'), 0);
+  assert.equal(usage.assistantDailyCap('lots'), 150);
+  assert.equal(usage.assistantDailyCap('-5'), 150);
+});
+
+test('once the daily limit is reached, the assistant says so and counts the turn-away', async () => {
+  const ask = () => assistant(new Request('https://example.test/api/assistant', {
+    method: 'POST', body: JSON.stringify({ caseText: 'An adult needs support with family conflict and debt.' }),
+  }), { waitUntil: () => {} } as any);
+  process.env.ASSISTANT_DAILY_CAP = '3';
+  try {
+    writes = []; waitingN = 3; // the stand-in database says 3 uses today
+    const res = await ask();
+    assert.equal(res.status, 429);
+    assert.match((await res.json()).error, /today's limit/);
+    await new Promise(r => setTimeout(r, 10));
+    assert.deepEqual(writes.map(w => w.values.metric), ['assistant_capped']);
+
+    writes = []; waitingN = 2; // one left
+    const ok = await ask(); await ok.text();
+    assert.equal(ok.status, 200);
+
+    writes = []; fail = true; waitingN = 3; // if the count can't be read, the assistant stays open
+    const db2 = (await import('../db/index.ts')).getDb();
+    const orig = db2.select; (db2 as any).select = () => { throw new Error('down'); };
+    try { const open = await ask(); await open.text(); assert.equal(open.status, 200); } finally { (db2 as any).select = orig; fail = false; }
+
+    process.env.ASSISTANT_DAILY_CAP = '0'; waitingN = 999;
+    const off = await ask(); await off.text();
+    assert.equal(off.status, 200, '0 switches the limit off');
+  } finally { delete process.env.ASSISTANT_DAILY_CAP; waitingN = 0; }
+});
+
+test('summary works out unique visitors, new and returning, and visits by country', () => {
+  const p = usage.periodFor(7, '2026-11-15');
+  const rows = [
+    { day: '2026-11-15', source: 'web', metric: 'visitor_day', key: '', count: 9 },
+    { day: '2026-11-14', source: 'web', metric: 'visitor_day', key: '', count: 5 },
+    { day: '2026-11-15', source: 'web', metric: 'visitor_new', key: '', count: 4 },
+    { day: '2026-11-03', source: 'web', metric: 'visitor_month', key: '', count: 20 }, // earlier this month, outside the 7 days
+    { day: '2026-11-15', source: 'web', metric: 'visitor_month', key: '', count: 2 },
+    { day: '2026-10-30', source: 'web', metric: 'visitor_month', key: '', count: 50 }, // last month: not this month's total
+    { day: '2026-11-15', source: 'web', metric: 'country', key: 'sg', count: 7 },
+    { day: '2026-11-14', source: 'web', metric: 'country', key: 'my', count: 1 },
+    { day: '2026-11-14', source: 'web', metric: 'country', key: 'sg', count: 2 },
+    { day: '2026-11-15', source: 'web', metric: 'assistant_capped', key: '', count: 3 },
+  ];
+  const s = usage.summarise(rows, [], p);
+  assert.deepEqual(s.visitors, { thisMonth: 22, monthFrom: '2026-11-01', newInPeriod: 4, returningDays: 10, averagePerDay: 2 });
+  assert.deepEqual(s.countries, [{ key: 'sg', count: 9 }, { key: 'my', count: 1 }]);
+  assert.equal(s.totals.assistantCapped, 3);
+  assert.equal(s.daily.at(-1)!.visitorDays, 9);
+});
+
+test('the dashboard shows the assistant limit and how much of it is used today', async () => {
+  process.env.ASSISTANT_DAILY_CAP = '80';
+  try {
+    usageRows = [{ day: usage.sgDay(), source: 'web', metric: 'assistant', key: '', count: 12 }];
+    submissionRows = [];
+    const s = await (await stats(new Request('https://example.test/api/stats?days=7', { headers: { 'x-admin-key': 'test-key' } }))).json();
+    assert.deepEqual(s.assistantCap, { limit: 80, usedToday: 12 });
+  } finally { delete process.env.ASSISTANT_DAILY_CAP; }
 });
