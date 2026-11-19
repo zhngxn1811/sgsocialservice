@@ -32,10 +32,14 @@
     return result + esc(value.slice(start));
   }
   function contactRow(contact) {
+    const hours = contact.trim().match(/^((?:(?:Office|Hotline)\s+)?(?:operating|opening)\s+hours|Office hours|Hotline hours):\s*(.+)$/i);
     const match = contact.trim().match(/^(WhatsApp(?:\/SMS)?|SMS(?:\/WhatsApp)?|Email|Skype|Website|Address):?\s+(.+)$/i);
     const emergency = contact.trim().match(/^(.+?) SMS:\s*(.+)$/i);
     let label, value, detail;
-    if (match) {
+    if (hours) {
+      label = /hotline/i.test(hours[1]) ? 'Hotline operating hours' : /office/i.test(hours[1]) ? 'Office operating hours' : 'Operating hours';
+      detail = esc(hours[2]);
+    } else if (match) {
       label = ({ whatsapp: 'WhatsApp', sms: 'SMS', email: 'Email', skype: 'Skype', website: 'Website', address: 'Address', 'whatsapp/sms': 'WhatsApp/SMS', 'sms/whatsapp': 'SMS/WhatsApp' })[match[1].toLowerCase()];
       value = match[2];
       if (/WhatsApp|SMS/.test(label)) detail = numbers(value, label);
