@@ -588,13 +588,16 @@
       "cats": [
         "disability"
       ],
-      "desc": "First stop for disability services, schemes, employment support and assistive tech.",
+      "h24": false,
+      "desc": "Singapore's first stop for disability support. Its Enabling Guide covers schemes, grants and around 450 services, from early intervention and special education to adult care, transport, deputyship and caregiver support. SG Enable also helps with referrals to government-funded services, employment support and assistive tech.",
       "phone": "1800 8585 885",
-      "web": "https://www.sgenable.sg",
+      "other": "Email contactus@sgenable.sg",
+      "web": "https://www.enablingguide.sg/",
       "tags": [
-        "Disability schemes"
-      ],
-      "other": "Email: contactus@sgenable.sg"
+        "Disability",
+        "Islandwide",
+        "Information & referral"
+      ]
     },
     {
       "id": "salvation-army-sojourn",
@@ -956,16 +959,17 @@
         "disability",
         "family"
       ],
-      "desc": "Assistance for Deaf, hard-of-hearing and DeafBlind people and their families from social workers, case managers and community services staff. WhatsApp contact during office hours. Contact details and hours are from the October 2024 contributed resource list; check before referring.",
+      "h24": false,
+      "desc": "Support for Deaf, hard-of-hearing and DeafBlind people and their families: casework, sign language interpretation and notetaking, video relay, a hearing care centre, a legal clinic, deaf education and Singapore Sign Language courses. Most services are for Singapore Citizens and PRs; phone and WhatsApp are answered during office hours.",
+      "phone": "6344 8274",
+      "other": "WhatsApp 9226 7621; Email info@sadeaf.org.sg",
       "web": "https://sadeaf.org.sg/",
       "tags": [
         "Deaf",
         "Hard of hearing",
         "DeafBlind",
-        "Casework",
-        "WhatsApp"
-      ],
-      "other": "WhatsApp: 9226 7621; Skype: hotline_442; Email: info@sadeaf.org.sg"
+        "Toa Payoh"
+      ]
     },
     {
       "id": "touch-silent-club",
@@ -2624,6 +2628,333 @@
       "tags": [
         "Financial aid",
         "Social Service Office"
+      ]
+    },
+    {
+      "id": "minds",
+      "name": "MINDS",
+      "org": "MINDS (formerly Movement for the Intellectually Disabled of Singapore)",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Lifelong support for people with intellectual disability and their families: special education schools, adult learning and employment, residential and home-based care, allied health, and caregiver respite, befriending and future care planning. MINDS Hubs offer assessment, information and referral, and case management.",
+      "phone": "6479 5655",
+      "other": "",
+      "web": "https://www.minds.org.sg/",
+      "tags": [
+        "Disability",
+        "Islandwide",
+        "Intellectual disability"
+      ]
+    },
+    {
+      "id": "rainbow-centre",
+      "name": "Rainbow Centre",
+      "org": "Rainbow Centre Singapore",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Serves children, youths and adults with disabilities across the lifespan, including autism and multiple disabilities. Runs early intervention, three special education schools, care and enrichment, employability and adult day services, plus caregiver support and inclusion training.",
+      "phone": "6475 2072",
+      "other": "Email contactus@rainbowcentre.org.sg",
+      "web": "https://www.rainbowcentre.org.sg/",
+      "tags": [
+        "Disability",
+        "Margaret Drive",
+        "Early intervention"
+      ]
+    },
+    {
+      "id": "autism-resource-centre",
+      "name": "Autism Resource Centre (Singapore)",
+      "org": "Autism Resource Centre (Singapore)",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Autism-specific charity running the WeCAN early intervention programme, Pathlight School (mainstream curriculum with life-readiness skills), employment support for autistic adults, and training and resources for families and professionals.",
+      "phone": "6323 3258",
+      "other": "Email arc@autism.org.sg",
+      "web": "https://www.autism.org.sg/",
+      "tags": [
+        "Disability",
+        "Ang Mo Kio",
+        "Autism"
+      ]
+    },
+    {
+      "id": "autism-association-singapore",
+      "name": "Autism Association (Singapore)",
+      "org": "Autism Association (Singapore)",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Supports children, youths and adults on the autism spectrum through Eden Children's Centre, Eden School, Eden Centres for Adults in Hougang and Clementi, and the Eden Friendship Club, along with caregiver support.",
+      "phone": "6774 6649",
+      "other": "",
+      "web": "https://autismlinks.org.sg/",
+      "tags": [
+        "Disability",
+        "Bukit Batok",
+        "Autism"
+      ]
+    },
+    {
+      "id": "cerebral-palsy-alliance-singapore",
+      "name": "Cerebral Palsy Alliance Singapore (CPAS)",
+      "org": "Cerebral Palsy Alliance Singapore",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "For people with cerebral palsy or multiple disabilities from early childhood to adulthood: early intervention, CPAS School for ages 7–18, adult rehabilitation workshop and day activity centre, allied health and outpatient therapy, and caregiver resources.",
+      "phone": "6585 5600",
+      "other": "",
+      "web": "https://cpas.org.sg/",
+      "tags": [
+        "Disability",
+        "Pasir Ris",
+        "Cerebral palsy"
+      ]
+    },
+    {
+      "id": "spd",
+      "name": "SPD",
+      "org": "SPD (formerly Society for the Physically Disabled)",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Supports people with physical and other disabilities with rehabilitation for adults, seniors and children, early intervention, a sheltered workshop, a day activity centre and case management, based at the SPD Ability Centre in Tiong Bahru.",
+      "phone": "6579 0700",
+      "other": "",
+      "web": "https://www.spd.org.sg/",
+      "tags": [
+        "Disability",
+        "Tiong Bahru",
+        "Physical disability"
+      ]
+    },
+    {
+      "id": "savh",
+      "name": "Singapore Association of the Visually Handicapped (SAVH)",
+      "org": "Singapore Association of the Visually Handicapped",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "National social service agency for people who are blind or have low vision. Offers a low vision centre, assistive devices, braille production, a library, a day care centre and social programmes; call the main line and press 1 for the infoline.",
+      "phone": "6251 4331",
+      "other": "Email lvc@savh.org.sg (low vision referrals)",
+      "web": "https://www.savh.org.sg/",
+      "tags": [
+        "Disability",
+        "Toa Payoh",
+        "Visual impairment"
+      ]
+    },
+    {
+      "id": "dyslexia-association-singapore",
+      "name": "Dyslexia Association of Singapore (DAS)",
+      "org": "Dyslexia Association of Singapore",
+      "cats": [
+        "disability",
+        "youth"
+      ],
+      "h24": false,
+      "desc": "Supports children and adults with dyslexia and other learning differences through specific learning difference assessments and ADHD screening, literacy and specialist teaching programmes, speech-language therapy, workshops, financial assistance and student wellness support.",
+      "phone": "6444 5700",
+      "other": "Email info@das.org.sg",
+      "web": "https://www.das.org.sg/",
+      "tags": [
+        "Disability",
+        "Jurong West",
+        "Dyslexia & learning differences"
+      ]
+    },
+    {
+      "id": "down-syndrome-association-singapore",
+      "name": "Down Syndrome Association (Singapore)",
+      "org": "Down Syndrome Association (Singapore)",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Supports people with Down syndrome and their families across the lifespan, with an infant and toddler programme, children's and adult development services, enrichment programmes, integration support, and family support and advocacy.",
+      "phone": "6500 9321",
+      "other": "Email admin@downsyndrome-singapore.org",
+      "web": "https://www.downsyndrome-singapore.org/",
+      "tags": [
+        "Disability",
+        "Bishan",
+        "Down syndrome"
+      ]
+    },
+    {
+      "id": "apsn",
+      "name": "APSN (Association for Persons with Special Needs)",
+      "org": "APSN",
+      "cats": [
+        "disability",
+        "youth"
+      ],
+      "h24": false,
+      "desc": "Serves children, youths and adults with mild intellectual disability through its special education schools (Chaoyang, Katong, Tanglin and Delta Senior), student care, and the APSN Centre for Adults for vocational training and employment support.",
+      "phone": "6479 6252",
+      "other": "Email enquiry@apsn.org.sg",
+      "web": "https://www.apsn.org.sg/",
+      "tags": [
+        "Disability",
+        "Bedok / Ubi",
+        "Mild intellectual disability"
+      ]
+    },
+    {
+      "id": "awwa-disability-services",
+      "name": "AWWA Disability Services",
+      "org": "AWWA",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "AWWA's services for people with disabilities across the lifespan: early intervention, AWWA School, special student care, Community Integration Service, an adult disability home and day activity centre, home personal care, Enabled Living @ Bedok and an assistive technology assessment centre.",
+      "phone": "6511 5200",
+      "other": "Email contactus@awwa.org.sg",
+      "web": "https://awwa.org.sg/our-services/",
+      "tags": [
+        "Disability",
+        "Islandwide",
+        "Early intervention"
+      ]
+    },
+    {
+      "id": "metta-disability",
+      "name": "Metta Welfare Association – Disability Care",
+      "org": "Metta Welfare Association",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Runs Metta School and Maitri School, a special education school for students with mild intellectual disability or autism, alongside disability care services for adults, from its headquarters in Simei.",
+      "phone": "6580 4688",
+      "other": "Email mwa@metta.org.sg",
+      "web": "https://www.metta.org.sg/",
+      "tags": [
+        "Disability",
+        "Simei",
+        "Special education"
+      ]
+    },
+    {
+      "id": "bizlink",
+      "name": "Bizlink Centre",
+      "org": "Bizlink Centre Singapore",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Helps people with disabilities into work, with vocational assessment, train-and-place programmes, employability and employment support, a sheltered workshop, work therapy and a day activity centre, plus its own social enterprises.",
+      "phone": "6449 5652",
+      "other": "",
+      "web": "https://www.bizlink.org.sg/",
+      "tags": [
+        "Disability",
+        "Chai Chee",
+        "Employment support"
+      ]
+    },
+    {
+      "id": "handicaps-welfare-association",
+      "name": "Handicaps Welfare Association (HWA)",
+      "org": "Handicaps Welfare Association",
+      "cats": [
+        "disability",
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Supports people with physical disabilities and seniors with transport for eligible members, rehabilitation and senior day care at Whampoa and Jurong Point, home care and social services.",
+      "phone": "6254 3006",
+      "other": "WhatsApp 6311 9268 (rehab & day care); Email hwa@hwa.org.sg",
+      "web": "https://www.hwa.org.sg/",
+      "tags": [
+        "Disability",
+        "Whampoa",
+        "Transport"
+      ]
+    },
+    {
+      "id": "muscular-dystrophy-association-singapore",
+      "name": "Muscular Dystrophy Association (Singapore)",
+      "org": "Muscular Dystrophy Association (Singapore)",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Supports people with muscular dystrophy and other neuromuscular conditions, and their families and caregivers, through therapy, empowerment and enrichment programmes, and information resources.",
+      "phone": "6259 6933",
+      "other": "Email mdas@mdas.org.sg",
+      "web": "https://www.mdas.org.sg/",
+      "tags": [
+        "Disability",
+        "Bishan",
+        "Muscular dystrophy"
+      ]
+    },
+    {
+      "id": "disabled-peoples-association",
+      "name": "Disabled People's Association (DPA)",
+      "org": "Disabled People's Association",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Cross-disability advocacy group run by and for people with disabilities. Offers disability awareness training, venue access guides, research and policy resources, and the DisOrdinary Love counselling service.",
+      "phone": "6791 1134",
+      "other": "Email hello@dpa.org.sg",
+      "web": "https://www.dpa.org.sg/",
+      "tags": [
+        "Disability",
+        "Chinatown",
+        "Advocacy"
+      ]
+    },
+    {
+      "id": "guide-dogs-singapore",
+      "name": "Guide Dogs Singapore",
+      "org": "Guide Dogs Singapore",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Supports people with vision loss through the guide dog programme, orientation and mobility training, independent living skills, smartphone and accessibility training, and inclusive activities. Call to book an appointment before visiting.",
+      "phone": "6339 7900",
+      "other": "Email admin@guidedogs.org.sg",
+      "web": "https://www.guidedogs.org.sg/",
+      "tags": [
+        "Disability",
+        "Sin Ming",
+        "Visual impairment"
+      ]
+    },
+    {
+      "id": "st-andrews-autism-centre",
+      "name": "St. Andrew's Autism Centre",
+      "org": "St. Andrew's Autism Centre",
+      "cats": [
+        "disability"
+      ],
+      "h24": false,
+      "desc": "Autism services from childhood to adulthood: St. Andrew's Autism School, family engagement, Singapore's first autism residential home for adults, day activity centres, supported work programmes and mobile caregiver support. Day activity centre places are applied for through SG Enable.",
+      "phone": "6517 3800",
+      "other": "Email enquiry@saac.org.sg",
+      "web": "https://www.saac.org.sg/",
+      "tags": [
+        "Disability",
+        "Islandwide",
+        "Autism"
       ]
     }
   ]
