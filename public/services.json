@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "categories": [
     {
       "id": "crisis",
@@ -149,12 +149,13 @@
       "cats": [
         "mental"
       ],
-      "desc": "Counselling, community mental health and recovery services for adults and youth. Provides information and assistance on mental health and psychosocial issues. Helpline: Monday to Friday 9am to 6pm.",
+      "desc": "Counselling, community mental health and recovery services for adults and youth. Provides information and assistance on mental health and psychosocial issues.",
       "phone": "1800 283 7019",
       "web": "https://www.samhealth.org.sg",
       "tags": [
         "Community care"
-      ]
+      ],
+      "other": "Hotline operating hours: Monday to Friday 9am to 6pm."
     },
     {
       "id": "silver-ribbon",
@@ -163,9 +164,9 @@
       "cats": [
         "mental"
       ],
-      "desc": "Mental health literacy, anti-stigma work and counselling support. Opening hours: Mon – Fri, 9am – 5pm (excluding eve of and public holidays).",
+      "desc": "Mental health literacy, anti-stigma work and counselling support.",
       "phone": "6386 1928",
-      "other": "Email: info@silverribbonsingapore.com",
+      "other": "Email: info@silverribbonsingapore.com; Office operating hours: Mon – Fri, 9am – 5pm (excluding eve of and public holidays).",
       "address": "H.O.L.A. @ Silver Ribbon (Singapore), Block 208, Serangoon Central #01-238 Singapore 550208",
       "web": "https://www.silverribbonsingapore.com",
       "tags": [
@@ -181,7 +182,7 @@
         "mental",
         "family"
       ],
-      "desc": "Mandarin counselling for individuals, couples and families on mental health, personal challenges, grief, pre-marital, marital, family and relationship issues. Helpline: daily 10am to 10pm.",
+      "desc": "Mandarin counselling for individuals, couples and families on mental health, personal challenges, grief, pre-marital, marital, family and relationship issues.",
       "phone": "1800 3535 800",
       "web": "https://www.carecorner.org.sg",
       "tags": [
@@ -193,7 +194,8 @@
           "label": "Mandarin counselling hotline",
           "url": "https://www.carecorner.org.sg/services/toll-free-counselling-hotline/"
         }
-      ]
+      ],
+      "other": "Hotline operating hours: daily 10am to 10pm."
     },
     {
       "id": "chat",
@@ -228,7 +230,7 @@
         "addictions",
         "substance"
       ],
-      "desc": "Assessment and treatment for drug, alcohol, gambling, gaming and other addictions. All Addictions Helpline (6-RECOVER): 24 hours.",
+      "desc": "Assessment and treatment for drug, alcohol, gambling, gaming and other addictions.",
       "phone": "6732 6837",
       "web": "https://www.nams.sg",
       "tags": [
@@ -237,7 +239,8 @@
         "Alcohol",
         "Drugs"
       ],
-      "h24": true
+      "h24": true,
+      "other": "Hotline operating hours: All Addictions Helpline (6-RECOVER), 24 hours."
     },
     {
       "id": "we-care",
@@ -314,13 +317,14 @@
         "trauma",
         "violence"
       ],
-      "desc": "Support for survivors of sexual assault and harassment of any gender: helpline, case management, and accompaniment to police and medical services. Helpline: Monday to Friday 10am to 6pm.",
+      "desc": "Support for survivors of sexual assault and harassment of any gender: helpline, case management, and accompaniment to police and medical services.",
       "phone": "6779 0282",
       "web": "https://sacc.aware.org.sg",
       "tags": [
         "Sexual assault",
         "Case support"
-      ]
+      ],
+      "other": "Hotline operating hours: Monday to Friday 10am to 6pm."
     },
     {
       "id": "navh",
@@ -347,7 +351,7 @@
         "violence",
         "legal"
       ],
-      "desc": "Helpline, counselling and legal clinic for women facing abuse or discrimination. Offers emotional support, information and encouragement in English, Mandarin, Malay and Tamil. Helpline: Monday to Friday 10am to 6pm.",
+      "desc": "Helpline, counselling and legal clinic for women facing abuse or discrimination. Offers emotional support, information and encouragement in English, Mandarin, Malay and Tamil.",
       "phone": "1800 777 5555",
       "web": "https://www.aware.org.sg",
       "tags": [
@@ -357,7 +361,8 @@
         "Mandarin",
         "Malay",
         "Tamil"
-      ]
+      ],
+      "other": "Hotline operating hours: Monday to Friday 10am to 6pm."
     },
     {
       "id": "pave",
@@ -382,13 +387,14 @@
         "financial",
         "family"
       ],
-      "desc": "Financial assistance for low-income individuals and families, and links to the nearest Social Service Office or Family Service Centre for case management on family, social and emotional issues. Hotline: daily 7am to midnight.",
+      "desc": "Financial assistance for low-income individuals and families, and links to the nearest Social Service Office or Family Service Centre for case management on family, social and emotional issues.",
       "phone": "1800 222 0000",
       "web": "https://www.msf.gov.sg/what-we-do/comcare",
       "tags": [
         "Financial aid",
         "SSO referral"
-      ]
+      ],
+      "other": "Hotline operating hours: daily 7am to midnight."
     },
     {
       "id": "ccs",
@@ -532,13 +538,14 @@
       "cats": [
         "youth"
       ],
-      "desc": "Support, advice and information for lonely or distressed primary-school-aged children aged 7 to 12, especially when parents or caregivers are unavailable. Helpline: Monday to Friday 2.30pm to 5pm. Webchat: Monday to Thursday 2.30pm to 7pm; Friday 2.30pm to 5pm.",
+      "desc": "Support, advice and information for lonely or distressed primary-school-aged children aged 7 to 12, especially when parents or caregivers are unavailable. Webchat: Monday to Thursday 2.30pm to 7pm; Friday 2.30pm to 5pm.",
       "phone": "1800 274 4788",
       "web": "https://www.tinklefriend.sg",
       "tags": [
         "Children 7–12",
         "Webchat"
-      ]
+      ],
+      "other": "Hotline operating hours: Monday to Friday 2.30pm to 5pm."
     },
     {
       "id": "aic",
@@ -549,13 +556,14 @@
         "disability",
         "mental"
       ],
-      "desc": "Information on community care services for seniors and caregivers, and for individuals with mental health and emotional needs. Care options include home care, day care and respite. Hotline: Monday to Friday 8.30am to 8.30pm; Saturday 8.30am to 4pm.",
+      "desc": "Information on community care services for seniors and caregivers, and for individuals with mental health and emotional needs. Care options include home care, day care and respite.",
       "phone": "1800 650 6060",
       "web": "https://www.aic.sg",
       "tags": [
         "Caregivers",
         "Eldercare"
-      ]
+      ],
+      "other": "Hotline operating hours: Monday to Friday 8.30am to 8.30pm, Saturday 8.30am to 4pm."
     },
     {
       "id": "sage",
@@ -565,12 +573,13 @@
         "seniors",
         "mental"
       ],
-      "desc": "Counselling and information helpline for people aged 50 and above on issues and services related to older persons. Free face-to-face counselling for seniors and their caregivers. Helpline: Monday to Friday 9am to 7pm; Saturday 9am to 1pm.",
+      "desc": "Counselling and information helpline for people aged 50 and above on issues and services related to older persons. Free face-to-face counselling for seniors and their caregivers.",
       "phone": "1800 555 5555",
       "web": "https://www.sagecc.org.sg",
       "tags": [
         "Seniors"
-      ]
+      ],
+      "other": "Hotline operating hours: Monday to Friday 9am to 7pm, Saturday 9am to 1pm."
     },
     {
       "id": "sgenable",
@@ -683,12 +692,13 @@
       "cats": [
         "migrant"
       ],
-      "desc": "Employment and work pass enquiries. Weekdays 8.30am to 5.30pm.",
+      "desc": "Employment and work pass enquiries.",
       "phone": "1800 339 5505",
       "web": "https://www.mom.gov.sg",
       "tags": [
         "Employment"
-      ]
+      ],
+      "other": "Office operating hours: Weekdays 8.30am to 5.30pm."
     },
     {
       "id": "lab",
@@ -711,7 +721,7 @@
       "org": "Pro Bono SG",
       "address": "1 Havelock Square #B1-18 State Courts Singapore 059724",
       "phone": "6536 0650",
-      "other": "Email: help@probono.sg; Office operating hours: 9.00 am - 12.00 pm, 2.00 pm - 5.00 pm; Hotline operating hours: 10.00 am - 1.00 pm, 2.00 pm - 4.00 pm; Closed on weekends and public holidays.",
+      "other": "Email: help@probono.sg; Office operating hours: Monday to Friday, 9.00 am – 12.00 pm, 2.00 pm – 5.00 pm. Closed on weekends and public holidays.; Hotline operating hours: Monday to Friday, 10.00 am – 1.00 pm, 2.00 pm – 4.00 pm. Closed on weekends and public holidays.",
       "cats": [
         "legal"
       ],
@@ -720,6 +730,51 @@
       "tags": [
         "Legal clinic"
       ]
+    },
+    {
+      "id": "probono-tian-de-temple",
+      "name": "Community Law Centre @ Tian De Temple",
+      "org": "Pro Bono SG",
+      "cats": [
+        "legal"
+      ],
+      "address": "109 Hougang Ave 5, Singapore 538817",
+      "phone": "6536 0650",
+      "other": "Email: help@probono.sg; Office operating hours: Monday to Friday, 9.00 am – 12.00 pm, 2.00 pm – 5.00 pm. Closed on weekends and public holidays.; Hotline operating hours: Monday to Friday, 10.00 am – 1.00 pm, 2.00 pm – 4.00 pm. Closed on weekends and public holidays."
+    },
+    {
+      "id": "probono-realm-of-tranquility",
+      "name": "Community Law Centre @ Realm of Tranquility",
+      "org": "Pro Bono SG",
+      "cats": [
+        "legal"
+      ],
+      "address": "Blk 547, Woodlands Drive 16, #01-177, Singapore 730547",
+      "phone": "6536 0650",
+      "other": "Email: help@probono.sg; Office operating hours: Monday to Friday, 9.00 am – 12.00 pm, 2.00 pm – 5.00 pm. Closed on weekends and public holidays.; Hotline operating hours: Monday to Friday, 10.00 am – 1.00 pm, 2.00 pm – 4.00 pm. Closed on weekends and public holidays."
+    },
+    {
+      "id": "probono-transnational-family-care",
+      "name": "Transnational Family Care Centre @ SCC",
+      "org": "Pro Bono SG",
+      "cats": [
+        "legal"
+      ],
+      "address": "5 Delta Ave, #01-09 Block 5, Singapore 160005",
+      "phone": "6536 0650",
+      "other": "Email: help@probono.sg; Office operating hours: Monday, 10.00 am – 9.00 pm. Tuesday to Friday, 10.00 am – 6.30 pm. Closed on weekends and public holidays."
+    },
+    {
+      "id": "probono-migrant-workers-law-centre",
+      "name": "Migrant Workers' Law Centre @ MWC",
+      "org": "Pro Bono SG",
+      "cats": [
+        "legal",
+        "migrant"
+      ],
+      "address": "579 Serangoon Road, Singapore 218193",
+      "phone": "87648298",
+      "other": "Email: migrantworkers@probono.sg; Office operating hours: Monday (virtual consults only), 9.00 am – 5.45 pm. Tuesday to Friday, 9.00 am – 5.45 pm. Saturday (virtual consults only), 11.00 am – 3.00 pm. Closed on public holidays.; SMS: 87648298"
     },
     {
       "id": "fjc",
@@ -776,7 +831,7 @@
         "youth",
         "mental"
       ],
-      "desc": "Singapore’s first integrated wellness centre designed with youths for youths and their caregivers. grovve offers well-being activities, mental health screening, fringe and intervention services. Opening hours: Monday to Saturday, 11am–8pm.",
+      "desc": "Singapore’s first integrated wellness centre designed with youths for youths and their caregivers. grovve offers well-being activities, mental health screening, fringe and intervention services.",
       "address": "*SCAPE, 2 Orchard Link #04-06, Singapore 237978",
       "web": "https://mindline.sg/grovve",
       "tags": [
@@ -786,7 +841,7 @@
         "Screening",
         "WhatsApp"
       ],
-      "other": "WhatsApp: 9691 6678; Email: grovve@shine.org.sg"
+      "other": "WhatsApp: 9691 6678; Email: grovve@shine.org.sg; Office operating hours: Monday to Saturday, 11am–8pm."
     },
     {
       "id": "shine-resilience",

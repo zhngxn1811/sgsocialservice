@@ -70,6 +70,15 @@ test('presents addresses as contact rows with safe map links and automatic Googl
   assert.ok(!unsafe.includes('href='));
 });
 
+test('presents office and hotline schedules as contact modes without telephone links', () => {
+  const html = render({ other: 'Office operating hours: Monday, 9.00 am – 5.45 pm; Hotline operating hours: Saturday, 11.00 am – 3.00 pm; Operating hours: <confirm>' });
+  assert.ok(html.includes('<dt>Office operating hours</dt><dd>Monday, 9.00 am – 5.45 pm</dd>'));
+  assert.ok(html.includes('<dt>Hotline operating hours</dt><dd>Saturday, 11.00 am – 3.00 pm</dd>'));
+  assert.ok(html.includes('<dt>Operating hours</dt><dd>&lt;confirm&gt;</dd>'));
+  assert.ok(!html.includes('href='));
+  assert.ok(!html.includes('<dt>Also</dt>'));
+});
+
 test('includes all 24 supplied Social Service Offices with 22 map-linked addresses and two remote offices', () => {
   const { services, categories } = JSON.parse(readFileSync(new URL('../public/services.json', import.meta.url), 'utf8'));
   assert.equal(categories.find((c: any) => c.id === 'msf-sso')?.label, 'MSF Social Service Offices');
