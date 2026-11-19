@@ -147,6 +147,84 @@
       "other": "Police SMS: 70999; SCDF fire or medical emergency SMS: 70995"
     },
     {
+      "id": "range-individual-couples-family-counselling",
+      "name": "Individual, Couples & Family Counselling",
+      "org": "RANGE Counselling Services",
+      "cats": [
+        "mental",
+        "family"
+      ],
+      "desc": "Private psychotherapy and counselling for individuals, couples and families with mental health concerns or life challenges, using evidence-based approaches. Sessions are in person in Woodlands or online. Children aged 4 to 18 can be seen with signed parent consent and a chaperone.",
+      "phone": "8950 5274",
+      "other": "Email: hello@rangecounsellingservices.com; Operating hours: By appointment only. Book online through the website; Call or text for a free 15-minute consultation",
+      "web": "https://www.rangecounsellingservices.com/services-faqs/",
+      "address": "Primz Bizhub, 21 Woodlands Close #02-24, Singapore 737854",
+      "tags": [
+        "Counselling",
+        "Couples counselling",
+        "Private practice",
+        "North"
+      ]
+    },
+    {
+      "id": "range-play-therapy",
+      "name": "Play Therapy for Children",
+      "org": "RANGE Counselling Services",
+      "cats": [
+        "mental",
+        "youth"
+      ],
+      "desc": "Child-centred play therapy for children aged 3 to 13 with emotional or behavioural difficulties, especially ones that show up at home or school. Sessions can be one-to-one or in small groups. Parents can join regular review sessions to stay involved.",
+      "phone": "8950 5274",
+      "other": "Email: hello@rangecounsellingservices.com; Operating hours: By appointment only; Call or text for a free 15-minute consultation",
+      "web": "https://www.rangecounsellingservices.com/playtherapy/",
+      "address": "Primz Bizhub, 21 Woodlands Close #02-24, Singapore 737854",
+      "tags": [
+        "Play therapy",
+        "Children",
+        "Private practice",
+        "North"
+      ]
+    },
+    {
+      "id": "range-parent-child-relationship-coaching",
+      "name": "Parent-Child Relationship Coaching",
+      "org": "RANGE Counselling Services",
+      "cats": [
+        "family"
+      ],
+      "desc": "One-to-one coaching for parents and caregivers who need help with a child’s behaviour or emotions, for children from toddlers to teenagers. Coaching is tailored to each family and focuses on calm, practical strategies, strengthening the relationship and kind discipline. It’s available in person or online. Specialisation: Parenting support for children aged 3 to 19.",
+      "phone": "8950 5274",
+      "other": "Email: hello@rangecounsellingservices.com; Operating hours: By appointment only; Call or text for a free 15-minute consultation",
+      "web": "https://www.rangecounsellingservices.com/parent-coaching/",
+      "address": "Primz Bizhub, 21 Woodlands Close #02-24, Singapore 737854",
+      "tags": [
+        "Parenting",
+        "Parent-child relationship",
+        "Private practice",
+        "North"
+      ]
+    },
+    {
+      "id": "range-circle-of-security",
+      "name": "Circle of Security® - Attachment-based group parenting programme",
+      "org": "RANGE Counselling Services",
+      "cats": [
+        "family"
+      ],
+      "desc": "A small-group programme of up to six parents, built on the Circle of Security® attachment model, to help parents understand their child’s needs and strengthen the relationship. It runs as 1.5-hour weekly sessions over 8 weeks, led by a certified facilitator. It’s especially relevant for parents of toddlers and preschoolers.",
+      "phone": "8950 5274",
+      "other": "Email: hello@rangecounsellingservices.com; Operating hours: Weekly sessions. Dates and times on request",
+      "web": "https://www.rangecounsellingservices.com/circle-of-security/",
+      "address": "Primz Bizhub, 21 Woodlands Close #02-24, Singapore 737854",
+      "tags": [
+        "Parenting",
+        "Attachment",
+        "Group programme",
+        "North"
+      ]
+    },
+    {
       "id": "samh",
       "name": "SAMH Helpline",
       "org": "Singapore Association for Mental Health",
