@@ -479,7 +479,8 @@
       "name": "Pregnancy Support and Residential Respite Services",
       "org": "Safe Place",
       "cats": [
-        "family"
+        "family",
+        "faith-based"
       ],
       "h24": false,
       "desc": "For pregnant women up to 32 weeks' gestation (any age or nationality). Offers social work assessment and case management, parentcraft coaching, and at least 12 months of baby essentials (eligibility criteria apply). Residential respite (Singapore Citizens/PRs only): mother and baby may stay up to 4 months after birth.",
@@ -1286,7 +1287,8 @@
       "org": "Fei Yue Family Service Centre",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Fei Yue's main Bukit Batok centre, from one of Singapore's earliest counselling agencies. Social workers assess each family's situation and offer casework, counselling, group programmes and referrals, working with SSOs and schools where needed.",
@@ -1307,7 +1309,8 @@
       "org": "Fei Yue Family Service Centre",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Extension office of Fei Yue's Bukit Batok centre, on the same phone line. Offers casework and counselling for personal, family and social difficulties, plus support groups and referrals.",
@@ -1328,7 +1331,8 @@
       "org": "Fei Yue Family Service Centre",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Fei Yue centre in Woodlands at Champions Way. Supports individuals and families coping with emotional, personal and social challenges through casework, counselling, groups and community programmes.",
@@ -1349,7 +1353,8 @@
       "org": "Fei Yue Family Service Centre",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Fei Yue centre for Choa Chu Kang residents, offering casework, counselling, groups and referrals. Fei Yue's MSF-appointed Strengthening Families Programme for marriage, divorce and family counselling is next door at Blk 281.",
@@ -1370,7 +1375,8 @@
       "org": "Fei Yue Family Service Centre",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Fei Yue centre serving the Yew Tee side of Choa Chu Kang. Social workers help families work through personal, social and emotional difficulties, with group programmes and referrals to community resources.",
@@ -1391,7 +1397,8 @@
       "org": "Fei Yue Family Service Centre",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Fei Yue family services based inside the Social Service Office at Corporation Drive, so families can get counselling and casework alongside SSO financial help in one place.",
@@ -1520,7 +1527,8 @@
       "cats": [
         "family",
         "violence",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "One of Singapore's early FSCs, serving Jurong East. Helps with financial assessment and aid, marital, parenting and family disputes, and runs the Mandatory Counselling Programme for people with a Personal Protection Order.",
@@ -1542,7 +1550,8 @@
       "cats": [
         "family",
         "violence",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Lakeside's Jurong West centre. Casework and counselling for money, marital, parenting and family conflict issues, including the Mandatory Counselling Programme for people with a Personal Protection Order.",
@@ -1929,7 +1938,8 @@
       "cats": [
         "family",
         "financial",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Tampines FSC open to all, offering secular counselling and casework, groups and outreach. Also runs practical help such as milk and diaper, furniture and back-to-school assistance, money management workshops and family violence prevention talks.",
