@@ -162,6 +162,96 @@
       "other": "Hotline operating hours: Monday to Friday 9am to 6pm."
     },
     {
+      "id": "club-heal-buangkok",
+      "name": "Club HEAL @ Buangkok – The Hope Centre",
+      "org": "Club HEAL",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Club HEAL’s Buangkok centre gives people with mental health conditions a safe space to recover and rebuild confidence, and supports their caregivers. It offers recovery and wellness programmes, community outreach and help getting back to work.",
+      "phone": "6899 3463",
+      "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg; Operating hours: Monday to Friday, 9am to 5pm",
+      "web": "https://www.clubheal.org.sg/",
+      "address": "Blk 997A Buangkok Crescent #01-809, Singapore 531997",
+      "tags": [
+        "Mental health recovery",
+        "Caregiver support",
+        "North-East"
+      ]
+    },
+    {
+      "id": "club-heal-bukit-batok-east",
+      "name": "Club HEAL @ Bukit Batok East – The Loving Hub",
+      "org": "Club HEAL",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Club HEAL’s centre in the west, for people with mental health conditions and their caregivers. It offers recovery and wellness programmes, community outreach and help getting back to work, and takes referrals from professionals by email.",
+      "phone": "6899 3463",
+      "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg; Operating hours: Monday to Friday, 9am to 5pm",
+      "web": "https://www.clubheal.org.sg/",
+      "address": "Blk 254 Bukit Batok East Ave 4 #01-229, Singapore 650254",
+      "tags": [
+        "Mental health recovery",
+        "Caregiver support",
+        "West"
+      ]
+    },
+    {
+      "id": "club-heal-marsiling",
+      "name": "Club HEAL @ Marsiling – The Empowerment Hut",
+      "org": "Club HEAL",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Club HEAL’s northern centre, and its Community Intervention Team (COMIT). GPs in the area refer patients with mental health conditions here for ongoing support in the community. It also runs recovery programmes and supports caregivers. Specialisation: COMIT, ongoing community mental health support for patients referred by GPs.",
+      "phone": "6899 3463",
+      "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg; Operating hours: Monday to Friday, 9am to 5pm",
+      "web": "https://www.clubheal.org.sg/",
+      "address": "Blk 317 Woodlands St 31 #01-194, Singapore 730317",
+      "tags": [
+        "Mental health recovery",
+        "GP referrals (COMIT)",
+        "North"
+      ]
+    },
+    {
+      "id": "club-heal-pasir-ris-east",
+      "name": "Club HEAL @ Pasir Ris East – The Acceptance Place",
+      "org": "Club HEAL",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Club HEAL’s centre in the east, for people with mental health conditions and their caregivers. It offers recovery and wellness programmes, community outreach and help getting back to work.",
+      "phone": "6899 3463",
+      "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg; Operating hours: Monday to Friday, 9am to 5pm",
+      "web": "https://www.clubheal.org.sg/",
+      "address": "Blk 148 Pasir Ris St 13 #01-24, Singapore 510148",
+      "tags": [
+        "Mental health recovery",
+        "Caregiver support",
+        "East"
+      ]
+    },
+    {
+      "id": "club-heal-eunos-crescent",
+      "name": "Club HEAL @ Eunos Crescent",
+      "org": "Club HEAL",
+      "cats": [
+        "mental"
+      ],
+      "desc": "Club HEAL’s centre in Eunos, for people with mental health conditions and their caregivers. It offers recovery and wellness programmes, community outreach and help getting back to work.",
+      "phone": "6899 3463",
+      "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg; Operating hours: Monday to Friday, 9am to 5pm",
+      "web": "https://www.clubheal.org.sg/",
+      "address": "20 Eunos Crescent #01-2961A, Singapore 400020",
+      "tags": [
+        "Mental health recovery",
+        "Caregiver support",
+        "East"
+      ]
+    },
+    {
       "id": "silver-ribbon",
       "name": "Silver Ribbon (Singapore)",
       "org": "Silver Ribbon",
