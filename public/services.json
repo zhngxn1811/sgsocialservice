@@ -54,6 +54,10 @@
       "label": "Disability"
     },
     {
+      "id": "neurodivergence",
+      "label": "Neurodivergence"
+    },
+    {
       "id": "migrant",
       "label": "Migrant workers"
     },
@@ -1450,7 +1454,8 @@
       "org": "Good News Community Services",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Neighbourhood FSC for Pasir Ris residents, offering casework, counselling, information and referral, and group and community programmes for individuals and families with social and emotional difficulties.",
@@ -2653,7 +2658,8 @@
       "name": "Rainbow Centre",
       "org": "Rainbow Centre Singapore",
       "cats": [
-        "disability"
+        "disability",
+        "neurodivergence"
       ],
       "h24": false,
       "desc": "Serves children, youths and adults with disabilities across the lifespan, including autism and multiple disabilities. Runs early intervention, three special education schools, care and enrichment, employability and adult day services, plus caregiver support and inclusion training.",
@@ -2671,7 +2677,8 @@
       "name": "Autism Resource Centre (Singapore)",
       "org": "Autism Resource Centre (Singapore)",
       "cats": [
-        "disability"
+        "disability",
+        "neurodivergence"
       ],
       "h24": false,
       "desc": "Autism-specific charity running the WeCAN early intervention programme, Pathlight School (mainstream curriculum with life-readiness skills), employment support for autistic adults, and training and resources for families and professionals.",
@@ -2689,7 +2696,8 @@
       "name": "Autism Association (Singapore)",
       "org": "Autism Association (Singapore)",
       "cats": [
-        "disability"
+        "disability",
+        "neurodivergence"
       ],
       "h24": false,
       "desc": "Supports children, youths and adults on the autism spectrum through Eden Children's Centre, Eden School, Eden Centres for Adults in Hougang and Clementi, and the Eden Friendship Club, along with caregiver support.",
@@ -2835,7 +2843,8 @@
       "name": "Metta Welfare Association – Disability Care",
       "org": "Metta Welfare Association",
       "cats": [
-        "disability"
+        "disability",
+        "neurodivergence"
       ],
       "h24": false,
       "desc": "Runs Metta School and Maitri School, a special education school for students with mild intellectual disability or autism, alongside disability care services for adults, from its headquarters in Simei.",
@@ -2944,7 +2953,8 @@
       "name": "St. Andrew's Autism Centre",
       "org": "St. Andrew's Autism Centre",
       "cats": [
-        "disability"
+        "disability",
+        "neurodivergence"
       ],
       "h24": false,
       "desc": "Autism services from childhood to adulthood: St. Andrew's Autism School, family engagement, Singapore's first autism residential home for adults, day activity centres, supported work programmes and mobile caregiver support. Day activity centre places are applied for through SG Enable.",

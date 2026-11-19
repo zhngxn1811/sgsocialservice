@@ -126,5 +126,13 @@
     "intro": "Social Service Offices run by the Ministry of Social and Family Development for ComCare financial assistance and social support. Find office addresses and Google Maps links below. Chua Chu Kang and Sembawang operate remotely with no walk-in services.",
     "social_title": "",
     "social_description": ""
+  },
+  "neurodivergence": {
+    "slug": "neurodivergence",
+    "title": "Neurodivergence support services in Singapore",
+    "description": "Find neurodivergence support services in Singapore, including autism services, early intervention, education, employment and caregiver support.",
+    "intro": "Services in Singapore supporting neurodivergent people and their caregivers, including autism support, early intervention, education and employment programmes.",
+    "social_title": "",
+    "social_description": ""
   }
 }
