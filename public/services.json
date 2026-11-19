@@ -409,6 +409,7 @@
       ],
       "desc": "Free debt counselling and debt management programmes for individuals with unsecured debt.",
       "phone": "1800 2255 227",
+      "other": "Email enquiry@ccs.org.sg",
       "web": "https://www.ccs.org.sg",
       "tags": [
         "Debt",
@@ -1636,7 +1637,8 @@
       "cats": [
         "family",
         "violence",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "MWS's main FSC and regional hub for Hougang, Sengkang and Serangoon, next to its marriage, divorce and parenting services on Hougang Ave 8. Handles family and marital conflict, parenting, financial difficulty and domestic violence using trauma-informed care.",
@@ -1658,7 +1660,8 @@
       "cats": [
         "family",
         "violence",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "Satellite office of MWS's Hougang centre, serving Buangkok residents. Offers information and referral, casework, counselling and group work for family and marital conflict, parenting, money difficulties and domestic violence.",
@@ -1679,7 +1682,8 @@
       "org": "Methodist Welfare Services",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "MWS's newest FSC, opened in August 2025 and operating for now from Allkin's Sengkang centre at Compassvale Walk. Provides casework, counselling, group work and referrals for Sengkang West residents.",
@@ -1700,7 +1704,8 @@
       "org": "Methodist Welfare Services",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "MWS centre at Tampines Street 44. Social workers and counsellors provide casework, counselling, group work and community programmes for individuals and families facing personal or family difficulties.",
@@ -1721,7 +1726,8 @@
       "org": "Methodist Welfare Services",
       "cats": [
         "family",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "MWS centre at Yishun Ring Road. Offers information and referral, casework and counselling, group work and community development for residents with personal or family-related issues.",
