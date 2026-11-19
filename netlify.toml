@@ -25,6 +25,21 @@
   to = "/privacy.html"
   status = 200
 
+[[redirects]]
+  from = "/apple-touch-icon.png"
+  to = "/icons/apple-touch-icon.png"
+  status = 200
+
+[[redirects]]
+  from = "/apple-touch-icon-precomposed.png"
+  to = "/icons/apple-touch-icon.png"
+  status = 200
+
+[[redirects]]
+  from = "/favicon.png"
+  to = "/icons/icon-192.png"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]
