@@ -263,7 +263,7 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
   }));
   home = replaceMarker(home, "count", `${total} of ${total} services`);
   home = replaceMarker(home, "cats", render.chips(directory.categories, directory.services, "all"));
-  home = replaceMarker(home, "grid", directory.services.map(render.card).join(""));
+  home = replaceMarker(home, "grid", directory.services.slice(0, 6).map(render.card).join(""));
   home = replaceMarker(home, "browse", browseNav(pages, esc));
   await writeFile(path.join(outDir, "index.html"), home);
 

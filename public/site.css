@@ -127,3 +127,7 @@ a.btn{display:inline-block;text-decoration:none}
 .browse a{display:inline-block;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font-weight:600;font-size:14px;text-decoration:none}
 .browse a:hover{border-color:var(--teal)}
 .browse a[aria-current="page"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.directory-pages{display:flex;align-items:center;justify-content:center;gap:16px;padding-bottom:40px}
+.directory-pages[hidden]{display:none}
+.directory-pages .btn:disabled{cursor:default}
