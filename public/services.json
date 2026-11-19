@@ -1725,7 +1725,8 @@
       "cats": [
         "family",
         "violence",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "PPIS centre at Wisma Geylang Serai. Free, secular casework and counselling for relationship difficulties, family violence, child management and parenting, at the centre, by home visit or over the phone, plus groups for women and children.",
@@ -1747,7 +1748,8 @@
       "cats": [
         "family",
         "violence",
-        "msf-fsc"
+        "msf-fsc",
+        "faith-based"
       ],
       "h24": false,
       "desc": "PPIS centre in Bukit Batok. Free, secular casework and counselling for relationship problems, family violence, parenting and child management, with group programmes for women and children.",
