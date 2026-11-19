@@ -166,7 +166,7 @@ function renderCats(){
 }
 function renderGrid(){
   const q=$("#q").value.trim().toLowerCase();
-  const list=S.filter(s=>(active==="all"||s.cats.includes(active))&&(!q||[s.name,s.org,s.desc,s.address,s.other,...s.tags].join(" ").toLowerCase().includes(q)));
+  const list=S.filter(s=>(active==="all"||s.cats.includes(active))&&(!q||[s.name,s.org,s.desc,s.address,s.other,...(s.tags||[])].join(" ").toLowerCase().includes(q)));
   const pages=Math.max(1,Math.ceil(list.length/PAGE_SIZE));
   page=Math.min(page,pages);
   const start=(page-1)*PAGE_SIZE;
