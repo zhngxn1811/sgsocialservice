@@ -72,6 +72,9 @@ test('cached system prompt includes the current directory with FSC contacts and 
   assert.equal(blocks[0].type, 'text');
   assert.deepEqual(blocks[0].cache_control, { type: 'ephemeral' });
   const system = blocks[0].text;
+  for (const category of directory.categories) {
+    assert.ok(system.includes(`${category.id}: ${category.label}`), `missing category ${category.id}`);
+  }
   assert.ok(system.includes(`Directory last updated: ${directory.updated}\nDIRECTORY:`));
   const lines = system.split('\nDIRECTORY:\n')[1].split('\n');
   assert.equal(lines.length, directory.services.length);
@@ -98,6 +101,16 @@ test('cached system prompt includes the current directory with FSC contacts and 
   assert.ok(system.includes("SINDA FSC is only for Indian Singapore Citizens and PRs"));
   assert.ok(system.includes("Use only emails and numbers that appear in the directory, exactly as written."));
   assert.ok(system.includes("prefer that centre and say why."));
+  assert.ok(system.includes('remote-only notices'));
+  assert.ok(system.includes('not independent verification of every service'));
+  const range = directory.services.filter((service: any) => service.org === 'RANGE Counselling Services');
+  assert.equal(range.length, 4);
+  for (const service of range) {
+    const line = lines.find((line: string) => line.startsWith(`[${service.id}] `));
+    assert.ok(line.includes('hello@rangecounsellingservices.com'));
+    assert.ok(line.includes('Primz Bizhub, 21 Woodlands Close #02-24, Singapore 737854'));
+    assert.ok(line.includes(service.other));
+  }
 });
 
 test('accepts referral-letter requests with drafting instructions and factual safeguards', async () => {
