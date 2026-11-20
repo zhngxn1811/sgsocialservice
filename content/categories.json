@@ -134,5 +134,21 @@
     "intro": "Services in Singapore supporting neurodivergent people and their caregivers, including autism support, early intervention, education and employment programmes.",
     "social_title": "",
     "social_description": ""
+  },
+  "crest": {
+    "slug": "crest",
+    "title": "CREST mental health outreach in Singapore",
+    "description": "Find CREST community mental health outreach services in Singapore, including youth support, early detection, caregiver support and referrals.",
+    "intro": "Community mental health outreach services offering awareness, early detection, emotional support and links to care, including CREST support for young people and caregivers.",
+    "social_title": "",
+    "social_description": ""
+  },
+  "comit": {
+    "slug": "comit",
+    "title": "COMIT mental health support in Singapore",
+    "description": "Find Community Intervention Team (COMIT) services in Singapore for mental health assessment, counselling, case management and caregiver support.",
+    "intro": "Community Intervention Teams provide mental health assessment, counselling, therapy, case management and caregiver support, working with healthcare and community partners.",
+    "social_title": "",
+    "social_description": ""
   }
 }

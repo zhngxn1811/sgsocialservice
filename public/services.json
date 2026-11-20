@@ -10,6 +10,14 @@
       "label": "Mental health & counselling"
     },
     {
+      "id": "crest",
+      "label": "CREST"
+    },
+    {
+      "id": "comit",
+      "label": "COMIT"
+    },
+    {
       "id": "addictions",
       "label": "Addictions (gambling, alcohol, gaming)"
     },
@@ -280,7 +288,8 @@
       "name": "Club HEAL @ Marsiling – The Empowerment Hut",
       "org": "Club HEAL",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "desc": "Club HEAL’s northern centre, and its Community Intervention Team (COMIT). GPs in the area refer patients with mental health conditions here for ongoing support in the community. It also runs recovery programmes and supports caregivers. Specialisation: COMIT, ongoing community mental health support for patients referred by GPs.",
       "phone": "6899 3463",
@@ -1201,7 +1210,8 @@
       "org": "Lakeside Family Services",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "crest"
       ],
       "h24": false,
       "desc": "A community mental health outreach programme for young people aged 12 to 25 who are dealing with stress, anxiety or other emotional difficulties. It runs group activities to help youths unwind, peer support groups, and mental health workshops and talks in schools and the community. Caregivers can also get help, including information on youth mental health and links to other programmes.",
@@ -1212,7 +1222,8 @@
         "Youth mental health",
         "Support groups",
         "Caregiver support",
-        "West"
+        "West",
+        "CREST"
       ],
       "address": "Blk 977 Jurong West St 93 #01-369, Singapore 640977",
       "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20977%20Jurong%20West%20St%2093%20%2301-369%2C%20Singapore%20640977"
@@ -1223,7 +1234,8 @@
       "org": "Allkin Singapore",
       "cats": [
         "mental",
-        "seniors"
+        "seniors",
+        "crest"
       ],
       "h24": false,
       "desc": "Raises awareness of dementia and mental health, promotes early detection, provides emotional support, conducts preventive and cognitive-stimulating activities, and links people to suitable health and social care services. Allkin CREST focuses on Punggol Coast, Punggol Shore, Punggol West SMC, Compassvale, Rivervale, Pasir Ris East, Pasir Ris Central, Pasir Ris West, Teck Ghee, Bishan East, Sin Ming, Kebun Baru SMC, Marymount SMC.",
@@ -1341,7 +1353,8 @@
       "org": "Allkin Singapore",
       "cats": [
         "mental",
-        "seniors"
+        "seniors",
+        "comit"
       ],
       "h24": false,
       "desc": "Provides assessment, therapy, counselling, psychoeducation, case management, personalised care plans, and caregiver support and training. Coordinates closely with polyclinics, GPs and community partners. Allkin COMIT is open to residents in Ang Mo Kio, Sin Ming, Bishan, Hougang, Sengkang, Punggol.",
