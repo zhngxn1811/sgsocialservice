@@ -1196,6 +1196,28 @@
       ]
     },
     {
+      "id": "lakeside-crest-youth-soar",
+      "name": "CREST-YOUTH (SOAR)",
+      "org": "Lakeside Family Services",
+      "cats": [
+        "mental",
+        "youth"
+      ],
+      "h24": false,
+      "desc": "A community mental health outreach programme for young people aged 12 to 25 who are dealing with stress, anxiety or other emotional difficulties. It runs group activities to help youths unwind, peer support groups, and mental health workshops and talks in schools and the community. Caregivers can also get help, including information on youth mental health and links to other programmes.",
+      "phone": "6991 3000",
+      "other": "Email: soar@lakeside.org.sg; Operating hours: Monday to Friday, 9am to 6pm",
+      "web": "https://lakeside.org.sg/crest-youth-lakeside/",
+      "tags": [
+        "Youth mental health",
+        "Support groups",
+        "Caregiver support",
+        "West"
+      ],
+      "address": "Blk 977 Jurong West St 93 #01-369, Singapore 640977",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blk%20977%20Jurong%20West%20St%2093%20%2301-369%2C%20Singapore%20640977"
+    },
+    {
       "id": "allkin-crest",
       "name": "Community outreach (CREST)",
       "org": "Allkin Singapore",
