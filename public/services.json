@@ -14,6 +14,10 @@
       "label": "CREST"
     },
     {
+      "id": "crest-youth",
+      "label": "CREST-Youth"
+    },
+    {
       "id": "comit",
       "label": "COMIT"
     },
@@ -271,7 +275,10 @@
       "org": "Club HEAL",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "youth",
+        "crest",
+        "crest-youth"
       ],
       "desc": "Club HEAL’s centre in the west, and a community intervention team (COMIT) with a youth team. It provides needs assessment, counselling and psychosocial therapy for people with mental health conditions and their caregivers, and takes GP referrals. It also runs recovery programmes and support for young people. The service is government-funded. Specialisation: COMIT. Takes GP referrals. Also supports youths and their caregivers.",
       "phone": "6899 3463",
@@ -282,7 +289,8 @@
         "COMIT",
         "Mental health recovery",
         "Youth mental health",
-        "West"
+        "West",
+        "CREST"
       ]
     },
     {
@@ -343,19 +351,22 @@
     },
     {
       "id": "silver-ribbon",
-      "name": "Silver Ribbon (Singapore)",
-      "org": "Silver Ribbon",
+      "name": "Silver Ribbon (Singapore) – Community Mental Health Team (Serangoon)",
+      "org": "Silver Ribbon (Singapore)",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
-      "desc": "Mental health literacy, anti-stigma work and counselling support.",
+      "desc": "A mental health charity in Serangoon that takes clients from across Singapore and works to reduce stigma. It offers early support and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6386 1928",
       "other": "Email: info@silverribbonsingapore.com; Office operating hours: Mon – Fri, 9am – 5pm (excluding eve of and public holidays).",
-      "address": "H.O.L.A. @ Silver Ribbon (Singapore), Block 208, Serangoon Central #01-238 Singapore 550208",
+      "address": "Blk 208 Serangoon Central #01-238, Singapore 550208",
       "web": "https://www.silverribbonsingapore.com",
       "tags": [
-        "Stigma",
-        "Psychoeducation"
+        "Community mental health",
+        "Islandwide",
+        "North-East",
+        "CREST"
       ]
     },
     {
@@ -1207,21 +1218,23 @@
     },
     {
       "id": "lakeside-crest-youth-soar",
-      "name": "CREST-YOUTH (SOAR)",
+      "name": "Lakeside Family Services – CREST-Youth @ Lakeside",
       "org": "Lakeside Family Services",
       "cats": [
         "mental",
         "youth",
-        "crest"
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health outreach programme for young people aged 12 to 25 who are dealing with stress, anxiety or other emotional difficulties. It runs group activities to help youths unwind, peer support groups, and mental health workshops and talks in schools and the community. Caregivers can also get help, including information on youth mental health and links to other programmes.",
+      "desc": "A community mental health outreach programme for young people aged 12 to 25 dealing with stress, anxiety or other emotional difficulties. It runs group activities to help youths unwind, peer support groups, and mental health workshops and talks in schools and the community. It also supports caregivers, with information on youth mental health and links to other programmes. Programme: CREST-Youth (confirmed). Specialisation: Youth mental health, ages 12 to 25.",
       "phone": "6991 3000",
       "other": "Email: soar@lakeside.org.sg; Operating hours: Monday to Friday, 9am to 6pm",
       "web": "https://lakeside.org.sg/crest-youth-lakeside/",
       "tags": [
+        "CREST-Youth",
         "Youth mental health",
-        "Support groups",
         "Caregiver support",
         "West",
         "CREST"
@@ -3339,14 +3352,15 @@
         "crest"
       ],
       "h24": false,
-      "desc": "Care Corner Seniors Service provides CREST community mental health outreach and support in Toa Payoh. Call to make an appointment.",
+      "desc": "A community outreach team (CREST) in Toa Payoh with a focus on older adults. It helps spot mental health concerns and dementia early, offers emotional support, and links people to assessment and treatment. It also runs a caregiver support group for families caring for someone with a mental health condition or dementia. The service is government-funded. Programme: CREST (confirmed). Specialisation: Seniors and their caregivers.",
       "phone": "6258 6601",
       "other": "Email: tp.crest@carecorner.org.sg; Call to make an appointment. Operating hours: Mon–Fri, 9.00am–6.00pm; weekends and public holidays: closed.",
-      "address": "214 Toa Payoh Lorong 8 #01-745, Singapore 310214",
+      "address": "Blk 214 Toa Payoh Lorong 8 #01-745, Singapore 310214",
       "web": "https://www.carecorner.org.sg/services/crest",
       "tags": [
-        "Community mental health",
         "CREST",
+        "Seniors",
+        "Caregiver support",
         "Central"
       ]
     },
@@ -3398,10 +3412,13 @@
       "org": "Children-At-Risk Empowerment Association (CARE)",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in Pasir Ris and the east. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in Pasir Ris and the east. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "6950 2206",
       "other": "",
       "address": "Blk 428 Pasir Ris Drive 6 #01-21, Singapore 510428",
@@ -3409,7 +3426,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "East"
+        "East",
+        "CREST"
       ]
     },
     {
@@ -3418,10 +3436,13 @@
       "org": "Fei Yue Community Services",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in the east. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in the east. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "6027 7650",
       "other": "Email: ec2sg@fycs.org",
       "address": "Blk 145 Simei Street 2 #01-06, Singapore 520145",
@@ -3429,7 +3450,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "East"
+        "East",
+        "CREST"
       ]
     },
     {
@@ -3458,10 +3480,12 @@
       "name": "Home Nursing Foundation – Community Mental Health Team (Buangkok)",
       "org": "Home Nursing Foundation",
       "cats": [
-        "mental"
+        "mental",
+        "seniors",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team run by Home Nursing Foundation in Buangkok. It’s a first stop for mental health support, especially for older residents, offering assessment, support and links to other services. The service is government-funded.",
+      "desc": "A community outreach team in Buangkok, mainly supporting older residents. It helps spot mental health concerns and dementia early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6854 5777",
       "other": "",
       "address": "Blk 999 Buangkok Crescent #01-01, Singapore 530999",
@@ -3469,7 +3493,8 @@
       "tags": [
         "Community mental health",
         "Seniors",
-        "North-East"
+        "North-East",
+        "CREST"
       ]
     },
     {
@@ -3477,10 +3502,11 @@
       "name": "Club HEAL – Community Mental Health Team (Tampines Junction)",
       "org": "Club HEAL",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
       "h24": false,
-      "desc": "Club HEAL’s Tampines Junction office, one of its community mental health team sites. It supports people with mental health conditions and their caregivers with recovery support, counselling and links to other services. The service is government-funded.",
+      "desc": "Club HEAL’s Tampines office. It supports people with mental health conditions and their caregivers through outreach, emotional support and links to recovery services. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6899 3463",
       "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg",
       "address": "Tampines Junction, 300 Tampines Ave 5 #09-02 Room 932, Singapore 529653",
@@ -3488,7 +3514,8 @@
       "tags": [
         "Community mental health",
         "Mental health recovery",
-        "East"
+        "East",
+        "CREST"
       ]
     },
     {
@@ -3496,10 +3523,11 @@
       "name": "Club HEAL – Community Mental Health Team (Mountbatten)",
       "org": "Club HEAL",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
       "h24": false,
-      "desc": "Club HEAL’s Mountbatten office, one of its community mental health team sites. It supports people with mental health conditions and their caregivers with recovery support, counselling and links to other services. The service is government-funded.",
+      "desc": "Club HEAL’s Mountbatten office. It supports people with mental health conditions and their caregivers through outreach, emotional support and links to recovery services. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6899 3463",
       "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg",
       "address": "Mountbatten Square, 229 Mountbatten Road #03-41F, Singapore 398007",
@@ -3507,7 +3535,8 @@
       "tags": [
         "Community mental health",
         "Mental health recovery",
-        "East"
+        "East",
+        "CREST"
       ]
     },
     {
@@ -3515,17 +3544,20 @@
       "name": "Fei Yue Community Services – Community Mental Health Team (Anchorvale)",
       "org": "Fei Yue Community Services",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Sengkang. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community outreach team in Sengkang. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6011 7650 / 6011 7656",
       "other": "",
       "web": "",
       "tags": [
         "Community mental health",
-        "North-East"
-      ]
+        "North-East",
+        "CREST"
+      ],
+      "address": "31 Anchorvale Road, Singapore 545056"
     },
     {
       "id": "montfort-cmht-bedok-reservoir",
@@ -3571,14 +3603,17 @@
     },
     {
       "id": "shine-youth-cmht-hougang",
-      "name": "SHINE Children and Youth Services – Youth Community Mental Health Team (Hougang)",
+      "name": "SHINE Children and Youth Services – Youth Integrated Team (Hougang)",
       "org": "SHINE Children and Youth Services",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in Hougang and the north-east. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth mental health team for young people and their caregivers in Hougang. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Programme: Youth Integrated Team. Specialisation: Youth and their caregivers.",
       "phone": "8383 9637",
       "other": "Email: yit_hougang@shine.org.sg",
       "address": "Blk 463 Hougang Ave 10 #01-964, Singapore 530463",
@@ -3586,7 +3621,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "North-East"
+        "North-East",
+        "CREST"
       ]
     },
     {
@@ -3616,10 +3652,13 @@
       "org": "Singapore Anglican Community Services",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in Sengkang and Rivervale. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in Sengkang and Rivervale. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "6258 1558",
       "other": "",
       "address": "Blk 184C Rivervale Crescent #01-199, Singapore 543184",
@@ -3627,7 +3666,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "North-East"
+        "North-East",
+        "CREST"
       ]
     },
     {
@@ -3636,10 +3676,13 @@
       "org": "Singapore Association for Mental Health (SAMH)",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in the east. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in the east. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "6344 8451",
       "other": "Email: csayeast@samhealth.org.sg; Email: sayiteast@samhealth.org.sg",
       "address": "Blk 124 Bedok North Road #01-133, Singapore 460124",
@@ -3647,7 +3690,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "East"
+        "East",
+        "CREST"
       ]
     },
     {
@@ -3655,29 +3699,35 @@
       "name": "AWWA – Community Mental Health Team (Ang Mo Kio)",
       "org": "AWWA",
       "cats": [
-        "mental"
+        "mental",
+        "seniors",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Ang Mo Kio. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. AWWA also runs caregiver support groups. The service is government-funded.",
+      "desc": "A community outreach team in Ang Mo Kio. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. AWWA also runs caregiver support groups every quarter. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6511 6690",
-      "other": "",
+      "other": "Caregiver support groups: 9784 9247",
       "address": "Blk 123 Ang Mo Kio Ave 6 #01-4011, Singapore 560123",
       "web": "",
       "tags": [
         "Community mental health",
-        "Central"
+        "Caregiver support",
+        "Central",
+        "CREST"
       ]
     },
     {
       "id": "brahm-cmht-aljunied",
-      "name": "Brahm Centre – Community Mental Health Team (Aljunied)",
+      "name": "Brahm Centre – Youth Community Mental Health Team (Aljunied)",
       "org": "Brahm Centre",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Aljunied and MacPherson, with a team for adults and a youth team for young people and their caregivers. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in Aljunied and MacPherson. Brahm also runs an adult team at the same address. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers. Adults are also seen here.",
       "phone": "6876 0262",
       "other": "",
       "address": "Blk 108 Aljunied Crescent #01-36, Singapore 380108",
@@ -3685,7 +3735,8 @@
       "tags": [
         "Community mental health",
         "Youth mental health",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3694,10 +3745,13 @@
       "org": "Limitless",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in Little India. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in Little India. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "",
       "other": "Email: hello@limitless.sg",
       "address": "9 Gloucester Road #01-03, Singapore 210009",
@@ -3705,7 +3759,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3734,17 +3789,19 @@
       "name": "NTUC Health – Community Mental Health Team (Bukit Merah)",
       "org": "NTUC Health",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Bukit Merah. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community outreach team in Bukit Merah. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "8223 1135",
       "other": "",
       "address": "Blk 121 Bukit Merah View #01-96, Singapore 151121",
       "web": "",
       "tags": [
         "Community mental health",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3753,18 +3810,19 @@
       "org": "O’Joy",
       "cats": [
         "mental",
-        "seniors"
+        "seniors",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team in Boon Keng, run by O’Joy, a charity known for supporting older adults with mental health needs. Staff listen to concerns, assess needs, and provide support such as counselling and therapy, or link people to other services. The service is government-funded.",
+      "desc": "A community outreach team in Boon Keng. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6749 0190",
       "other": "",
       "address": "Blk 5 Upper Boon Keng Road #02-10, Singapore 380005",
       "web": "",
       "tags": [
         "Community mental health",
-        "Seniors",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3772,17 +3830,19 @@
       "name": "Singapore Anglican Community Services – Community Mental Health Team (Beach Road)",
       "org": "Singapore Anglican Community Services",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in the Beach Road and Bugis area. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community outreach team in the Beach Road and Bugis area. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6291 2473",
       "other": "",
       "address": "Blk 5 Beach Road #02-4915, Singapore 190005",
       "web": "",
       "tags": [
         "Community mental health",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3791,10 +3851,13 @@
       "org": "Singapore Children’s Society",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in Bishan. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in Bishan. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "6358 0911",
       "other": "Email: fm@childrensociety.org.sg",
       "address": "Junction 8 Office Tower, 9 Bishan Place #05-02, Singapore 579837",
@@ -3802,7 +3865,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3831,17 +3895,19 @@
       "name": "Thye Hua Kwan Moral Charities – Community Mental Health Team (Tiong Bahru)",
       "org": "Thye Hua Kwan Moral Charities",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Tiong Bahru and Bukit Merah. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community outreach team in Tiong Bahru. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6924 2951",
       "other": "",
       "address": "Blk 44 Beo Crescent #01-57, Singapore 160044",
       "web": "",
       "tags": [
         "Community mental health",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3850,10 +3916,11 @@
       "org": "TOUCH Community Services",
       "cats": [
         "mental",
-        "seniors"
+        "seniors",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Ang Mo Kio. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. TOUCH also runs a caregiver support group nearby. The service is government-funded.",
+      "desc": "A community outreach team in Ang Mo Kio. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. TOUCH also runs a caregiver support group nearby, at Blk 444 Ang Mo Kio Ave 10. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "6804 6555",
       "other": "Email: caregivers@touch.org.sg (caregiver support)",
       "address": "Blk 433 Ang Mo Kio Ave 10 #01-1415, Singapore 560433",
@@ -3861,7 +3928,8 @@
       "tags": [
         "Community mental health",
         "Caregiver support",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3870,10 +3938,13 @@
       "org": "TOUCH Community Services",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers in Bukit Merah. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers in Bukit Merah. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "1800 377 2252",
       "other": "Email: mentalhealth@touch.org.sg",
       "address": "Blk 162 Bukit Merah Central #05-3545, Singapore 150162",
@@ -3881,7 +3952,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3890,10 +3962,13 @@
       "org": "TOUCH Community Services",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
       ],
       "h24": false,
-      "desc": "A community mental health team for young people and their caregivers at *SCAPE in Orchard. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded.",
+      "desc": "A youth team for young people and their caregivers at *SCAPE in Orchard. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
       "phone": "1800 377 2252",
       "other": "Email: mentalhealth@touch.org.sg",
       "address": "*SCAPE, 2 Orchard Link #04-06, Singapore 237978",
@@ -3901,7 +3976,8 @@
       "tags": [
         "Youth mental health",
         "Caregiver support",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -3909,17 +3985,19 @@
       "name": "Viriya Community Services – Community Mental Health Team (Potong Pasir)",
       "org": "Viriya Community Services",
       "cats": [
-        "mental"
+        "mental",
+        "crest"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Potong Pasir. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community outreach team in Potong Pasir. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
       "phone": "9690 2989",
       "other": "",
       "address": "Blk 142 Potong Pasir Ave 3 #01-224, Singapore 350142",
       "web": "",
       "tags": [
         "Community mental health",
-        "Central"
+        "Central",
+        "CREST"
       ]
     },
     {
@@ -4073,13 +4151,15 @@
       "id": "montfort-comit-yishun",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "crest",
+        "seniors"
       ],
       "h24": false,
       "web": "",
       "name": "Montfort Care – GoodLife! Community Intervention Team (Yishun)",
       "org": "Montfort Care",
-      "desc": "A community team in Yishun running both a COMIT, for needs assessment, counselling and psychosocial therapy, and community outreach (CREST). It works closely with GPs, polyclinics and hospitals, takes referrals from GPs and other professionals, and runs a caregiver support group. The service is government-funded. Specialisation: COMIT and community outreach. Takes GP referrals.",
+      "desc": "A community team in Yishun running both a COMIT, for needs assessment, counselling and psychosocial therapy, and a confirmed community outreach team (CREST), for early identification and emotional support. It works closely with GPs, polyclinics and hospitals, takes referrals from GPs and other professionals, and runs a caregiver support group. The service is government-funded. Specialisation: COMIT and community outreach. Takes GP referrals.",
       "address": "Blk 838 Yishun Street 81 #01-322, Singapore 760838",
       "phone": "6484 8040",
       "other": "Email: GoodLife-Yishun@montfortcare.org.sg; Caregiver support: crest.north@montfortcare.org.sg",
@@ -4087,7 +4167,8 @@
         "COMIT",
         "Community mental health",
         "Caregiver support",
-        "North"
+        "North",
+        "CREST"
       ]
     },
     {
@@ -4151,6 +4232,307 @@
         "Community mental health",
         "GP referrals",
         "West"
+      ]
+    },
+    {
+      "id": "reach-crest-bukit-batok",
+      "cats": [
+        "mental",
+        "seniors",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6801 0876 / 6801 0878",
+      "other": "Email: crest-ss@reach.org.sg",
+      "web": "https://www.reach.org.sg/",
+      "name": "REACH Community Services – CREST (Bukit Batok)",
+      "org": "REACH Community Services",
+      "address": "Blk 377A Bukit Batok Street 31 #01-24, Singapore 651377",
+      "desc": "A community outreach team (CREST) in Bukit Batok. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. It also runs a caregiver support group. The service is government-funded. Programme: CREST (confirmed).",
+      "tags": [
+        "CREST",
+        "Community mental health",
+        "Caregiver support",
+        "West"
+      ]
+    },
+    {
+      "id": "brahm-outreach-simei",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6612 6125",
+      "other": "",
+      "web": "",
+      "name": "Brahm Centre – Community Mental Health Team (Simei)",
+      "org": "Brahm Centre",
+      "address": "Blk 148 Simei Street 1 #01-121, Singapore 520148",
+      "desc": "A community outreach team in Simei. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "East",
+        "CREST"
+      ]
+    },
+    {
+      "id": "clarity-cmht-toa-payoh",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6801 7467",
+      "other": "",
+      "web": "",
+      "name": "Clarity Singapore – Community Mental Health Team (Toa Payoh)",
+      "org": "Clarity Singapore",
+      "address": "Agape Village, 7A Lorong 8 Toa Payoh #04-01, Singapore 319264",
+      "desc": "A community outreach team at Agape Village in Toa Payoh that takes clients from across Singapore. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "Islandwide",
+        "Central",
+        "CREST"
+      ]
+    },
+    {
+      "id": "club-heal-cmht-woods-square",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6899 3463",
+      "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg",
+      "web": "",
+      "name": "Club HEAL – Community Mental Health Team (Woods Square)",
+      "org": "Club HEAL",
+      "address": "Woods Square Solo 1, 10 Woodlands Square #03-56, Singapore 737714",
+      "desc": "Club HEAL’s Woodlands office. It supports people with mental health conditions and their caregivers through outreach, emotional support and links to recovery services. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "Mental health recovery",
+        "North",
+        "CREST"
+      ]
+    },
+    {
+      "id": "dementia-singapore-cmht-bendemeer",
+      "cats": [
+        "mental",
+        "seniors",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6377 0700",
+      "other": "Tiong Bahru caregiver group: 6389 5389",
+      "web": "https://www.dementia.org.sg/",
+      "name": "Dementia Singapore – Community Mental Health Team (Bendemeer)",
+      "org": "Dementia Singapore",
+      "address": "BS Bendemeer Centre, 20 Bendemeer Road #01-02, Singapore 339914",
+      "desc": "A team in Bendemeer for people living with dementia and their caregivers, taking clients from across Singapore. It offers early support, information, and links to dementia care and caregiver support groups. It also runs caregiver support groups at Bendemeer and Tiong Bahru. The service is government-funded. Specialisation: Dementia and caregivers. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Dementia",
+        "Caregiver support",
+        "Islandwide",
+        "Central",
+        "CREST"
+      ]
+    },
+    {
+      "id": "intellect-cmht",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "",
+      "other": "WhatsApp: 8088 5120; Address: Marina One East Tower, 5 Straits View B2-60/61, Singapore 018935; Address: The Woodleigh Mall, 11 Bidadari Park Drive #02-03/05/06/07, Singapore 367803; Address: Tembeling Centre, 252 Tembeling Road #01-09, Singapore 423731; Address: The Foundry, 11 Prinsep Link, Singapore 187949",
+      "web": "",
+      "name": "Intellect – Community Mental Health Team (multiple locations)",
+      "org": "Intellect",
+      "address": "Union Building, 171 Tras Street #02-179, Singapore 079025",
+      "desc": "A mental health provider that takes clients from across Singapore and works with AIC’s community mental health network. It has several centres around the city and is contacted by WhatsApp. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "Islandwide",
+        "Central",
+        "CREST"
+      ]
+    },
+    {
+      "id": "montfort-cmht-marine-terrace",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6445 0570",
+      "other": "",
+      "web": "",
+      "name": "Montfort Care – Community Mental Health Team (Marine Terrace)",
+      "org": "Montfort Care",
+      "address": "Blk 50 Marine Terrace #03-365, Singapore 440050",
+      "desc": "A community outreach team in Marine Parade. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "East",
+        "CREST"
+      ]
+    },
+    {
+      "id": "ntuc-health-cmht-jurong-west",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6267 4197",
+      "other": "",
+      "web": "",
+      "name": "NTUC Health – Community Mental Health Team (Jurong West)",
+      "org": "NTUC Health",
+      "address": "Blk 361 Yung An Road #01-111, Singapore 610361",
+      "desc": "A community outreach team in Jurong West, on Yung An Road. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "West",
+        "CREST"
+      ]
+    },
+    {
+      "id": "sage-cmht-sengkang",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6354 1191",
+      "other": "",
+      "web": "",
+      "name": "SAGE Counselling Centre – Community Mental Health Team (Sengkang)",
+      "org": "SAGE Counselling Centre",
+      "address": "Blk 262C Compassvale Street #01-137, Singapore 543262",
+      "desc": "A community outreach team in Compassvale, Sengkang. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "North-East",
+        "CREST"
+      ]
+    },
+    {
+      "id": "sacs-cmht-jurong-east",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "6262 1183",
+      "other": "",
+      "web": "",
+      "name": "Singapore Anglican Community Services – Community Mental Health Team (Jurong East)",
+      "org": "Singapore Anglican Community Services",
+      "address": "Blk 374 Jurong East Street 32 #01-486, Singapore 600374",
+      "desc": "A community outreach team in Jurong East. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "West",
+        "CREST"
+      ]
+    },
+    {
+      "id": "touch-cmht-yishun",
+      "cats": [
+        "mental",
+        "crest"
+      ],
+      "h24": false,
+      "phone": "1800 6123 123",
+      "other": "",
+      "web": "",
+      "name": "TOUCH Community Services – Community Mental Health Team (Yishun)",
+      "org": "TOUCH Community Services",
+      "address": "513 Wellington Circle, Singapore 750513",
+      "desc": "A community outreach team in Yishun, at Wellington Circle. It helps spot mental health concerns early, offers emotional support, and links people to assessment and treatment. The service is government-funded. Programme: Community outreach (likely CREST).",
+      "tags": [
+        "Community mental health",
+        "North",
+        "CREST"
+      ]
+    },
+    {
+      "id": "shine-crest-youth-clementi",
+      "cats": [
+        "mental",
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
+      ],
+      "h24": false,
+      "phone": "6778 6867 / 8855 3569",
+      "other": "",
+      "web": "",
+      "name": "SHINE Children and Youth Services – CREST-Youth (Clementi)",
+      "org": "SHINE Children and Youth Services",
+      "address": "Blk 329 Clementi Ave 2 #01-248, Singapore 120329",
+      "desc": "A youth team for young people and their caregivers in Clementi. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers. Programme: CREST-Youth (likely, going by the team’s email).",
+      "tags": [
+        "CREST-Youth",
+        "Youth mental health",
+        "Caregiver support",
+        "West",
+        "CREST"
+      ]
+    },
+    {
+      "id": "care-corner-youth-cmht-woodlands",
+      "cats": [
+        "mental",
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
+      ],
+      "h24": false,
+      "phone": "6978 4217",
+      "other": "Email: insight@carecorner.org.sg",
+      "web": "",
+      "name": "Care Corner Singapore – Youth Community Mental Health Team (Woodlands)",
+      "org": "Care Corner Singapore",
+      "address": "Woods Square Tower 2, 6 Woodlands Square #03-01, Singapore 737737",
+      "desc": "A youth team for young people and their caregivers in Woodlands. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
+      "tags": [
+        "Youth mental health",
+        "Caregiver support",
+        "North",
+        "CREST"
+      ]
+    },
+    {
+      "id": "samh-youth-cmht-woodlands",
+      "cats": [
+        "mental",
+        "youth",
+        "seniors",
+        "crest",
+        "crest-youth"
+      ],
+      "h24": false,
+      "phone": "6362 4845",
+      "other": "Email: csaynorth@samhealth.org.sg; Email: sayitnorth@samhealth.org.sg",
+      "web": "",
+      "name": "Singapore Association for Mental Health (SAMH) – Youth Community Mental Health Team (Woodlands)",
+      "org": "Singapore Association for Mental Health (SAMH)",
+      "address": "Blk 317 Woodlands Street 31 #01-196, Singapore 730317",
+      "desc": "A youth team for young people and their caregivers in Woodlands. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers.",
+      "tags": [
+        "Youth mental health",
+        "Caregiver support",
+        "North",
+        "CREST"
       ]
     }
   ]

@@ -150,5 +150,13 @@
     "intro": "Community Intervention Teams provide mental health assessment, counselling, therapy, case management and caregiver support, working with healthcare and community partners.",
     "social_title": "",
     "social_description": ""
+  },
+  "crest-youth": {
+    "slug": "crest-youth",
+    "title": "CREST-Youth mental health support in Singapore",
+    "description": "Find CREST-Youth and community youth mental health teams in Singapore, offering emotional support, counselling and help for young people and caregivers.",
+    "intro": "Youth mental health outreach teams offer a first stop for young people facing stress, emotional difficulties or mental health concerns, with support for their caregivers and links to further help.",
+    "social_title": "",
+    "social_description": ""
   }
 }
