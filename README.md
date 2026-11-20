@@ -99,6 +99,8 @@ Follow the prompts to create a new site, then add the two environment variables 
 
 **Submissions:** open `yoursite/admin`, enter your key, then mark each one *done* or *rejected* once you've handled it.
 
+**Assistant knowledge:** the assistant's context is generated from `public/services.json`, including every listing, category label, contact detail, operating hours, tag, address and supplied link. Directory changes reach the assistant with the next deploy; no separate knowledge upload is needed. The prompt includes the directory's `updated` date. Identical context is cached briefly by the AI provider; changed content refreshes that cache automatically.
+
 **Editing the directory:** on GitHub, open `public/services.json`, click the pencil icon, edit, and commit. Netlify redeploys in about a minute. A listing looks like this:
 
 ```json
