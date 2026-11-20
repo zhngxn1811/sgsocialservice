@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19",
+  "updated": "2026-11-20",
   "categories": [
     {
       "id": "crisis",
@@ -290,7 +290,9 @@
       "tags": [
         "Mental health recovery",
         "GP referrals (COMIT)",
-        "North"
+        "North",
+        "COMIT",
+        "Community Intervention Team"
       ]
     },
     {
@@ -1191,6 +1193,151 @@
       "tags": [
         "Suicide prevention",
         "International resources"
+      ]
+    },
+    {
+      "id": "allkin-crest",
+      "name": "Community outreach (CREST)",
+      "org": "Allkin Singapore",
+      "cats": [
+        "mental",
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Raises awareness of dementia and mental health, promotes early detection, provides emotional support, conducts preventive and cognitive-stimulating activities, and links people to suitable health and social care services. Allkin CREST focuses on Punggol Coast, Punggol Shore, Punggol West SMC, Compassvale, Rivervale, Pasir Ris East, Pasir Ris Central, Pasir Ris West, Teck Ghee, Bishan East, Sin Ming, Kebun Baru SMC, Marymount SMC.",
+      "phone": "",
+      "other": "Confirm programme availability, venue and referral arrangements with Allkin.",
+      "web": "https://www.allkin.org.sg",
+      "tags": [
+        "CREST",
+        "Community outreach",
+        "Dementia",
+        "Mental health",
+        "Early detection",
+        "Punggol Coast",
+        "Punggol Shore",
+        "Punggol West SMC",
+        "Compassvale",
+        "Rivervale",
+        "Pasir Ris East",
+        "Pasir Ris Central",
+        "Pasir Ris West",
+        "Teck Ghee",
+        "Bishan East",
+        "Sin Ming",
+        "Kebun Baru SMC",
+        "Marymount SMC"
+      ]
+    },
+    {
+      "id": "allkin-pds-dementia",
+      "name": "Post-Diagnostic Support (PDS-Dementia)",
+      "org": "Allkin Singapore",
+      "cats": [
+        "seniors",
+        "mental"
+      ],
+      "h24": false,
+      "desc": "Six-month support for persons newly diagnosed with dementia and their caregivers, including education on the condition, coordination of community resources, and early planning and management.",
+      "phone": "",
+      "other": "Confirm programme availability, venue and referral arrangements with Allkin.",
+      "web": "https://www.allkin.org.sg",
+      "tags": [
+        "PDS-Dementia",
+        "Post-Diagnostic Support",
+        "Dementia",
+        "Caregiver support",
+        "Newly diagnosed"
+      ]
+    },
+    {
+      "id": "allkin-mcsp",
+      "name": "Meeting Centre Support Programme (MCSP)",
+      "org": "Allkin Singapore",
+      "cats": [
+        "seniors",
+        "mental"
+      ],
+      "h24": false,
+      "desc": "Facilitated group sessions for persons with mild to early moderate dementia featuring psychosocial, physical, cognitive stimulation, and social activities. Meets alternate Monday afternoons.",
+      "phone": "",
+      "other": "Confirm programme availability, venue and referral arrangements with Allkin.",
+      "web": "https://www.allkin.org.sg",
+      "tags": [
+        "MCSP",
+        "Meeting Centre Support Programme",
+        "Dementia",
+        "Cognitive stimulation",
+        "Group programme"
+      ]
+    },
+    {
+      "id": "allkin-opcg",
+      "name": "Orientation Programme for Caregivers (OPCG)",
+      "org": "Allkin Singapore",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "A 5-session series held twice yearly covering understanding dementia, caregiving skills, coping strategies, Advance Care Planning and Lasting Power of Attorney (LPA), and community resources.",
+      "phone": "",
+      "other": "Confirm programme availability, venue and referral arrangements with Allkin.",
+      "web": "https://www.allkin.org.sg",
+      "tags": [
+        "OPCG",
+        "Orientation Programme for Caregivers",
+        "Dementia",
+        "Caregiver training",
+        "Advance Care Planning",
+        "LPA"
+      ]
+    },
+    {
+      "id": "allkin-csc",
+      "name": "Caregivers Strength Circle (CSC)",
+      "org": "Allkin Singapore",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Ongoing support group for caregivers of persons living with dementia to connect and organise interest-focused activities, with monthly gatherings and an annual celebration.",
+      "phone": "",
+      "other": "Confirm programme availability, venue and referral arrangements with Allkin.",
+      "web": "https://www.allkin.org.sg",
+      "tags": [
+        "CSC",
+        "Caregivers Strength Circle",
+        "Dementia",
+        "Caregiver support",
+        "Support group"
+      ]
+    },
+    {
+      "id": "allkin-comit",
+      "name": "Community Intervention Team (COMIT)",
+      "org": "Allkin Singapore",
+      "cats": [
+        "mental",
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Provides assessment, therapy, counselling, psychoeducation, case management, personalised care plans, and caregiver support and training. Coordinates closely with polyclinics, GPs and community partners. Allkin COMIT is open to residents in Ang Mo Kio, Sin Ming, Bishan, Hougang, Sengkang, Punggol.",
+      "phone": "",
+      "other": "Confirm programme availability, venue and referral arrangements with Allkin.",
+      "web": "https://www.allkin.org.sg",
+      "tags": [
+        "COMIT",
+        "Community Intervention Team",
+        "Mental health",
+        "Counselling",
+        "Case management",
+        "Caregiver support",
+        "Ang Mo Kio",
+        "Sin Ming",
+        "Bishan",
+        "Hougang",
+        "Sengkang",
+        "Punggol"
       ]
     },
     {
