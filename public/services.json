@@ -270,16 +270,18 @@
       "name": "Club HEAL @ Bukit Batok East – The Loving Hub",
       "org": "Club HEAL",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
-      "desc": "Club HEAL’s centre in the west, for people with mental health conditions and their caregivers. It offers recovery and wellness programmes, community outreach and help getting back to work, and takes referrals from professionals by email.",
+      "desc": "Club HEAL’s centre in the west, and a community intervention team (COMIT) with a youth team. It provides needs assessment, counselling and psychosocial therapy for people with mental health conditions and their caregivers, and takes GP referrals. It also runs recovery programmes and support for young people. The service is government-funded. Specialisation: COMIT. Takes GP referrals. Also supports youths and their caregivers.",
       "phone": "6899 3463",
       "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg; Operating hours: Monday to Friday, 9am to 5pm",
       "web": "https://www.clubheal.org.sg/",
       "address": "Blk 254 Bukit Batok East Ave 4 #01-229, Singapore 650254",
       "tags": [
+        "COMIT",
         "Mental health recovery",
-        "Caregiver support",
+        "Youth mental health",
         "West"
       ]
     },
@@ -291,17 +293,16 @@
         "mental",
         "comit"
       ],
-      "desc": "Club HEAL’s northern centre, and its Community Intervention Team (COMIT). GPs in the area refer patients with mental health conditions here for ongoing support in the community. It also runs recovery programmes and supports caregivers. Specialisation: COMIT, ongoing community mental health support for patients referred by GPs.",
+      "desc": "Club HEAL’s northern centre and a community intervention team (COMIT). It provides needs assessment, counselling and psychosocial therapy for people with mental health conditions and their caregivers, and takes referrals from GPs in the area. It also runs recovery programmes and a caregiver support group. The service is government-funded. Specialisation: COMIT. Ongoing community mental health support for GP-referred patients.",
       "phone": "6899 3463",
       "other": "Email: info@clubheal.org.sg; Referrals: referral@clubheal.org.sg; Operating hours: Monday to Friday, 9am to 5pm",
       "web": "https://www.clubheal.org.sg/",
       "address": "Blk 317 Woodlands St 31 #01-194, Singapore 730317",
       "tags": [
-        "Mental health recovery",
-        "GP referrals (COMIT)",
-        "North",
         "COMIT",
-        "Community Intervention Team"
+        "Mental health recovery",
+        "Caregiver support",
+        "North"
       ]
     },
     {
@@ -1349,7 +1350,7 @@
     },
     {
       "id": "allkin-comit",
-      "name": "Community Intervention Team (COMIT)",
+      "name": "Allkin Singapore – Community Intervention Team (Ang Mo Kio)",
       "org": "Allkin Singapore",
       "cats": [
         "mental",
@@ -1357,24 +1358,16 @@
         "comit"
       ],
       "h24": false,
-      "desc": "Provides assessment, therapy, counselling, psychoeducation, case management, personalised care plans, and caregiver support and training. Coordinates closely with polyclinics, GPs and community partners. Allkin COMIT is open to residents in Ang Mo Kio, Sin Ming, Bishan, Hougang, Sengkang, Punggol.",
+      "desc": "A community intervention team (COMIT) and first stop for mental health support in Ang Mo Kio. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
       "phone": "6038 4400",
-      "other": "Email: mentalhealthservice@allkin.org.sg; Call 6038 4400 to make an appointment before visiting.",
-      "address": "North (Ang Mo Kio): 304 Ang Mo Kio Avenue 1, #01-1143/1147, Singapore 560304; North-East (Rivervale): 193 Rivervale Drive, #01-787, Singapore 540193",
+      "other": "Email: mentalhealthservice@allkin.org.sg",
+      "address": "Blk 323 Ang Mo Kio Ave 3 #01-1960, Singapore 560323",
       "web": "https://www.allkin.org.sg",
       "tags": [
         "COMIT",
-        "Community Intervention Team",
-        "Mental health",
-        "Counselling",
-        "Case management",
-        "Caregiver support",
-        "Ang Mo Kio",
-        "Sin Ming",
-        "Bishan",
-        "Hougang",
-        "Sengkang",
-        "Punggol"
+        "Community mental health",
+        "GP referrals",
+        "Central"
       ]
     },
     {
@@ -3359,37 +3352,43 @@
     },
     {
       "id": "brahm-cmht-simei",
-      "name": "Brahm Centre – Community Mental Health Team (Simei)",
+      "name": "Brahm Centre – Community Intervention Team (Simei)",
       "org": "Brahm Centre",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Simei and Tampines. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded, so there’s no cost to clients.",
-      "phone": "6612 6125",
-      "other": "",
-      "address": "Blk 148 Simei Street 1 #01-121, Singapore 520148",
+      "desc": "A community intervention team (COMIT) in Simei. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "phone": "6786 0800",
+      "other": "Email: info@brahmcentre.com",
+      "address": "Blk 227 Simei Street 4 #01-50, Singapore 520227",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
+        "GP referrals",
         "East"
       ]
     },
     {
       "id": "brahm-cmht-tampines",
-      "name": "Brahm Centre – Community Mental Health Team (Tampines)",
+      "name": "Brahm Centre – Community Intervention Team (Tampines)",
       "org": "Brahm Centre",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Tampines. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded, so there’s no cost to clients.",
+      "desc": "A community intervention team (COMIT) in Tampines. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
       "phone": "6908 2122",
-      "other": "",
+      "other": "Email: info@brahmcentre.com",
       "address": "Blk 473 Tampines Street 43 #01-94, Singapore 520473",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
+        "GP referrals",
         "East"
       ]
     },
@@ -3435,18 +3434,20 @@
     },
     {
       "id": "filos-cmht-chai-chee",
-      "name": "Filos Community Services – Community Mental Health Team (Chai Chee)",
+      "name": "Filos Community Services – Community Intervention Team (Chai Chee)",
       "org": "Filos Community Services",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Bedok and Chai Chee. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. It also runs a caregiver support group. The service is government-funded.",
+      "desc": "A community intervention team (COMIT) in Bedok and Chai Chee. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. It also runs a caregiver support group. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
       "phone": "6241 1503",
-      "other": "",
+      "other": "Email: info@filos.sg",
       "address": "Blk 55 Chai Chee Drive #01-222, Singapore 460055",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
         "Caregiver support",
         "East"
@@ -3528,37 +3529,43 @@
     },
     {
       "id": "montfort-cmht-bedok-reservoir",
-      "name": "Montfort Care – Community Mental Health Team (Bedok Reservoir)",
+      "name": "Montfort Care – GoodLife! Community Intervention Team (Bedok)",
       "org": "Montfort Care",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Bedok Reservoir. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community intervention team (COMIT) in Bedok Reservoir. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
       "phone": "6312 3988",
-      "other": "",
+      "other": "Email: GoodLifebd@montfortcare.org.sg",
       "address": "613A Bedok Reservoir Road #01-1364, Singapore 471613",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
+        "GP referrals",
         "East"
       ]
     },
     {
       "id": "montfort-cmht-marine-parade",
-      "name": "Montfort Care – Community Mental Health Team (Marine Parade)",
+      "name": "Montfort Care – GoodLife! Community Intervention Team (Marine Parade)",
       "org": "Montfort Care",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Marine Parade. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
-      "phone": "6445 0570",
-      "other": "",
-      "address": "Blk 50 Marine Terrace #03-365, Singapore 440050",
+      "desc": "A community intervention team (COMIT) serving Marine Parade and Mountbatten. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "phone": "6242 3309",
+      "other": "Email: GoodLife-MP@montfortcare.org.sg",
+      "address": "223 Mountbatten Road #02-18, Singapore 398008",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
+        "GP referrals",
         "East"
       ]
     },
@@ -3584,19 +3591,22 @@
     },
     {
       "id": "sacs-cmht-pasir-ris",
-      "name": "Singapore Anglican Community Services – Community Mental Health Team (Pasir Ris)",
+      "name": "Singapore Anglican Community Services – Anglican Care Centre (Pasir Ris)",
       "org": "Singapore Anglican Community Services",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Pasir Ris. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community intervention team (COMIT) in Pasir Ris. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
       "phone": "6584 4633",
-      "other": "",
+      "other": "Email: acc_pasirris@sacs.org.sg",
       "address": "Blk 534 Pasir Ris Drive 1 #01-266, Singapore 510534",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
+        "GP referrals",
         "East"
       ]
     },
@@ -3700,19 +3710,22 @@
     },
     {
       "id": "montfort-cmht-chinatown",
-      "name": "Montfort Care – Community Mental Health Team (Chinatown)",
+      "name": "Montfort Care – GoodLife! Community Intervention Team (Kreta Ayer)",
       "org": "Montfort Care",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Chinatown and the city area. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "A community intervention team (COMIT) serving Kreta Ayer, Chinatown and the city area. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
       "phone": "6274 6904",
-      "other": "",
+      "other": "Email: GoodLife-KA@montfortcare.org.sg",
       "address": "Chinatown Point, 133 New Bridge Road #04-01 to #04-11, Singapore 059413",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
+        "GP referrals",
         "Central"
       ]
     },
@@ -3794,19 +3807,22 @@
     },
     {
       "id": "samh-cmht-jalan-besar",
-      "name": "Singapore Association for Mental Health (SAMH) – Community Mental Health Team (Jalan Besar)",
+      "name": "Singapore Association for Mental Health (SAMH) – Community Intervention Team (Jalan Besar)",
       "org": "Singapore Association for Mental Health (SAMH)",
       "cats": [
-        "mental"
+        "mental",
+        "comit"
       ],
       "h24": false,
-      "desc": "A community mental health team and first stop for mental health support in Jalan Besar, based at Maude Road. Staff listen to your concerns, assess your needs, and provide support such as counselling and therapy, or link you to other services. The service is government-funded.",
+      "desc": "SAMH’s community intervention team (COMIT) at Maude Road, which also serves Potong Pasir. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
       "phone": "8511 2678",
-      "other": "",
-      "address": "Blk 1 Maude Road #03-30, Singapore 200001",
+      "other": "Email: samhmobile@samhealth.org.sg",
+      "address": "Blk 1 Maude Road #03-30 (Lift Lobby B), Singapore 200001",
       "web": "",
       "tags": [
+        "COMIT",
         "Community mental health",
+        "GP referrals",
         "Central"
       ]
     },
@@ -3904,6 +3920,237 @@
       "tags": [
         "Community mental health",
         "Central"
+      ]
+    },
+    {
+      "id": "allkin-comit-rivervale",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Allkin Singapore – Community Intervention Team (Rivervale)",
+      "org": "Allkin Singapore",
+      "desc": "A community intervention team (COMIT) in Sengkang and Rivervale. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. It also runs a caregiver support group. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "Blk 193 Rivervale Drive #01-787, Singapore 540193",
+      "phone": "6038 4400",
+      "other": "Email: mentalhealthservice@allkin.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "Caregiver support",
+        "North-East"
+      ]
+    },
+    {
+      "id": "sacs-comit-bukit-batok",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Singapore Anglican Community Services – Anglican Care Centre (Bukit Batok)",
+      "org": "Singapore Anglican Community Services",
+      "desc": "A community intervention team (COMIT) in Bukit Batok. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "Blk 267 Bukit Batok East Ave 4 #01-206, Singapore 650267",
+      "phone": "6562 4881",
+      "other": "Email: acc_bukitbatok@sacs.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "GP referrals",
+        "West"
+      ]
+    },
+    {
+      "id": "sacs-comit-yishun",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Singapore Anglican Community Services – Anglican Care Centre (Yishun)",
+      "org": "Singapore Anglican Community Services",
+      "desc": "A community intervention team (COMIT) in Yishun. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "Blk 707 Yishun Ave 5 #01-36, Singapore 760707",
+      "phone": "6753 5311",
+      "other": "Email: acc_yishun@sacs.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "GP referrals",
+        "North"
+      ]
+    },
+    {
+      "id": "care-corner-comit-toa-payoh",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Care Corner Singapore – Community Intervention Team (Toa Payoh)",
+      "org": "Care Corner Singapore",
+      "desc": "A community intervention team (COMIT) in Toa Payoh that takes clients from across Singapore. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals. Islandwide.",
+      "address": "Blk 159 Lorong 1 Toa Payoh #01-1530, Singapore 310159",
+      "phone": "6978 7151",
+      "other": "Email: ccu.admin@carecorner.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "Islandwide",
+        "Central"
+      ]
+    },
+    {
+      "id": "clarity-comit-yishun",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Clarity Singapore – Community Intervention Team (Yishun)",
+      "org": "Clarity Singapore",
+      "desc": "A community intervention team (COMIT) in Yishun that takes clients from across Singapore. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals. Islandwide.",
+      "address": "Blk 854 Yishun Ring Road #01-3511, Singapore 760854",
+      "phone": "6757 7990",
+      "other": "Email: referral@clarity-singapore.org",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "Islandwide",
+        "North"
+      ]
+    },
+    {
+      "id": "fei-yue-comit-teck-whye",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Fei Yue Community Services – Community Intervention Team (Teck Whye)",
+      "org": "Fei Yue Community Services",
+      "desc": "A community intervention team (COMIT) at Limbang Green in Teck Whye, serving Choa Chu Kang. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "Blk 11 Teck Whye Lane #01-222, Singapore 680011",
+      "phone": "6011 7658",
+      "other": "Email: COMIT@fycs.org",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "GP referrals",
+        "West"
+      ]
+    },
+    {
+      "id": "montfort-comit-telok-blangah",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Montfort Care – GoodLife! Community Intervention Team (Telok Blangah)",
+      "org": "Montfort Care",
+      "desc": "A community intervention team (COMIT) in Telok Blangah. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "Blk 28 Telok Blangah Rise #01-219, Singapore 090028",
+      "phone": "6274 6904",
+      "other": "Email: GoodLife-TB@montfortcare.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "GP referrals",
+        "Central"
+      ]
+    },
+    {
+      "id": "montfort-comit-yishun",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Montfort Care – GoodLife! Community Intervention Team (Yishun)",
+      "org": "Montfort Care",
+      "desc": "A community team in Yishun running both a COMIT, for needs assessment, counselling and psychosocial therapy, and community outreach (CREST). It works closely with GPs, polyclinics and hospitals, takes referrals from GPs and other professionals, and runs a caregiver support group. The service is government-funded. Specialisation: COMIT and community outreach. Takes GP referrals.",
+      "address": "Blk 838 Yishun Street 81 #01-322, Singapore 760838",
+      "phone": "6484 8040",
+      "other": "Email: GoodLife-Yishun@montfortcare.org.sg; Caregiver support: crest.north@montfortcare.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "Caregiver support",
+        "North"
+      ]
+    },
+    {
+      "id": "samh-comit-jurong-east",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Singapore Association for Mental Health (SAMH) – Community Intervention Team (Jurong East)",
+      "org": "Singapore Association for Mental Health (SAMH)",
+      "desc": "SAMH’s community intervention team (COMIT) in Jurong East. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "Blk 257 Jurong East Street 24 #01-405, Singapore 600257",
+      "phone": "8511 2678",
+      "other": "Email: samhmobile@samhealth.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "GP referrals",
+        "West"
+      ]
+    },
+    {
+      "id": "st-lukes-comit-bukit-batok",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "St. Luke’s Hospital – Community Intervention Team (Bukit Batok)",
+      "org": "St. Luke’s Hospital",
+      "desc": "A community intervention team (COMIT) run by St. Luke’s Hospital in Bukit Batok. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "2 Bukit Batok Street 11, Singapore 659674",
+      "phone": "6895 2794",
+      "other": "Email: slh-comit@stluke.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "GP referrals",
+        "West"
+      ]
+    },
+    {
+      "id": "viriya-comit-jurong-west",
+      "cats": [
+        "mental",
+        "comit"
+      ],
+      "h24": false,
+      "web": "",
+      "name": "Viriya Community Services – Community Intervention Team (Jurong West)",
+      "org": "Viriya Community Services",
+      "desc": "A community intervention team (COMIT) in Jurong West. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
+      "address": "Blk 646 Jurong West Street 61 #01-142, Singapore 640646",
+      "phone": "9690 2989",
+      "other": "Email: mwh@viriya.org.sg",
+      "tags": [
+        "COMIT",
+        "Community mental health",
+        "GP referrals",
+        "West"
       ]
     }
   ]
