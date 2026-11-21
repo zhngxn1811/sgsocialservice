@@ -104,6 +104,7 @@
       <button type="button" data-kind="recommend" aria-pressed="true">Recommend a service</button>
       <button type="button" data-kind="update" aria-pressed="false">Report an update</button>
     </div>
+    <p class="note">Prefer a full page? <a href="/recommend">Recommend a service</a> or <a href="/report">report an update</a>.</p>
     <div id="fRecommend">
       <div class="two">
         <div><label for="fName">Service or programme name</label><input id="fName" name="name" required></div>
@@ -143,7 +144,7 @@
     </fieldset>
     <input id="fHp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
     <p class="note">Please don't include any client information.</p>
-    <div id="fMsg" hidden></div>
+    <div id="fMsg" role="status" aria-live="polite" hidden></div>
     <div class="row" style="justify-content:flex-end">
       <button type="button" class="btn" id="cancelForm">Close</button>
       <button type="submit" class="btn primary" id="sendForm">Submit</button>
@@ -153,6 +154,7 @@
 
 <script src="/track.js" defer></script>
 <script src="/render.js"></script>
+<script src="/submission-form.js"></script>
 <script>
 let CATS=[], S=[];
 
@@ -199,17 +201,11 @@ $("#q").addEventListener("input",()=>{
     if(!$("#grid .card"))window.sgssTrack?.("search_no_results");
   },1200);
 });
-fetch("/api/services").then(r=>r.json()).then(d=>{CATS=d.categories;S=d.services;renderCats();renderGrid();fillFormLists();openReportFromLink();})
+fetch("/api/services").then(r=>r.json()).then(d=>{CATS=d.categories;S=d.services;renderCats();renderGrid();SGSSForm.init(d);})
   .catch(()=>{
     // The listings are already in the page from the build, so only say something if they're missing.
     if(!$("#grid .card"))$("#grid").innerHTML='<p class="empty">The directory didn\'t load. Refresh the page to try again.</p>';
   });
-// "Report an update" on a presenting-issue page links here as /?report=<listing id>
-function openReportFromLink(){
-  const id=new URLSearchParams(location.search).get("report");
-  if(id&&S.some(s=>s.id===id)){openForm("update",id);history.replaceState(null,"",location.pathname);}
-}
-
 /* ---------- AI assistant ---------- */
 const DISCLAIM='<p class="disclaim">AI-generated service guidance or referral-letter draft. Verify details, consent and recipient requirements, complete any placeholders locally, and use your professional judgement before referring or sending.</p>';
 function md(t){
@@ -257,50 +253,6 @@ $("#askBtn").addEventListener("click",async()=>{
 });
 $("#clearBtn").addEventListener("click",()=>{$("#caseText").value="";$("#caseText").focus();});
 
-/* ---------- Submission form ---------- */
-let kind="recommend";
-const dlg=$("#dlg");
-function fillFormLists(){
-  $("#fCat").innerHTML=CATS.map(c=>`<option value="${c.id}">${esc(c.label)}</option>`).join("");
-  $("#fWhich").innerHTML=S.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
-}
-function setKind(k){
-  kind=k;$("#fKind").value=k;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.kind===k));
-  $("#fRecommend").hidden=k!=="recommend";$("#fUpdate").hidden=k!=="update";
-  $("#fDetailsLabel").textContent=k==="recommend"?"Why is it helpful? Who is it for?":"What's changed? (new number, hours, closed, moved)";
-}
-function openForm(k="recommend",which){
-  setKind(k);if(which)$("#fWhich").value=which;$("#fMsg").hidden=true;
-  try{dlg.showModal()}catch{dlg.setAttribute("open","")}
-}
-$("#openForm").addEventListener("click",()=>openForm());
-document.addEventListener("click",e=>{const r=e.target.closest("[data-report]");if(r)openForm("update",r.dataset.report);if(e.target.closest("[data-open]"))openForm();});
-document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>setKind(b.dataset.kind)));
-$("#cancelForm").addEventListener("click",()=>dlg.close());
-function showMsg(html,cls){const m=$("#fMsg");m.className=cls||"";m.innerHTML=html;m.hidden=false;}
-
-$("#subForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const details=$("#fDetails").value.trim();
-  if(kind==="recommend"&&!$("#fName").value.trim()){showMsg("Add the service or programme name.","note");$("#fName").focus();return;}
-  if(kind==="update"&&!$("#fWhich").value){showMsg("Choose the listing to update.","note");$("#fWhich").focus();return;}
-  if(!details){showMsg("Add a short description so we know what to change or add.","note");$("#fDetails").focus();return;}
-  const userEmail=$("#fUserEmail").value.trim();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)){showMsg("Add your email address.","note");$("#fUserEmail").focus();return;}
-  if(!$("#fRole").value.trim()){showMsg("Add your occupation.","note");$("#fRole").focus();return;}
-  if(!$("#fOrgType").value){showMsg("Choose your organisation type.","note");$("#fOrgType").focus();return;}
-  const rec={kind,details,role:$("#fRole").value.trim(),submitter_email:$("#fUserEmail").value.trim(),submitter_org_type:$("#fOrgType").value,website:$("#fHp").value,
-    ...(kind==="recommend"?{name:$("#fName").value.trim(),org:$("#fOrg").value.trim(),category:$("#fCat").value,phone:$("#fPhone").value.trim(),sms_whatsapp:$("#fSmsWhatsapp").value.trim(),email:$("#fEmail").value.trim(),web:$("#fWeb").value.trim()}:{serviceId:$("#fWhich").value,name:S.find(s=>s.id===$("#fWhich").value)?.name||""})};
-  const btn=$("#sendForm");btn.disabled=true;
-  try{
-    const r=await fetch("/api/submissions",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(rec)});
-    const d=await r.json().catch(()=>({}));
-    if(!r.ok){showMsg(esc(d.error||"That didn't go through. Try again in a moment."),"note");return;}
-    showMsg("Thanks. Your submission is in and will be reviewed before the directory is updated.","ok");
-    ["fName","fOrg","fPhone","fSmsWhatsapp","fEmail","fWeb","fDetails","fUserEmail","fRole","fOrgType"].forEach(i=>$("#"+i).value="");
-  }catch{showMsg("That didn't go through. Check your connection and try again.","note");}
-  finally{btn.disabled=false;}
-});
 </script>
 
 </body>
