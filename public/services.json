@@ -5001,6 +5001,155 @@
         "Central"
       ],
       "address": "100 Bukit Timah Road, Singapore 229899"
+    },
+    {
+      "id": "lions-befrienders-counselling",
+      "name": "Lions Befrienders – Counselling Service",
+      "org": "Lions Befrienders Service Association",
+      "cats": [
+        "mental",
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "A community mental wellness service started in 2021. It began by supporting Lions Befrienders’ own seniors and now also serves caregivers, families, youths, working adults and the wider community. Services include individual and group counselling, caregiver support, prison reintegration programmes, suicide and depression risk assessments, life-stage planning, digital counselling and mental wellness workshops. The address is the head office; the service also has other counselling offices. Email for enquiries and referrals.",
+      "phone": "1800 375 8600",
+      "other": "Email: lbsa_counselling@lb.org.sg; Operating hours: Monday to Friday, 9am to 6pm",
+      "address": "130 Bukit Merah View #01-358, Singapore 150130",
+      "web": "https://www.lionsbefrienders.org.sg/counselling-service/",
+      "tags": [
+        "Counselling",
+        "Seniors",
+        "Caregiver support",
+        "Prison reintegration",
+        "Islandwide",
+        "Central"
+      ]
+    },
+    {
+      "id": "lions-befrienders-befriending",
+      "name": "Lions Befrienders – Befriending (Community Wellbeing and Support Services)",
+      "org": "Lions Befrienders Service Association",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Companionship for socially isolated seniors through home visits and phone calls, in areas assigned by AIC. It aims to reduce loneliness, help seniors age in place and connect them with useful help. For Singapore Citizens and PRs aged 60 and above, usually with at least one or two risk factors: living alone or effectively alone and feeling lonely; little or no social support; being the main caregiver for someone with high care needs; or limited social contact because of a physical or cognitive impairment. New befriending referrals go through AIC’s Integrated Referral Management System (IRMS) at app.aic.sg/eReg. Eligible seniors can also be invited to drop in at an Active Ageing Centre. Email for help with referrals.",
+      "phone": "1800 375 8600",
+      "other": "Email: befriending@lb.org.sg; Operating hours: Monday to Friday, 9am to 6pm",
+      "web": "https://www.lionsbefrienders.org.sg/community-wellbeing-and-support-services/",
+      "tags": [
+        "Befriending",
+        "Seniors",
+        "Social isolation",
+        "Caregiver support",
+        "Islandwide"
+      ],
+      "links": [
+        {
+          "label": "AIC Integrated Referral Management System (IRMS)",
+          "url": "https://app.aic.sg/eReg"
+        }
+      ]
+    },
+    {
+      "id": "lions-befrienders-ccms",
+      "name": "Lions Befrienders – Community Case Management Service (CCMS)",
+      "org": "Lions Befrienders Service Association",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Case management for vulnerable seniors and their caregivers who are struggling with several health and social needs at once. It helps seniors keep living at home or in the community for as long as possible and prevents or delays residential care. For seniors aged 60 and above; residents under 60 are considered case by case. Seniors must have either two or more social risks, one social risk plus a poorly controlled chronic or advanced illness, or one social risk plus a physical, mental or cognitive impairment or behavioural issues affecting daily living. Social risks include no caregiver or caregiver issues, family problems such as neglect, social isolation or low mood, and unsafe or unstable housing. West office serves Bukit Timah, Clementi and Queenstown; East office serves Changi and Tampines. Download the CCMS referral form from the website and email it to the office for the senior’s area, copying AIC at careconsultant@aic.sg.",
+      "phone": "1800 375 8600",
+      "other": "West office; Email: ccms.west@lb.org.sg; East office; Email: ccms.east@lb.org.sg; Copy AIC on referrals; Email: careconsultant@aic.sg",
+      "web": "https://www.lionsbefrienders.org.sg/community-case-management-service-ccms/",
+      "tags": [
+        "Case management",
+        "Seniors",
+        "Caregiver support",
+        "West",
+        "Central",
+        "East"
+      ]
+    },
+    {
+      "id": "lions-befrienders-hpc-plus",
+      "name": "Lions Befrienders – Enhanced Home Personal Care (HPC+)",
+      "org": "Lions Befrienders Service Association",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Trained care staff come to the home to help vulnerable seniors keep living there and give caregivers a break. Help includes maintenance exercises, light housekeeping, personal hygiene, recreational activities, grocery shopping and vital signs checks. Care is tailored to each senior, can change as their needs do, and includes closer check-ins and monitoring. For vulnerable seniors who need help to keep living at home or whose caregivers need support. Singapore Citizens and PRs who meet the admission criteria can apply for a government subsidy, set by a national means test. All referrals go through AIC: a doctor at any hospital or polyclinic can apply online for the senior, or families can contact AIC or visit an AIC Link branch. AIC: 1800 650 6060, enquiries@aic.sg.",
+      "phone": "1800 375 8600 (Lions Befrienders); 1800 650 6060 (AIC)",
+      "other": "Email: contact@lb.org.sg; AIC referral enquiries; Email: enquiries@aic.sg",
+      "web": "https://www.lionsbefrienders.org.sg/home-personal-care/",
+      "tags": [
+        "Home care",
+        "Seniors",
+        "Caregiver support",
+        "Islandwide"
+      ]
+    },
+    {
+      "id": "lions-befrienders-aac",
+      "name": "Lions Befrienders – Active Ageing Centres (AACs)",
+      "org": "Lions Befrienders Service Association",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "Drop-in social and recreational centres for seniors who live nearby. Lions Befrienders runs 10 across Singapore, each offering activities, befriending and buddying, and information and referral. Activities include crafts, exercise, cooking, drumming, Taekwondo, Korean dance, interest groups, and classes on smartphones, languages, health and law. Befriending and buddying includes home visits and phone calls. Information and referral provides guidance on schemes and grants and links to the right services. For Singapore Citizens and PRs aged 60 and above who live near a centre. Anyone can invite an eligible senior to drop in. The listed address is the head office.",
+      "phone": "1800 375 8600",
+      "other": "Email: contact@lb.org.sg",
+      "address": "130 Bukit Merah View #01-358, Singapore 150130",
+      "web": "https://www.lionsbefrienders.org.sg/active-ageing-centre/",
+      "tags": [
+        "Active ageing",
+        "Seniors",
+        "Befriending",
+        "Islandwide"
+      ]
+    },
+    {
+      "id": "lions-befrienders-iccp",
+      "name": "Lions Befrienders – Integrated Community Care Provider (ICCP)",
+      "org": "Lions Befrienders Service Association",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "A care network for seniors in each sub-region: local providers work together to keep seniors well, spot risks early and get them timely care. Lions Befrienders leads the network in four sub-regions, bringing together Active Ageing Centres, Senior Care Centres, HPC+ and home therapy with partner agencies. Sub-regions: Bukit Timah & Queenstown 4; Clementi 1; Clementi 2; Tampines & Paya Lebar 3.",
+      "phone": "1800 375 8600",
+      "other": "Email: lb.iccp@lb.org.sg",
+      "web": "https://www.lionsbefrienders.org.sg/iccp/",
+      "tags": [
+        "Care coordination",
+        "Seniors",
+        "West",
+        "Central",
+        "East"
+      ]
+    },
+    {
+      "id": "lions-befrienders-gym-tonic",
+      "name": "Lions Befrienders – Gym Tonic (LB AAC @ Mei Ling)",
+      "org": "Lions Befrienders Service Association",
+      "cats": [
+        "seniors"
+      ],
+      "h24": false,
+      "desc": "A strength-training programme that helps seniors stay strong and lowers their risk of frailty and falls. Training is tailored to each person’s fitness level and progress is tracked with software. Participants typically gain about 20% in muscle strength after 3 months. The programme is 24 sessions over 3 months, twice a week. For seniors aged 60 and above who can walk without help, follow basic instructions and attend twice a week. They should have no complications such as a past stroke, seizures or ongoing rehabilitation. Fees apply, with lower rates for Pioneer Generation, Merdeka Generation and Blue CHAS cardholders.",
+      "phone": "8721 8591",
+      "other": "Operating hours: Monday to Friday, 9am–12pm and 1pm–5pm",
+      "address": "Blk 150 Mei Ling Street #01-59, Singapore 141150",
+      "web": "https://www.lionsbefrienders.org.sg/gym-tonic/",
+      "tags": [
+        "Seniors",
+        "Active ageing",
+        "Fall prevention",
+        "Central"
+      ]
     }
   ]
 }
