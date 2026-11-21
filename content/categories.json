@@ -174,5 +174,21 @@
     "intro": "Services offering psychological assessment and intervention in Singapore. Check each listing for eligibility, assessment options, therapy and referral requirements.",
     "social_title": "",
     "social_description": ""
+  },
+  "trauma-informed": {
+    "slug": "trauma-informed",
+    "title": "Trauma-informed counselling in Singapore",
+    "description": "Find trauma-informed counselling and psychotherapy in Singapore for PTSD, complex trauma, dissociation and dissociative identity disorder.",
+    "intro": "Explore trauma-informed counselling and psychotherapy services, with contact details and appointment hours to help you find support.",
+    "social_title": "",
+    "social_description": ""
+  },
+  "private-practice": {
+    "slug": "private-practice",
+    "title": "Private practice counselling in Singapore",
+    "description": "Find private practice counselling from RANGE Counselling Services and SimpliBeing in Singapore, with contact details and appointment information.",
+    "intro": "Find private practice services from RANGE Counselling Services and SimpliBeing, including counselling, psychotherapy and career support.",
+    "social_title": "",
+    "social_description": ""
   }
 }
