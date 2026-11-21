@@ -656,6 +656,23 @@
       ]
     },
     {
+      "id": "schemes-sg",
+      "name": "Schemes.sg",
+      "org": "better.sg",
+      "cats": [
+        "financial"
+      ],
+      "desc": "A free-to-use online search tool for social assistance in Singapore. It covers 600+ government and community assistance schemes in Singapore, sorted into ten areas, from Financial Assistance to Community Support. You can browse by category, or describe your situation and its AI search suggests schemes you might qualify for. Useful for helping professionals and clients who want a quick overview of what support exists before contacting the agencies themselves.\n\nThe site is built by volunteers at better.sg. It’s not an official government site, so always check eligibility and details with the agency running the scheme.",
+      "web": "https://schemes.sg/",
+      "tags": [
+        "Financial assistance",
+        "Schemes & grants",
+        "Information & referral",
+        "Online",
+        "Islandwide"
+      ]
+    },
+    {
       "id": "fsc",
       "name": "Family Service Centres",
       "org": "MSF network, run by various agencies",
