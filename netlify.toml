@@ -14,6 +14,16 @@
   to = "/services.json"
   status = 200
 
+[[redirects]]
+  from = "/recommend"
+  to = "/recommend.html"
+  status = 200
+
+[[redirects]]
+  from = "/report"
+  to = "/report.html"
+  status = 200
+
 # Tidy URLs for the extra pages
 [[redirects]]
   from = "/admin"

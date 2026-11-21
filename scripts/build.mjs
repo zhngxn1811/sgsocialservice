@@ -207,6 +207,8 @@ function sitemap(base, pages, date) {
   const urls = [
     { loc: `${base}/`, priority: "1.0" },
     ...pages.map(p => ({ loc: `${base}/help/${p.slug}/`, priority: "0.8" })),
+    { loc: `${base}/recommend`, priority: "0.5" },
+    { loc: `${base}/report`, priority: "0.5" },
     { loc: `${base}/privacy.html`, priority: "0.3" },
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
