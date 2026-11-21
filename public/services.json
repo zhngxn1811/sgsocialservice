@@ -10,6 +10,14 @@
       "label": "Mental health & counselling"
     },
     {
+      "id": "healthcare",
+      "label": "Healthcare"
+    },
+    {
+      "id": "psychological-assessment-intervention",
+      "label": "Psychological assessment and intervention"
+    },
+    {
       "id": "crest",
       "label": "CREST"
     },
@@ -112,32 +120,55 @@
       "h24": true,
       "desc": "National 24/7 mental health line for distress or crisis. Call, text or chat, and get linked to further care.",
       "phone": "1771",
-      "other": "WhatsApp 6669 1771",
+      "other": "WhatsApp: 6669-1771",
       "web": "https://www.mindline.sg",
       "tags": [
         "Distress",
         "Triage"
+      ],
+      "links": [
+        {
+          "label": "mindline webchat",
+          "url": "https://mindline.sg/fsmh"
+        }
       ]
     },
     {
       "id": "imh",
-      "name": "IMH Emergency Services",
+      "name": "Institute of Mental Health (IMH)",
       "org": "Institute of Mental Health",
       "cats": [
         "crisis",
-        "mental"
+        "mental",
+        "addictions",
+        "substance",
+        "youth",
+        "seniors",
+        "healthcare",
+        "psychological-assessment-intervention"
       ],
-      "h24": true,
-      "desc": "24-hour psychiatric emergency service and helpline for acute risk or severe symptoms.",
-      "phone": "6389 2222",
-      "web": "https://www.imh.com.sg",
+      "h24": false,
+      "desc": "Singapore’s tertiary psychiatric hospital, with outpatient, inpatient, emergency and community services for all ages. Outpatient clinics include Clinic B (adult and elderly psychiatry), the National Addictions Management Service (NAMS) clinic, Child Guidance Clinic (Sunrise Wing) for children and adolescents, and Community Wellness Clinic at Geylang Polyclinic. Outpatient visits are by appointment. New patients should get a referral letter from a polyclinic or GP first; CHAS cardholders can get one from a participating GP for subsidised rates. IMH also runs a 24-hour emergency service. For 24-hour mental health support, contact mindline: dial 1771, WhatsApp 6669-1771 or visit mindline.sg/fsmh.",
+      "phone": "6389 2200",
+      "other": "Appointments: 6389 2200 (Mon–Fri, 8am–4pm); Email: imh.appt@nhghealth.com.sg; Main line (24 hours): 6389 2000; Medical social workers: 6389 2059; Email: imh.admin.msw@nhghealth.com.sg; Operating hours: Mon–Thu 8am–5:30pm, Fri 8am–5pm",
+      "web": "https://www.nhghealth.com.sg/imh",
       "tags": [
-        "Psychiatric emergency"
+        "Psychiatry",
+        "Hospital",
+        "Emergency",
+        "Addictions",
+        "Children & youth",
+        "North-East"
       ],
+      "address": "10 Buangkok View, Buangkok Green Medical Park, Singapore 539747",
       "links": [
         {
-          "label": "IMH clinical services",
-          "url": "https://www.imh.com.sg/Clinical-Services/Pages/Message-by-CMB.aspx"
+          "label": "Online appointment form",
+          "url": "https://for.sg/imhappt"
+        },
+        {
+          "label": "mindline webchat",
+          "url": "https://mindline.sg/fsmh"
         }
       ]
     },
@@ -164,7 +195,8 @@
       "org": "RANGE Counselling Services",
       "cats": [
         "mental",
-        "family"
+        "family",
+        "psychological-assessment-intervention"
       ],
       "desc": "Private psychotherapy and counselling for individuals, couples and families with mental health concerns or life challenges, using evidence-based approaches. Sessions are in person in Woodlands or online. Children aged 4 to 18 can be seen with signed parent consent and a chaperone.",
       "phone": "8950 5274",
@@ -184,7 +216,8 @@
       "org": "RANGE Counselling Services",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "psychological-assessment-intervention"
       ],
       "desc": "Child-centred play therapy for children aged 3 to 13 with emotional or behavioural difficulties, especially ones that show up at home or school. Sessions can be one-to-one or in small groups. Parents can join regular review sessions to stay involved.",
       "phone": "8950 5274",
@@ -276,7 +309,8 @@
       "cats": [
         "mental",
         "comit",
-        "youth"
+        "youth",
+        "psychological-assessment-intervention"
       ],
       "desc": "Club HEAL’s centre in the west, and a community intervention team (COMIT) with a youth team. It provides needs assessment, counselling and psychosocial therapy for people with mental health conditions and their caregivers, and takes GP referrals. It also runs recovery programmes and support for young people. The service is government-funded. Specialisation: COMIT. Takes GP referrals. Also supports youths and their caregivers.",
       "phone": "6899 3463",
@@ -296,7 +330,8 @@
       "org": "Club HEAL",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "desc": "Club HEAL’s northern centre and a community intervention team (COMIT). It provides needs assessment, counselling and psychosocial therapy for people with mental health conditions and their caregivers, and takes referrals from GPs in the area. It also runs recovery programmes and a caregiver support group. The service is government-funded. Specialisation: COMIT. Ongoing community mental health support for GP-referred patients.",
       "phone": "6899 3463",
@@ -391,48 +426,47 @@
     },
     {
       "id": "chat",
-      "name": "CHAT",
+      "name": "CHAT – Centre of Excellence for Youth Mental Health (IMH)",
       "org": "Institute of Mental Health",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "psychological-assessment-intervention"
       ],
-      "desc": "Mental health check-ins and assessment for young people aged 16 to 30. Walk-ins for mental health assessments at CHAT Hub are available Monday to Saturday: Monday, 9am to 5pm; Tuesday to Saturday, 12pm to 9pm. Closed on Sundays and public holidays. webCHAT offers in-the-moment text-based support for emotional concerns, clarity and help finding support.",
+      "h24": false,
+      "desc": "Free, confidential mental health assessment for young people aged 16 to 30. Youth support workers are trained in psychology, social work and counselling. Assessments take about an hour and usually run Tuesday to Saturday afternoons. Book for yourself or someone else through the online form on the CHAT website; CHAT calls back within 5 working days. CHAT also gives brief support while young people wait for the service it refers them to.",
       "phone": "6493 6500 / 6493 6501",
       "other": "Email: CHAT@mentalhealth.sg",
-      "address": "CHAT Hub, *SCAPE, 2 Orchard Link, #04-07, Singapore 237978",
-      "web": "https://www.chat.mentalhealth.sg",
+      "web": "https://www.nhghealth.com.sg/imh/chat",
       "tags": [
-        "Youth 16–30",
-        "Assessment",
-        "Webchat"
+        "Youth mental health",
+        "Free",
+        "Central"
       ],
-      "links": [
-        {
-          "label": "webCHAT",
-          "url": "https://www.imh.com.sg/CHAT/Get-Help/webCHAT/Pages/default.aspx"
-        }
-      ]
+      "address": "*SCAPE, 2 Orchard Link #04-07, Singapore 237978"
     },
     {
       "id": "nams",
-      "name": "All Addictions Helpline",
-      "org": "National Addictions Management Service (NAMS)",
+      "name": "IMH – National Addictions Management Service (NAMS)",
+      "org": "Institute of Mental Health",
       "cats": [
+        "mental",
         "addictions",
-        "substance"
+        "substance",
+        "healthcare",
+        "psychological-assessment-intervention"
       ],
-      "desc": "Assessment and treatment for drug, alcohol, gambling, gaming and other addictions.",
-      "phone": "6732 6837",
-      "web": "https://www.nams.sg",
+      "h24": false,
+      "desc": "IMH’s specialist outpatient clinic for addictions, covering substances, alcohol and gambling. Use Carpark G.",
+      "phone": "6389 2200",
+      "other": "National Problem Gambling Helpline: 1800-6-668-668 (daily, 8am–11pm); QuitVape: 6389 2929",
+      "web": "https://www.nhghealth.com.sg/imh/nams/contact-us",
       "tags": [
-        "Treatment",
-        "Gambling",
-        "Alcohol",
-        "Drugs"
+        "Addictions",
+        "Psychiatry",
+        "North-East"
       ],
-      "h24": true,
-      "other": "Hotline operating hours: All Addictions Helpline (6-RECOVER), 24 hours."
+      "address": "10 Buangkok View, Block 9, Basement 1, Singapore 539747"
     },
     {
       "id": "we-care",
@@ -1027,7 +1061,8 @@
       "org": "NCSS, Shine Children & Youth Services and National Mindline",
       "cats": [
         "youth",
-        "mental"
+        "mental",
+        "psychological-assessment-intervention"
       ],
       "desc": "Singapore’s first integrated wellness centre designed with youths for youths and their caregivers. grovve offers well-being activities, mental health screening, fringe and intervention services.",
       "address": "*SCAPE, 2 Orchard Link #04-06, Singapore 237978",
@@ -1047,7 +1082,8 @@
       "org": "SHINE Children & Youth Services",
       "cats": [
         "youth",
-        "mental"
+        "mental",
+        "psychological-assessment-intervention"
       ],
       "desc": "Programmes for young people aged 12 to 25 with mental health needs, including emotional support, mentoring, counselling, support groups and mental health screening. Contact: Monday to Friday 9am to 6pm.",
       "web": "https://www.shine.org.sg/resilience",
@@ -1066,7 +1102,8 @@
       "cats": [
         "youth",
         "mental",
-        "trauma"
+        "trauma",
+        "psychological-assessment-intervention"
       ],
       "desc": "Free and subsidised counselling and psychological services for young people aged 12 to 25, facing relationship issues, trauma, mental health concerns, self-image and behavioural challenges. Apply using the online form.",
       "web": "https://www.limitless.sg/talk",
@@ -1365,7 +1402,8 @@
       "cats": [
         "mental",
         "seniors",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) and first stop for mental health support in Ang Mo Kio. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3142,7 +3180,8 @@
       "org": "Dyslexia Association of Singapore",
       "cats": [
         "disability",
-        "youth"
+        "youth",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "Supports children and adults with dyslexia and other learning differences through specific learning difference assessments and ADHD screening, literacy and specialist teaching programmes, speech-language therapy, workshops, financial assistance and student wellness support.",
@@ -3367,7 +3406,8 @@
       "org": "Brahm Centre",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) in Simei. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3388,7 +3428,8 @@
       "org": "Brahm Centre",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) in Tampines. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3457,7 +3498,8 @@
       "org": "Filos Community Services",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) in Bedok and Chai Chee. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. It also runs a caregiver support group. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3562,7 +3604,8 @@
       "org": "Montfort Care",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) in Bedok Reservoir. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3583,7 +3626,8 @@
       "org": "Montfort Care",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) serving Marine Parade and Mountbatten. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3645,7 +3689,8 @@
       "org": "Singapore Anglican Community Services",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) in Pasir Ris. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3783,7 +3828,8 @@
       "org": "Montfort Care",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A community intervention team (COMIT) serving Kreta Ayer, Chinatown and the city area. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -3889,7 +3935,8 @@
       "org": "Singapore Association for Mental Health (SAMH)",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "SAMH’s community intervention team (COMIT) at Maude Road, which also serves Potong Pasir. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
@@ -4018,7 +4065,8 @@
       "id": "allkin-comit-rivervale",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4039,7 +4087,8 @@
       "id": "sacs-comit-bukit-batok",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4060,7 +4109,8 @@
       "id": "sacs-comit-yishun",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4081,7 +4131,8 @@
       "id": "care-corner-comit-toa-payoh",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4102,7 +4153,8 @@
       "id": "clarity-comit-yishun",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4123,7 +4175,8 @@
       "id": "fei-yue-comit-teck-whye",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4144,7 +4197,8 @@
       "id": "montfort-comit-telok-blangah",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4167,7 +4221,8 @@
         "mental",
         "comit",
         "crest",
-        "seniors"
+        "seniors",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4189,7 +4244,8 @@
       "id": "samh-comit-jurong-east",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4210,7 +4266,8 @@
       "id": "st-lukes-comit-bukit-batok",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4231,7 +4288,8 @@
       "id": "viriya-comit-jurong-west",
       "cats": [
         "mental",
-        "comit"
+        "comit",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "web": "",
@@ -4548,6 +4606,384 @@
         "North",
         "CREST"
       ]
+    },
+    {
+      "id": "sgh-psychiatry",
+      "name": "Singapore General Hospital (SGH) – Department of Psychiatry",
+      "org": "Singapore General Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Covers general psychiatry, geriatric psychiatry, eating disorders, sleep disorders, neuropsychiatry and neuromodulation (ECT, TMS and tDCS). Also offers psychotherapy, including CBT and psychodynamic therapy, and stress management. Visits are by appointment only. You can refer yourself online or by phone. Referrals are also accepted from polyclinics, hospitals, GPs, voluntary welfare organisations, schools and institutions of higher learning. Appointment phone and email per ICA.",
+      "phone": "6321 4377 (per ICA)",
+      "other": "Email: appointments@sgh.com.sg",
+      "web": "https://www.sgh.com.sg/our-specialties/psychiatry",
+      "tags": [
+        "Psychiatry",
+        "Hospital",
+        "Eating disorders",
+        "Central"
+      ],
+      "address": "Academia, Level 3, Singapore General Hospital, Outram Road, Singapore 169608"
+    },
+    {
+      "id": "cgh-psychological-medicine",
+      "name": "Changi General Hospital (CGH) – Department of Psychological Medicine",
+      "org": "Changi General Hospital",
+      "cats": [
+        "mental",
+        "addictions",
+        "youth",
+        "seniors",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Runs general psychiatry, addiction medicine, adolescent psychiatry, geriatric psychiatry, a memory clinic and a sleep disorders clinic. The Community Psychogeriatric Programme visits people aged 65 and above with mental disorders who cannot get to hospital, in selected areas. That programme needs a referral from a healthcare professional.",
+      "phone": "6850 3333",
+      "other": "Appointments operating hours: Mon–Fri, 8:30am–5:30pm",
+      "web": "https://www.cgh.com.sg/our-specialties/psychological-medicine",
+      "tags": [
+        "Psychiatry",
+        "Hospital",
+        "Addictions",
+        "Seniors",
+        "Youth mental health",
+        "East"
+      ],
+      "address": "The Integrated Building, Level 3 (J3-04), 2 Simei Street 3, Singapore 529889"
+    },
+    {
+      "id": "skh-psychiatry",
+      "name": "Sengkang General Hospital (SKH) – Department of Psychiatry",
+      "org": "Sengkang General Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Diagnoses and treats depression, bipolar disorder, anxiety, OCD, PTSD, schizophrenia, insomnia and dementia. Also supports people adjusting to a new diagnosis, a chronic illness or surgery. Care comes from psychiatrists, psychologists, nurses, occupational therapists and medical social workers. You can book directly, or get a referral letter from a polyclinic or family clinic for subsidised rates. A pre-assessment form is available before your visit. Appointment phone and email per ICA.",
+      "phone": "6930 6000 (per ICA)",
+      "other": "Email: appointments@skh.com.sg",
+      "web": "https://www.skh.com.sg/our-specialties/department-of-psychiatry",
+      "tags": [
+        "Psychiatry",
+        "Hospital",
+        "North-East"
+      ],
+      "address": "110 Sengkang East Way, Singapore 544886"
+    },
+    {
+      "id": "ttsh-psychiatry",
+      "name": "Tan Tock Seng Hospital (TTSH) – Department of Psychiatry",
+      "org": "Tan Tock Seng Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Runs outpatient clinics, inpatient wards and a Medical Psychiatry Care Unit. Treats anxiety, stress-related and mood disorders, psychoses, psychosomatic disorders and dementia, plus psychiatric conditions in people who are medically ill, including palliative psychiatry. Treatments include medication, ECT, psychotherapy and psychosocial support.",
+      "phone": "6357 7000 (per ICA)",
+      "web": "https://www.nhghealth.com.sg/find-care/Service/ttsh-psychiatry",
+      "tags": [
+        "Psychiatry",
+        "Hospital",
+        "Central"
+      ],
+      "address": "Clinic 4A / 4B, 11 Jalan Tan Tock Seng, Singapore 308433"
+    },
+    {
+      "id": "ktph-psychological-medicine",
+      "name": "Khoo Teck Puat Hospital (KTPH) – Psychological Medicine",
+      "org": "Khoo Teck Puat Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "For adults aged 18 and above. Offers diagnostic assessments, medication, psychotherapy, family counselling, case management and TMS for depression that has not responded to other treatment. Also provides mental capacity assessments (including for a Lasting Power of Attorney), IQ testing, and neuropsychological and dementia assessments. You can be referred by your primary care doctor or a lawyer, or refer yourself. Appointment phone and email per ICA. TMS referrals from other psychiatrists: ktph.psyservices@ktph.com.sg.",
+      "phone": "6555 8828 (per ICA)",
+      "other": "Email: ktph.appt@ktph.com.sg; Email: ktph.psyservices@ktph.com.sg",
+      "web": "https://www.nhghealth.com.sg/find-care/Service/ktph-psychiatry",
+      "tags": [
+        "Psychiatry",
+        "Hospital",
+        "North"
+      ],
+      "address": "90 Yishun Central, Singapore 768828"
+    },
+    {
+      "id": "woodlands-medical-psychiatry",
+      "name": "Woodlands Hospital – Medical Psychiatry",
+      "org": "Woodlands Hospital",
+      "cats": [
+        "mental",
+        "seniors",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Treats depression, bipolar disorder, psychosis, anxiety disorders, and stress and adjustment difficulties. Also covers old age psychiatry (including dementia, with caregiver support), psycho-oncology and end-of-life psychiatry, and assessments of decision-making capacity. Bring a referral letter or doctor’s memo to your first visit. If you do not have a doctor, get a referral from a polyclinic or GP first.",
+      "phone": "6363 8000",
+      "other": "General enquiries: 6363 3000",
+      "web": "https://www.nhghealth.com.sg/find-care/Service/wh-medical-psychiatry",
+      "tags": [
+        "Psychiatry",
+        "Hospital",
+        "Seniors",
+        "North"
+      ],
+      "address": "17 Woodlands Drive 17, Singapore 737628"
+    },
+    {
+      "id": "nuh-psychological-medicine",
+      "name": "National University Hospital (NUH) – Department of Psychological Medicine",
+      "org": "National University Hospital",
+      "cats": [
+        "mental",
+        "youth",
+        "seniors",
+        "family",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Covers child and adolescent psychiatry, ageing psychiatry, mood disorders, psychosis, cognitive neuropsychology, psycho-oncology, psycho-cardiology and a Women’s Emotional Health Service. Also has an inpatient ward and psychologists for therapy and assessment, including learning assessments for children aged 6 and above.",
+      "phone": "6772 2002",
+      "other": "Enquiries: 6772 4850; Operating hours: Mon–Fri, 8:30am–5:30pm",
+      "web": "https://www.nuh.com.sg/psymed",
+      "tags": [
+        "Psychiatry",
+        "Psychology",
+        "Hospital",
+        "Children & youth",
+        "Women",
+        "Central"
+      ],
+      "address": "Neuroscience Clinic, Kent Ridge Wing, Level 4, 5 Lower Kent Ridge Road, Singapore 119074"
+    },
+    {
+      "id": "ntfgh-psychiatry",
+      "name": "Ng Teng Fong General Hospital (NTFGH) – Psychiatry",
+      "org": "Ng Teng Fong General Hospital",
+      "cats": [
+        "mental",
+        "seniors",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Treats a wide range of psychiatric conditions and offers psychological therapies. Its Memory Clinic, staffed by a psychiatry doctor, a psychologist and a case manager, diagnoses mild cognitive impairment and dementia. Works with GPs, polyclinics and community agencies in the west. Appointment phone and email per ICA.",
+      "phone": "6908 2222 (per ICA)",
+      "other": "Email: appointment@nuhs.edu.sg; Operating hours: Mon–Fri, 8:30am–5:30pm",
+      "web": "https://www.ntfgh.com.sg/our-services/clinical-services/psychiatry",
+      "tags": [
+        "Psychiatry",
+        "Hospital",
+        "Seniors",
+        "West"
+      ],
+      "address": "Clinic A33, Tower A Specialist Outpatient Clinics, Level 3, 1 Jurong East Street 21, Singapore 609606"
+    },
+    {
+      "id": "ah-psychological-medicine",
+      "name": "Alexandra Hospital (AH) – Psychological Medicine",
+      "org": "Alexandra Hospital",
+      "cats": [
+        "mental",
+        "youth",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Mental health care across all ages. Has a 72-bed psychiatric ward for adults, general outpatient psychiatry, and specialist child and adolescent psychiatry. Psychologists provide evidence-based psychotherapy.",
+      "phone": "6908 2222",
+      "other": "Email: AH_ICareClinic@nuhs.edu.sg; Operating hours: Mon–Fri, 8:30am–5:30pm",
+      "web": "https://www.ah.com.sg/our-services/specialties-and-services/psychological-medicine",
+      "tags": [
+        "Psychiatry",
+        "Psychology",
+        "Hospital",
+        "Children & youth",
+        "Central"
+      ],
+      "address": "Clinic J, Integrated Care Clinic, Zone B, B02-02, 378 Alexandra Road, Singapore 159964"
+    },
+    {
+      "id": "kkh-psychological-medicine",
+      "name": "KK Women’s and Children’s Hospital (KKH) – Department of Psychological Medicine",
+      "org": "KK Women’s and Children’s Hospital",
+      "cats": [
+        "mental",
+        "family",
+        "youth",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Mental health care for women, children and adolescents at KKH@Halifax. The Women’s Mental Wellness Service covers conditions during and after pregnancy, after pregnancy loss, linked to infertility, PMDD, and depression around menopause. The Child and Adolescent Mental Wellness Service covers mood and anxiety disorders, OCD, ADHD, autism, Tourette’s, and stress-related and psychosomatic disorders; it currently takes internal KKH referrals only. REACH East supports students in schools in the east with emotional, behavioural or developmental needs. REACH referrals come through its helpline, which school counsellors can call. Appointment phone and email per ICA. Perinatal mental health enquiries: pnd@kkh.com.sg (replies within 3–5 working days).",
+      "phone": "6294 4050 (per ICA)",
+      "other": "Email: centralappt@kkh.com.sg; Email: pnd@kkh.com.sg",
+      "web": "https://www.kkh.com.sg/our-specialties/psychological-medicine",
+      "tags": [
+        "Psychiatry",
+        "Women",
+        "Perinatal",
+        "Children & youth",
+        "Central"
+      ],
+      "address": "KKH@Halifax, 11 Halifax Road, Singapore 229262"
+    },
+    {
+      "id": "sgh-psychology",
+      "name": "SGH – Department of Psychology",
+      "org": "Singapore General Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Psychological and neuropsychological care for SGH patients, with individual and group therapy for inpatients and outpatients. Covers anxiety, eating disorders, quitting smoking, cognitive training and more. To get an appointment, get a referral from a polyclinic or GP to an SGH specialty, which can then refer you on to a psychologist.",
+      "phone": "6321 4377",
+      "web": "https://www.sgh.com.sg/our-specialties/psychology",
+      "tags": [
+        "Psychology",
+        "Hospital",
+        "Eating disorders",
+        "Central"
+      ],
+      "address": "SingHealth Tower, Level 5, 10 Hospital Boulevard, Singapore 168582"
+    },
+    {
+      "id": "skh-psychology",
+      "name": "SKH – Department of Psychology",
+      "org": "Sengkang General Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Psychotherapy for inpatients and outpatients, and neuropsychological assessments for dementia, stroke and brain injury. Treats anxiety, depression, PTSD, bipolar disorder, OCD, insomnia, chronic pain, grief, and stress and burnout, using ACT, CBT, mindfulness-based approaches and schema therapy. You need a referral from your GP or doctor.",
+      "phone": "6930 6000 (per ICA)",
+      "web": "https://www.skh.com.sg/patient-care/specialties-services/psychology",
+      "tags": [
+        "Psychology",
+        "Hospital",
+        "North-East"
+      ],
+      "address": "110 Sengkang East Way, Singapore 544886"
+    },
+    {
+      "id": "ttsh-psychology",
+      "name": "TTSH – Department of Psychology",
+      "org": "Tan Tock Seng Hospital",
+      "cats": [
+        "mental",
+        "trauma",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Therapy, mostly CBT, for anxiety, mood and trauma-related disorders, grief, sleep problems, chronic pain and weight management. Also provides neuropsychological assessments for ADHD, brain injury, stroke and dementia, including return-to-work, capacity and medico-legal assessments, and cognitive rehabilitation. Subspecialties are general, bariatric, geriatric, pain, rehabilitation, trauma and sleep psychology. All referrals must come from a medical doctor; no walk-ins.",
+      "phone": "6357 7000 (per ICA)",
+      "web": "https://www.nhghealth.com.sg/find-care/Service/ttsh-psychology",
+      "tags": [
+        "Psychology",
+        "Hospital",
+        "Trauma",
+        "Central"
+      ],
+      "address": "11 Jalan Tan Tock Seng, Singapore 308433"
+    },
+    {
+      "id": "ktph-psychology",
+      "name": "KTPH / Admiralty Medical Centre – Psychology Service",
+      "org": "Khoo Teck Puat Hospital / Admiralty Medical Centre",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "For adults aged 18 and above. Offers evidence-based therapy such as CBT for depression, anxiety and OCD, and neuropsychological assessments for brain injury, stroke, dementia and mild cognitive impairment. You can book directly or get a referral from a doctor.",
+      "phone": "KTPH 6555 8828 / Admiralty Medical Centre 6807 8088",
+      "web": "https://www.nhghealth.com.sg/find-care/Service/ktph-psychology",
+      "tags": [
+        "Psychology",
+        "Hospital",
+        "North"
+      ],
+      "address": "Khoo Teck Puat Hospital, 90 Yishun Central, Singapore 768828; Admiralty Medical Centre, 676 Woodlands Drive 71 #03-01, Singapore 730676"
+    },
+    {
+      "id": "woodlands-psychology",
+      "name": "Woodlands Hospital – Psychology",
+      "org": "Woodlands Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Offers general psychology and pain psychology at the Woodlands Hospital Medical Centre. General Psychology is on Level 4 and Pain Psychology on Level 3.",
+      "phone": "6363 8000",
+      "tags": [
+        "Psychology",
+        "Hospital",
+        "North"
+      ],
+      "address": "17 Woodlands Drive 17, Singapore 737628"
+    },
+    {
+      "id": "ntfgh-psychology",
+      "name": "NTFGH – Psychology Service",
+      "org": "Ng Teng Fong General Hospital",
+      "cats": [
+        "mental",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Psychological care for NTFGH patients using evidence-based therapy, with a focus on emotional and mental wellbeing.",
+      "phone": "6908 2222 (per ICA)",
+      "web": "https://ntfgh.com.sg/our-services/allied-health-services/psychology",
+      "tags": [
+        "Psychology",
+        "Hospital",
+        "West"
+      ],
+      "address": "1 Jurong East Street 21, Singapore 609606"
+    },
+    {
+      "id": "kkh-psychology",
+      "name": "KKH – Psychology Service",
+      "org": "KK Women’s and Children’s Hospital",
+      "cats": [
+        "mental",
+        "youth",
+        "family",
+        "healthcare",
+        "psychological-assessment-intervention"
+      ],
+      "h24": false,
+      "desc": "Psychological and neuropsychological assessment and therapy for children and adolescents aged 7 to 18, and for women. Psychologists also work in KKH’s chronic pain, dermatology, diabetes and other clinics. Patients must see a KKH doctor first, who then refers them to a psychologist.",
+      "phone": "6294 4050",
+      "web": "https://www.kkh.com.sg/our-specialties/allied-health-specialties/psychology-service",
+      "tags": [
+        "Psychology",
+        "Children & youth",
+        "Women",
+        "Central"
+      ],
+      "address": "100 Bukit Timah Road, Singapore 229899"
     }
   ]
 }
