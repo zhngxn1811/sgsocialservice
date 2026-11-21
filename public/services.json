@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "categories": [
     {
       "id": "crisis",
@@ -3603,19 +3603,18 @@
     },
     {
       "id": "shine-youth-cmht-hougang",
-      "name": "SHINE Children and Youth Services – Youth Integrated Team (Hougang)",
+      "name": "Youth Integrated Team (YIT) SHINE@Hougang",
       "org": "SHINE Children and Youth Services",
       "cats": [
         "mental",
         "youth",
         "seniors",
-        "crest",
         "crest-youth"
       ],
       "h24": false,
       "desc": "A youth mental health team for young people and their caregivers in Hougang. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Programme: Youth Integrated Team. Specialisation: Youth and their caregivers.",
       "phone": "8383 9637",
-      "other": "Email: yit_hougang@shine.org.sg",
+      "other": "WhatsApp: 8368 1526; Email: yit_hougang@shine.org.sg",
       "address": "Blk 463 Hougang Ave 10 #01-964, Singapore 530463",
       "web": "",
       "tags": [
@@ -3623,6 +3622,24 @@
         "Caregiver support",
         "North-East",
         "CREST"
+      ]
+    },
+    {
+      "id": "shine-yit-clementi",
+      "name": "Youth Integrated Team (YIT) SHINE @ Clementi",
+      "org": "SHINE Children and Youth Services",
+      "cats": [
+        "mental",
+        "youth"
+      ],
+      "h24": false,
+      "desc": "SHINE Children and Youth Services’ Youth Integrated Team (YIT) in Clementi. Contact the team by WhatsApp or email.",
+      "phone": "",
+      "other": "WhatsApp: 9846 1038; Email: yit_clementi@shine.org.sg",
+      "web": "",
+      "tags": [
+        "Youth mental health",
+        "West"
       ]
     },
     {
@@ -4473,9 +4490,9 @@
       ],
       "h24": false,
       "phone": "6778 6867 / 8855 3569",
-      "other": "",
+      "other": "WhatsApp: 9793 7653; Email: cresty_clementi@shine.org.sg",
       "web": "",
-      "name": "SHINE Children and Youth Services – CREST-Youth (Clementi)",
+      "name": "CREST-Youth SHINE @ Clementi",
       "org": "SHINE Children and Youth Services",
       "address": "Blk 329 Clementi Ave 2 #01-248, Singapore 120329",
       "desc": "A youth team for young people and their caregivers in Clementi. It’s a first stop for youths with emotional or mental health concerns, offering support such as counselling and links to other help. The service is government-funded. Specialisation: Youth and their caregivers. Programme: CREST-Youth (likely, going by the team’s email).",
