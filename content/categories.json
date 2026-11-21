@@ -158,5 +158,21 @@
     "intro": "Youth mental health outreach teams offer a first stop for young people facing stress, emotional difficulties or mental health concerns, with support for their caregivers and links to further help.",
     "social_title": "",
     "social_description": ""
+  },
+  "healthcare": {
+    "slug": "healthcare",
+    "title": "Healthcare services in Singapore",
+    "description": "Find hospital and polyclinic services in Singapore, with contact details and referral requirements for counsellors and social workers.",
+    "intro": "Hospital and polyclinic services in Singapore. Check each listing for the care available, appointment contacts and referral requirements.",
+    "social_title": "",
+    "social_description": ""
+  },
+  "psychological-assessment-intervention": {
+    "slug": "psychological-assessment-intervention",
+    "title": "Psychological assessment and intervention in Singapore",
+    "description": "Find psychological assessment and intervention services in Singapore, with contact details and referral requirements to help plan appropriate care.",
+    "intro": "Services offering psychological assessment and intervention in Singapore. Check each listing for eligibility, assessment options, therapy and referral requirements.",
+    "social_title": "",
+    "social_description": ""
   }
 }
