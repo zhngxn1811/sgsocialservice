@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "categories": [
     {
       "id": "crisis",
@@ -5208,6 +5208,247 @@
       "h24": false,
       "other": "WhatsApp: +65 8804 0608; Email: info@simplibeing.com; Operating hours: By appointment only. Mon–Fri 09:00–17:00 (Regular), Mon–Fri 17:00–20:00 (Peak), Sat–Sun 09:00–17:00 (Peak). Closed on public holidays.",
       "address": "400 Orchard Road, Orchard Towers, #18-10, Singapore 238875"
+    },
+    {
+      "id": "empowered-families-initiative",
+      "name": "Empowered Families Initiative (EFI)",
+      "org": "Empowered Families Initiative",
+      "cats": [
+        "financial",
+        "family"
+      ],
+      "h24": false,
+      "desc": "A programme for lower-income, under-resourced households in Singapore that backs their own plans to improve their situation and income. EFI is a registered charity set up by social service practitioners, whose approach is: “We don’t focus on needs but on potential.” Access Grants support goals such as education or a home-based business, with families deciding how to use the funds. Savings Matching matches savings 1:2 over six months, capped at $1,200. Peer Support Networks bring families together regularly to share progress, learn from one another and support each other. For households that want support to invest in goals that can increase their income.",
+      "other": "Email: empoweredfamilies.sg@gmail.com",
+      "address": "25 International Business Park #04-103L, German Centre, Singapore 609916",
+      "web": "https://www.empoweredfamiliesinitiative.com",
+      "tags": [
+        "Financial assistance",
+        "Low-income families",
+        "Savings",
+        "Grants",
+        "Peer support",
+        "West"
+      ]
+    },
+    {
+      "id": "cws-social-assistance",
+      "name": "Catholic Welfare Services – Social Assistance",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "financial",
+        "family",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "Financial and social support to help individuals become more financially and personally self-reliant. Combines short-term aid with longer-term solutions, including family interventions and referrals to external agencies. CWS also runs a bursary programme for students. Referrals must be made through the CWS Social Assistance Referral Form on the programmes page, for SSOs, FSCs and other referring agencies only.",
+      "phone": "6333 5484 (social work enquiries)",
+      "other": "Email: socialwork@catholicwelfare.org.sg",
+      "address": "55 Waterloo Street #06-01, Catholic Centre, Singapore 187954",
+      "web": "https://catholicwelfare.org.sg/our-programmes-services/",
+      "tags": [
+        "Financial assistance",
+        "Social work",
+        "Bursary",
+        "Faith-based (Catholic)",
+        "Central"
+      ]
+    },
+    {
+      "id": "cws-esce",
+      "name": "Catholic Welfare Services – Emmanuel Second Chance Education (ESCE) Programme",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "financial",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "A scholarship and mentorship programme for individuals in difficult financial circumstances who need a second chance in life. Gives clients the means to earn a better income and realise their potential, funded by an anonymous donor. To apply, download the ESCE application form from the programme page.",
+      "phone": "6337 7954",
+      "other": "Email: generalenquiries@catholicwelfare.org.sg",
+      "web": "https://catholicwelfare.org.sg/our-programmes-services/",
+      "tags": [
+        "Education",
+        "Scholarship",
+        "Mentoring",
+        "Financial assistance",
+        "Faith-based (Catholic)",
+        "Central"
+      ]
+    },
+    {
+      "id": "cws-hearts-at-work",
+      "name": "Catholic Welfare Services – Hearts@Work",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "disability",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "Vocational training for young adults aged 19 to 40 with intellectual disabilities. Launched in 2009, it offers work skills training, partnerships with private companies for hands-on projects, and programmes for personal development.",
+      "phone": "6284 8010",
+      "address": "490 East Coast Road, Singapore 429058",
+      "web": "https://catholicwelfare.org.sg/our-programmes-services/",
+      "tags": [
+        "Special needs & disabilities",
+        "Vocational training",
+        "Employment",
+        "Faith-based (Catholic)",
+        "East"
+      ]
+    },
+    {
+      "id": "cws-night-mission",
+      "name": "Catholic Welfare Services – The Night Mission",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "A volunteer-led outreach programme for people sleeping rough, which began in Bras Basah and expanded to Toa Payoh, Ang Mo Kio and Bedok. Teams visit rough sleepers and homeless individuals, provide essentials such as food, drinks and toiletries, and link people to support programmes. Focuses on befriending and respects each person’s privacy. To refer a client for shelter or support, use CWS Shelters for Rough Sleepers or Social Assistance instead. For volunteering enquiries, email volunteer@catholicwelfare.org.sg.",
+      "other": "Email: volunteer@catholicwelfare.org.sg",
+      "web": "https://catholicwelfare.org.sg/our-programmes-services/",
+      "tags": [
+        "Homelessness",
+        "Rough sleepers",
+        "Outreach",
+        "Volunteering",
+        "Faith-based (Catholic)",
+        "Central",
+        "East"
+      ]
+    },
+    {
+      "id": "cws-shelters-rough-sleepers",
+      "name": "Catholic Welfare Services – Shelters for Rough Sleepers",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "Temporary housing and social work support to help rough sleepers move towards long-term housing. CWS runs three shelters: Bethlehem Shelter in Ang Mo Kio accommodates up to 8 individuals and one family of four; S3P Shelter at Thomson (SLF Building, with MSF) accommodates up to 5 clients; Gift of Joy Shelter in Telok Kurau (with Willing Hearts) accommodates up to 16 individuals and two families of four. To refer, use the shelter referral form on the CWS programmes page.",
+      "phone": "6333 5484 (shelter enquiries)",
+      "other": "Email: socialwork@catholicwelfare.org.sg",
+      "web": "https://catholicwelfare.org.sg/our-programmes-services/",
+      "tags": [
+        "Homelessness",
+        "Shelter",
+        "Rough sleepers",
+        "Families",
+        "Faith-based (Catholic)",
+        "Central",
+        "East"
+      ]
+    },
+    {
+      "id": "cws-st-josephs-home",
+      "name": "St Joseph's Home (Catholic Welfare Services)",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "seniors",
+        "healthcare",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "A nursing home founded in 1978 with the Canossian Sisters. Provides long-term residential care, physiotherapy, occupational, art and music therapy, case management and counselling. One of Singapore’s pioneering hospice care institutions, with an on-site Childcare Centre for intergenerational activities.",
+      "phone": "6268 0482",
+      "address": "36 Jurong West Street 24, Singapore 648141",
+      "web": "https://stjh.org.sg",
+      "tags": [
+        "Nursing home",
+        "Seniors",
+        "Hospice & palliative care",
+        "Faith-based (Catholic)",
+        "West"
+      ]
+    },
+    {
+      "id": "cws-st-theresas-home",
+      "name": "St Theresa's Home (Catholic Welfare Services)",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "seniors",
+        "healthcare",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "A nursing home founded in 1935 by the Little Sisters of the Poor and managed by CWS since 2003. Houses over 200 residents and offers personalised care and rehabilitation services, including physiotherapy and occupational therapy, to help residents stay independent.",
+      "phone": "6256 2532",
+      "address": "49 Upper Thomson Road, Singapore 574325",
+      "web": "https://www.sainttheresahome.org.sg",
+      "tags": [
+        "Nursing home",
+        "Seniors",
+        "Rehabilitation",
+        "Faith-based (Catholic)",
+        "Central"
+      ]
+    },
+    {
+      "id": "cws-villa-francis",
+      "name": "Villa Francis Home for the Aged (Catholic Welfare Services)",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "seniors",
+        "healthcare",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "A nursing home established in 1973 and managed by CWS since 2001. Houses over 240 residents and provides nursing and medical care with consultants, specialists and volunteer doctors. Physiotherapy and occupational therapy support mobility and independence.",
+      "phone": "6269 2877",
+      "address": "91 Yishun Central, Singapore 768829",
+      "web": "https://villafrancis.org.sg",
+      "tags": [
+        "Nursing home",
+        "Seniors",
+        "Rehabilitation",
+        "Faith-based (Catholic)",
+        "North"
+      ]
+    },
+    {
+      "id": "cws-st-vincent-home",
+      "name": "St Vincent Home (Catholic Welfare Services)",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "seniors",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "A residential facility established with SSVP that provides a safe, supportive home for up to 18 elderly residents. Focuses on self-sufficiency and independent living in a communal, extended-family setting. For seniors aged 60 and above who lack family support, have limited financial means and need stable housing.",
+      "phone": "6333 5484",
+      "other": "Email: socialwork@catholicwelfare.org.sg",
+      "web": "https://catholicwelfare.org.sg/our-programmes-services/",
+      "tags": [
+        "Seniors",
+        "Housing",
+        "Residential care",
+        "Faith-based (Catholic)"
+      ]
+    },
+    {
+      "id": "cws-bt-youthreach",
+      "name": "CWS – BT YouthReach",
+      "org": "Catholic Welfare Services",
+      "cats": [
+        "youth",
+        "mental",
+        "faith-based"
+      ],
+      "h24": false,
+      "desc": "An outreach programme for at-risk youth, developed from the Poverello Teen Centre (1999) and expanded with Boys’ Town in 2009. Services include a drop-in centre, counselling and mentoring, home visits, and life skills workshops at schools and organisations. Uses a youth-centred, strength-based approach.",
+      "phone": "6337 7954 (general) · 6333 5484 (social work)",
+      "other": "Email: generalenquiries@catholicwelfare.org.sg",
+      "address": "55 Waterloo Street #06-01, Catholic Centre, Singapore 187954",
+      "web": "https://catholicwelfare.org.sg/our-programmes-services/",
+      "tags": [
+        "Youth",
+        "At-risk youth",
+        "Counselling",
+        "Mentoring",
+        "Faith-based (Catholic)",
+        "Central"
+      ]
     }
   ]
 }
