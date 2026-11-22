@@ -100,6 +100,33 @@
   ],
   "services": [
     {
+      "id": "icp-asia-ocd-erp-therapy",
+      "name": "OCD Treatment: Exposure and Response Prevention (ERP) Therapy",
+      "org": "Integrative Clinical Practice Asia (ICP Asia)",
+      "cats": [
+        "mental",
+        "private-practice"
+      ],
+      "h24": false,
+      "desc": "Private psychotherapy for adults with obsessive-compulsive disorder (OCD) using Exposure and Response Prevention (ERP). Therapy starts with an assessment and a personal fear hierarchy, followed by gradual exposure exercises during and between sessions. Sessions are available online across Singapore and Asia, and in person. Home visits are available where clinically indicated. A complimentary 30-minute discovery call is available on request. To book, use the registration form on the service page.",
+      "other": "Operating hours: Evening and Saturday slots are offered, subject to availability.",
+      "web": "https://icp-asia.com/ocd-erp-therapy-singapore",
+      "links": [
+        {
+          "label": "Contact form",
+          "url": "https://icp-asia.com/contact"
+        }
+      ],
+      "tags": [
+        "OCD",
+        "Psychotherapy",
+        "Private practice",
+        "Online",
+        "Home visits",
+        "Islandwide"
+      ]
+    },
+    {
       "id": "transforming-lives-executive-function-coaching",
       "name": "Executive Function Coaching",
       "org": "Transforming Lives",
