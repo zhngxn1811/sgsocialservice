@@ -189,13 +189,13 @@ function render(){
   $("#report").hidden=false;
   $("#period").textContent=`${dayLabel(range.from,{day:"numeric",month:"short",year:"numeric"})} to ${dayLabel(range.to,{day:"numeric",month:"short",year:"numeric"})}`;
   const v=data.visitors||{thisMonth:0,newInPeriod:0,returningDays:0,averagePerDay:0,monthFrom:range.to};
-  const tiles=[["Visits","visits"],["Searches","searches"],["Assistant uses","assistant"],["Submissions","submissions"]];
+  const tiles=[["Visits","visits"],["Searches","searches"],["Assistant uses","assistant"],["Jobs assistant uses","jobsAssistant"],["Submissions","submissions"]];
   $("#tiles").innerHTML=`<div class="tile"><span class="label">Unique visitors this month</span><span class="value">${fmt(v.thisMonth)}</span><span class="delta">since ${esc(dayLabel(v.monthFrom,{day:"numeric",month:"short"}))}</span></div>`+
     tiles.map(([label,k])=>`<div class="tile"><span class="label">${label}</span><span class="value">${fmt(t[k])}</span><span class="delta">${delta(t[k],p[k])}</span></div>`).join("");
   $("#visitorsLine").innerHTML=`<span>New visitors <b>${fmt(v.newInPeriod)}</b> (${delta(t.newVisitors,p.newVisitors)})</span><span>Returning visitor-days <b>${fmt(v.returningDays)}</b></span><span>About <b>${fmt(v.averagePerDay)}</b> different visitors a day</span>`;
   const cap=data.assistantCap;
   $("#capLine").innerHTML=cap?(cap.limit?`<span>Assistant daily limit: <b>${fmt(cap.usedToday)}</b> of <b>${fmt(cap.limit)}</b> used today${cap.usedToday>=cap.limit?' <span class="capwarn">(limit reached)</span>':""}</span>`:'<span>Assistant daily limit: <b>off</b></span>')+
-    `<span>Turned away by the limit in this period <b>${fmt(t.assistantCapped)}</b></span>`:"";
+    `<span>Turned away by the limit in this period <b>${fmt(t.assistantCapped)}</b></span>`+(t.jobsAssistantCapped?`<span>Jobs assistant turned away by its limit <b>${fmt(t.jobsAssistantCapped)}</b></span>`:""):"";
   $("#minor").innerHTML=`<span>Page views <b>${fmt(t.pageviews)}</b></span><span>Searches with no results <b>${fmt(t.noResults)}</b> (possible gaps in the directory)</span>`;
   drawVisits(); drawCountries(); drawIssues(); drawAudience(); drawSubmissions(); drawTable();
 }
@@ -314,7 +314,7 @@ function drawSubmissions(){
 }
 
 /* ---------- Table, CSV and report summary ---------- */
-const COLS=[["day","Day"],["visits","Visits"],["visitorDays","Visitors"],["newVisitors","New visitors"],["pageviews","Page views"],["searches","Searches"],["noResults","No-result searches"],["assistant","Assistant uses"],["submissions","Submissions"],["profiles","Pop-up answers"]];
+const COLS=[["day","Day"],["visits","Visits"],["visitorDays","Visitors"],["newVisitors","New visitors"],["pageviews","Page views"],["searches","Searches"],["noResults","No-result searches"],["assistant","Assistant uses"],["jobsAssistant","Jobs assistant uses"],["submissions","Submissions"],["profiles","Pop-up answers"]];
 function drawTable(){
   $("#table").innerHTML=`<thead><tr>${COLS.map(c=>`<th scope="col">${c[1]}</th>`).join("")}</tr></thead><tbody>${[...data.daily].reverse().map(r=>`<tr>${COLS.map(([k],i)=>i?`<td>${fmt(r[k])}</td>`:`<td>${esc(dayLabel(r.day,{weekday:"short",day:"numeric",month:"short"}))}</td>`).join("")}</tr>`).join("")}</tbody>
   <tfoot><tr><th scope="row">Total</th>${COLS.slice(1).map(([k])=>`<td><b>${fmt(data.totals[k])}</b></td>`).join("")}</tr></tfoot>`;

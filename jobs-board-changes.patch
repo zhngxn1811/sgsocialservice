@@ -1,0 +1,267 @@
+--- a/README.md
++++ b/README.md
+@@ -192,6 +192,28 @@
+ | `netlify/lib/usage.mts` | shared counting and summary logic |
+ | `public/admin/stats.html` | the dashboard |
+ 
++## Jobs board
++
++The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social and health services, each with its own page at `/jobs/<job-id>` showing the description, requirements and an **Apply** button that goes to the original listing. It has its own AI assistant, separate from the directory assistant, that acts as a seasoned recruitment consultant: people describe the job they want and get a shortlist of real, open roles with links, plus advice on how to stand out.
++
++**Where the jobs come from.** Every day at 6am Singapore time the site pulls social and health services jobs from MyCareersFuture's public job search (about 26 searches: social worker, counsellor, psychologist, case manager, youth worker and so on). Only Singapore-based roles that are still open are kept. Jobs that expire, or that disappear from MyCareersFuture, are closed automatically and their pages say so. JobStreet, LinkedIn, Indeed and Careers@Gov don't allow copying, so add roles from those by hand (below). Each listing's qualification, experience, fresh-grad friendliness, nature of work and type of organisation are read from the listing text, so they're a good guide but not perfect.
++
++**Settings** (Site configuration > Environment variables):
++
++- `ADMIN_KEY`: required. The daily refresh and the jobs admin page use it.
++- `ANTHROPIC_API_KEY`: the same key the directory assistant uses.
++- `JOBS_ASSISTANT_DAILY_CAP`: optional, how many jobs assistant answers a day before it pauses until midnight. Default 150. It's counted separately from the directory assistant's cap.
++- `JOBS_CLAUDE_MODEL`: optional, to use a different model for the jobs assistant. Defaults to `CLAUDE_MODEL`, then `claude-sonnet-5-5`.
++- `SITE_URL`: optional, your public address (for example `https://sgsocialservices.sg`) so job links and search results use it.
++
++**First run.** After the first deploy, go to **`/admin/jobs`**, sign in with your `ADMIN_KEY` and press **Refresh jobs now**. It takes a few minutes; reload the page to see the jobs arrive. After that it runs by itself every day.
++
++**Adding a job by hand.** On `/admin/jobs`, use **Add a job by hand**. A title, organisation, link to the application page (https) and closing date are required, and the location must be in Singapore. The job comes down by itself after its closing date. You can also close or reopen any job from the list.
++
++**Organisation types.** Jobs are sorted into Healthcare, Social & community services, Government, Education or Charity from the employer's name and industry. If one is wrong, add the employer's name exactly as it appears on the listing (in capitals) to `content/job-org-types.json`, for example `"AGENCY FOR INTEGRATED CARE PTE. LTD.": "government"`, and redeploy.
++
++**Privacy.** The jobs assistant doesn't save conversations; they stay in the visitor's browser tab. It refuses messages containing an NRIC, phone number or email address. Only daily usage counts are kept, shown as "Jobs assistant" on `/admin/stats`.
++
+ ## Mobile apps
+ 
+ The Android and iOS apps (a separate project) use this site's API: `/api/services` for listings, `/api/assistant` and `/api/submissions`. They need nothing else from this repo. Edits to `public/services.json` reach the apps automatically the next time they open, with no app update needed.
+--- a/db/schema.ts
++++ b/db/schema.ts
+@@ -1,4 +1,4 @@
+-import { check, date, index, integer, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
++import { boolean, check, date, index, integer, pgTable, primaryKey, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+ import { sql } from 'drizzle-orm';
+ 
+ export const submissions = pgTable('submissions', {
+@@ -27,7 +27,8 @@
+ //   metric: visit, pageview, search, search_no_results, filter, assistant,
+ //           profile (optional pop-up answer, key "role:agency"), profile_shown, profile_skip, assistant_role,
+ //           visitor_day / visitor_new / visitor_month (one per browser per day, ever, or month),
+-//           country (key: two-letter country of a visit, from Netlify; no IP stored), assistant_capped
++//           country (key: two-letter country of a visit, from Netlify; no IP stored), assistant_capped,
++//           jobs_assistant / jobs_assistant_capped (the jobs board assistant, counted separately)
+ //   key:    what the count is about, e.g. "home", "help:legal-help" or a category id ("" if none)
+ //   source: "web" for the website ("app" is reserved for the mobile apps)
+ export const usageDaily = pgTable('usage_daily', {
+@@ -38,7 +39,54 @@
+   count: integer('count').notNull().default(0),
+ }, table => [
+   primaryKey({ columns: [table.day, table.source, table.metric, table.key] }),
+-  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped')`),
++  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped')`),
+   check('usage_daily_count_positive', sql`${table.count} >= 0`),
+   index('usage_daily_day_idx').on(table.day),
+ ]);
++
++// Jobs board (/jobs/). Open roles in Singapore's social and health services.
++// Filled automatically from MyCareersFuture every day (netlify/lib/jobs-sync.mts), plus any roles
++// added by hand on /admin/jobs.html (e.g. from Careers@Gov or an employer's own careers page).
++// A job is shown only while status is 'open' and its closing date hasn't passed.
++export const JOB_QUALIFICATIONS = ['doctorate', 'masters', 'honours', 'bachelors', 'diploma', 'unspecified'] as const;
++export const JOB_ORG_TYPES = ['healthcare', 'social-community', 'government', 'education', 'charity'] as const;
++export const jobs = pgTable('jobs', {
++  id: text('id').primaryKey(), // also the page address: /jobs/<id>
++  source: text('source').notNull(), // 'mycareersfuture' or 'manual'
++  source_id: text('source_id').notNull(), // the portal's own id (for manual jobs, the same as id)
++  source_name: text('source_name').notNull().default(''), // shown to readers, e.g. "MyCareersFuture", "Careers@Gov"
++  title: text('title').notNull(),
++  org: text('org').notNull(),
++  org_uen: text('org_uen').notNull().default(''),
++  org_type: text('org_type').notNull().default('social-community'),
++  location: text('location').notNull().default('Singapore'),
++  employment_type: text('employment_type').notNull().default(''),
++  salary_min: integer('salary_min'),
++  salary_max: integer('salary_max'),
++  salary_type: text('salary_type').notNull().default(''),
++  summary: text('summary').notNull().default(''),
++  description: text('description').notNull().default(''), // plain text: "## " headings, "- " bullets
++  requirements: text('requirements').notNull().default(''),
++  qualification: text('qualification').notNull().default('unspecified'),
++  min_years: integer('min_years'),
++  fresh_grad: boolean('fresh_grad').notNull().default(false),
++  nature: text('nature').array().notNull().default(sql`'{}'::text[]`),
++  skills: text('skills').array().notNull().default(sql`'{}'::text[]`),
++  apply_url: text('apply_url').notNull(),
++  source_url: text('source_url').notNull().default(''),
++  posted_at: date('posted_at', { mode: 'string' }),
++  closes_at: date('closes_at', { mode: 'string' }),
++  status: text('status').notNull().default('open'),
++  last_seen_at: timestamp('last_seen_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
++  created_at: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
++  updated_at: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
++}, table => [
++  uniqueIndex('jobs_source_id_idx').on(table.source, table.source_id),
++  index('jobs_status_closes_idx').on(table.status, table.closes_at),
++  check('jobs_source', sql`${table.source} in ('mycareersfuture', 'manual')`),
++  check('jobs_status', sql`${table.status} in ('open', 'closed')`),
++  check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'bachelors', 'diploma', 'unspecified')`),
++  check('jobs_org_type', sql`${table.org_type} in ('healthcare', 'social-community', 'government', 'education', 'charity')`),
++  check('jobs_apply_url_https', sql`${table.apply_url} like 'https://%'`),
++  check('jobs_title_required', sql`length(trim(${table.title})) > 0`),
++]);
+--- a/netlify/lib/usage.mts
++++ b/netlify/lib/usage.mts
+@@ -5,9 +5,9 @@
+ import { usageDaily } from "../../db/schema.js";
+ 
+ export const METRICS = ["visit", "pageview", "search", "search_no_results", "filter", "assistant", "profile", "profile_shown", "profile_skip", "assistant_role",
+-  "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped"] as const;
++  "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"] as const;
+ // Counted on the server only. The browser can't send these.
+-const SERVER_ONLY = new Set(["assistant", "country", "assistant_capped"]);
++const SERVER_ONLY = new Set(["assistant", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"]);
+ // Sent once per browser (per day, ever, or per month). The browser only remembers the date it last sent them.
+ const VISITOR = new Set(["visitor_day", "visitor_new", "visitor_month"]);
+ 
+@@ -108,27 +108,34 @@
+ // Daily cap on assistant uses across the whole site, so a bot or a bad day can't run up the AI bill.
+ // Set ASSISTANT_DAILY_CAP in Netlify (0 switches the cap off). Resets at midnight Singapore time.
+ export const DEFAULT_ASSISTANT_CAP = 150;
+-const envCap = (): string | undefined => (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.ASSISTANT_DAILY_CAP;
++const env = (name: string): string | undefined => (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.[name];
++const envCap = (): string | undefined => env("ASSISTANT_DAILY_CAP");
+ export function assistantDailyCap(raw: string | undefined = envCap()): number {
+   if (raw === undefined || raw.trim() === "") return DEFAULT_ASSISTANT_CAP;
+   const n = Number(raw);
+   return Number.isInteger(n) && n >= 0 ? n : DEFAULT_ASSISTANT_CAP;
+ }
+ type ReadDb = { select: (cols: any) => any };
+-export async function assistantUsedToday(db: ReadDb, day = sgDay()): Promise<number> {
++// The jobs board assistant has its own cap, JOBS_ASSISTANT_DAILY_CAP (same rules, same default),
++// so a busy day on one assistant can't lock people out of the other.
++export function jobsAssistantDailyCap(raw: string | undefined = env("JOBS_ASSISTANT_DAILY_CAP")): number {
++  return assistantDailyCap(raw);
++}
++type CappedMetric = "assistant" | "jobs_assistant";
++export async function assistantUsedToday(db: ReadDb, day = sgDay(), metric: CappedMetric = "assistant"): Promise<number> {
+   const [row] = await db.select({ n: sql<number>`coalesce(sum(${usageDaily.count}), 0)::int` }).from(usageDaily)
+-    .where(and(eq(usageDaily.day, day), eq(usageDaily.metric, "assistant")));
++    .where(and(eq(usageDaily.day, day), eq(usageDaily.metric, metric)));
+   return Number(row?.n ?? 0);
+ }
+ // True when today's uses have reached the cap. If the count can't be read, the assistant stays open.
+-export async function assistantCapReached(cap = assistantDailyCap(), day = sgDay()): Promise<boolean> {
++export async function assistantCapReached(cap = assistantDailyCap(), day = sgDay(), metric: CappedMetric = "assistant"): Promise<boolean> {
+   if (!cap) return false;
+-  try { return (await assistantUsedToday(getDb(), day)) >= cap; } catch { return false; }
++  try { return (await assistantUsedToday(getDb(), day, metric)) >= cap; } catch { return false; }
+ }
+ 
+ // Counts one use of a server-side feature (the assistant). Never sees or stores what was asked.
+ // Errors are swallowed: counting must never delay or break the feature itself.
+-export function countServerUse(metric: "assistant" | "assistant_capped", waitUntil?: (p: Promise<unknown>) => void): void {
++export function countServerUse(metric: "assistant" | "assistant_capped" | "jobs_assistant" | "jobs_assistant_capped", waitUntil?: (p: Promise<unknown>) => void): void {
+   let p: Promise<unknown>;
+   try { p = recordUsage(getDb(), [{ metric, key: "" }]).catch(() => {}); } catch { return; }
+   waitUntil?.(p);
+@@ -138,12 +145,13 @@
+ 
+ export type UsageRow = { day: string; source: string; metric: string; key: string; count: number };
+ export type SubmissionRow = { created_at: string; kind: string; status?: string };
+-const TOTAL_KEYS = ["visits", "pageviews", "searches", "noResults", "assistant", "submissions", "profiles", "profileShown", "profileSkips", "visitorDays", "newVisitors", "assistantCapped"] as const;
++const TOTAL_KEYS = ["visits", "pageviews", "searches", "noResults", "assistant", "submissions", "profiles", "profileShown", "profileSkips", "visitorDays", "newVisitors", "assistantCapped", "jobsAssistant", "jobsAssistantCapped"] as const;
+ type Totals = Record<(typeof TOTAL_KEYS)[number], number>;
+ const METRIC_TO_TOTAL: Record<string, keyof Totals> = {
+   visit: "visits", pageview: "pageviews", search: "searches", search_no_results: "noResults", assistant: "assistant",
+   profile: "profiles", profile_shown: "profileShown", profile_skip: "profileSkips",
+   visitor_day: "visitorDays", visitor_new: "newVisitors", assistant_capped: "assistantCapped",
++  jobs_assistant: "jobsAssistant", jobs_assistant_capped: "jobsAssistantCapped",
+ };
+ 
+ const addDays = (day: string, n: number) => {
+@@ -165,7 +173,7 @@
+   [...m].map(([key, count]) => ({ key, label: labels[key] ?? key, count })).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+ 
+ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: ReturnType<typeof periodFor>) {
+-  const zero = (): Totals => ({ visits: 0, pageviews: 0, searches: 0, noResults: 0, assistant: 0, submissions: 0, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0 });
++  const zero = (): Totals => ({ visits: 0, pageviews: 0, searches: 0, noResults: 0, assistant: 0, submissions: 0, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0, jobsAssistant: 0, jobsAssistantCapped: 0 });
+   const totals = zero(), previous = zero();
+   const daily = new Map<string, Totals & { day: string }>();
+   for (let d = period.from; d <= period.to; d = addDays(d, 1)) daily.set(d, { day: d, ...zero() });
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+   "scripts": {
+     "build": "node scripts/build.mjs",
+     "test": "node --import tsx --experimental-test-module-mocks --test tests/*.test.mts",
+-    "typecheck": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck netlify/functions/submissions.mts netlify/functions/track.mts netlify/functions/stats.mts netlify/lib/usage.mts db/index.ts db/schema.ts drizzle.config.ts",
++    "typecheck": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck netlify/functions/submissions.mts netlify/functions/track.mts netlify/functions/stats.mts netlify/lib/usage.mts netlify/lib/jobs.mts netlify/lib/jobs-sync.mts netlify/lib/job-page.mts netlify/lib/jobs-assistant.mts netlify/functions/jobs.mts netlify/functions/job-page.mts netlify/functions/jobs-assistant.mts netlify/functions/jobs-sync-background.mts netlify/functions/jobs-sync-scheduled.mts db/index.ts db/schema.ts drizzle.config.ts",
+     "db:generate": "drizzle-kit generate"
+   }
+ }
+--- a/public/admin/stats.html
++++ b/public/admin/stats.html
+@@ -189,13 +189,13 @@
+   $("#report").hidden=false;
+   $("#period").textContent=`${dayLabel(range.from,{day:"numeric",month:"short",year:"numeric"})} to ${dayLabel(range.to,{day:"numeric",month:"short",year:"numeric"})}`;
+   const v=data.visitors||{thisMonth:0,newInPeriod:0,returningDays:0,averagePerDay:0,monthFrom:range.to};
+-  const tiles=[["Visits","visits"],["Searches","searches"],["Assistant uses","assistant"],["Submissions","submissions"]];
++  const tiles=[["Visits","visits"],["Searches","searches"],["Assistant uses","assistant"],["Jobs assistant uses","jobsAssistant"],["Submissions","submissions"]];
+   $("#tiles").innerHTML=`<div class="tile"><span class="label">Unique visitors this month</span><span class="value">${fmt(v.thisMonth)}</span><span class="delta">since ${esc(dayLabel(v.monthFrom,{day:"numeric",month:"short"}))}</span></div>`+
+     tiles.map(([label,k])=>`<div class="tile"><span class="label">${label}</span><span class="value">${fmt(t[k])}</span><span class="delta">${delta(t[k],p[k])}</span></div>`).join("");
+   $("#visitorsLine").innerHTML=`<span>New visitors <b>${fmt(v.newInPeriod)}</b> (${delta(t.newVisitors,p.newVisitors)})</span><span>Returning visitor-days <b>${fmt(v.returningDays)}</b></span><span>About <b>${fmt(v.averagePerDay)}</b> different visitors a day</span>`;
+   const cap=data.assistantCap;
+   $("#capLine").innerHTML=cap?(cap.limit?`<span>Assistant daily limit: <b>${fmt(cap.usedToday)}</b> of <b>${fmt(cap.limit)}</b> used today${cap.usedToday>=cap.limit?' <span class="capwarn">(limit reached)</span>':""}</span>`:'<span>Assistant daily limit: <b>off</b></span>')+
+-    `<span>Turned away by the limit in this period <b>${fmt(t.assistantCapped)}</b></span>`:"";
++    `<span>Turned away by the limit in this period <b>${fmt(t.assistantCapped)}</b></span>`+(t.jobsAssistantCapped?`<span>Jobs assistant turned away by its limit <b>${fmt(t.jobsAssistantCapped)}</b></span>`:""):"";
+   $("#minor").innerHTML=`<span>Page views <b>${fmt(t.pageviews)}</b></span><span>Searches with no results <b>${fmt(t.noResults)}</b> (possible gaps in the directory)</span>`;
+   drawVisits(); drawCountries(); drawIssues(); drawAudience(); drawSubmissions(); drawTable();
+ }
+@@ -314,7 +314,7 @@
+ }
+ 
+ /* ---------- Table, CSV and report summary ---------- */
+-const COLS=[["day","Day"],["visits","Visits"],["visitorDays","Visitors"],["newVisitors","New visitors"],["pageviews","Page views"],["searches","Searches"],["noResults","No-result searches"],["assistant","Assistant uses"],["submissions","Submissions"],["profiles","Pop-up answers"]];
++const COLS=[["day","Day"],["visits","Visits"],["visitorDays","Visitors"],["newVisitors","New visitors"],["pageviews","Page views"],["searches","Searches"],["noResults","No-result searches"],["assistant","Assistant uses"],["jobsAssistant","Jobs assistant uses"],["submissions","Submissions"],["profiles","Pop-up answers"]];
+ function drawTable(){
+   $("#table").innerHTML=`<thead><tr>${COLS.map(c=>`<th scope="col">${c[1]}</th>`).join("")}</tr></thead><tbody>${[...data.daily].reverse().map(r=>`<tr>${COLS.map(([k],i)=>i?`<td>${fmt(r[k])}</td>`:`<td>${esc(dayLabel(r.day,{weekday:"short",day:"numeric",month:"short"}))}</td>`).join("")}</tr>`).join("")}</tbody>
+   <tfoot><tr><th scope="row">Total</th>${COLS.slice(1).map(([k])=>`<td><b>${fmt(data.totals[k])}</b></td>`).join("")}</tr></tfoot>`;
+--- a/public/privacy.html
++++ b/public/privacy.html
+@@ -35,6 +35,10 @@
+ <h2>The mobile app</h2>
+ <p>The SG Social Services app for Android and iOS works the same way as this website. Services you save with the star, and your light or dark appearance choice, are kept only on your phone and are never sent to us. The app keeps a copy of the directory on your phone so it works offline. It doesn't use accounts, location, contacts, advertising or tracking.</p>
+ 
++<h2 id="jobs">The jobs board and jobs assistant</h2>
++<p>Jobs on the board are copied from public listings, mostly MyCareersFuture, and checked every day. Each one links to the original listing, where you apply. We don't take applications, CVs or contact details, and we don't share anything about you with employers.</p>
++<p>What you type into the jobs assistant is sent to Anthropic's Claude model to pick out suitable jobs and write your recommendations. It isn't saved on our side: the conversation lives in your browser tab and is gone when you press "Start over" or close the page. Anthropic doesn't use it to train its models. Please leave out your NRIC, phone number, email and address; the assistant refuses messages that contain them. We only count how many times the jobs assistant was used each day.</p>
++
+ <h2>Visit counts</h2>
+ <p>To show funders and partners that the directory is used, the site keeps simple daily counts: how many visits and page views there were, how many searches were made, which presenting-issue pages and filters were used, and how many times the assistant was used. That's all. We don't use cookies for this, and we don't store your IP address, device details, the words you search for or anything you type into the assistant. If your browser has Do Not Track or Global Privacy Control switched on, you aren't counted at all.</p>
+ <p>We also count roughly how many different people visit, and which country visits come from. For the first, your browser remembers the last date it was counted (for example "19 November 2026") so it isn't counted twice in a day or month; that date stays on your device and only "+1 visitor" is sent to us. For the second, our host, Netlify, works out the country from your connection and we add 1 to that country's count. We never see or store your IP address or anything more precise than the country.</p>
+--- a/public/track.js
++++ b/public/track.js
+@@ -32,6 +32,8 @@
+     var path = location.pathname;
+     var page = path === "/" || path === "/index.html" ? "home"
+       : path.indexOf("/help/") === 0 ? "help:" + (path.split("/")[2] || "")
++      : /^\/jobs\/?(index\.html)?$/.test(path) ? "jobs"
++      : path.indexOf("/jobs/") === 0 ? "job" // every job page counts as one "job" page, not one counter each
+       : path.replace(/\.html$/, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() || "home";
+ 
+     if (firstPage) window.sgssTrack("visit");
+--- a/scripts/build.mjs
++++ b/scripts/build.mjs
+@@ -208,6 +208,7 @@
+   const urls = [
+     { loc: `${base}/`, priority: "1.0" },
+     ...pages.map(p => ({ loc: `${base}/help/${p.slug}/`, priority: "0.8" })),
++    { loc: `${base}/jobs/`, priority: "0.9" },
+     { loc: `${base}/privacy.html`, priority: "0.3" },
+   ];
+   return `<?xml version="1.0" encoding="UTF-8"?>
+--- a/tests/usage.test.mts
++++ b/tests/usage.test.mts
+@@ -132,7 +132,7 @@
+     { created_at: '2026-11-03T01:00:00Z', kind: 'update' }, // previous period
+   ];
+   const s = usage.summarise(rows, subs, p);
+-  assert.deepEqual(s.totals, { visits: 8, pageviews: 9, searches: 0, noResults: 0, assistant: 6, submissions: 2, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0 });
++  assert.deepEqual(s.totals, { visits: 8, pageviews: 9, searches: 0, noResults: 0, assistant: 6, submissions: 2, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0, jobsAssistant: 0, jobsAssistantCapped: 0 });
+   assert.deepEqual(s.submissionsByKind, { recommend: 1, update: 1 });
+   assert.equal(s.previous.visits, 10);
+   assert.equal(s.previous.submissions, 1);

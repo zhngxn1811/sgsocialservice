@@ -5,9 +5,9 @@ import { getDb } from "../../db/index.js";
 import { usageDaily } from "../../db/schema.js";
 
 export const METRICS = ["visit", "pageview", "search", "search_no_results", "filter", "assistant", "profile", "profile_shown", "profile_skip", "assistant_role",
-  "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped"] as const;
+  "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"] as const;
 // Counted on the server only. The browser can't send these.
-const SERVER_ONLY = new Set(["assistant", "country", "assistant_capped"]);
+const SERVER_ONLY = new Set(["assistant", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"]);
 // Sent once per browser (per day, ever, or per month). The browser only remembers the date it last sent them.
 const VISITOR = new Set(["visitor_day", "visitor_new", "visitor_month"]);
 
@@ -108,27 +108,34 @@ export function countryKey(code: unknown): string {
 // Daily cap on assistant uses across the whole site, so a bot or a bad day can't run up the AI bill.
 // Set ASSISTANT_DAILY_CAP in Netlify (0 switches the cap off). Resets at midnight Singapore time.
 export const DEFAULT_ASSISTANT_CAP = 150;
-const envCap = (): string | undefined => (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.ASSISTANT_DAILY_CAP;
+const env = (name: string): string | undefined => (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.[name];
+const envCap = (): string | undefined => env("ASSISTANT_DAILY_CAP");
 export function assistantDailyCap(raw: string | undefined = envCap()): number {
   if (raw === undefined || raw.trim() === "") return DEFAULT_ASSISTANT_CAP;
   const n = Number(raw);
   return Number.isInteger(n) && n >= 0 ? n : DEFAULT_ASSISTANT_CAP;
 }
 type ReadDb = { select: (cols: any) => any };
-export async function assistantUsedToday(db: ReadDb, day = sgDay()): Promise<number> {
+// The jobs board assistant has its own cap, JOBS_ASSISTANT_DAILY_CAP (same rules, same default),
+// so a busy day on one assistant can't lock people out of the other.
+export function jobsAssistantDailyCap(raw: string | undefined = env("JOBS_ASSISTANT_DAILY_CAP")): number {
+  return assistantDailyCap(raw);
+}
+type CappedMetric = "assistant" | "jobs_assistant";
+export async function assistantUsedToday(db: ReadDb, day = sgDay(), metric: CappedMetric = "assistant"): Promise<number> {
   const [row] = await db.select({ n: sql<number>`coalesce(sum(${usageDaily.count}), 0)::int` }).from(usageDaily)
-    .where(and(eq(usageDaily.day, day), eq(usageDaily.metric, "assistant")));
+    .where(and(eq(usageDaily.day, day), eq(usageDaily.metric, metric)));
   return Number(row?.n ?? 0);
 }
 // True when today's uses have reached the cap. If the count can't be read, the assistant stays open.
-export async function assistantCapReached(cap = assistantDailyCap(), day = sgDay()): Promise<boolean> {
+export async function assistantCapReached(cap = assistantDailyCap(), day = sgDay(), metric: CappedMetric = "assistant"): Promise<boolean> {
   if (!cap) return false;
-  try { return (await assistantUsedToday(getDb(), day)) >= cap; } catch { return false; }
+  try { return (await assistantUsedToday(getDb(), day, metric)) >= cap; } catch { return false; }
 }
 
 // Counts one use of a server-side feature (the assistant). Never sees or stores what was asked.
 // Errors are swallowed: counting must never delay or break the feature itself.
-export function countServerUse(metric: "assistant" | "assistant_capped", waitUntil?: (p: Promise<unknown>) => void): void {
+export function countServerUse(metric: "assistant" | "assistant_capped" | "jobs_assistant" | "jobs_assistant_capped", waitUntil?: (p: Promise<unknown>) => void): void {
   let p: Promise<unknown>;
   try { p = recordUsage(getDb(), [{ metric, key: "" }]).catch(() => {}); } catch { return; }
   waitUntil?.(p);
@@ -138,12 +145,13 @@ export function countServerUse(metric: "assistant" | "assistant_capped", waitUnt
 
 export type UsageRow = { day: string; source: string; metric: string; key: string; count: number };
 export type SubmissionRow = { created_at: string; kind: string; status?: string };
-const TOTAL_KEYS = ["visits", "pageviews", "searches", "noResults", "assistant", "submissions", "profiles", "profileShown", "profileSkips", "visitorDays", "newVisitors", "assistantCapped"] as const;
+const TOTAL_KEYS = ["visits", "pageviews", "searches", "noResults", "assistant", "submissions", "profiles", "profileShown", "profileSkips", "visitorDays", "newVisitors", "assistantCapped", "jobsAssistant", "jobsAssistantCapped"] as const;
 type Totals = Record<(typeof TOTAL_KEYS)[number], number>;
 const METRIC_TO_TOTAL: Record<string, keyof Totals> = {
   visit: "visits", pageview: "pageviews", search: "searches", search_no_results: "noResults", assistant: "assistant",
   profile: "profiles", profile_shown: "profileShown", profile_skip: "profileSkips",
   visitor_day: "visitorDays", visitor_new: "newVisitors", assistant_capped: "assistantCapped",
+  jobs_assistant: "jobsAssistant", jobs_assistant_capped: "jobsAssistantCapped",
 };
 
 const addDays = (day: string, n: number) => {
@@ -165,7 +173,7 @@ const labelled = (m: Map<string, number>, labels: Record<string, string>): Count
   [...m].map(([key, count]) => ({ key, label: labels[key] ?? key, count })).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 
 export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: ReturnType<typeof periodFor>) {
-  const zero = (): Totals => ({ visits: 0, pageviews: 0, searches: 0, noResults: 0, assistant: 0, submissions: 0, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0 });
+  const zero = (): Totals => ({ visits: 0, pageviews: 0, searches: 0, noResults: 0, assistant: 0, submissions: 0, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0, jobsAssistant: 0, jobsAssistantCapped: 0 });
   const totals = zero(), previous = zero();
   const daily = new Map<string, Totals & { day: string }>();
   for (let d = period.from; d <= period.to; d = addDays(d, 1)) daily.set(d, { day: d, ...zero() });

@@ -132,7 +132,7 @@ test('summary adds up totals, the previous period, daily rows, pages and filters
     { created_at: '2026-11-03T01:00:00Z', kind: 'update' }, // previous period
   ];
   const s = usage.summarise(rows, subs, p);
-  assert.deepEqual(s.totals, { visits: 8, pageviews: 9, searches: 0, noResults: 0, assistant: 6, submissions: 2, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0 });
+  assert.deepEqual(s.totals, { visits: 8, pageviews: 9, searches: 0, noResults: 0, assistant: 6, submissions: 2, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0, jobsAssistant: 0, jobsAssistantCapped: 0 });
   assert.deepEqual(s.submissionsByKind, { recommend: 1, update: 1 });
   assert.equal(s.previous.visits, 10);
   assert.equal(s.previous.submissions, 1);

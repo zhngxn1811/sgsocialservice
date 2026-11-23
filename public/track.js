@@ -32,6 +32,8 @@
     var path = location.pathname;
     var page = path === "/" || path === "/index.html" ? "home"
       : path.indexOf("/help/") === 0 ? "help:" + (path.split("/")[2] || "")
+      : /^\/jobs\/?(index\.html)?$/.test(path) ? "jobs"
+      : path.indexOf("/jobs/") === 0 ? "job" // every job page counts as one "job" page, not one counter each
       : path.replace(/\.html$/, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() || "home";
 
     if (firstPage) window.sgssTrack("visit");

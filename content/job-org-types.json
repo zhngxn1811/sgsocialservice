@@ -1,0 +1,5 @@
+{
+  "_how_to_use": "Fix an organisation the jobs board puts under the wrong type. Key: the organisation's UEN, or its name in CAPITALS exactly as it appears on MyCareersFuture. Value: healthcare, social-community, government, education or charity. Changes apply at the next daily sync.",
+  "INSTITUTE OF MENTAL HEALTH": "healthcare",
+  "AGENCY FOR INTEGRATED CARE PTE. LTD.": "government"
+}

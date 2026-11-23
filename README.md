@@ -99,8 +99,6 @@ Follow the prompts to create a new site, then add the two environment variables 
 
 **Submissions:** open `yoursite/admin`, enter your key, then mark each one *done* or *rejected* once you've handled it.
 
-**Assistant knowledge:** the assistant's context is generated from `public/services.json`, including every listing, category label, contact detail, operating hours, tag, address and supplied link. Directory changes reach the assistant with the next deploy; no separate knowledge upload is needed. The prompt includes the directory's `updated` date. Identical context is cached briefly by the AI provider; changed content refreshes that cache automatically.
-
 **Editing the directory:** on GitHub, open `public/services.json`, click the pencil icon, edit, and commit. Netlify redeploys in about a minute. A listing looks like this:
 
 ```json
@@ -176,6 +174,14 @@ Open **`/admin/stats`** and sign in with your `ADMIN_KEY` (the same key as the s
 
 **How it's counted (privacy-friendly):** `public/track.js` sends anonymous counts to `/api/track`, which adds 1 to a daily counter in the `usage_daily` table. No cookies, IP addresses, device details, search words or case text are stored. Browsers with Do Not Track or Global Privacy Control switched on aren't counted, and search engines and link previewers are filtered out. Assistant uses are counted on the server in `assistant.mjs`, so they can't be inflated from a browser. Submissions come straight from the submissions table.
 
+### The optional "who's using this" pop-up
+
+`public/profile.js` asks two optional questions, **role** and **type of workplace**, from fixed lists. It shows once per browser, the first time someone scrolls to the directory (home or an issue page) or gets an assistant answer. It's a small corner card (a bottom sheet on phones) that never blocks the page, appears no sooner than 4 seconds after the page loads, and never appears on top of the recommend/report form. "Not now" or ✕ means it won't ask again in that browser. It's never shown to people with Do Not Track or Global Privacy Control on.
+
+Answers are stored only as daily counts (`profile` with key `role:workplace`), along with how often it was shown or skipped. Once someone has answered, their later assistant uses are also counted by role (`assistant_role`). The server only accepts options from the lists in `netlify/lib/usage.mts`, and a test checks the pop-up offers exactly the same lists. To change an option, edit both files.
+
+The dashboard's **Who's using it** section shows the answer rate, breakdowns by role and by workplace, assistant uses by role, and the most common combinations. **Recommendations and updates** shows new services recommended and listing updates in the period, plus how many are still waiting for your review. "Copy summary for a report" now includes the most common roles.
+
 The `usage_daily` table is created by the migration in `netlify/database/migrations/` the next time Netlify deploys. Numbers start from that deploy; earlier visits weren't counted.
 
 | File | What it does |
@@ -185,6 +191,28 @@ The `usage_daily` table is created by the migration in `netlify/database/migrati
 | `netlify/functions/stats.mts` | `GET /api/stats?days=30`: the numbers, admin key required |
 | `netlify/lib/usage.mts` | shared counting and summary logic |
 | `public/admin/stats.html` | the dashboard |
+
+## Jobs board
+
+The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social and health services, each with its own page at `/jobs/<job-id>` showing the description, requirements and an **Apply** button that goes to the original listing. It has its own AI assistant, separate from the directory assistant, that acts as a seasoned recruitment consultant: people describe the job they want and get a shortlist of real, open roles with links, plus advice on how to stand out.
+
+**Where the jobs come from.** Every day at 6am Singapore time the site pulls social and health services jobs from MyCareersFuture's public job search (about 26 searches: social worker, counsellor, psychologist, case manager, youth worker and so on). Only Singapore-based roles that are still open are kept. Jobs that expire, or that disappear from MyCareersFuture, are closed automatically and their pages say so. JobStreet, LinkedIn, Indeed and Careers@Gov don't allow copying, so add roles from those by hand (below). Each listing's qualification, experience, fresh-grad friendliness, nature of work and type of organisation are read from the listing text, so they're a good guide but not perfect.
+
+**Settings** (Site configuration > Environment variables):
+
+- `ADMIN_KEY`: required. The daily refresh and the jobs admin page use it.
+- `ANTHROPIC_API_KEY`: the same key the directory assistant uses.
+- `JOBS_ASSISTANT_DAILY_CAP`: optional, how many jobs assistant answers a day before it pauses until midnight. Default 150. It's counted separately from the directory assistant's cap.
+- `JOBS_CLAUDE_MODEL`: optional, to use a different model for the jobs assistant. Defaults to `CLAUDE_MODEL`, then `claude-sonnet-5-5`.
+- `SITE_URL`: optional, your public address (for example `https://sgsocialservices.sg`) so job links and search results use it.
+
+**First run.** After the first deploy, go to **`/admin/jobs`**, sign in with your `ADMIN_KEY` and press **Refresh jobs now**. It takes a few minutes; reload the page to see the jobs arrive. After that it runs by itself every day.
+
+**Adding a job by hand.** On `/admin/jobs`, use **Add a job by hand**. A title, organisation, link to the application page (https) and closing date are required, and the location must be in Singapore. The job comes down by itself after its closing date. You can also close or reopen any job from the list.
+
+**Organisation types.** Jobs are sorted into Healthcare, Social & community services, Government, Education or Charity from the employer's name and industry. If one is wrong, add the employer's name exactly as it appears on the listing (in capitals) to `content/job-org-types.json`, for example `"AGENCY FOR INTEGRATED CARE PTE. LTD.": "government"`, and redeploy.
+
+**Privacy.** The jobs assistant doesn't save conversations; they stay in the visitor's browser tab. It refuses messages containing an NRIC, phone number or email address. Only daily usage counts are kept, shown as "Jobs assistant" on `/admin/stats`.
 
 ## Mobile apps
 

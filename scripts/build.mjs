@@ -145,6 +145,7 @@ ${jsonLd(data)}
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
 <script src="/track.js" defer></script>
+<script src="/profile.js" defer></script>
 </head>
 <body>
 ${crisis}
@@ -207,8 +208,7 @@ function sitemap(base, pages, date) {
   const urls = [
     { loc: `${base}/`, priority: "1.0" },
     ...pages.map(p => ({ loc: `${base}/help/${p.slug}/`, priority: "0.8" })),
-    { loc: `${base}/recommend`, priority: "0.5" },
-    { loc: `${base}/report`, priority: "0.5" },
+    { loc: `${base}/jobs/`, priority: "0.9" },
     { loc: `${base}/privacy.html`, priority: "0.3" },
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -265,7 +265,7 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
   }));
   home = replaceMarker(home, "count", `${total} of ${total} services`);
   home = replaceMarker(home, "cats", render.chips(directory.categories, directory.services, "all"));
-  home = replaceMarker(home, "grid", directory.services.slice(0, 6).map(render.card).join(""));
+  home = replaceMarker(home, "grid", directory.services.map(render.card).join(""));
   home = replaceMarker(home, "browse", browseNav(pages, esc));
   await writeFile(path.join(outDir, "index.html"), home);
 

@@ -1,0 +1,41 @@
+CREATE TABLE "jobs" (
+	"id" text PRIMARY KEY,
+	"source" text NOT NULL,
+	"source_id" text NOT NULL,
+	"source_name" text DEFAULT '' NOT NULL,
+	"title" text NOT NULL,
+	"org" text NOT NULL,
+	"org_uen" text DEFAULT '' NOT NULL,
+	"org_type" text DEFAULT 'social-community' NOT NULL,
+	"location" text DEFAULT 'Singapore' NOT NULL,
+	"employment_type" text DEFAULT '' NOT NULL,
+	"salary_min" integer,
+	"salary_max" integer,
+	"salary_type" text DEFAULT '' NOT NULL,
+	"summary" text DEFAULT '' NOT NULL,
+	"description" text DEFAULT '' NOT NULL,
+	"requirements" text DEFAULT '' NOT NULL,
+	"qualification" text DEFAULT 'unspecified' NOT NULL,
+	"min_years" integer,
+	"fresh_grad" boolean DEFAULT false NOT NULL,
+	"nature" text[] DEFAULT '{}'::text[] NOT NULL,
+	"skills" text[] DEFAULT '{}'::text[] NOT NULL,
+	"apply_url" text NOT NULL,
+	"source_url" text DEFAULT '' NOT NULL,
+	"posted_at" date,
+	"closes_at" date,
+	"status" text DEFAULT 'open' NOT NULL,
+	"last_seen_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "jobs_source" CHECK ("source" in ('mycareersfuture', 'manual')),
+	CONSTRAINT "jobs_status" CHECK ("status" in ('open', 'closed')),
+	CONSTRAINT "jobs_qualification" CHECK ("qualification" in ('doctorate', 'masters', 'honours', 'bachelors', 'diploma', 'unspecified')),
+	CONSTRAINT "jobs_org_type" CHECK ("org_type" in ('healthcare', 'social-community', 'government', 'education', 'charity')),
+	CONSTRAINT "jobs_apply_url_https" CHECK ("apply_url" like 'https://%'),
+	CONSTRAINT "jobs_title_required" CHECK (length(trim("title")) > 0)
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX "jobs_source_id_idx" ON "jobs" ("source","source_id");--> statement-breakpoint
+CREATE INDEX "jobs_status_closes_idx" ON "jobs" ("status","closes_at");--> statement-breakpoint
+ALTER TABLE "usage_daily" DROP CONSTRAINT "usage_daily_metric", ADD CONSTRAINT "usage_daily_metric" CHECK ("metric" in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped'));
