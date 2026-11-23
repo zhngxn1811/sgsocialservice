@@ -36,6 +36,11 @@
   status = 200
 
 [[redirects]]
+  from = "/sitemap"
+  to = "/sitemap.html"
+  status = 200
+
+[[redirects]]
   from = "/apple-touch-icon.png"
   to = "/icons/apple-touch-icon.png"
   status = 200

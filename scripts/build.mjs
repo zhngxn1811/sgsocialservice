@@ -34,7 +34,7 @@ function between(html, start, end, what) {
 
 function replaceMarker(html, name, content) {
   const re = new RegExp(`<!-- build:${name}\\b[^>]*-->`);
-  if (!re.test(html)) throw new Error(`Build: marker "build:${name}" is missing from public/index.html`);
+  if (!re.test(html)) throw new Error(`Build: marker "build:${name}" is missing from the page template`);
   return html.replace(re, () => content);
 }
 
@@ -292,7 +292,13 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
     await writeFile(path.join(outDir, "privacy.html"), privacy);
   }
 
-  // Sitemap, and point robots.txt at it.
+  const sitemapSource = await readFile(path.join(pub, "sitemap.html"), "utf8");
+  let sitemapPage = replaceMarker(sitemapSource, "head", `<link rel="canonical" href="${esc(base)}/sitemap">`);
+  sitemapPage = replaceMarker(sitemapPage, "browse", browseNav(pages, esc));
+  sitemapPage = replaceMarker(sitemapPage, "footer", footer);
+  await writeFile(path.join(outDir, "sitemap.html"), sitemapPage);
+
+  // XML sitemap, and point robots.txt at it.
   await writeFile(path.join(outDir, "sitemap.xml"), sitemap(base, pages, today));
   const robots = existsSync(path.join(pub, "robots.txt")) ? await readFile(path.join(pub, "robots.txt"), "utf8") : "User-agent: *\nAllow: /\n";
   await writeFile(path.join(outDir, "robots.txt"), robots.trimEnd() + `\n\nSitemap: ${base}/sitemap.xml\n`);

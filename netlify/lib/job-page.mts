@@ -75,7 +75,7 @@ ${extra}
 </header>
 `;
 
-const FOOT = `<footer><div class="wrap">SG Social Services is an independent, volunteer-run directory and jobs board, not affiliated with any employer or job portal. Job details are copied from the source listing. Always check the original before applying. <a href="/privacy.html">Privacy</a></div></footer>
+const FOOT = `<footer><div class="wrap">SG Social Services is an independent, volunteer-run directory and jobs board, not affiliated with any employer or job portal. Job details are copied from the source listing. Always check the original before applying. <a href="/privacy.html">Privacy</a> · <a href="/sitemap">Sitemap</a></div></footer>
 </body>
 </html>`;
 

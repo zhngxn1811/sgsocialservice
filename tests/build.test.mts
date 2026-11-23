@@ -56,6 +56,25 @@ test('crisis lines and footer appear on every issue page', async () => {
     const html = await read(`help/${page.slug}/index.html`);
     assert.ok(html.includes('SOS <span class="mono">1767</span>'), page.slug);
     assert.ok(html.includes('href="/privacy.html"'), page.slug);
+    assert.ok(html.includes('<a href="/sitemap">Sitemap</a>'), page.slug);
+  }
+});
+
+test('the visitor sitemap links to the main pages and every generated issue page', async () => {
+  const { read, result } = await buildInto();
+  const sitemap = await read('sitemap.html');
+  assert.ok(sitemap.includes('<h1>Sitemap</h1>'));
+  assert.ok(sitemap.includes(`<link rel="canonical" href="${SITE}/sitemap">`));
+  assert.ok(!sitemap.includes('<!-- build:'));
+  assert.ok(!sitemap.includes('href="/admin'));
+  for (const route of ['/', '/jobs/', '/recommend', '/report', '/privacy.html']) {
+    assert.ok(sitemap.includes(`href="${route}"`), route);
+  }
+  for (const page of result.pages) {
+    assert.ok(sitemap.includes(`href="/help/${page.slug}/"`), page.slug);
+  }
+  for (const file of ['index.html', 'jobs/index.html', 'recommend.html', 'report.html', 'privacy.html']) {
+    assert.match(await read(file), /<footer>[^\n]*<a href="\/sitemap">Sitemap<\/a>/, file);
   }
 });
 
