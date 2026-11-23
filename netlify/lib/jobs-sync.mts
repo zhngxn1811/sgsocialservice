@@ -70,26 +70,27 @@ export async function collectMcfJobs(opts: {
 
 type Db = ReturnType<typeof import("../../db/index.js").getDb>;
 
-// Saves (inserts or updates) the collected jobs, then closes:
+// Saves the collected jobs without overwriting curated entries, then closes:
 //   - any job whose closing date has passed (portal or hand-added)
-//   - portal jobs not seen in this run, but only if every search worked
+//   - non-curated portal jobs not seen in this run, but only if every search worked
 export async function saveJobs(db: Db, records: JobRecord[], startedAt: string, today: string, complete: boolean) {
   let saved = 0;
   for (const r of records) {
     const { id, ...rest } = r;
-    await db.insert(jobs).values({ id, ...rest, last_seen_at: startedAt, updated_at: startedAt })
+    const written = await db.insert(jobs).values({ id, ...rest, last_seen_at: startedAt, updated_at: startedAt })
       .onConflictDoUpdate({
         target: [jobs.source, jobs.source_id],
         set: { ...rest, status: "open", last_seen_at: startedAt, updated_at: startedAt }, // the id (page address) never changes
-      });
-    saved++;
+        setWhere: eq(jobs.curated, false),
+      }).returning({ id: jobs.id });
+    saved += written.length;
   }
   const expired = await db.update(jobs).set({ status: "closed", updated_at: startedAt })
     .where(and(eq(jobs.status, "open"), lt(jobs.closes_at, today))).returning({ id: jobs.id });
   let gone: { id: string }[] = [];
   if (complete) {
     gone = await db.update(jobs).set({ status: "closed", updated_at: startedAt })
-      .where(and(eq(jobs.status, "open"), eq(jobs.source, "mycareersfuture"), lt(jobs.last_seen_at, startedAt)))
+      .where(and(eq(jobs.status, "open"), eq(jobs.source, "mycareersfuture"), eq(jobs.curated, false), lt(jobs.last_seen_at, startedAt)))
       .returning({ id: jobs.id });
   }
   return { saved, closed: expired.length + gone.length };

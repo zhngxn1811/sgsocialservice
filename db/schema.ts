@@ -77,6 +77,7 @@ export const jobs = pgTable('jobs', {
   posted_at: date('posted_at', { mode: 'string' }),
   closes_at: date('closes_at', { mode: 'string' }),
   status: text('status').notNull().default('open'),
+  curated: boolean('curated').notNull().default(false),
   last_seen_at: timestamp('last_seen_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   created_at: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),

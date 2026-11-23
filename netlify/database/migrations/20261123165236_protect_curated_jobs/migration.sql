@@ -1,0 +1,1 @@
+ALTER TABLE "jobs" ADD COLUMN "curated" boolean DEFAULT false NOT NULL;
