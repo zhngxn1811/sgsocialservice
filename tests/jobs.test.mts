@@ -136,11 +136,15 @@ test('filters and sorts', () => {
   assert.deepEqual(sortJobs(sample, 'experience').map(j => j.id), ['b', 'c', 'a']);
 });
 
-test('the board page filters and sorts exactly like the server', () => {
+function browserJobs() {
   const src = readFileSync(new URL('../public/jobs/jobs.js', import.meta.url), 'utf8');
   const ctx: { SGSSJobs?: { filterJobs: typeof filterJobs; sortJobs: typeof sortJobs; card: (j: PublicJob, m: unknown, t: string) => string } } = {};
   runInNewContext(src, { globalThis: ctx, window: undefined });
-  const client = ctx.SGSSJobs!;
+  return ctx.SGSSJobs!;
+}
+
+test('the board page filters and sorts exactly like the server', () => {
+  const client = browserJobs();
   const cases = [{}, { fresh: true }, { qualification: ['masters'] }, { maxYears: 0 }, { orgType: ['charity', 'healthcare'] }, { q: 'executive' }];
   for (const f of cases) for (const sort of ['newest', 'closing', 'qualification', 'qualification-asc', 'experience']) {
     assert.deepEqual(Array.from(client.filterJobs(sample, { ...f, sort }), j => j.id), filterJobs(sample, { ...f, sort }).map(j => j.id), JSON.stringify({ f, sort }));
@@ -148,6 +152,60 @@ test('the board page filters and sorts exactly like the server', () => {
   const html = client.card(pub({ id: 'x', title: '<b>Hi</b>', apply_url: 'https://e.org/"onload="x' }), { orgTypes: [], qualifications: [], natures: [] }, '2026-11-24');
   assert.ok(!html.includes('<b>Hi</b>'));
   assert.ok(html.includes('href="https://e.org/&quot;onload=&quot;x"'));
+});
+
+test('salary brackets match overlapping monthly pay and seniority matches minimum years', () => {
+  const listings = [
+    pub({ id: 'below', salary_min: 2800, salary_max: 2999, min_years: 0 }),
+    pub({ id: 'boundary', salary_min: 3000, salary_max: 3000, min_years: 1 }),
+    pub({ id: 'mid', salary_min: 4000, salary_max: 4500, min_years: 2 }),
+    pub({ id: 'overlaps', salary_min: 4900, salary_max: 5100, min_years: 4 }),
+    pub({ id: 'senior', salary_min: null, salary_max: 6000, salary_type: ' monthly ', min_years: 5 }),
+    pub({ id: 'hourly', salary_type: 'Hourly', min_years: null }),
+    pub({ id: 'no-period', salary_type: '', min_years: null }),
+    pub({ id: 'no-pay', salary_min: null, salary_max: null, min_years: null }),
+  ];
+  const cases: [Parameters<typeof filterJobs>[1], string[]][] = [
+    [{ salaryBracket: 'under-3000' }, ['below']],
+    [{ salaryBracket: '3000-3999' }, ['boundary']],
+    [{ salaryBracket: '4000-4999' }, ['mid', 'overlaps']],
+    [{ salaryBracket: '5000-5999' }, ['overlaps']],
+    [{ salaryBracket: '6000-plus' }, ['senior']],
+    [{ seniority: 'entry' }, ['below', 'boundary']],
+    [{ seniority: 'mid' }, ['mid', 'overlaps']],
+    [{ seniority: 'senior' }, ['senior']],
+    [{ seniority: 'unspecified' }, ['hourly', 'no-period', 'no-pay']],
+    [{ salaryBracket: '4000-4999', seniority: 'mid', maxYears: 2, q: 'social' }, ['mid']],
+    [{ salaryBracket: '6000-plus', seniority: 'entry' }, []],
+  ];
+  for (const filter of [filterJobs, browserJobs().filterJobs]) {
+    for (const [options, ids] of cases) {
+      assert.deepEqual(Array.from(filter(listings, options), job => job.id), ids, JSON.stringify(options));
+    }
+  }
+});
+
+test('entry-level checkboxes match fresh-grad jobs or placement vacancies', () => {
+  const listings = [
+    pub({ id: 'intern', title: 'Youth Work Intern' }),
+    pub({ id: 'internship', title: 'Social Work Internship' }),
+    pub({ id: 'practicum', title: 'Counselling Practicum', fresh_grad: true }),
+    pub({ id: 'tagged', title: 'Care Support', employment_type: 'Part Time, Internship' }),
+    pub({ id: 'graduate', title: 'Social Worker', fresh_grad: true, summary: 'Internship experience preferred.' }),
+    pub({ id: 'coordinator', title: 'Internship Programme Coordinator' }),
+    pub({ id: 'internal', title: 'Internal Communications Officer' }),
+  ];
+  const cases: [Parameters<typeof filterJobs>[1], string[]][] = [
+    [{ internship: true }, ['tagged', 'practicum', 'internship', 'intern']],
+    [{ fresh: true }, ['practicum', 'graduate']],
+    [{ fresh: true, internship: true }, ['tagged', 'practicum', 'internship', 'graduate', 'intern']],
+    [{ fresh: true, internship: true, q: 'counselling' }, ['practicum']],
+  ];
+  for (const filter of [filterJobs, browserJobs().filterJobs]) {
+    for (const [options, ids] of cases) {
+      assert.deepEqual(Array.from(filter(listings, options), job => job.id), ids, JSON.stringify(options));
+    }
+  }
 });
 
 test('ids are readable and stable', () => {

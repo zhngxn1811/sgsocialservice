@@ -2,15 +2,29 @@
 // and runs the AI jobs assistant (/api/jobs-assistant). The conversation stays in this tab only.
 (function (root) {
   const RANK = { doctorate: 5, masters: 4, honours: 3, bachelors: 2, diploma: 1, unspecified: 0 };
+  const SALARY_BRACKETS = [
+    ["under-3000", 0, 3000], ["3000-3999", 3000, 4000], ["4000-4999", 4000, 5000],
+    ["5000-5999", 5000, 6000], ["6000-plus", 6000, Infinity],
+  ];
+  const PLACEMENT = /\b(?:intern|internship|practicum)\b(?!\s+(?:(?:programme|program|placement)\s+)?(?:coordinator|manager|supervisor)\b)/i;
   const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // Same rules as filterJobs/sortJobs in netlify/lib/jobs.mts (a test keeps them in step).
   function filterJobs(list, f) {
     const words = (f.q || "").toLowerCase().split(/\s+/).filter(Boolean);
+    const bracket = SALARY_BRACKETS.find(([id]) => id === f.salaryBracket);
     const out = list.filter(j => {
+      if (bracket) {
+        const low = j.salary_min || j.salary_max;
+        const high = j.salary_max || j.salary_min;
+        if (j.salary_type?.trim().toLowerCase() !== "monthly" || !low || !high || high < bracket[1] || low >= bracket[2]) return false;
+      }
+      const seniority = j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior";
+      if (f.seniority && f.seniority !== seniority) return false;
       if (f.qualification && f.qualification.length && !f.qualification.includes(j.qualification)) return false;
       if (typeof f.maxYears === "number" && (j.min_years ?? 0) > f.maxYears) return false;
-      if (f.fresh && !j.fresh_grad) return false;
+      if ((f.fresh || f.internship) && !(f.fresh && j.fresh_grad) &&
+          !(f.internship && (PLACEMENT.test(j.title) || PLACEMENT.test(j.employment_type)))) return false;
       if (f.nature && f.nature.length && !f.nature.some(n => j.nature.includes(n))) return false;
       if (f.orgType && f.orgType.length && !f.orgType.includes(j.org_type)) return false;
       if (f.skill && !j.skills.some(s => s.toLowerCase() === f.skill.toLowerCase())) return false;
@@ -77,7 +91,8 @@
     const vals = n => [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(i => i.value);
     const y = $("#fYears").value;
     return { q: $("#jobQ").value.trim(), qualification: vals("qual"), maxYears: y === "" ? null : Number(y), fresh: $("#fFresh").checked,
-      nature: vals("nature"), orgType: vals("org"), skill: $("#fSkill").value, sort: $("#jobSort").value };
+      nature: vals("nature"), orgType: vals("org"), skill: $("#fSkill").value, sort: $("#jobSort").value,
+      salaryBracket: $("#fSalary").value, seniority: $("#fSeniority").value, internship: $("#fInternship").checked };
   }
   function saveUrl(f) {
     const p = new URLSearchParams();
@@ -85,9 +100,12 @@
     f.qualification.forEach(v => p.append("qual", v));
     if (f.maxYears !== null) p.set("years", f.maxYears);
     if (f.fresh) p.set("fresh", "1");
+    if (f.internship) p.set("internship", "1");
     f.nature.forEach(v => p.append("nature", v));
     f.orgType.forEach(v => p.append("org", v));
     if (f.skill) p.set("skill", f.skill);
+    if (f.salaryBracket) p.set("salary", f.salaryBracket);
+    if (f.seniority) p.set("seniority", f.seniority);
     if (f.sort && f.sort !== "newest") p.set("sort", f.sort);
     const qs = p.toString();
     window.history.replaceState(null, "", qs ? `?${qs}${location.hash}` : location.pathname + location.hash);
@@ -99,14 +117,17 @@
     tick("qual", p.getAll("qual")); tick("nature", p.getAll("nature")); tick("org", p.getAll("org"));
     if (p.has("years")) $("#fYears").value = p.get("years");
     $("#fFresh").checked = p.get("fresh") === "1";
+    $("#fInternship").checked = p.get("internship") === "1";
     if (p.get("skill")) $("#fSkill").value = p.get("skill");
+    $("#fSalary").value = p.get("salary") || "";
+    $("#fSeniority").value = p.get("seniority") || "";
     if (p.get("sort")) $("#jobSort").value = p.get("sort");
   }
   function render() {
     const f = state();
     saveUrl(f);
     const list = filterJobs(ALL, f);
-    const n = f.qualification.length + f.nature.length + f.orgType.length + (f.maxYears !== null) + f.fresh + !!f.skill;
+    const n = f.qualification.length + f.nature.length + f.orgType.length + (f.maxYears !== null) + f.fresh + f.internship + !!f.skill + !!f.salaryBracket + !!f.seniority;
     $("#filterCount").textContent = n ? `${n} on` : "";
     $("#boardMeta").textContent = `${list.length} of ${ALL.length} open job${ALL.length === 1 ? "" : "s"} · refreshed ${fmtDate(TODAY)}`;
     if (!list.length) {
@@ -147,11 +168,12 @@
   }
   let t;
   $("#jobQ").addEventListener("input", () => { clearTimeout(t); t = setTimeout(render, 150); });
-  ["#jobSort", "#fYears", "#fFresh", "#fSkill"].forEach(s => $(s).addEventListener("change", render));
+  ["#jobSort", "#fYears", "#fSkill", "#fSalary", "#fSeniority"].forEach(s => $(s).addEventListener("change", render));
   $("#filters").addEventListener("change", e => { if (e.target.matches("input[type=checkbox]")) render(); });
   $("#clearFilters").addEventListener("click", () => {
     document.querySelectorAll("#filters input[type=checkbox]").forEach(i => { i.checked = false; });
-    $("#fYears").value = ""; $("#fSkill").value = ""; $("#jobQ").value = ""; render();
+    ["#fYears", "#fSkill", "#fSalary", "#fSeniority", "#jobQ"].forEach(s => { $(s).value = ""; });
+    render();
   });
   loadJobs();
 

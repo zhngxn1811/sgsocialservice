@@ -362,16 +362,32 @@ export const isLive = (j: { status?: string; closes_at: string | null }, today: 
   (j.status === undefined || j.status === "open") && (!j.closes_at || j.closes_at >= today);
 
 export type JobFilters = {
-  q?: string; qualification?: string[]; maxYears?: number | null; fresh?: boolean;
+  q?: string; qualification?: string[]; maxYears?: number | null; fresh?: boolean; internship?: boolean;
   nature?: string[]; orgType?: string[]; skill?: string; sort?: string;
+  salaryBracket?: string; seniority?: string;
 };
+
+const SALARY_BRACKETS = [
+  ["under-3000", 0, 3000], ["3000-3999", 3000, 4000], ["4000-4999", 4000, 5000],
+  ["5000-5999", 5000, 6000], ["6000-plus", 6000, Infinity],
+] as const;
+const PLACEMENT = /\b(?:intern|internship|practicum)\b(?!\s+(?:(?:programme|program|placement)\s+)?(?:coordinator|manager|supervisor)\b)/i;
 
 export function filterJobs<T extends PublicJob>(list: T[], f: JobFilters): T[] {
   const words = (f.q || "").toLowerCase().split(/\s+/).filter(Boolean);
+  const bracket = SALARY_BRACKETS.find(([id]) => id === f.salaryBracket);
   const out = list.filter(j => {
+    if (bracket) {
+      const low = j.salary_min || j.salary_max;
+      const high = j.salary_max || j.salary_min;
+      if (j.salary_type?.trim().toLowerCase() !== "monthly" || !low || !high || high < bracket[1] || low >= bracket[2]) return false;
+    }
+    const seniority = j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior";
+    if (f.seniority && f.seniority !== seniority) return false;
     if (f.qualification?.length && !f.qualification.includes(j.qualification)) return false;
     if (typeof f.maxYears === "number" && (j.min_years ?? 0) > f.maxYears) return false;
-    if (f.fresh && !j.fresh_grad) return false;
+    if ((f.fresh || f.internship) && !(f.fresh && j.fresh_grad) &&
+        !(f.internship && (PLACEMENT.test(j.title) || PLACEMENT.test(j.employment_type)))) return false;
     if (f.nature?.length && !f.nature.some(n => (j.nature as string[]).includes(n))) return false;
     if (f.orgType?.length && !f.orgType.includes(j.org_type)) return false;
     if (f.skill && !j.skills.some(s => s.toLowerCase() === f.skill!.toLowerCase())) return false;
