@@ -134,7 +134,7 @@ On every deploy, Netlify runs `scripts/build.mjs`, which copies `public/` into `
 
 - **Listings written into the HTML.** All of `services.json` is in the home page before any JavaScript runs. The page then filters and searches live as before. Built and live cards come from the same file (`public/render.js`), so they always match.
 - **A page per presenting issue** at `/help/<slug>/`, e.g. `/help/domestic-family-violence/`. Each has its own title, Google description and intro, all in `content/categories.json`. Edit the wording there. Avoid changing a `slug` once Google has indexed the page, because it changes the address. A new category in `services.json` gets a page automatically, and categories with no listings are skipped.
-- **`sitemap.xml`**, linked from `robots.txt`.
+- **`/sitemap`**, linked from the footer, lists the main pages and all generated presenting-issue pages. The separate **`sitemap.xml`** is linked from `robots.txt`.
 - **Share previews**: `public/og-image.png` shows when the site is posted on LinkedIn, WhatsApp or X.
 - **Structured data** (JSON-LD) describing the site, each issue page and its services.
 - **Icons**: favicon, iPhone home-screen icon and `site.webmanifest`, so "Add to Home Screen" looks like an app.
