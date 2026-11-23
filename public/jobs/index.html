@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Social and health services jobs in Singapore | SG Social Services Jobs</title>
-<meta name="description" content="Open jobs in Singapore's social and health services: social work, counselling, psychology, care coordination, youth and community roles. Filter by qualification and experience, or ask the AI jobs assistant for your best matches.">
+<meta name="description" content="Open jobs in Singapore's social and health services: social work, counselling, psychology, care coordination, youth and community roles. Filter by qualification, experience and salary, or ask the AI jobs assistant for your best matches.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -91,6 +91,29 @@
     <div class="board-layout">
       <details class="panel filters" id="filters" open>
         <summary>Filters <span class="note" id="filterCount"></span></summary>
+        <fieldset>
+          <legend><label for="fSalary" style="margin:0">Desired salary (S$/month)</label></legend>
+          <select id="fSalary" aria-describedby="salaryHint">
+            <option value="">Any salary</option>
+            <option value="under-3000">Below S$3,000</option>
+            <option value="3000-3999">S$3,000–3,999</option>
+            <option value="4000-4999">S$4,000–4,999</option>
+            <option value="5000-5999">S$5,000–5,999</option>
+            <option value="6000-plus">S$6,000 and above</option>
+          </select>
+          <p class="note filter-hint" id="salaryHint">Matches advertised monthly pay that overlaps your bracket.</p>
+        </fieldset>
+        <fieldset>
+          <legend><label for="fSeniority" style="margin:0">Seniority</label></legend>
+          <select id="fSeniority" aria-describedby="seniorityHint">
+            <option value="">Any seniority</option>
+            <option value="entry">Entry level (0–1 years)</option>
+            <option value="mid">Mid level (2–4 years)</option>
+            <option value="senior">Senior level (5+ years)</option>
+            <option value="unspecified">Experience not stated</option>
+          </select>
+          <p class="note filter-hint" id="seniorityHint">Based on minimum experience, not job title.</p>
+        </fieldset>
         <fieldset id="fQual"><legend>Qualification required</legend></fieldset>
         <fieldset>
           <legend><label for="fYears" style="margin:0">Experience required</label></legend>
@@ -103,7 +126,11 @@
             <option value="5">Up to 5 years</option>
           </select>
         </fieldset>
-        <fieldset><legend>Fresh grads</legend><label class="check"><input type="checkbox" id="fFresh"> Fresh grads welcome</label></fieldset>
+        <fieldset>
+          <legend>Entry Level</legend>
+          <label class="check"><input type="checkbox" id="fFresh"> Fresh grads welcome</label>
+          <label class="check"><input type="checkbox" id="fInternship"> Internship/Practicum</label>
+        </fieldset>
         <fieldset id="fNature"><legend>Nature of work</legend></fieldset>
         <fieldset id="fOrg"><legend>Type of organisation</legend></fieldset>
         <fieldset>
