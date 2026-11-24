@@ -1,10 +1,10 @@
 {
-  "version": "8",
-  "dialect": "postgres",
   "id": "45275250-0566-4f50-a32d-81fc7e075975",
   "prevIds": [
-    "44766880-aee2-4897-ad81-099c41fc3506"
+    "8dbd5171-1edc-4dc3-b1f8-00569f55923b"
   ],
+  "version": "8",
+  "dialect": "postgres",
   "ddl": [
     {
       "isRlsEnabled": false,
@@ -306,6 +306,19 @@
       "generated": null,
       "identity": null,
       "name": "apply_url",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'apply'",
+      "generated": null,
+      "identity": null,
+      "name": "application_action",
       "entityType": "columns",
       "schema": "public",
       "table": "jobs"
@@ -810,6 +823,13 @@
     {
       "value": "\"apply_url\" like 'https://%'",
       "name": "jobs_apply_url_https",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "value": "\"application_action\" in ('apply', 'register', 'check-window')",
+      "name": "jobs_application_action",
       "entityType": "checks",
       "schema": "public",
       "table": "jobs"
