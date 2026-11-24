@@ -17,7 +17,7 @@ import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { RULES, SITE_NAME, checkSeo, resolveMeta, validateDirectory } from "./seo.mjs";
+import { RULES, SITE_NAME, checkSeo, readStaticMeta, resolveMeta, validateDirectory } from "./seo.mjs";
 import { seoPreviewHtml } from "./seo-preview.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -306,6 +306,7 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
   // SEO checks, shown in the deploy log and on /admin/seo. Warnings never stop a deploy.
   const seoPages = [
     { name: "Home", path: "/", meta: homeMeta },
+    { name: "Jobs Board", path: "/jobs/", meta: readStaticMeta(await readFile(path.join(pub, "jobs", "index.html"), "utf8")) },
     ...pages.map(p => ({ name: p.label, path: `/help/${p.slug}/`, meta: p.meta })),
     { name: "Privacy", path: "/privacy.html", meta: privacyMeta },
   ];

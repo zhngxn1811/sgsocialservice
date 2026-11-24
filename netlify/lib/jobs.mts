@@ -390,7 +390,7 @@ export const isLive = (j: { status?: string; closes_at: string | null }, today: 
   (j.status === undefined || j.status === "open") && (!j.closes_at || j.closes_at >= today);
 
 export type JobFilters = {
-  q?: string; qualification?: string[]; maxYears?: number | null; experienceRange?: string; fresh?: boolean; internship?: boolean;
+  q?: string; qualification?: string[]; maxYears?: number | null; experienceRange?: string; fresh?: boolean; internship?: boolean; placement?: boolean;
   nature?: string[]; orgType?: string[]; skill?: string; sort?: string;
   salaryBracket?: string; seniority?: string;
 };
@@ -400,7 +400,8 @@ const SALARY_BRACKETS = [
   ["5000-5999", 5000, 6000], ["6000-plus", 6000, Infinity],
 ] as const;
 const EXPERIENCE_RANGES = [["0-3", 0, 3], ["5-7", 5, 7], ["8-12", 8, 12], ["12-15", 12, 15], ["over-15", 16, Infinity]] as const;
-const PLACEMENT = /\b(?:intern|internship|practicum)\b(?!\s+(?:(?:programme|program|placement)\s+)?(?:coordinator|manager|supervisor)\b)/i;
+const INTERNSHIP = /\b(?:interns?|internships?)\b(?![\s-]+(?:(?:programme|program|placement)[\s-]+)?(?:coordinator|manager|supervisor)\b)/i;
+const PLACEMENT = /\b(?:practicums?|locums?)\b(?![\s-]+(?:(?:programme|program|placement)[\s-]+)?(?:coordinator|manager|supervisor)\b)/i;
 
 export function filterJobs<T extends PublicJob>(list: T[], f: JobFilters): T[] {
   const words = (f.q || "").toLowerCase().split(/\s+/).filter(Boolean);
@@ -418,8 +419,9 @@ export function filterJobs<T extends PublicJob>(list: T[], f: JobFilters): T[] {
         !(j.accepts_graduate_diploma && f.qualification.includes("graduate-diploma"))) return false;
     if (experience && (j.min_years == null || j.min_years < experience[1] || j.min_years > experience[2])) return false;
     if (typeof f.maxYears === "number" && (j.min_years ?? 0) > f.maxYears) return false;
-    if ((f.fresh || f.internship) && !(f.fresh && j.fresh_grad) &&
-        !(f.internship && (PLACEMENT.test(j.title) || PLACEMENT.test(j.employment_type)))) return false;
+    if ((f.fresh || f.internship || f.placement) && !(f.fresh && j.fresh_grad) &&
+        !(f.internship && (INTERNSHIP.test(j.title) || INTERNSHIP.test(j.employment_type))) &&
+        !(f.placement && (PLACEMENT.test(j.title) || PLACEMENT.test(j.employment_type)))) return false;
     if (f.nature?.length && !f.nature.some(n => (j.nature as string[]).includes(n))) return false;
     if (f.orgType?.length && !f.orgType.includes(j.org_type)) return false;
     if (f.skill && !j.skills.some(s => s.toLowerCase() === f.skill!.toLowerCase())) return false;
