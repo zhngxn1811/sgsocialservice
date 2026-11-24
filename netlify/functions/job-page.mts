@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { jobs } from "../../db/schema.js";
 import { renderJobPage, renderNotFound } from "../lib/job-page.mjs";
-import type { JobRecord } from "../lib/jobs.mjs";
+import { isLinkOnlySubmission, isLive, type JobRecord } from "../lib/jobs.mjs";
 import { sgDay } from "../lib/usage.mjs";
 
 const page = (status: number, html: string, cache: string) => new Response(html, {
@@ -18,8 +18,11 @@ export default async (req: Request, context: Context) => {
   if (!/^[a-z0-9-]{3,140}$/.test(id)) return page(404, renderNotFound(base), "public, max-age=300");
   try {
     const [job] = await getDb().select().from(jobs).where(eq(jobs.id, id)).limit(1) as JobRecord[];
-    if (!job || job.source === "submission") return page(404, renderNotFound(base), "public, max-age=300");
-    const { status, html } = renderJobPage(job, base, sgDay());
+    const today = sgDay();
+    if (!job || job.status === "pending" || (job.source === "submission" && (!isLive(job, today) || isLinkOnlySubmission(job)))) {
+      return page(404, renderNotFound(base), "no-store");
+    }
+    const { status, html } = renderJobPage(job, base, today);
     return page(status, html, "public, max-age=600");
   } catch {
     return page(503, renderNotFound(base, "This job couldn't load", "Something went wrong on our side. Try again in a moment, or"), "no-store");

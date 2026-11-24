@@ -100,7 +100,7 @@ test('only open Singapore roles in the sector', () => {
   assert.equal(isOpenMcf(mcf({ status: { jobStatus: 'Closed' } }), '2026-11-24'), false);
 });
 
-test('jobs added by hand must be current, Singapore-based and have an https application link', () => {
+test('jobs added by hand must be current, Singapore-based and have an HTTPS or mailto application link', () => {
   const ok = { title: 'Counsellor', org: 'Some Charity Association', apply_url: 'https://example.org/apply', closes_at: '2026-12-31', description: 'Fresh graduates welcome.', requirements: 'Degree in Psychology.' };
   const made = manualJob(ok, '2026-11-24');
   assert.ok('job' in made);
@@ -111,10 +111,11 @@ test('jobs added by hand must be current, Singapore-based and have an https appl
     assert.deepEqual(made.job.nature, ['counselling']);
     assert.equal(made.job.source, 'manual');
   }
-  assert.match((manualJob({ ...ok, apply_url: 'http://x.org' }, '2026-11-24') as { error: string }).error, /https/);
+  assert.ok('job' in manualJob({ ...ok, apply_url: 'mailto:careers@example.org' }, '2026-11-24'));
+  assert.match((manualJob({ ...ok, apply_url: 'http://x.org' }, '2026-11-24') as { error: string }).error, /HTTPS/);
   assert.match((manualJob({ ...ok, closes_at: '2026-11-01' }, '2026-11-24') as { error: string }).error, /passed/);
   assert.match((manualJob({ ...ok, location: 'Kuala Lumpur' }, '2026-11-24') as { error: string }).error, /Singapore/);
-  assert.match((manualJob({ ...ok, apply_url: 'javascript:alert(1)' }, '2026-11-24') as { error: string }).error, /https/);
+  assert.match((manualJob({ ...ok, apply_url: 'javascript:alert(1)' }, '2026-11-24') as { error: string }).error, /HTTPS/);
 });
 
 test('manual jobs default to 30 calendar days but preserve an explicit closing date', () => {
@@ -191,12 +192,19 @@ test('the board page filters and sorts exactly like the server', () => {
   assert.ok(html.includes('href="https://e.org/&quot;onload=&quot;x"'));
 });
 
-test('submitted jobs link directly to the original listing instead of a local job page', () => {
+test('legacy link-only submissions go directly to the original listing', () => {
   const html = browserJobs().card(pub({ id: 'submitted-example', external_listing: true, apply_url: 'https://employer.example/role' }),
     { orgTypes: [], qualifications: [], natures: [] }, '2026-11-24');
   assert.ok(html.includes('href="https://employer.example/role" target="_blank" rel="noopener noreferrer"'));
   assert.ok(html.includes('View original listing'));
   assert.ok(!html.includes('/jobs/submitted-example'));
+});
+
+test('full employer submissions show local job details and an email application action', () => {
+  const html = browserJobs().card(pub({ id: 'submitted-example', apply_url: 'mailto:careers@example.test' }),
+    { orgTypes: [], qualifications: [], natures: [] }, '2026-11-24');
+  assert.match(html, /href="\/jobs\/submitted-example">View job/);
+  assert.match(html, /href="mailto:careers@example.test">Apply by email/);
 });
 
 test('salary brackets match overlapping monthly pay and seniority matches minimum years', () => {

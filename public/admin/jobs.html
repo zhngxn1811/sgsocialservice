@@ -23,6 +23,9 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
 .muted{color:var(--muted);font-size:13px}
 .pill{font-size:12px;font-weight:700;border-radius:4px;padding:2px 8px;background:var(--teal-soft);color:var(--teal)}
 .pill.closed{background:var(--warn-soft);color:var(--accent)}
+.review-copy{max-width:62ch;white-space:pre-wrap;overflow-wrap:anywhere}
+.review-actions{display:flex;flex-wrap:wrap;gap:6px}
+summary{cursor:pointer;color:var(--teal);font-weight:600;margin-top:6px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .grid label{display:grid;gap:4px;font-weight:600;font-size:14px}
 .grid label.wide{grid-column:1/-1}
@@ -38,15 +41,33 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
   <form class="row" id="login">
     <input id="key" type="password" placeholder="Admin key" autocomplete="current-password" aria-label="Admin key">
     <button class="primary">Load</button>
-    <select id="filter" aria-label="Show"><option value="open">Open</option><option value="pending">Pending review</option><option value="closed">Closed</option><option value="all">All</option></select>
+    <span id="msg" role="status"></span>
+  </form>
+  <h2 id="reviewTitle">Submissions awaiting review</h2>
+  <p class="muted">Review the description, qualifications and application destination before publishing. Shows up to 20 submissions at a time, oldest first.</p>
+  <div class="tablewrap"><table aria-labelledby="reviewTitle">
+    <thead><tr><th>Submission</th><th>Application</th><th>Closes</th><th>Decision</th></tr></thead>
+    <tbody id="reviewRows"><tr><td colspan="4" class="muted">Enter your admin key to load submissions.</td></tr></tbody>
+  </table></div>
+
+  <h2 id="linksTitle">Flagged application links</h2>
+  <p class="muted">Each morning from 7am Singapore time, the checker looks for HTTPS application pages that return 404 or 410 on two separate checks. Confirm the link is unavailable before closing the job. Email links are not checked; MyCareersFuture listings are handled by their own refresh.</p>
+  <div class="row"><button type="button" id="checkLinks" disabled>Check due links now</button><span id="linkMsg" role="status"></span></div>
+  <div class="tablewrap"><table aria-labelledby="linksTitle">
+    <thead><tr><th>Job</th><th>Application</th><th>Last confirmed issue</th><th>Last checked (SGT)</th><th>Action</th></tr></thead>
+    <tbody id="linkRows"><tr><td colspan="5" class="muted">Enter your admin key to load flagged links.</td></tr></tbody>
+  </table></div>
+
+  <h2 id="boardTitle">Manage listings</h2>
+  <p class="muted">Jobs from MyCareersFuture refresh every morning at 6am and come down automatically when they close or are removed. Close a job here if you spot one that shouldn't be on the board (it may come back at the next refresh if it's still open on MyCareersFuture).</p>
+  <div class="row">
+    <select id="filter" aria-label="Show"><option value="open">Open</option><option value="closed">Closed</option><option value="all">All</option></select>
     <select id="src" aria-label="Source"><option value="">All sources</option><option value="mycareersfuture">MyCareersFuture</option><option value="manual">Added by hand</option><option value="submission">Public submissions</option></select>
     <input id="find" type="search" placeholder="Find a job" aria-label="Find a job">
     <button type="button" id="sync">Refresh jobs now</button>
-    <span id="msg"></span>
-  </form>
-  <p class="muted">Jobs from MyCareersFuture refresh every morning at 6am and come down automatically when they close or are removed. Close a job here if you spot one that shouldn't be on the board (it may come back at the next refresh if it's still open on MyCareersFuture).</p>
-  <p class="muted">For public submissions, select <strong>Pending review</strong>. Open the original listing to verify the role is relevant and still accepting applications before approving it.</p>
-  <div class="tablewrap"><table>
+    <span id="boardMsg" class="muted"></span>
+  </div>
+  <div class="tablewrap"><table aria-labelledby="boardTitle">
     <thead><tr><th>Job</th><th>Type of work</th><th>Qualification · experience</th><th>Closes</th><th>Source</th><th>Status</th></tr></thead>
     <tbody id="rows"><tr><td colspan="6" class="muted">Enter your admin key to load jobs.</td></tr></tbody>
   </table></div>
@@ -56,7 +77,7 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
   <form id="add" class="grid">
     <label>Job title<input name="title" required maxlength="200"></label>
     <label>Organisation<input name="org" required maxlength="200"></label>
-    <label>Application link<input name="apply_url" type="url" required placeholder="https://"></label>
+    <label>Application link<input name="apply_url" type="url" required placeholder="https://… or mailto:…"></label>
     <label>Posting date (optional)<input name="posted_at" type="date"></label>
     <label>Closing date (if stated)<input name="closes_at" type="date"></label>
     <label>Where it's listed<input name="source_name" placeholder="e.g. Careers@Gov" maxlength="60"></label>
@@ -78,48 +99,101 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
 const $=s=>document.querySelector(s);
 const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const say=(el,t,cls)=>{el.textContent=t;el.className=cls||"";};
-let data=[];
+let data=[], pending=[], flagged=[], loaded=false;
 try{$("#key").value=sessionStorage.getItem("ssk")||""}catch{}
 const headers=()=>({"Content-Type":"application/json","x-admin-key":$("#key").value});
+const requestJobs=async (url,options)=>{
+  const response=await fetch(url,options);
+  const body=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(body.error||"Couldn't update jobs.");
+  return body;
+};
+const emptyRow=(columns,message)=>`<tr><td colspan="${columns}" class="muted">${esc(message)}</td></tr>`;
+const jobLink=job=>job.external_listing?esc(job.apply_url):`/jobs/${encodeURIComponent(job.id)}`;
+const applicationLink=job=>job.apply_url.startsWith("mailto:")
+  ? `<a href="${esc(job.apply_url)}">${esc(job.apply_url.slice(7))}</a>`
+  : `<a href="${esc(job.apply_url)}" title="${esc(job.apply_url)}" target="_blank" rel="noopener noreferrer">Open application page</a>`;
+const jobLabel=job=>`<strong>${esc(job.title)}</strong><div class="muted">${esc(job.org)}</div>`;
+const localDate=new Intl.DateTimeFormat("en-SG",{dateStyle:"medium",timeStyle:"short",timeZone:"Asia/Singapore"});
 async function load(){
-  say($("#msg"),"");
-  const r=await fetch("/api/jobs?all=1",{headers:headers()});
-  if(!r.ok){say($("#msg"),(await r.json().catch(()=>({}))).error||"Couldn't load.","err");return;}
-  try{sessionStorage.setItem("ssk",$("#key").value)}catch{}
-  data=await r.json();render();
+  say($("#msg"),"Loading jobs…","muted");
+  const key=$("#key").value, options={headers:headers()};
+  try{
+    const lists=await Promise.all(["board", "submissions", "unavailable"].map(queue=>requestJobs("/api/jobs?all=1&queue="+queue,options)));
+    [data,pending,flagged]=lists;
+    try{sessionStorage.setItem("ssk",key)}catch{}
+    loaded=true;render();renderQueues();say($("#msg"),"");
+    return true;
+  }catch(error){
+    data=[];pending=[];flagged=[];loaded=false;
+    render();renderQueues();
+    say($("#msg"),error instanceof TypeError?"Couldn't connect. Try again.":error.message,"err");
+    return false;
+  }
+}
+function renderQueues(){
+  $("#reviewTitle").textContent=loaded?`Submissions awaiting review (${pending.length})`:"Submissions awaiting review";
+  $("#linksTitle").textContent=loaded?`Flagged application links (${flagged.length})`:"Flagged application links";
+  $("#checkLinks").disabled=!loaded;
+  $("#reviewRows").innerHTML=pending.length?pending.map(job=>`<tr>
+    <td>${jobLabel(job)}<details><summary>Review listing</summary>
+      ${job.description?`<strong>Job description</strong><p class="review-copy">${esc(job.description)}</p><strong>Qualifications</strong><p class="review-copy">${esc(job.requirements)}</p>`:'<p class="muted">Older submission. Review the original application page for details.</p>'}
+    </details></td>
+    <td>${applicationLink(job)}</td><td>${esc(job.closes_at||"—")}${job.closing_date_estimated?" (estimated)":""}</td>
+    <td><div class="review-actions"><button type="button" class="primary" data-id="${esc(job.id)}" data-status="open">Approve and publish</button><button type="button" data-id="${esc(job.id)}" data-status="closed">Decline</button></div></td>
+  </tr>`).join(""):emptyRow(4,loaded?"No submissions are waiting for review.":"Load jobs to see submissions.");
+  $("#linkRows").innerHTML=flagged.length?flagged.map(job=>`<tr>
+    <td>${jobLabel(job)}</td><td>${applicationLink(job)}</td><td><span class="pill closed">HTTP ${esc(job.link_missing_code)}</span></td>
+    <td>${job.link_checked_at?esc(localDate.format(new Date(job.link_checked_at))):"—"}</td><td><button type="button" data-id="${esc(job.id)}" data-status="closed">Close job</button></td>
+  </tr>`).join(""):emptyRow(5,loaded?"No application links are flagged.":"Load jobs to see flagged links.");
 }
 function render(){
   const f=$("#filter").value,src=$("#src").value,q=$("#find").value.toLowerCase().trim();
-  $('#filter option[value="pending"]').textContent=`Pending review (${data.filter(d=>d.status==="pending").length})`;
-  const list=data.filter(d=>(f==="all"||d.status===f)&&(!src||d.source===src)&&(!q||`${d.title} ${d.org}`.toLowerCase().includes(q)));
+  const list=data.filter(d=>d.status!=="pending"&&(f==="all"||d.status===f)&&(!src||d.source===src)&&(!q||`${d.title} ${d.org}`.toLowerCase().includes(q)));
   $("#rows").innerHTML=list.length?list.slice(0,500).map(d=>`<tr>
-    <td><a href="${d.source==="submission"?esc(d.apply_url):`/jobs/${esc(d.id)}`}" target="_blank" rel="noopener noreferrer">${esc(d.title)}</a><div class="muted">${esc(d.org)} · ${esc(d.org_type)}</div></td>
+    <td>${d.status==="open"||d.source!=="submission"?`<a href="${jobLink(d)}" target="_blank" rel="noopener noreferrer">${esc(d.title)}</a>`:esc(d.title)}<div class="muted">${esc(d.org)} · ${esc(d.org_type)}</div></td>
     <td class="muted">${esc((d.nature||[]).join(", ")||"—")}</td>
     <td class="muted">${esc(d.qualification)} · ${d.min_years===null?"—":esc(d.min_years)+" yrs"}${d.fresh_grad?" · fresh grads":""}</td>
     <td>${esc(d.closes_at||"—")}${d.closing_date_estimated?" (estimated)":""}</td>
     <td class="muted">${esc(d.source_name||d.source)}</td>
-    <td><select data-id="${esc(d.id)}" aria-label="Status for ${esc(d.title)}">${d.status==="pending"?'<option value="pending" selected disabled>Pending review</option><option value="open">Approve and publish</option><option value="closed">Decline</option>':["open","closed"].map(s=>`<option ${s===d.status?"selected":""}>${s}</option>`).join("")}</select></td>
-  </tr>`).join(""):`<tr><td colspan="6" class="muted">Nothing here.</td></tr>`;
-  say($("#msg"),`${list.length} shown`,"muted");
+    <td><select data-id="${esc(d.id)}" aria-label="Status for ${esc(d.title)}">${["open","closed"].map(s=>`<option ${s===d.status?"selected":""}>${s}</option>`).join("")}</select></td>
+  </tr>`).join(""):emptyRow(6,loaded?"No jobs match these filters.":"Enter your admin key to load jobs.");
+  say($("#boardMsg"),loaded?`${Math.min(list.length,500)} of ${list.length} shown`:"","muted");
 }
 $("#login").addEventListener("submit",e=>{e.preventDefault();load();});
 ["#filter","#src"].forEach(s=>$(s).addEventListener("change",render));
 $("#find").addEventListener("input",render);
-$("#rows").addEventListener("change",async e=>{
-  const sel=e.target.closest("select[data-id]");if(!sel)return;
-  const job=data.find(d=>d.id===sel.dataset.id),status=sel.value;
-  sel.disabled=true;
+async function changeStatus(control,status,message){
+  const previous=data.find(job=>job.id===control.dataset.id)?.status;
+  const controls=Array.from(control.closest("tr").querySelectorAll("button,select"));
+  controls.forEach(input=>input.disabled=true);
   try{
-    const r=await fetch("/api/jobs/"+encodeURIComponent(sel.dataset.id),{method:"PATCH",headers:headers(),body:JSON.stringify({status})});
-    if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error||"Couldn't update.");
-    const wasPending=job?.status==="pending";
-    if(job)job.status=status;
-    render();
-    if(wasPending)say($("#msg"),status==="open"?"Listing approved.":"Submission declined.","ok");
+    await requestJobs("/api/jobs/"+encodeURIComponent(control.dataset.id),{method:"PATCH",headers:headers(),body:JSON.stringify({status})});
+    if(await load())say($("#msg"),message,"ok");
   }catch(error){
-    if(job)sel.value=job.status;
+    if(control.tagName==="SELECT"&&previous)control.value=previous;
     say($("#msg"),error instanceof TypeError?"Couldn't connect. Try again.":error.message,"err");
-  }finally{sel.disabled=false;}
+  }finally{controls.forEach(input=>input.disabled=false);}
+}
+$("#rows").addEventListener("change",e=>{
+  const select=e.target.closest("select[data-id]");
+  if(select)changeStatus(select,select.value,select.value==="open"?"Job reopened.":"Job closed.");
+});
+for(const table of ["#reviewRows","#linkRows"])$(table).addEventListener("click",e=>{
+  const button=e.target.closest("button[data-id]");
+  if(button)changeStatus(button,button.dataset.status,table==="#linkRows"?"Job closed.":button.dataset.status==="open"?"Listing approved.":"Submission declined.");
+});
+$("#checkLinks").addEventListener("click",async e=>{
+  const button=e.currentTarget;
+  button.disabled=true;
+  say($("#linkMsg"),"Starting link checks…","muted");
+  try{
+    const response=await fetch("/.netlify/functions/job-link-check-background",{method:"POST",headers:headers()});
+    if(response.status!==202)throw new Error("Couldn't start link checks.");
+    say($("#linkMsg"),"Link checks queued for jobs that are due. Press Load in a few minutes to see the results.","ok");
+  }catch{
+    say($("#linkMsg"),"Couldn't start link checks. Try again.","err");
+  }finally{button.disabled=!loaded;}
 });
 $("#sync").addEventListener("click",async()=>{
   const r=await fetch("/.netlify/functions/jobs-sync-background",{method:"POST",headers:headers()});

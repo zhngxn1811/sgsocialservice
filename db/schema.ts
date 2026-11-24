@@ -83,6 +83,9 @@ export const jobs = pgTable('jobs', {
   last_seen_at: timestamp('last_seen_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   created_at: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  link_checked_at: timestamp('link_checked_at', { withTimezone: true, mode: 'string' }),
+  link_missing_count: integer('link_missing_count').notNull().default(0),
+  link_missing_code: integer('link_missing_code'),
 }, table => [
   uniqueIndex('jobs_source_id_idx').on(table.source, table.source_id),
   index('jobs_status_closes_idx').on(table.status, table.closes_at),
@@ -90,7 +93,7 @@ export const jobs = pgTable('jobs', {
   check('jobs_status', sql`${table.status} in ('open', 'closed', 'pending')`),
   check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'graduate-diploma', 'bachelors', 'diploma', 'o-levels', 'unspecified')`),
   check('jobs_org_type', sql`${table.org_type} in ('healthcare', 'social-community', 'government', 'education', 'charity')`),
-  check('jobs_apply_url_https', sql`${table.apply_url} like 'https://%'`),
+  check('jobs_application_url', sql`${table.apply_url} like 'https://%' or ${table.apply_url} like 'mailto:%'`),
   check('jobs_application_action', sql`${table.application_action} in ('apply', 'register', 'check-window')`),
   check('jobs_title_required', sql`length(trim(${table.title})) > 0`),
 ]);

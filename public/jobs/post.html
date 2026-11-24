@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Post a Job | SG Social Services Jobs</title>
-<meta name="description" content="Submit a link to an open role in Singapore’s social and health services.">
+<meta name="description" content="Post an open role in Singapore’s social and health services for review.">
 <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/site.css">
 <link rel="stylesheet" href="/theme.css">
@@ -23,18 +23,20 @@
   <section class="panel" aria-labelledby="postTitle">
     <p class="eyebrow">Jobs board · Submit a listing</p>
     <h1 id="postTitle">Post a Job</h1>
-    <p class="lede">Share an open role in Singapore’s social or health services. We review submissions before they appear on the board. Jobseekers go straight to the original listing to read more and apply.</p>
+    <p class="lede">Share an open role in Singapore’s social or health services. We review it before publishing. Jobseekers read the listing here and apply through the link you provide.</p>
     <form id="jobPostForm" method="post" action="/api/job-submissions">
       <div class="job-post-fields">
         <label>Job title<input name="title" required maxlength="200"></label>
         <label>Organisation<input name="org" required maxlength="200" autocomplete="organization"></label>
         <div class="job-post-wide">
-          <label for="listingUrl">Original job listing URL</label>
-          <input id="listingUrl" name="apply_url" type="url" required maxlength="500" pattern="[Hh][Tt][Tt][Pp][Ss]://.+" placeholder="https://" aria-describedby="listingHint">
-          <p id="listingHint" class="note">Use the HTTPS link to the role itself, not the employer’s homepage.</p>
+          <label for="applyUrl">Application link</label>
+          <input id="applyUrl" name="apply_url" type="url" required maxlength="500" placeholder="https://… or mailto:…" aria-describedby="applyHint">
+          <p id="applyHint" class="note">Use an HTTPS link to the role or a public recruitment address such as mailto:careers@example.org. This link is published with the job.</p>
         </div>
         <label>Employment type (optional)<input name="employment_type" maxlength="80" placeholder="e.g. Full-time"></label>
         <label>Closing date (optional)<input name="closes_at" type="date"></label>
+        <label class="job-post-wide">Job description<textarea name="description" required maxlength="20000" placeholder="Describe the role, key responsibilities and what the team does."></textarea></label>
+        <label class="job-post-wide">Qualifications<textarea name="requirements" required maxlength="20000" placeholder="List the education, experience and skills applicants need. If none are required, say so."></textarea></label>
         <div hidden><label>Leave this blank<input name="website" tabindex="-1" autocomplete="off"></label></div>
       </div>
       <div class="row"><button class="btn teal" type="submit">Submit for review</button></div>
