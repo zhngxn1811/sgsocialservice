@@ -1,7 +1,7 @@
 // Jobs board (/jobs/): loads open jobs from /api/jobs, filters and sorts them in the browser,
 // and runs the AI jobs assistant (/api/jobs-assistant). The conversation stays in this tab only.
 (function (root) {
-  const RANK = { doctorate: 5, masters: 4, honours: 3, "graduate-diploma": 2.5, bachelors: 2, diploma: 1, unspecified: 0 };
+  const RANK = { doctorate: 5, masters: 4, honours: 3, "graduate-diploma": 2.5, bachelors: 2, diploma: 1, "o-levels": 0.5, unspecified: 0 };
   const SALARY_BRACKETS = [
     ["under-3000", 0, 3000], ["3000-3999", 3000, 4000], ["4000-4999", 4000, 5000],
     ["5000-5999", 5000, 6000], ["6000-plus", 6000, Infinity],
