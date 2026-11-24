@@ -250,21 +250,26 @@ test('Graduate Diploma filter matches a stated requirement or accepted alternati
   }
 });
 
-test('entry-level checkboxes match fresh-grad jobs or placement vacancies', () => {
+test('entry-level checkboxes match fresh-grad jobs, internships, and practicum or locum placements separately', () => {
   const listings = [
     pub({ id: 'intern', title: 'Youth Work Intern' }),
     pub({ id: 'internship', title: 'Social Work Internship' }),
     pub({ id: 'practicum', title: 'Counselling Practicum', fresh_grad: true }),
+    pub({ id: 'locum', title: 'Locum Physiotherapist' }),
+    pub({ id: 'locum-tagged', title: 'Therapy Assistant', employment_type: 'Part Time, Locum' }),
     pub({ id: 'tagged', title: 'Care Support', employment_type: 'Part Time, Internship' }),
-    pub({ id: 'graduate', title: 'Social Worker', fresh_grad: true, summary: 'Internship experience preferred.' }),
+    pub({ id: 'graduate', title: 'Social Worker', fresh_grad: true, summary: 'Internship or practicum experience preferred.' }),
     pub({ id: 'coordinator', title: 'Internship Programme Coordinator' }),
+    pub({ id: 'supervisor', title: 'Practicum Placement Supervisor' }),
     pub({ id: 'internal', title: 'Internal Communications Officer' }),
   ];
   const cases: [Parameters<typeof filterJobs>[1], string[]][] = [
-    [{ internship: true }, ['tagged', 'practicum', 'internship', 'intern']],
+    [{ internship: true }, ['tagged', 'internship', 'intern']],
+    [{ placement: true }, ['practicum', 'locum', 'locum-tagged']],
     [{ fresh: true }, ['practicum', 'graduate']],
-    [{ fresh: true, internship: true }, ['tagged', 'practicum', 'internship', 'graduate', 'intern']],
-    [{ fresh: true, internship: true, q: 'counselling' }, ['practicum']],
+    [{ internship: true, placement: true }, ['tagged', 'practicum', 'locum', 'internship', 'locum-tagged', 'intern']],
+    [{ fresh: true, internship: true, placement: true }, ['tagged', 'practicum', 'locum', 'internship', 'graduate', 'locum-tagged', 'intern']],
+    [{ internship: true, placement: true, q: 'counselling' }, ['practicum']],
   ];
   for (const filter of [filterJobs, browserJobs().filterJobs]) {
     for (const [options, ids] of cases) {

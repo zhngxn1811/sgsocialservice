@@ -34,6 +34,20 @@ export function resolveMeta(meta = {}) {
   };
 }
 
+export function readStaticMeta(html) {
+  const head = html.match(/<head>([\s\S]*?)<\/head>/i)?.[1] ?? "";
+  const entities = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", "#39": "'" };
+  const read = pattern => clean(head.match(pattern)?.[1]).replace(/&(amp|lt|gt|quot|apos|#39);/g, (_, entity) => entities[entity]);
+  const title = read(/<title>([\s\S]*?)<\/title>/i);
+  const description = read(/<meta name="description" content="([^"]*)"/i);
+  return {
+    title,
+    description,
+    socialTitle: read(/<meta property="og:title" content="([^"]*)"/i) || title,
+    socialDescription: read(/<meta property="og:description" content="([^"]*)"/i) || description,
+  };
+}
+
 // Returns a list of { page, field, message } for anything that breaks the rules.
 // pages: [{ name, path, meta: <resolved meta> }]
 export function checkSeo(pages) {

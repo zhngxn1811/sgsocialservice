@@ -152,6 +152,8 @@ Links in the sitemap and share tags use your site's main address, which Netlify 
 4. Save. Netlify redeploys in about a minute.
 5. Open **`/admin/seo`** on your site to see every page as it appears in Google and as a share card, with character counts and anything to fix.
 
+The Jobs Board preview uses the search and social tags in `public/jobs/index.html`.
+
 The rules (in `scripts/seo.mjs`): titles up to 60 characters, descriptions between 70 and 155, social titles up to 70, and every page with its own title and description. The site name is added to a title only when it still fits. Anything outside the rules shows as a suggestion in the deploy log and on `/admin/seo`, but never stops a deploy.
 
 **Safety net:** if an edit breaks `services.json` (a missing name, a category that doesn't exist, a duplicate ID, a bad link, or invalid formatting), the build stops with a clear message and the live site stays as it was. Fix the listing in Pages CMS and save again.

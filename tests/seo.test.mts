@@ -55,14 +55,32 @@ test('checks flag long, short, missing and duplicate text', () => {
   assert.ok(!issues.some(i => i.page === 'dupe-a'), 'the first page with a title is not blamed');
 });
 
-test('the shipped titles and descriptions all pass, and /admin/seo shows every page', async () => {
+test('/admin/seo shows the jobs board and checks its published metadata', async () => {
   const root = await tempRoot(async () => {});
   const result = await buildAt(root);
-  assert.deepEqual(result.issues, []);
+  assert.deepEqual(result.issues.map(({ path, field }) => [path, field]), [
+    ['/jobs/', 'title'],
+    ['/jobs/', 'description'],
+  ]);
   const preview = await readFile(path.join(root, 'dist/admin/seo.html'), 'utf8');
   assert.ok(preview.includes('<meta name="robots" content="noindex,nofollow">'));
-  assert.equal(preview.match(/<section class="page"/g)!.length, result.pages.length + 2); // + home and privacy
-  assert.ok(preview.includes('All 15 pages pass'));
+  assert.equal(preview.match(/<section class="page"/g)!.length, result.pages.length + 3);
+  const jobs = preview.match(/<section class="page" id="p--jobs-">([\s\S]*?)<\/section>/)?.[1] ?? '';
+  assert.ok(jobs.includes('<a class="mono" href="/jobs/">/jobs/</a>'));
+  assert.ok(jobs.includes('Social and health services jobs in Singapore'));
+  assert.ok(jobs.includes('Jobs in Singapore&#39;s social and health services'));
+  assert.ok(jobs.includes('2 to fix'));
+});
+
+test('jobs board preview follows changes to its page metadata', async () => {
+  const root = await tempRoot(async dir => {
+    const file = path.join(dir, 'public/jobs/index.html');
+    const jobs = await readFile(file, 'utf8');
+    await writeFile(file, jobs.replace(/<title>[^<]*<\/title>/, '<title>Jobs in health &amp; social services</title>'));
+  });
+  await buildAt(root);
+  const preview = await readFile(path.join(root, 'dist/admin/seo.html'), 'utf8');
+  assert.ok(preview.includes('<div class="stitle">Jobs in health &amp; social services</div>'));
 });
 
 test('home and privacy text come from content/site.json', async () => {
