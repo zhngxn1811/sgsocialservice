@@ -250,7 +250,7 @@ test('Graduate Diploma filter matches a stated requirement or accepted alternati
   }
 });
 
-test('entry-level checkboxes match fresh-grad jobs, internships, and practicum or locum placements separately', () => {
+test('entry-level checkboxes match fresh-grad jobs and internship or practicum roles, not locum alone', () => {
   const listings = [
     pub({ id: 'intern', title: 'Youth Work Intern' }),
     pub({ id: 'internship', title: 'Social Work Internship' }),
@@ -258,22 +258,47 @@ test('entry-level checkboxes match fresh-grad jobs, internships, and practicum o
     pub({ id: 'locum', title: 'Locum Physiotherapist' }),
     pub({ id: 'locum-tagged', title: 'Therapy Assistant', employment_type: 'Part Time, Locum' }),
     pub({ id: 'tagged', title: 'Care Support', employment_type: 'Part Time, Internship' }),
+    pub({ id: 'tagged-practicum', title: 'Counselling Trainee', employment_type: 'Practicum' }),
     pub({ id: 'graduate', title: 'Social Worker', fresh_grad: true, summary: 'Internship or practicum experience preferred.' }),
     pub({ id: 'coordinator', title: 'Internship Programme Coordinator' }),
     pub({ id: 'supervisor', title: 'Practicum Placement Supervisor' }),
     pub({ id: 'internal', title: 'Internal Communications Officer' }),
   ];
   const cases: [Parameters<typeof filterJobs>[1], string[]][] = [
-    [{ internship: true }, ['tagged', 'internship', 'intern']],
-    [{ placement: true }, ['practicum', 'locum', 'locum-tagged']],
+    [{ internship: true }, ['tagged', 'practicum', 'tagged-practicum', 'internship', 'intern']],
     [{ fresh: true }, ['practicum', 'graduate']],
-    [{ internship: true, placement: true }, ['tagged', 'practicum', 'locum', 'internship', 'locum-tagged', 'intern']],
-    [{ fresh: true, internship: true, placement: true }, ['tagged', 'practicum', 'locum', 'internship', 'graduate', 'locum-tagged', 'intern']],
-    [{ internship: true, placement: true, q: 'counselling' }, ['practicum']],
+    [{ fresh: true, internship: true }, ['tagged', 'practicum', 'tagged-practicum', 'internship', 'graduate', 'intern']],
+    [{ internship: true, q: 'counselling' }, ['practicum', 'tagged-practicum']],
   ];
   for (const filter of [filterJobs, browserJobs().filterJobs]) {
     for (const [options, ids] of cases) {
       assert.deepEqual(Array.from(filter(listings, options), job => job.id), ids, JSON.stringify(options));
+    }
+  }
+});
+
+test('job type checkboxes match any selected type and combine with other filter groups', () => {
+  const listings = [
+    pub({ id: 'full', title: 'Care Coordinator', employment_type: 'Permanent, Full Time', fresh_grad: true }),
+    pub({ id: 'part-locum', title: 'Community Nurse', employment_type: 'Part-Time, Locum' }),
+    pub({ id: 'contract', title: 'Youth Worker', employment_type: 'Contract (hourly pay)' }),
+    pub({ id: 'freelance', title: 'Psychologist', employment_type: 'Part Time, Freelance', fresh_grad: true }),
+    pub({ id: 'locum-title', title: 'Locum Physiotherapist', employment_type: '' }),
+    pub({ id: 'other', title: 'Contract Manager', employment_type: 'Full–Time', summary: 'Works with freelance therapists.' }),
+  ];
+  const cases: [Parameters<typeof filterJobs>[1], string[]][] = [
+    [{ jobType: ['full-time'] }, ['full', 'other']],
+    [{ jobType: ['part-time'] }, ['freelance', 'part-locum']],
+    [{ jobType: ['locum'] }, ['locum-title', 'part-locum']],
+    [{ jobType: ['contract'] }, ['contract']],
+    [{ jobType: ['freelance'] }, ['freelance']],
+    [{ jobType: ['part-time', 'locum'] }, ['freelance', 'locum-title', 'part-locum']],
+    [{ jobType: ['part-time', 'contract'], fresh: true }, ['freelance']],
+    [{ jobType: [] }, ['contract', 'freelance', 'full', 'locum-title', 'other', 'part-locum']],
+  ];
+  for (const filter of [filterJobs, browserJobs().filterJobs]) {
+    for (const [options, ids] of cases) {
+      assert.deepEqual(Array.from(filter(listings, options), job => job.id).sort(), ids, JSON.stringify(options));
     }
   }
 });
