@@ -38,13 +38,14 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
   <form class="row" id="login">
     <input id="key" type="password" placeholder="Admin key" autocomplete="current-password" aria-label="Admin key">
     <button class="primary">Load</button>
-    <select id="filter" aria-label="Show"><option value="open">Open</option><option value="closed">Closed</option><option value="all">All</option></select>
-    <select id="src" aria-label="Source"><option value="">All sources</option><option value="mycareersfuture">MyCareersFuture</option><option value="manual">Added by hand</option></select>
+    <select id="filter" aria-label="Show"><option value="open">Open</option><option value="pending">Pending review</option><option value="closed">Closed</option><option value="all">All</option></select>
+    <select id="src" aria-label="Source"><option value="">All sources</option><option value="mycareersfuture">MyCareersFuture</option><option value="manual">Added by hand</option><option value="submission">Public submissions</option></select>
     <input id="find" type="search" placeholder="Find a job" aria-label="Find a job">
     <button type="button" id="sync">Refresh jobs now</button>
     <span id="msg"></span>
   </form>
   <p class="muted">Jobs from MyCareersFuture refresh every morning at 6am and come down automatically when they close or are removed. Close a job here if you spot one that shouldn't be on the board (it may come back at the next refresh if it's still open on MyCareersFuture).</p>
+  <p class="muted">For public submissions, select <strong>Pending review</strong>. Open the original listing to verify the role is relevant and still accepting applications before approving it.</p>
   <div class="tablewrap"><table>
     <thead><tr><th>Job</th><th>Type of work</th><th>Qualification · experience</th><th>Closes</th><th>Source</th><th>Status</th></tr></thead>
     <tbody id="rows"><tr><td colspan="6" class="muted">Enter your admin key to load jobs.</td></tr></tbody>
@@ -89,14 +90,15 @@ async function load(){
 }
 function render(){
   const f=$("#filter").value,src=$("#src").value,q=$("#find").value.toLowerCase().trim();
+  $('#filter option[value="pending"]').textContent=`Pending review (${data.filter(d=>d.status==="pending").length})`;
   const list=data.filter(d=>(f==="all"||d.status===f)&&(!src||d.source===src)&&(!q||`${d.title} ${d.org}`.toLowerCase().includes(q)));
   $("#rows").innerHTML=list.length?list.slice(0,500).map(d=>`<tr>
-    <td><a href="/jobs/${esc(d.id)}" target="_blank">${esc(d.title)}</a><div class="muted">${esc(d.org)} · ${esc(d.org_type)}</div></td>
+    <td><a href="${d.source==="submission"?esc(d.apply_url):`/jobs/${esc(d.id)}`}" target="_blank" rel="noopener noreferrer">${esc(d.title)}</a><div class="muted">${esc(d.org)} · ${esc(d.org_type)}</div></td>
     <td class="muted">${esc((d.nature||[]).join(", ")||"—")}</td>
     <td class="muted">${esc(d.qualification)} · ${d.min_years===null?"—":esc(d.min_years)+" yrs"}${d.fresh_grad?" · fresh grads":""}</td>
     <td>${esc(d.closes_at||"—")}${d.closing_date_estimated?" (estimated)":""}</td>
     <td class="muted">${esc(d.source_name||d.source)}</td>
-    <td><select data-id="${esc(d.id)}" aria-label="Status">${["open","closed"].map(s=>`<option ${s===d.status?"selected":""}>${s}</option>`).join("")}</select></td>
+    <td><select data-id="${esc(d.id)}" aria-label="Status for ${esc(d.title)}">${d.status==="pending"?'<option value="pending" selected disabled>Pending review</option><option value="open">Approve and publish</option><option value="closed">Decline</option>':["open","closed"].map(s=>`<option ${s===d.status?"selected":""}>${s}</option>`).join("")}</select></td>
   </tr>`).join(""):`<tr><td colspan="6" class="muted">Nothing here.</td></tr>`;
   say($("#msg"),`${list.length} shown`,"muted");
 }
@@ -105,8 +107,19 @@ $("#login").addEventListener("submit",e=>{e.preventDefault();load();});
 $("#find").addEventListener("input",render);
 $("#rows").addEventListener("change",async e=>{
   const sel=e.target.closest("select[data-id]");if(!sel)return;
-  const r=await fetch("/api/jobs/"+encodeURIComponent(sel.dataset.id),{method:"PATCH",headers:headers(),body:JSON.stringify({status:sel.value})});
-  if(r.ok){const d=data.find(x=>x.id===sel.dataset.id);if(d)d.status=sel.value;render();}else say($("#msg"),"Couldn't update.","err");
+  const job=data.find(d=>d.id===sel.dataset.id),status=sel.value;
+  sel.disabled=true;
+  try{
+    const r=await fetch("/api/jobs/"+encodeURIComponent(sel.dataset.id),{method:"PATCH",headers:headers(),body:JSON.stringify({status})});
+    if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error||"Couldn't update.");
+    const wasPending=job?.status==="pending";
+    if(job)job.status=status;
+    render();
+    if(wasPending)say($("#msg"),status==="open"?"Listing approved.":"Submission declined.","ok");
+  }catch(error){
+    if(job)sel.value=job.status;
+    say($("#msg"),error instanceof TypeError?"Couldn't connect. Try again.":error.message,"err");
+  }finally{sel.disabled=false;}
 });
 $("#sync").addEventListener("click",async()=>{
   const r=await fetch("/.netlify/functions/jobs-sync-background",{method:"POST",headers:headers()});

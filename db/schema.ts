@@ -52,7 +52,7 @@ export const JOB_QUALIFICATIONS = ['doctorate', 'masters', 'honours', 'bachelors
 export const JOB_ORG_TYPES = ['healthcare', 'social-community', 'government', 'education', 'charity'] as const;
 export const jobs = pgTable('jobs', {
   id: text('id').primaryKey(), // also the page address: /jobs/<id>
-  source: text('source').notNull(), // 'mycareersfuture' or 'manual'
+  source: text('source').notNull(),
   source_id: text('source_id').notNull(), // the portal's own id (for manual jobs, the same as id)
   source_name: text('source_name').notNull().default(''), // shown to readers, e.g. "MyCareersFuture", "Careers@Gov"
   title: text('title').notNull(),
@@ -86,8 +86,8 @@ export const jobs = pgTable('jobs', {
 }, table => [
   uniqueIndex('jobs_source_id_idx').on(table.source, table.source_id),
   index('jobs_status_closes_idx').on(table.status, table.closes_at),
-  check('jobs_source', sql`${table.source} in ('mycareersfuture', 'manual')`),
-  check('jobs_status', sql`${table.status} in ('open', 'closed')`),
+  check('jobs_source', sql`${table.source} in ('mycareersfuture', 'manual', 'submission')`),
+  check('jobs_status', sql`${table.status} in ('open', 'closed', 'pending')`),
   check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'graduate-diploma', 'bachelors', 'diploma', 'o-levels', 'unspecified')`),
   check('jobs_org_type', sql`${table.org_type} in ('healthcare', 'social-community', 'government', 'education', 'charity')`),
   check('jobs_apply_url_https', sql`${table.apply_url} like 'https://%'`),

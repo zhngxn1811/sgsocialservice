@@ -191,6 +191,14 @@ test('the board page filters and sorts exactly like the server', () => {
   assert.ok(html.includes('href="https://e.org/&quot;onload=&quot;x"'));
 });
 
+test('submitted jobs link directly to the original listing instead of a local job page', () => {
+  const html = browserJobs().card(pub({ id: 'submitted-example', external_listing: true, apply_url: 'https://employer.example/role' }),
+    { orgTypes: [], qualifications: [], natures: [] }, '2026-11-24');
+  assert.ok(html.includes('href="https://employer.example/role" target="_blank" rel="noopener noreferrer"'));
+  assert.ok(html.includes('View original listing'));
+  assert.ok(!html.includes('/jobs/submitted-example'));
+});
+
 test('salary brackets match overlapping monthly pay and seniority matches minimum years', () => {
   const listings = [
     pub({ id: 'below', salary_min: 2800, salary_max: 2999, min_years: 0 }),

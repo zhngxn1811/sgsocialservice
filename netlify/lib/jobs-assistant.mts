@@ -122,7 +122,7 @@ export function jobLine(j: PublicJob, i: number, base: string): string {
       ? `board listing ends: ${j.closes_at}; employer deadline not stated` : `applications close: ${j.closes_at || "not stated"}`,
     ...(j.skills.length ? [`skills: ${j.skills.slice(0, 8).join(", ")}`] : []),
     `summary: ${j.summary.replace(/\s+/g, " ")}`,
-    `job page: ${base}/jobs/${j.id}`, `apply: ${j.apply_url}`,
+    `job page: ${j.external_listing ? j.apply_url : `${base}/jobs/${j.id}`}`, `apply: ${j.apply_url}`,
   ].join(" | ");
 }
 

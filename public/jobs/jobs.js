@@ -81,13 +81,15 @@
     const pay = salary(j);
     const action = j.application_action === "register" ? "How to register"
       : j.application_action === "check-window" ? "Check application windows" : "Apply";
+    const destination = j.external_listing ? esc(j.apply_url) : `/jobs/${esc(j.id)}`;
+    const external = 'target="_blank" rel="noopener noreferrer"';
     return `<article class="job-card">
-      <h3><a href="/jobs/${esc(j.id)}">${esc(j.title)}</a></h3>
+      <h3><a href="${destination}"${j.external_listing ? ` ${external}` : ""}>${esc(j.title)}</a></h3>
       <p class="org">${esc(j.org)} · ${esc(lab(labels.orgTypes, j.org_type))}</p>
       <div class="tags">${j.fresh_grad ? '<span class="tag fresh">Fresh grads welcome</span>' : ""}<span class="tag">${esc(lab(labels.qualifications, j.qualification))}</span>${j.nature.slice(0, 2).map(n => `<span class="tag">${esc(lab(labels.natures, n))}</span>`).join("")}</div>
-      <p>${esc(j.summary)}</p>
+      ${j.summary ? `<p>${esc(j.summary)}</p>` : ""}
       <div class="facts"><span>${esc(expLabel(j))}</span>${j.employment_type ? `<span>${esc(j.employment_type)}</span>` : ""}${pay ? `<span>${esc(pay)}</span>` : ""}${closes}</div>
-      <div class="actions"><a class="btn" href="/jobs/${esc(j.id)}">${action === "Apply" ? "View job" : "View details"}</a><a class="btn primary" href="${esc(j.apply_url)}" target="_blank" rel="noopener noreferrer">${action}</a></div>
+      <div class="actions">${j.external_listing ? "" : `<a class="btn" href="${destination}">${action === "Apply" ? "View job" : "View details"}</a>`}<a class="btn primary" href="${esc(j.apply_url)}" ${external}>${j.external_listing ? "View original listing" : action}</a></div>
     </article>`;
   }
 

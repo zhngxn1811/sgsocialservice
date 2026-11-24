@@ -235,12 +235,12 @@ export type McfJob = {
 };
 
 export type JobRecord = {
-  id: string; source: "mycareersfuture" | "manual"; source_id: string; source_name: string;
+  id: string; source: "mycareersfuture" | "manual" | "submission"; source_id: string; source_name: string;
   title: string; org: string; org_uen: string; org_type: OrgType; location: string; employment_type: string;
   salary_min: number | null; salary_max: number | null; salary_type: string;
   summary: string; description: string; requirements: string;
   qualification: Qualification; min_years: number | null; fresh_grad: boolean; nature: Nature[]; skills: string[];
-  apply_url: string; source_url: string; posted_at: string | null; closes_at: string | null; status: "open" | "closed";
+  apply_url: string; source_url: string; posted_at: string | null; closes_at: string | null; status: "open" | "closed" | "pending";
   application_action?: "apply" | "register" | "check-window";
   closing_date_estimated: boolean;
 };
@@ -377,7 +377,7 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
 
 // ---------- filtering and sorting (API, board and assistant all use these) ----------
 
-export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "application_action" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean };
+export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "application_action" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean; external_listing?: boolean };
 export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   id: j.id, title: j.title, org: j.org, org_type: j.org_type, location: j.location, employment_type: j.employment_type,
   salary_min: j.salary_min, salary_max: j.salary_max, salary_type: j.salary_type, summary: j.summary,
@@ -386,6 +386,7 @@ export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
     ? sentences(j.requirements || j.description).some(s => GRADUATE_DIPLOMA.test(s) && !PREFERRED.test(s))
     : j.accepts_graduate_diploma,
   apply_url: j.apply_url, application_action: j.application_action, source_name: j.source_name, posted_at: j.posted_at, closes_at: j.closes_at, closing_date_estimated: j.closing_date_estimated,
+  ...(("source" in j ? j.source === "submission" : j.external_listing) ? { external_listing: true } : {}),
 });
 
 export const isVacancy = (job: Pick<JobRecord, "application_action">) => (job.application_action ?? "apply") === "apply";

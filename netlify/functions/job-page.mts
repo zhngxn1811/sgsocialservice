@@ -18,7 +18,7 @@ export default async (req: Request, context: Context) => {
   if (!/^[a-z0-9-]{3,140}$/.test(id)) return page(404, renderNotFound(base), "public, max-age=300");
   try {
     const [job] = await getDb().select().from(jobs).where(eq(jobs.id, id)).limit(1) as JobRecord[];
-    if (!job) return page(404, renderNotFound(base), "public, max-age=300");
+    if (!job || job.source === "submission") return page(404, renderNotFound(base), "public, max-age=300");
     const { status, html } = renderJobPage(job, base, sgDay());
     return page(status, html, "public, max-age=600");
   } catch {

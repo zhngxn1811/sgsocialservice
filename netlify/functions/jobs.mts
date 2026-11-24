@@ -3,7 +3,7 @@
 // POST  /api/jobs              add a job by hand           (admin)
 // PATCH /api/jobs/:id          { status: "open" | "closed" } (admin)
 import type { Config, Context } from "@netlify/functions";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, gte, ne, or } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { jobs } from "../../db/schema.js";
 import { withCors } from "../lib/cors.mjs";
@@ -46,7 +46,7 @@ export default withCors(async (req: Request, context: Context) => {
   try {
     const db = getDb();
     if (req.method === "GET" && !id) {
-      return json(200, await db.select().from(jobs).orderBy(desc(jobs.updated_at)).limit(2000));
+      return json(200, await db.select().from(jobs).orderBy(desc(eq(jobs.status, "pending")), desc(jobs.updated_at)).limit(2000));
     }
     if (req.method === "POST" && !id) {
       let body: Record<string, unknown>;
@@ -61,8 +61,11 @@ export default withCors(async (req: Request, context: Context) => {
       let status: unknown = null;
       try { status = (await req.json())?.status; } catch {}
       if (status !== "open" && status !== "closed") return json(400, { error: "Status must be open or closed." });
-      const updated = await db.update(jobs).set({ status, updated_at: new Date().toISOString() }).where(eq(jobs.id, id)).returning({ id: jobs.id });
-      if (!updated.length) return json(404, { error: "Job not found." });
+      const target = status === "open"
+        ? and(eq(jobs.id, id), or(ne(jobs.source, "submission"), gte(jobs.closes_at, today)))
+        : eq(jobs.id, id);
+      const updated = await db.update(jobs).set({ status, updated_at: new Date().toISOString() }).where(target).returning({ id: jobs.id });
+      if (!updated.length) return json(404, { error: status === "open" ? "Job not found or its listing date has passed." : "Job not found." });
       return json(200, { ok: true });
     }
   } catch {
