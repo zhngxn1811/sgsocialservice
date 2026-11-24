@@ -7,8 +7,14 @@
     ["5000-5999", 5000, 6000], ["6000-plus", 6000, Infinity],
   ];
   const EXPERIENCE_RANGES = [["0-3", 0, 3], ["5-7", 5, 7], ["8-12", 8, 12], ["12-15", 12, 15], ["over-15", 16, Infinity]];
-  const INTERNSHIP = /\b(?:interns?|internships?)\b(?![\s-]+(?:(?:programme|program|placement)[\s-]+)?(?:coordinator|manager|supervisor)\b)/i;
-  const PLACEMENT = /\b(?:practicums?|locums?)\b(?![\s-]+(?:(?:programme|program|placement)[\s-]+)?(?:coordinator|manager|supervisor)\b)/i;
+  const INTERNSHIP = /\b(?:interns?|internships?|practicums?)\b(?![\s-]+(?:(?:programme|program|placement)[\s-]+)?(?:coordinator|manager|supervisor)\b)/i;
+  const JOB_TYPES = new Map([
+    ["full-time", /\bfull[-\s–—]*time\b/i],
+    ["part-time", /\bpart[-\s–—]*time\b/i],
+    ["locum", /\blocums?\b/i],
+    ["contract", /\bcontract\b/i],
+    ["freelance", /\bfreelanc(?:e|ers?|ing)\b/i],
+  ]);
   const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   // Same rules as filterJobs/sortJobs in netlify/lib/jobs.mts (a test keeps them in step).
@@ -28,9 +34,10 @@
           !(j.accepts_graduate_diploma && f.qualification.includes("graduate-diploma"))) return false;
       if (experience && (j.min_years == null || j.min_years < experience[1] || j.min_years > experience[2])) return false;
       if (typeof f.maxYears === "number" && (j.min_years ?? 0) > f.maxYears) return false;
-      if ((f.fresh || f.internship || f.placement) && !(f.fresh && j.fresh_grad) &&
-          !(f.internship && (INTERNSHIP.test(j.title) || INTERNSHIP.test(j.employment_type))) &&
-          !(f.placement && (PLACEMENT.test(j.title) || PLACEMENT.test(j.employment_type)))) return false;
+      if ((f.fresh || f.internship) && !(f.fresh && j.fresh_grad) &&
+          !(f.internship && (INTERNSHIP.test(j.title) || INTERNSHIP.test(j.employment_type)))) return false;
+      if (f.jobType?.length && !f.jobType.some(type => JOB_TYPES.get(type)?.test(j.employment_type) ||
+          (type === "locum" && JOB_TYPES.get(type)?.test(j.title)))) return false;
       if (f.nature && f.nature.length && !f.nature.some(n => j.nature.includes(n))) return false;
       if (f.orgType && f.orgType.length && !f.orgType.includes(j.org_type)) return false;
       if (f.skill && !j.skills.some(s => s.toLowerCase() === f.skill.toLowerCase())) return false;
@@ -98,7 +105,7 @@
     return { q: $("#jobQ").value.trim(), qualification: vals("qual"), experienceRange: $("#fYears").value, fresh: $("#fFresh").checked,
       nature: vals("nature"), orgType: vals("org"), skill: $("#fSkill").value, sort: $("#jobSort").value,
       salaryBracket: $("#fSalary").value, seniority: $("#fSeniority").value,
-      internship: $("#fInternship").checked, placement: $("#fPlacement").checked };
+      internship: $("#fInternship").checked, jobType: vals("jobType") };
   }
   function saveUrl(f) {
     const p = new URLSearchParams();
@@ -107,7 +114,7 @@
     if (f.experienceRange) p.set("years", f.experienceRange);
     if (f.fresh) p.set("fresh", "1");
     if (f.internship) p.set("internship", "1");
-    if (f.placement) p.set("placement", "1");
+    f.jobType.forEach(v => p.append("jobType", v));
     f.nature.forEach(v => p.append("nature", v));
     f.orgType.forEach(v => p.append("org", v));
     if (f.skill) p.set("skill", f.skill);
@@ -122,10 +129,10 @@
     $("#jobQ").value = p.get("q") || "";
     const tick = (n, list) => list.forEach(v => { const el = document.querySelector(`input[name="${n}"][value="${CSS.escape(v)}"]`); if (el) el.checked = true; });
     tick("qual", p.getAll("qual")); tick("nature", p.getAll("nature")); tick("org", p.getAll("org"));
+    tick("jobType", p.getAll("jobType"));
     if (p.has("years")) $("#fYears").value = p.get("years");
     $("#fFresh").checked = p.get("fresh") === "1";
-    $("#fInternship").checked = p.get("internship") === "1";
-    $("#fPlacement").checked = p.get("placement") === "1";
+    $("#fInternship").checked = p.get("internship") === "1" || p.get("placement") === "1";
     if (p.get("skill")) $("#fSkill").value = p.get("skill");
     $("#fSalary").value = p.get("salary") || "";
     $("#fSeniority").value = p.get("seniority") || "";
@@ -135,7 +142,7 @@
     const f = state();
     saveUrl(f);
     const list = filterJobs(ALL, f);
-    const n = f.qualification.length + f.nature.length + f.orgType.length + !!f.experienceRange + f.fresh + f.internship + f.placement + !!f.skill + !!f.salaryBracket + !!f.seniority;
+    const n = f.qualification.length + f.nature.length + f.orgType.length + f.jobType.length + !!f.experienceRange + f.fresh + f.internship + !!f.skill + !!f.salaryBracket + !!f.seniority;
     $("#filterCount").textContent = n ? `${n} on` : "";
     $("#boardMeta").textContent = `${list.length} of ${ALL.length} open job${ALL.length === 1 ? "" : "s"} · refreshed ${fmtDate(TODAY)}`;
     if (!list.length) {
