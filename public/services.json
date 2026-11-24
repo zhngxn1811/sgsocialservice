@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22",
+  "updated": "2026-11-24",
   "categories": [
     {
       "id": "crisis",
@@ -4341,21 +4341,22 @@
       "id": "st-lukes-comit-bukit-batok",
       "cats": [
         "mental",
-        "comit",
-        "psychological-assessment-intervention"
+        "seniors",
+        "comit"
       ],
       "h24": false,
-      "web": "",
-      "name": "St. Luke’s Hospital – Community Intervention Team (Bukit Batok)",
-      "org": "St. Luke’s Hospital",
-      "desc": "A community intervention team (COMIT) run by St. Luke’s Hospital in Bukit Batok. It provides needs assessment, counselling and psychosocial therapy for people with mental health concerns and their caregivers. It works closely with GPs, polyclinics and hospitals, and takes referrals from GPs and other professionals. The service is government-funded. Specialisation: COMIT. Assessment, counselling and psychosocial therapy. Takes GP referrals.",
-      "address": "2 Bukit Batok Street 11, Singapore 659674",
+      "web": "https://www.slh.org.sg/community/community-intervention-team/",
+      "name": "Community Intervention Team (SLH COMIT)",
+      "org": "St Luke's Hospital",
+      "desc": "An allied health-led, multidisciplinary team that supports people with dementia or mental health conditions at home, helping them stay in the community and maintain or improve their quality of life. It also supports caregivers through education, psychosocial support and connections to community services. Who it's for: Residents aged 40 and above in the areas below who have dementia with behavioural challenges, suspected dementia needing assessment and management, or a mild to moderate mental health condition such as depression or anxiety. The team also supports caregivers experiencing high stress or finding care difficult. Areas covered: Bukit Batok East, Bukit Batok SMC, Bukit Panjang SMC, Cashew, Clementi, Hong Kah North SMC, Jurong Central, Jurong Spring, Ulu Pandan, West Coast, Yuhua SMC and Zhenghua. Services include engaging clients in tailored activities, educating and counselling caregivers, coordinating and managing care, addressing behavioural and psychological symptoms, recommending home adaptations and equipment, and connecting families with local services. How to refer: Community partners and caregivers can download the referral form in Word or PDF from the service website. The form is for community partners and caregivers only.",
+      "address": "St Luke's Hospital, 2 Bukit Batok Street 11, Singapore 659674",
       "phone": "6895 2794",
       "other": "Email: slh-comit@stluke.org.sg",
       "tags": [
         "COMIT",
         "Community mental health",
-        "GP referrals",
+        "Dementia",
+        "Caregiver support",
         "West"
       ]
     },
