@@ -132,8 +132,11 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
     url,
   };
 
+  const emailApplication = job.apply_url.startsWith("mailto:");
+  const applyAttrs = emailApplication ? "" : ' target="_blank" rel="noopener noreferrer"';
   const applyLabel = job.application_action === "register" ? "How to register"
     : job.application_action === "check-window" ? "Check application windows"
+    : emailApplication ? "Apply by email" : job.source === "submission" ? "Open application page"
     : job.source === "mycareersfuture" ? "Apply on MyCareersFuture" : `Apply${job.source_name ? ` on ${job.source_name}` : ""}`;
   const html = HEAD(title, desc, url, vacancy ? jsonLd(ld) : "") + `<main class="wrap job-page">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/jobs/">Jobs board</a> <span aria-hidden="true">›</span> <span aria-current="page">${esc(job.title)}</span></nav>
@@ -144,7 +147,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
       <div class="tags">${job.fresh_grad ? '<span class="tag fresh">Fresh grads welcome</span>' : ""}${job.nature.map(n => `<span class="tag">${esc(labelFor.nature(n))}</span>`).join("")}</div>
     </div>
     <div class="apply-box">
-      <a class="btn primary apply" href="${esc(job.apply_url)}" target="_blank" rel="noopener noreferrer">${esc(applyLabel)}</a>
+      <a class="btn primary apply" href="${esc(job.apply_url)}"${applyAttrs}>${esc(applyLabel)}</a>
       ${job.closes_at ? `<p class="note">${job.closing_date_estimated ? "Listed until" : "Applications close"} ${esc(fmtDate(job.closes_at))}${job.closing_date_estimated ? " (employer deadline not stated)" : ""}</p>` : ""}
     </div>
   </div>
@@ -154,7 +157,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
       ${textToHtml(job.description) || `<p>${esc(job.summary || "See the full listing for details.")}</p>`}
       ${job.requirements ? `<h2>Requirements</h2>${textToHtml(job.requirements)}` : ""}
       ${job.skills.length ? `<h2>Skills</h2><div class="tags">${job.skills.map(s => `<span class="tag">${esc(s)}</span>`).join("")}</div>` : ""}
-      <p class="apply-foot"><a class="btn primary" href="${esc(job.apply_url)}" target="_blank" rel="noopener noreferrer">${esc(applyLabel)}</a></p>
+      <p class="apply-foot"><a class="btn primary" href="${esc(job.apply_url)}"${applyAttrs}>${esc(applyLabel)}</a></p>
     </article>
     <aside class="panel job-facts" aria-label="Job details">
       <dl>${facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>

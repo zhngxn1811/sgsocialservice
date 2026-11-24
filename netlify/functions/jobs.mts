@@ -3,7 +3,7 @@
 // POST  /api/jobs              add a job by hand           (admin)
 // PATCH /api/jobs/:id          { status: "open" | "closed" } (admin)
 import type { Config, Context } from "@netlify/functions";
-import { and, desc, eq, gte, ne, or } from "drizzle-orm";
+import { and, asc, desc, eq, gte, isNull, ne, or, sql } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { jobs } from "../../db/schema.js";
 import { withCors } from "../lib/cors.mjs";
@@ -46,6 +46,25 @@ export default withCors(async (req: Request, context: Context) => {
   try {
     const db = getDb();
     if (req.method === "GET" && !id) {
+      const queue = url.searchParams.get("queue");
+      const summary = { id: jobs.id, title: jobs.title, org: jobs.org, apply_url: jobs.apply_url };
+      if (queue === "submissions") {
+        return json(200, await db.select({ ...summary, description: jobs.description, requirements: jobs.requirements,
+          closes_at: jobs.closes_at, closing_date_estimated: jobs.closing_date_estimated }).from(jobs)
+          .where(and(eq(jobs.source, "submission"), eq(jobs.status, "pending"))).orderBy(asc(jobs.updated_at)).limit(20));
+      }
+      if (queue === "unavailable") {
+        return json(200, await db.select({ ...summary, link_checked_at: jobs.link_checked_at, link_missing_code: jobs.link_missing_code })
+          .from(jobs).where(and(eq(jobs.status, "open"), gte(jobs.link_missing_count, 2),
+          or(isNull(jobs.closes_at), gte(jobs.closes_at, today)))).orderBy(desc(jobs.link_checked_at)).limit(2000));
+      }
+      if (queue === "board") {
+        return json(200, await db.select({ ...summary, org_type: jobs.org_type, nature: jobs.nature, qualification: jobs.qualification,
+          min_years: jobs.min_years, fresh_grad: jobs.fresh_grad, closes_at: jobs.closes_at, closing_date_estimated: jobs.closing_date_estimated,
+          source_name: jobs.source_name, source: jobs.source, status: jobs.status,
+          external_listing: sql<boolean>`(${jobs.source} = 'submission' and ${jobs.description} = '' and ${jobs.requirements} = '')`,
+        }).from(jobs).where(ne(jobs.status, "pending")).orderBy(desc(jobs.updated_at)).limit(2000));
+      }
       return json(200, await db.select().from(jobs).orderBy(desc(eq(jobs.status, "pending")), desc(jobs.updated_at)).limit(2000));
     }
     if (req.method === "POST" && !id) {

@@ -7,7 +7,7 @@
 .job-post h1{font-size:clamp(28px,5vw,40px)}
 .job-post .lede{color:var(--muted);margin:8px 0 24px;max-width:60ch}
 .job-post-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.job-post-fields label > input{display:block;margin-top:6px}
+.job-post-fields label > :is(input,textarea){display:block;margin-top:6px}
 .job-post-wide{grid-column:1/-1}
 .job-post-wide .note{margin:6px 0 0}
 .job-post-status:not(:empty){background:var(--teal-soft);border-radius:8px;margin:16px 0 0;padding:10px 12px}

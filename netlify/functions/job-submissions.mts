@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { Config } from "@netlify/functions";
 import { getDb } from "../../db/index.js";
 import { jobs } from "../../db/schema.js";
-import { manualJob } from "../lib/jobs.mjs";
+import { applicationUrl, manualJob } from "../lib/jobs.mjs";
 import { orgOverrides } from "../lib/jobs-sync.mjs";
 import { sgDay } from "../lib/usage.mjs";
 
@@ -19,7 +19,7 @@ export default async (req: Request) => {
   let body: Record<string, unknown>;
   try {
     const raw = await req.text();
-    if (raw.length > 8_000) return json(413, { error: "The submission is too long." });
+    if (raw.length > 250_000) return json(413, { error: "The submission is too long." });
     body = JSON.parse(raw);
   } catch {
     return json(400, { error: "Send the job as JSON." });
@@ -27,17 +27,24 @@ export default async (req: Request) => {
   if (!body || typeof body !== "object" || Array.isArray(body)) return json(400, { error: "Send the job as JSON." });
   if (body.website) return json(201, { ok: true });
 
-  const submittedUrl = typeof body.apply_url === "string" ? body.apply_url.trim() : "";
-  const listing = /^https:\/\/[^/\\]/i.test(submittedUrl) && URL.canParse(submittedUrl) ? new URL(submittedUrl) : null;
+  for (const [field, label] of [["description", "job description"], ["requirements", "qualifications"]]) {
+    const text = body[field];
+    if (typeof text !== "string" || !text.trim() || text.length > 20_000 || text.includes("\0")) {
+      return json(400, { error: `Enter the ${label} (up to 20,000 characters).` });
+    }
+  }
+
+  const listing = applicationUrl(body.apply_url);
   const siteHosts = [new URL(req.url).hostname, "sgsocialservices.app", "sgsocialservices.netlify.app"];
   const listingHost = listing?.hostname.replace(/\.$/, "");
-  if (!listing || listing.username || listing.password || listing.href.length > 500 ||
+  if (!listing ||
       siteHosts.some(host => listingHost === host || listingHost === `www.${host}` || listingHost?.endsWith(`--${host}`))) {
-    return json(400, { error: "Enter an external job listing URL starting with https://." });
+    return json(400, { error: "Enter an external HTTPS application link or a mailto: link with one email address." });
   }
 
   const made = manualJob({
-    title: body.title, org: body.org, apply_url: listing.href, source_name: "External listing",
+    title: body.title, org: body.org, apply_url: listing.href, source_name: "Employer submission",
+    description: body.description, requirements: body.requirements,
     employment_type: body.employment_type, closes_at: body.closes_at,
   }, sgDay(), orgOverrides);
   if ("error" in made) return json(400, { error: made.error });

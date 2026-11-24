@@ -219,6 +219,18 @@ export const isHttpsUrl = (u: unknown): u is string => {
   try { return new URL(u).protocol === "https:"; } catch { return false; }
 };
 
+export function applicationUrl(value: unknown): URL | null {
+  if (typeof value !== "string") return null;
+  const link = value.trim();
+  if (!link || link.length > 500 || /[\x00-\x20\x7f\\]/.test(link)) return null;
+  if (!URL.canParse(link)) return null;
+  const url = new URL(link);
+  if (url.href.length > 500) return null;
+  if (url.protocol === "https:" && /^https:\/\/[^/]/i.test(link) && !url.username && !url.password) return url;
+  if (/^mailto:[a-z0-9_+.-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i.test(link)) return url;
+  return null;
+}
+
 // ---------- MyCareersFuture ----------
 
 // The parts of a MyCareersFuture listing we use (from GET https://api.mycareersfuture.gov.sg/v2/jobs).
@@ -338,8 +350,9 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
   const title = str(input.title, 200), org = str(input.org, 200);
   if (!title) return { error: "Add the job title." };
   if (!org) return { error: "Add the organisation." };
-  const apply = str(input.apply_url, 500);
-  if (!isHttpsUrl(apply)) return { error: "Add the application link (it must start with https://)." };
+  const destination = applicationUrl(input.apply_url);
+  if (!destination) return { error: "Add an HTTPS application link or a mailto: link with one email address." };
+  const apply = destination.href;
   const posted = str(input.posted_at, 30) || today;
   if (!isCalendarDate(posted)) return { error: "Enter a valid posting date." };
   const deadline = str(input.closes_at, 30);
@@ -369,7 +382,7 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
       min_years: minYears,
       fresh_grad: typeof input.fresh_grad === "boolean" ? input.fresh_grad : freshGradOf(text, minYears),
       nature: nature.length ? nature : natureOf(title, text), skills: skillsOf(text),
-      apply_url: apply, source_url: isHttpsUrl(source) ? source : apply,
+      apply_url: apply, source_url: isHttpsUrl(source) ? source : destination.protocol === "https:" ? apply : "",
       posted_at: posted, closes_at: closes, closing_date_estimated: !deadline, status: "open",
     },
   };
@@ -378,6 +391,8 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
 // ---------- filtering and sorting (API, board and assistant all use these) ----------
 
 export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "application_action" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean; external_listing?: boolean };
+
+export const isLinkOnlySubmission = (job: JobRecord) => job.source === "submission" && !job.description && !job.requirements;
 export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   id: j.id, title: j.title, org: j.org, org_type: j.org_type, location: j.location, employment_type: j.employment_type,
   salary_min: j.salary_min, salary_max: j.salary_max, salary_type: j.salary_type, summary: j.summary,
@@ -386,7 +401,7 @@ export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
     ? sentences(j.requirements || j.description).some(s => GRADUATE_DIPLOMA.test(s) && !PREFERRED.test(s))
     : j.accepts_graduate_diploma,
   apply_url: j.apply_url, application_action: j.application_action, source_name: j.source_name, posted_at: j.posted_at, closes_at: j.closes_at, closing_date_estimated: j.closing_date_estimated,
-  ...(("source" in j ? j.source === "submission" : j.external_listing) ? { external_listing: true } : {}),
+  ...(("source" in j ? isLinkOnlySubmission(j) : j.external_listing) ? { external_listing: true } : {}),
 });
 
 export const isVacancy = (job: Pick<JobRecord, "application_action">) => (job.application_action ?? "apply") === "apply";
