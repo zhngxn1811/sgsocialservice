@@ -5496,6 +5496,27 @@
         "Faith-based (Catholic)",
         "Central"
       ]
+    },
+    {
+      "id": "trybe-youth-counselling-therapy",
+      "name": "Youth Counselling & Therapy",
+      "org": "Trybe",
+      "cats": [
+        "mental",
+        "youth",
+        "trauma-informed"
+      ],
+      "h24": false,
+      "desc": "Trybe Counselling & Therapy supports young people aged 12–25 with mental health concerns such as anxiety, depression and addiction, as well as academic or career stress, relationship difficulties, life transitions, self-esteem and identity issues. Its trauma-informed therapists offer respectful, non-judgemental support and use evidence-based approaches that address thoughts, emotions, bodily responses and relationships. Approaches include Trauma-Focused Cognitive Behavioural Therapy, Solution-Focused Brief Therapy, Narrative Therapy, Expressive Arts Therapy, Play Therapy, Somatic Experiencing and EMDR. No referral is required. Message Trybe on WhatsApp to book an appointment or a free 15-minute discovery call to ask questions and see if the service is a good fit.",
+      "phone": "6784 1481",
+      "other": "WhatsApp: 9093 9855 (intake); Email: enquiries@trybe.org; Address: 479 Tampines Street 44, #01-241, Singapore 520479; Address: 195 Pearl's Hill Terrace, #03-46, Singapore 168976",
+      "tags": [
+        "Youth",
+        "Counselling",
+        "Trauma-Informed",
+        "East",
+        "Central"
+      ]
     }
   ]
 }
