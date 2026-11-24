@@ -1,0 +1,2 @@
+ALTER TABLE "jobs" ADD COLUMN "application_action" text DEFAULT 'apply' NOT NULL;--> statement-breakpoint
+ALTER TABLE "jobs" ADD CONSTRAINT "jobs_application_action" CHECK ("application_action" in ('apply', 'register', 'check-window'));

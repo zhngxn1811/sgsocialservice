@@ -34,6 +34,18 @@ test('structured data lets search engines show the job until it closes', () => {
   assert.equal(ld.hiringOrganization.name, 'New Hope Community Services Limited');
 });
 
+test('registration and application windows are not presented as open vacancies', () => {
+  for (const [application_action, label] of [
+    ['register', 'How to register'],
+    ['check-window', 'Check application windows'],
+  ] as const) {
+    const { status, html } = renderJobPage(job({ application_action, closes_at: null }), BASE, '2026-11-24');
+    assert.equal(status, 200);
+    assert.ok(html.includes(`>${label}</a>`));
+    assert.doesNotMatch(html, /JobPosting|Apply by|Apply on MyCareersFuture/);
+  }
+});
+
 test('estimated board expiry does not claim an employer set a deadline or closed applications', () => {
   const estimated = job({ closing_date_estimated: true });
   const live = renderJobPage(estimated, BASE, '2026-12-19');

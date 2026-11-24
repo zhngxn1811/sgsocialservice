@@ -1,6 +1,6 @@
 // The page for one job: /jobs/<id>. Built on request from the database by netlify/functions/job-page.mts.
 // Every piece of job text is escaped. Descriptions are plain text (see htmlToText), never portal HTML.
-import { experienceLabel, labelFor, salaryLabel, type JobRecord } from "./jobs.mjs";
+import { experienceLabel, isVacancy, labelFor, salaryLabel, type JobRecord } from "./jobs.mjs";
 
 export const esc = (t: unknown) => String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 const jsonLd = (data: unknown) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
@@ -85,6 +85,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
   const title = `${job.title} at ${job.org} | SG Social Services Jobs`;
   const desc = job.summary || `${job.title} at ${job.org}, Singapore.`;
   const salary = salaryLabel(job);
+  const vacancy = isVacancy(job);
 
   if (!open) {
     return {
@@ -93,7 +94,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/jobs/">Jobs board</a> <span aria-hidden="true">›</span> <span aria-current="page">${esc(job.title)}</span></nav>
   <h1>${esc(job.title)}</h1>
   <p class="job-org">${esc(job.org)}</p>
-  <div class="closed-note">${job.closing_date_estimated ? "<strong>This job is no longer listed on the board.</strong> No employer deadline was recorded." : "<strong>This job is no longer taking applications.</strong> It closed or was taken down by the employer."} <a href="/jobs/">See current jobs</a> or ask the jobs assistant for similar roles.</div>
+  <div class="closed-note">${!vacancy ? "<strong>This opportunity is no longer listed on the board.</strong>" : job.closing_date_estimated ? "<strong>This job is no longer listed on the board.</strong> No employer deadline was recorded." : "<strong>This job is no longer taking applications.</strong> It closed or was taken down by the employer."} <a href="/jobs/">See current jobs</a> or ask the jobs assistant for similar roles.</div>
 </main>
 ` + FOOT,
     };
@@ -108,8 +109,10 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
     ["Employment", job.employment_type || "Not stated"],
     ...(salary ? [["Salary", salary] as [string, string]] : []),
     ["Location", job.location],
-    ["Posted", fmtDate(job.posted_at) || "Not stated"],
-    [job.closing_date_estimated ? "Listed until" : "Apply by", fmtDate(job.closes_at) || "Not stated"],
+    ...(vacancy ? [
+      ["Posted", fmtDate(job.posted_at) || "Not stated"] as [string, string],
+      [job.closing_date_estimated ? "Listed until" : "Apply by", fmtDate(job.closes_at) || "Not stated"] as [string, string],
+    ] : []),
   ];
 
   const ld = {
@@ -129,8 +132,10 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
     url,
   };
 
-  const applyLabel = job.source === "mycareersfuture" ? "Apply on MyCareersFuture" : `Apply${job.source_name ? ` on ${job.source_name}` : ""}`;
-  const html = HEAD(title, desc, url, jsonLd(ld)) + `<main class="wrap job-page">
+  const applyLabel = job.application_action === "register" ? "How to register"
+    : job.application_action === "check-window" ? "Check application windows"
+    : job.source === "mycareersfuture" ? "Apply on MyCareersFuture" : `Apply${job.source_name ? ` on ${job.source_name}` : ""}`;
+  const html = HEAD(title, desc, url, vacancy ? jsonLd(ld) : "") + `<main class="wrap job-page">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/jobs/">Jobs board</a> <span aria-hidden="true">›</span> <span aria-current="page">${esc(job.title)}</span></nav>
   <div class="job-head">
     <div>
