@@ -1,0 +1,55 @@
+{
+  "_how_to_use": "Organisations hiring on their own careers pages, shown as 'Hiring now' cards on /jobs/. Use this for employers whose jobs don't have their own links, or whose careers sites can't be pulled in automatically. One entry per organisation. 'id' is short, lowercase, letters, numbers and dashes. 'org_type' is one of: healthcare, social-community, government, education, charity. 'areas' uses the nature-of-work ids from the board's filters (social-work, counselling, clinical-psychology, psychology, case-management, youth-work, allied-health, nursing-care, special-needs, community-programmes, research-policy, admin-ops). 'roles' lists a few example roles in your own words. 'checked' is the date you last opened the careers page and saw relevant openings (YYYY-MM-DD). A card hides by itself 120 days after 'checked', so update the date whenever you re-check.",
+  "employers": [
+    {
+      "id": "rainbow-centre",
+      "name": "Rainbow Centre",
+      "org_type": "charity",
+      "url": "https://www.rainbowcentre.org.sg/careers/",
+      "summary": "Special education schools and early intervention for children and youth with disabilities.",
+      "roles": ["Special Education Interventionist", "Job Coach", "Care Facilitator", "Programme Executive", "Teacher Aide (Early Intervention)"],
+      "areas": ["special-needs", "community-programmes"],
+      "checked": "2026-11-24"
+    },
+    {
+      "id": "dementia-singapore",
+      "name": "Dementia Singapore",
+      "org_type": "charity",
+      "url": "https://dementia.org.sg/career/",
+      "summary": "Care, caregiver support and programmes for persons living with dementia. Apply through the Contact Form on their site, choosing \"Career (HR)\".",
+      "roles": ["Social Worker", "Senior Social Worker", "Social Work Associate", "Psychologist", "Programme Coordinator (Expressive Arts Therapy)"],
+      "areas": ["social-work", "psychology", "case-management", "community-programmes"],
+      "checked": "2026-11-24"
+    },
+    {
+      "id": "minds",
+      "name": "MINDS (Movement for the Intellectually Disabled of Singapore)",
+      "org_type": "charity",
+      "url": "https://minds.recruiterpal.com/career/jobs",
+      "summary": "Schools, day activity centres, homes and employment services for persons with intellectual disability.",
+      "roles": ["Social Worker", "Allied health and therapy roles", "Programme and care staff"],
+      "areas": ["special-needs", "social-work", "allied-health"],
+      "checked": "2026-11-24"
+    },
+    {
+      "id": "singhealth",
+      "name": "SingHealth (SGH, CGH, SKH, community hospitals and polyclinics)",
+      "org_type": "healthcare",
+      "url": "https://careers.singhealth.com.sg/go/SingHealth-Allied-Health-Professional/647444/",
+      "summary": "Allied health roles across SingHealth's hospitals, community hospitals and polyclinics. Search \"social work\" or \"psychologist\" on the page.",
+      "roles": ["Medical Social Worker", "Social Work Assistant", "Psychologist", "Therapy roles"],
+      "areas": ["social-work", "clinical-psychology", "allied-health"],
+      "checked": "2026-11-24"
+    },
+    {
+      "id": "msf",
+      "name": "Ministry of Social and Family Development (MSF)",
+      "org_type": "government",
+      "url": "https://www.msf.gov.sg/join-us/jobs-careers",
+      "summary": "Public service roles in social support, child and youth protection, rehabilitation and family services. Applications are on Careers@Gov.",
+      "roles": ["Protection Officer", "Case management roles", "Social Service Office roles", "Youth Homes casework"],
+      "areas": ["social-work", "case-management", "youth-work", "research-policy"],
+      "checked": "2026-11-24"
+    }
+  ]
+}

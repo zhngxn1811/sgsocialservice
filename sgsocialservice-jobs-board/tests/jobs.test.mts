@@ -1,0 +1,174 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { test } from 'node:test';
+import { runInNewContext } from 'node:vm';
+import {
+  filterJobs, freshGradOf, htmlToText, isOpenMcf, isRelevantMcf, jobId, manualJob, mapMcfJob, minYearsOf,
+  natureOf, orgTypeOf, qualificationOf, sortJobs, splitRequirements, titleCase, toPublic, type McfJob, type PublicJob,
+} from '../netlify/lib/jobs.mts';
+import { collectMcfJobs } from '../netlify/lib/jobs-sync.mts';
+import { mcf } from './fixtures/mcf.mts';
+
+
+test('minimum qualification: required beats preferred, lowest required wins', () => {
+  assert.equal(qualificationOf('Degree in Social Work required. Master\'s preferred.'), 'bachelors');
+  assert.equal(qualificationOf('Master\'s degree in Clinical Psychology from a recognised university.'), 'masters');
+  assert.equal(qualificationOf('Diploma or Degree in Psychology, Social Work or related field.'), 'diploma');
+  assert.equal(qualificationOf('Honours degree in Psychology (or equivalent).'), 'honours');
+  assert.equal(qualificationOf('PhD or DClinPsy in Clinical Psychology.'), 'doctorate');
+  assert.equal(qualificationOf('Postgraduate diploma in counselling.'), 'masters');
+  assert.equal(qualificationOf('A master\'s degree would be an advantage.'), 'masters'); // only preferred, so that's what we have
+  assert.equal(qualificationOf('Friendly and caring.', '70'), 'bachelors');
+  assert.equal(qualificationOf('Friendly and caring.', '52'), 'diploma');
+  assert.equal(qualificationOf('Friendly and caring.', '92'), 'doctorate');
+  assert.equal(qualificationOf('Friendly and caring.'), 'unspecified');
+});
+
+test('experience and fresh graduates', () => {
+  assert.equal(minYearsOf('anything', 2), 2);
+  assert.equal(minYearsOf('At least 3 years of relevant experience.'), 3);
+  assert.equal(minYearsOf('5 years of experience in a hospital is an advantage.'), null);
+  assert.equal(minYearsOf('Minimum 1-2 years experience in social services.'), 1);
+  assert.equal(freshGradOf('Fresh graduates are welcome to apply.', 1), true);
+  assert.equal(freshGradOf('Senior role.', 0), true);
+  assert.equal(freshGradOf('Senior role.', 3), false);
+  assert.equal(freshGradOf('This role is not suitable for fresh graduates.', 0), false);
+});
+
+test('nature of work comes mostly from the title', () => {
+  assert.deepEqual(natureOf('Senior Social Worker', 'Provide counselling to families.'), ['social-work']);
+  assert.ok(natureOf('Clinical Psychologist', 'Psychological assessment.').includes('clinical-psychology'));
+  assert.ok(!natureOf('Clinical Psychologist', 'Psychological assessment.').includes('psychology'));
+  assert.deepEqual(natureOf('Youth Worker', ''), ['youth-work']);
+  assert.ok(natureOf('Executive', 'Case management for clients. Case management reviews.').includes('case-management'));
+});
+
+test('type of organisation', () => {
+  assert.equal(orgTypeOf('SINGAPORE GENERAL HOSPITAL PTE LTD'), 'healthcare');
+  assert.equal(orgTypeOf('MINISTRY OF SOCIAL AND FAMILY DEVELOPMENT'), 'government');
+  assert.equal(orgTypeOf('NATIONAL UNIVERSITY OF SINGAPORE'), 'education');
+  assert.equal(orgTypeOf('THE SALVATION ARMY'), 'charity');
+  assert.equal(orgTypeOf('NEW HOPE COMMUNITY SERVICES LIMITED'), 'social-community');
+  assert.equal(orgTypeOf('Some Clinic', '', { 'SOME CLINIC': 'charity' }), 'charity');
+  assert.equal(orgTypeOf('Whatever Ltd', 'HOSPITALS'), 'healthcare');
+});
+
+test('portal HTML becomes safe plain text with headings and bullets', () => {
+  const t = htmlToText('<h3>About</h3><p>Help &amp; care</p><ul><li>One</li><li>Two</li></ul><script>alert(1)</script><p>&lt;img src=x onerror=alert(1)&gt;</p>');
+  assert.equal(t, '## About\n\nHelp & care\n\n- One\n- Two');
+  assert.ok(!/[<>]/.test(htmlToText('<b>x</b>&lt;script&gt;y&lt;/script&gt;')));
+});
+
+test('requirements are split from the description', () => {
+  const { description, requirements } = splitRequirements(htmlToText(mcf().description!));
+  assert.match(description, /^## Job Summary/);
+  assert.match(requirements, /Degree in Social Work/);
+  assert.ok(!/Requirements/.test(description));
+});
+
+test('maps a MyCareersFuture listing', () => {
+  const j = mapMcfJob(mcf())!;
+  assert.equal(j.title, 'Social Worker - Social Housing (Rental Housing Projects)');
+  assert.equal(j.org, 'New Hope Community Services Limited');
+  assert.equal(j.org_type, 'social-community');
+  assert.equal(j.qualification, 'bachelors');
+  assert.equal(j.min_years, 2);
+  assert.equal(j.fresh_grad, false);
+  assert.ok(j.nature.includes('social-work'));
+  assert.ok(j.skills.includes('Case management') && j.skills.includes('Communication'));
+  assert.equal(j.apply_url, mcf().metadata!.jobDetailsUrl);
+  assert.equal(j.closes_at, '2026-12-19');
+  assert.equal(j.posted_at, '2026-11-19');
+  assert.equal(j.salary_min, 4000);
+  assert.equal(j.location, 'Singapore');
+  assert.match(j.id, /^social-worker-social-housing-rental-housing-projects-new-hope-community-services-232da047$/);
+  assert.ok(!/alert/.test(j.description + j.requirements));
+  assert.equal(mapMcfJob(mcf({ metadata: { ...mcf().metadata, isHideSalary: true } }))!.salary_min, null);
+  assert.equal(mapMcfJob(mcf({ uuid: '' })), null);
+});
+
+test('only open Singapore roles in the sector', () => {
+  assert.equal(isRelevantMcf(mcf()), true);
+  assert.equal(isRelevantMcf(mcf({ categories: [{ category: 'Engineering' }], title: 'Software Engineer' })), false);
+  assert.equal(isRelevantMcf(mcf({ categories: [{ category: 'Healthcare / Pharmaceutical' }], title: 'Senior Medical Social Worker' })), true);
+  assert.equal(isRelevantMcf(mcf({ address: { isOverseas: true, overseasCountry: 'Malaysia' } })), false);
+  assert.equal(isOpenMcf(mcf(), '2026-11-24'), true);
+  assert.equal(isOpenMcf(mcf(), '2026-12-20'), false);
+  assert.equal(isOpenMcf(mcf({ status: { jobStatus: 'Closed' } }), '2026-11-24'), false);
+});
+
+test('jobs added by hand must be current, Singapore-based and have an https application link', () => {
+  const ok = { title: 'Counsellor', org: 'Some Charity Association', apply_url: 'https://example.org/apply', closes_at: '2026-12-31', description: 'Fresh graduates welcome.', requirements: 'Degree in Psychology.' };
+  const made = manualJob(ok, '2026-11-24');
+  assert.ok('job' in made);
+  if ('job' in made) {
+    assert.equal(made.job.qualification, 'bachelors');
+    assert.equal(made.job.fresh_grad, true);
+    assert.equal(made.job.org_type, 'charity');
+    assert.deepEqual(made.job.nature, ['counselling']);
+    assert.equal(made.job.source, 'manual');
+  }
+  assert.match((manualJob({ ...ok, apply_url: 'http://x.org' }, '2026-11-24') as { error: string }).error, /https/);
+  assert.match((manualJob({ ...ok, closes_at: '2026-11-01' }, '2026-11-24') as { error: string }).error, /passed/);
+  assert.match((manualJob({ ...ok, location: 'Kuala Lumpur' }, '2026-11-24') as { error: string }).error, /Singapore/);
+  assert.match((manualJob({ ...ok, apply_url: 'javascript:alert(1)' }, '2026-11-24') as { error: string }).error, /https/);
+});
+
+const pub = (o: Partial<PublicJob>): PublicJob => ({ ...toPublic(mapMcfJob(mcf())!), ...o });
+const sample = [
+  pub({ id: 'a', title: 'Social Worker', qualification: 'bachelors', min_years: 2, fresh_grad: false, nature: ['social-work'], org_type: 'social-community', posted_at: '2026-11-10', closes_at: '2026-12-01' }),
+  pub({ id: 'b', title: 'Clinical Psychologist', qualification: 'masters', min_years: 0, fresh_grad: true, nature: ['clinical-psychology'], org_type: 'healthcare', posted_at: '2026-11-20', closes_at: '2026-11-28', skills: ['CBT'] }),
+  pub({ id: 'c', title: 'Programme Executive', qualification: 'diploma', min_years: null, fresh_grad: true, nature: ['community-programmes'], org_type: 'charity', posted_at: '2026-11-15', closes_at: null }),
+];
+
+test('filters and sorts', () => {
+  assert.deepEqual(filterJobs(sample, { fresh: true }).map(j => j.id), ['b', 'c']);
+  assert.deepEqual(filterJobs(sample, { qualification: ['masters', 'diploma'] }).map(j => j.id), ['b', 'c']);
+  assert.deepEqual(filterJobs(sample, { maxYears: 1 }).map(j => j.id), ['b', 'c']);
+  assert.deepEqual(filterJobs(sample, { orgType: ['healthcare'] }).map(j => j.id), ['b']);
+  assert.deepEqual(filterJobs(sample, { nature: ['social-work'] }).map(j => j.id), ['a']);
+  assert.deepEqual(filterJobs(sample, { skill: 'cbt' }).map(j => j.id), ['b']);
+  assert.deepEqual(filterJobs(sample, { q: 'psychologist' }).map(j => j.id), ['b']);
+  assert.deepEqual(sortJobs(sample, 'newest').map(j => j.id), ['b', 'c', 'a']);
+  assert.deepEqual(sortJobs(sample, 'closing').map(j => j.id), ['b', 'a', 'c']);
+  assert.deepEqual(sortJobs(sample, 'qualification').map(j => j.id), ['b', 'a', 'c']);
+  assert.deepEqual(sortJobs(sample, 'qualification-asc').map(j => j.id), ['c', 'a', 'b']);
+  assert.deepEqual(sortJobs(sample, 'experience').map(j => j.id), ['b', 'c', 'a']);
+});
+
+test('the board page filters and sorts exactly like the server', () => {
+  const src = readFileSync(new URL('../public/jobs/jobs.js', import.meta.url), 'utf8');
+  const ctx: { SGSSJobs?: { filterJobs: typeof filterJobs; sortJobs: typeof sortJobs; card: (j: PublicJob, m: unknown, t: string) => string } } = {};
+  runInNewContext(src, { globalThis: ctx, window: undefined });
+  const client = ctx.SGSSJobs!;
+  const cases = [{}, { fresh: true }, { qualification: ['masters'] }, { maxYears: 0 }, { orgType: ['charity', 'healthcare'] }, { q: 'executive' }];
+  for (const f of cases) for (const sort of ['newest', 'closing', 'qualification', 'qualification-asc', 'experience']) {
+    assert.deepEqual(Array.from(client.filterJobs(sample, { ...f, sort }), j => j.id), filterJobs(sample, { ...f, sort }).map(j => j.id), JSON.stringify({ f, sort }));
+  }
+  const html = client.card(pub({ id: 'x', title: '<b>Hi</b>', apply_url: 'https://e.org/"onload="x' }), { orgTypes: [], qualifications: [], natures: [] }, '2026-11-24');
+  assert.ok(!html.includes('<b>Hi</b>'));
+  assert.ok(html.includes('href="https://e.org/&quot;onload=&quot;x"'));
+});
+
+test('ids are readable and stable', () => {
+  assert.equal(jobId('Senior Social Worker (Family)', 'CARE CORNER SINGAPORE LTD', 'abcdef1234'), 'senior-social-worker-family-care-corner-abcdef12');
+  assert.equal(titleCase('KK WOMEN\'S AND CHILDREN\'S HOSPITAL PTE. LTD.'), 'KK Women\'s and Children\'s Hospital Pte. Ltd.');
+});
+
+test('sync collects across pages, de-duplicates, and reports failed searches', async () => {
+  const page = (n: number, start = 0) => Array.from({ length: n }, (_, i) => mcf({ uuid: `u${start + i}` }));
+  const calls: string[] = [];
+  const fetch = async (url: string) => {
+    calls.push(url);
+    const u = new URL(url), term = u.searchParams.get('search'), p = Number(u.searchParams.get('page'));
+    if (term === 'broken') return new Response('nope', { status: 500 });
+    if (term === 'social worker') return Response.json({ results: p === 0 ? page(100) : page(5, 100) });
+    return Response.json({ results: [...page(3), mcf({ uuid: 'closed', status: { jobStatus: 'Closed' } }), mcf({ uuid: 'eng', title: 'Engineer', categories: [{ category: 'Engineering' }] })] });
+  };
+  const got = await collectMcfJobs({ fetch, today: '2026-11-24', terms: ['social worker', 'counsellor', 'broken'], delayMs: 0 });
+  assert.equal(got.records.length, 105);
+  assert.deepEqual(got.failedSearches, ['broken']);
+  assert.equal(got.complete, false);
+  assert.equal(calls.filter(c => c.includes('social%20worker')).length, 2);
+  assert.ok(calls.every(c => c.startsWith('https://api.mycareersfuture.gov.sg/v2/jobs?')));
+});

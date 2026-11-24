@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Social and health services jobs in Singapore | SG Social Services Jobs</title>
+<meta name="description" content="Open jobs in Singapore's social and health services: social work, counselling, psychology, care coordination, youth and community roles. Filter by qualification and experience, or ask the AI jobs assistant for your best matches.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/jobs/jobs.css">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#18262B" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#E6ECEA" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="SG Social Services">
+<meta property="og:title" content="Jobs in Singapore's social and health services">
+<meta property="og:description" content="Open roles in social work, counselling, psychology and community services, with an AI jobs assistant for students, fresh grads and career switchers.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_SG">
+<meta property="og:image" content="/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/theme.css">
+<script src="/theme.js"></script>
+<script src="/track.js" defer></script>
+<script src="/md.js" defer></script>
+<script src="/jobs/jobs.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand brand-link" href="/jobs/">
+      <div class="mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.4-7-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7 2.8C19 16.6 12 21 12 21Z" fill="var(--accent-ink)"/></svg>
+      </div>
+      <div>
+        <span class="name">SG Social Services Jobs</span>
+        <p>Jobs in Singapore's social and health services</p>
+      </div>
+    </a>
+    <div class="header-actions"><button class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark mode" hidden><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></svg><span>Dark mode</span></button>
+    <a class="btn" href="/">Service directory</a></div>
+  </div>
+</header>
+
+<main>
+  <section class="wrap jobs-hero" aria-labelledby="pageTitle">
+    <p class="eyebrow">Jobs board</p>
+    <h1 id="pageTitle">Find your role in Singapore's social and health services</h1>
+    <p>Open jobs in social work, counselling, psychology, care coordination, youth, disability and community services, refreshed every day. Filter them yourself, or tell the jobs assistant what you're looking for and get a shortlist picked for you.</p>
+  </section>
+
+  <section class="wrap jobs-desk" id="assistant" aria-labelledby="asstTitle">
+    <div class="panel">
+      <p class="eyebrow">AI jobs assistant</p>
+      <h2 id="asstTitle">Describe the job you're looking for</h2>
+      <p class="lede">Share what you studied, any experience (internships, practicum and volunteering count), and the kind of work and people you want to work with. The assistant matches you to open roles and tells you how to stand out.</p>
+      <label for="jobAsk">What are you looking for?</label>
+      <textarea id="jobAsk" placeholder="Example: Final-year psychology student at NTU, graduating in May. Did a 10-week practicum at a family service centre and volunteer with youth at risk. Looking for a full-time entry-level role in counselling or youth work, ideally in the east. Speak Mandarin."></textarea>
+      <div class="privacy"><strong>Leave out contact and ID details.</strong> No NRIC, phone numbers, emails or addresses. Your studies, experience and interests are enough. Nothing you type is stored.</div>
+      <div class="row">
+        <button class="btn teal" id="jobAskBtn" type="button">Find my matches</button>
+        <button class="btn" id="jobResetBtn" type="button">Start over</button>
+      </div>
+      <p class="note" style="margin-top:12px">You can reply to the assistant here to refine the shortlist, for example "only fresh grad roles" or "what about hospitals?"</p>
+    </div>
+    <div class="panel chat-panel">
+      <div class="chat-head"><h2>Recommendations</h2><span class="note" id="chatStatus" aria-live="polite"></span></div>
+      <div class="chat-log" id="chatLog" tabindex="0" aria-label="Jobs assistant recommendations" aria-live="polite">
+        <p class="placeholder">Your shortlist will appear here, best matches first, with links to each job and its application page.</p>
+      </div>
+      <p class="disclaim" style="margin:0;padding:10px 16px">AI suggestions from the jobs on this board. Check each listing's requirements and closing date before applying.</p>
+    </div>
+  </section>
+
+  <section class="wrap jobs-board" aria-labelledby="boardTitle">
+    <div class="board-head">
+      <div>
+        <h2 id="boardTitle">Open jobs</h2>
+        <p class="meta" id="boardMeta">Loading jobs…</p>
+      </div>
+      <div class="board-tools">
+        <input id="jobQ" type="search" placeholder="Search titles, employers, skills" autocomplete="off" aria-label="Search jobs">
+        <label for="jobSort" style="margin:0">Sort</label>
+        <select id="jobSort"></select>
+      </div>
+    </div>
+    <div class="board-layout">
+      <details class="panel filters" id="filters" open>
+        <summary>Filters <span class="note" id="filterCount"></span></summary>
+        <fieldset id="fQual"><legend>Qualification required</legend></fieldset>
+        <fieldset>
+          <legend><label for="fYears" style="margin:0">Experience required</label></legend>
+          <select id="fYears">
+            <option value="">Any</option>
+            <option value="0">None needed</option>
+            <option value="1">Up to 1 year</option>
+            <option value="2">Up to 2 years</option>
+            <option value="3">Up to 3 years</option>
+            <option value="5">Up to 5 years</option>
+          </select>
+        </fieldset>
+        <fieldset><legend>Fresh grads</legend><label class="check"><input type="checkbox" id="fFresh"> Fresh grads welcome</label></fieldset>
+        <fieldset id="fNature"><legend>Nature of work</legend></fieldset>
+        <fieldset id="fOrg"><legend>Type of organisation</legend></fieldset>
+        <fieldset>
+          <legend><label for="fSkill" style="margin:0">Skills required</label></legend>
+          <select id="fSkill"><option value="">Any skill</option></select>
+        </fieldset>
+        <button class="linkbtn" type="button" id="clearFilters">Clear all filters</button>
+      </details>
+      <div>
+        <div class="job-list" id="jobList" aria-live="polite"></div>
+        <section class="hiring-now" id="hiringNow" aria-labelledby="hiringTitle" hidden>
+          <h2 id="hiringTitle">Also hiring on their own careers pages</h2>
+          <p class="lead">These organisations list openings on their own sites. Their jobs aren't copied here one by one, so open their page to see what's available and apply there.</p>
+          <div class="hiring-list" id="hiringList"></div>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">SG Social Services is an independent, volunteer-run directory and jobs board, not affiliated with any employer or job portal. Jobs come from MyCareersFuture and employers' own listings, and are checked daily. Always read the original listing before applying. The assistant gives suggestions, not career guarantees. <a href="/privacy.html">Privacy</a></div></footer>
+</body>
+</html>

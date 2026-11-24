@@ -1,0 +1,28 @@
+{
+  "name": "sg-social-services",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.60.0",
+    "@netlify/blobs": "^8.1.0",
+    "@netlify/database": "^2.0.2",
+    "drizzle-orm": "^1.0.0-beta.22"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.1.0",
+    "@types/node": "^26.6.6",
+    "drizzle-kit": "^1.0.0-beta.22",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --import tsx --experimental-test-module-mocks --test tests/*.test.mts",
+    "typecheck": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck netlify/functions/submissions.mts netlify/functions/track.mts netlify/functions/stats.mts netlify/lib/usage.mts netlify/lib/jobs.mts netlify/lib/jobs-sync.mts netlify/lib/job-page.mts netlify/lib/jobs-assistant.mts netlify/lib/hiring.mts netlify/functions/jobs.mts netlify/functions/job-page.mts netlify/functions/jobs-assistant.mts netlify/functions/jobs-sync-background.mts netlify/functions/jobs-sync-scheduled.mts db/index.ts db/schema.ts drizzle.config.ts",
+    "db:generate": "drizzle-kit generate"
+  }
+}
