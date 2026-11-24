@@ -86,7 +86,7 @@ export const jobs = pgTable('jobs', {
   index('jobs_status_closes_idx').on(table.status, table.closes_at),
   check('jobs_source', sql`${table.source} in ('mycareersfuture', 'manual')`),
   check('jobs_status', sql`${table.status} in ('open', 'closed')`),
-  check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'bachelors', 'diploma', 'unspecified')`),
+  check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'graduate-diploma', 'bachelors', 'diploma', 'unspecified')`),
   check('jobs_org_type', sql`${table.org_type} in ('healthcare', 'social-community', 'government', 'education', 'charity')`),
   check('jobs_apply_url_https', sql`${table.apply_url} like 'https://%'`),
   check('jobs_title_required', sql`length(trim(${table.title})) > 0`),

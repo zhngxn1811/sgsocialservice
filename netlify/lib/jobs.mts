@@ -6,6 +6,7 @@ export const QUALIFICATIONS = [
   { id: "doctorate", label: "Doctorate (PhD/PsyD)", rank: 5 },
   { id: "masters", label: "Master's degree", rank: 4 },
   { id: "honours", label: "Honours degree", rank: 3 },
+  { id: "graduate-diploma", label: "Graduate Diploma", rank: 2.5 },
   { id: "bachelors", label: "Bachelor's degree", rank: 2 },
   { id: "diploma", label: "Diploma", rank: 1 },
   { id: "unspecified", label: "Not stated", rank: 0 },
@@ -58,6 +59,7 @@ const SECTOR_SKILLS: [string, RegExp][] = [
   ["Tamil", /\btamil\b/i],
 ];
 
+const GRADUATE_DIPLOMA = /\bgraduate diploma\b/i;
 const LEVEL_RE: [Exclude<Qualification, "unspecified">, RegExp][] = [
   ["doctorate", /\b(ph\.?\s?d|psy\.?\s?d|d\.?\s?clin\.?\s?psy|doctorate|doctoral)\b/i],
   ["masters", /\bmaster'?s?\b|\bmasters?\b|\bpost-?graduate (degree|qualification)\b|\bM\.?\s?(A|Sc|SW|Soc ?Sci|Psych|Couns)\b/i],
@@ -80,7 +82,10 @@ export function qualificationOf(text: string, ssecEqa?: string | null): Qualific
     const cleaned = s.replace(/\bpost-?graduate diploma\b/gi, "postgraduate qualification")
       // "Master's degree" is a master's requirement, not also a degree (bachelor's) one
       .replace(/\b(master'?s?|masters|doctoral|doctorate|honou?rs|post-?graduate)\s+degree/gi, "$1 qualification");
-    for (const [level, re] of LEVEL_RE) if (re.test(cleaned)) (PREFERRED.test(cleaned) ? preferred : required).add(level);
+    const pool = PREFERRED.test(cleaned) ? preferred : required;
+    if (GRADUATE_DIPLOMA.test(cleaned)) pool.add("graduate-diploma");
+    const otherLevels = cleaned.replace(/\bgraduate diploma\b/gi, "graduate qualification");
+    for (const [level, re] of LEVEL_RE) if (re.test(otherLevels)) pool.add(level);
   }
   // "Degree (Honours)" is an honours requirement, not a plain bachelor's one
   if (required.has("honours")) required.delete("bachelors");
@@ -350,11 +355,14 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
 
 // ---------- filtering and sorting (API, board and assistant all use these) ----------
 
-export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "source_name" | "posted_at" | "closes_at">;
+export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean };
 export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   id: j.id, title: j.title, org: j.org, org_type: j.org_type, location: j.location, employment_type: j.employment_type,
   salary_min: j.salary_min, salary_max: j.salary_max, salary_type: j.salary_type, summary: j.summary,
   qualification: j.qualification, min_years: j.min_years, fresh_grad: j.fresh_grad, nature: j.nature, skills: j.skills,
+  accepts_graduate_diploma: "requirements" in j
+    ? sentences(j.requirements || j.description).some(s => GRADUATE_DIPLOMA.test(s) && !PREFERRED.test(s))
+    : j.accepts_graduate_diploma,
   apply_url: j.apply_url, source_name: j.source_name, posted_at: j.posted_at, closes_at: j.closes_at,
 });
 
@@ -362,7 +370,7 @@ export const isLive = (j: { status?: string; closes_at: string | null }, today: 
   (j.status === undefined || j.status === "open") && (!j.closes_at || j.closes_at >= today);
 
 export type JobFilters = {
-  q?: string; qualification?: string[]; maxYears?: number | null; fresh?: boolean; internship?: boolean;
+  q?: string; qualification?: string[]; maxYears?: number | null; experienceRange?: string; fresh?: boolean; internship?: boolean;
   nature?: string[]; orgType?: string[]; skill?: string; sort?: string;
   salaryBracket?: string; seniority?: string;
 };
@@ -371,11 +379,13 @@ const SALARY_BRACKETS = [
   ["under-3000", 0, 3000], ["3000-3999", 3000, 4000], ["4000-4999", 4000, 5000],
   ["5000-5999", 5000, 6000], ["6000-plus", 6000, Infinity],
 ] as const;
+const EXPERIENCE_RANGES = [["0-3", 0, 3], ["5-7", 5, 7], ["8-12", 8, 12], ["12-15", 12, 15], ["over-15", 16, Infinity]] as const;
 const PLACEMENT = /\b(?:intern|internship|practicum)\b(?!\s+(?:(?:programme|program|placement)\s+)?(?:coordinator|manager|supervisor)\b)/i;
 
 export function filterJobs<T extends PublicJob>(list: T[], f: JobFilters): T[] {
   const words = (f.q || "").toLowerCase().split(/\s+/).filter(Boolean);
   const bracket = SALARY_BRACKETS.find(([id]) => id === f.salaryBracket);
+  const experience = EXPERIENCE_RANGES.find(([id]) => id === f.experienceRange);
   const out = list.filter(j => {
     if (bracket) {
       const low = j.salary_min || j.salary_max;
@@ -384,7 +394,9 @@ export function filterJobs<T extends PublicJob>(list: T[], f: JobFilters): T[] {
     }
     const seniority = j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior";
     if (f.seniority && f.seniority !== seniority) return false;
-    if (f.qualification?.length && !f.qualification.includes(j.qualification)) return false;
+    if (f.qualification?.length && !f.qualification.includes(j.qualification) &&
+        !(j.accepts_graduate_diploma && f.qualification.includes("graduate-diploma"))) return false;
+    if (experience && (j.min_years == null || j.min_years < experience[1] || j.min_years > experience[2])) return false;
     if (typeof f.maxYears === "number" && (j.min_years ?? 0) > f.maxYears) return false;
     if ((f.fresh || f.internship) && !(f.fresh && j.fresh_grad) &&
         !(f.internship && (PLACEMENT.test(j.title) || PLACEMENT.test(j.employment_type)))) return false;
