@@ -1,11 +1,12 @@
 // Jobs board (/jobs/): loads open jobs from /api/jobs, filters and sorts them in the browser,
 // and runs the AI jobs assistant (/api/jobs-assistant). The conversation stays in this tab only.
 (function (root) {
-  const RANK = { doctorate: 5, masters: 4, honours: 3, bachelors: 2, diploma: 1, unspecified: 0 };
+  const RANK = { doctorate: 5, masters: 4, honours: 3, "graduate-diploma": 2.5, bachelors: 2, diploma: 1, unspecified: 0 };
   const SALARY_BRACKETS = [
     ["under-3000", 0, 3000], ["3000-3999", 3000, 4000], ["4000-4999", 4000, 5000],
     ["5000-5999", 5000, 6000], ["6000-plus", 6000, Infinity],
   ];
+  const EXPERIENCE_RANGES = [["0-3", 0, 3], ["5-7", 5, 7], ["8-12", 8, 12], ["12-15", 12, 15], ["over-15", 16, Infinity]];
   const PLACEMENT = /\b(?:intern|internship|practicum)\b(?!\s+(?:(?:programme|program|placement)\s+)?(?:coordinator|manager|supervisor)\b)/i;
   const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
@@ -13,6 +14,7 @@
   function filterJobs(list, f) {
     const words = (f.q || "").toLowerCase().split(/\s+/).filter(Boolean);
     const bracket = SALARY_BRACKETS.find(([id]) => id === f.salaryBracket);
+    const experience = EXPERIENCE_RANGES.find(([id]) => id === f.experienceRange);
     const out = list.filter(j => {
       if (bracket) {
         const low = j.salary_min || j.salary_max;
@@ -21,7 +23,9 @@
       }
       const seniority = j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior";
       if (f.seniority && f.seniority !== seniority) return false;
-      if (f.qualification && f.qualification.length && !f.qualification.includes(j.qualification)) return false;
+      if (f.qualification?.length && !f.qualification.includes(j.qualification) &&
+          !(j.accepts_graduate_diploma && f.qualification.includes("graduate-diploma"))) return false;
+      if (experience && (j.min_years == null || j.min_years < experience[1] || j.min_years > experience[2])) return false;
       if (typeof f.maxYears === "number" && (j.min_years ?? 0) > f.maxYears) return false;
       if ((f.fresh || f.internship) && !(f.fresh && j.fresh_grad) &&
           !(f.internship && (PLACEMENT.test(j.title) || PLACEMENT.test(j.employment_type)))) return false;
@@ -89,8 +93,7 @@
   }
   function state() {
     const vals = n => [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(i => i.value);
-    const y = $("#fYears").value;
-    return { q: $("#jobQ").value.trim(), qualification: vals("qual"), maxYears: y === "" ? null : Number(y), fresh: $("#fFresh").checked,
+    return { q: $("#jobQ").value.trim(), qualification: vals("qual"), experienceRange: $("#fYears").value, fresh: $("#fFresh").checked,
       nature: vals("nature"), orgType: vals("org"), skill: $("#fSkill").value, sort: $("#jobSort").value,
       salaryBracket: $("#fSalary").value, seniority: $("#fSeniority").value, internship: $("#fInternship").checked };
   }
@@ -98,7 +101,7 @@
     const p = new URLSearchParams();
     if (f.q) p.set("q", f.q);
     f.qualification.forEach(v => p.append("qual", v));
-    if (f.maxYears !== null) p.set("years", f.maxYears);
+    if (f.experienceRange) p.set("years", f.experienceRange);
     if (f.fresh) p.set("fresh", "1");
     if (f.internship) p.set("internship", "1");
     f.nature.forEach(v => p.append("nature", v));
@@ -127,7 +130,7 @@
     const f = state();
     saveUrl(f);
     const list = filterJobs(ALL, f);
-    const n = f.qualification.length + f.nature.length + f.orgType.length + (f.maxYears !== null) + f.fresh + f.internship + !!f.skill + !!f.salaryBracket + !!f.seniority;
+    const n = f.qualification.length + f.nature.length + f.orgType.length + !!f.experienceRange + f.fresh + f.internship + !!f.skill + !!f.salaryBracket + !!f.seniority;
     $("#filterCount").textContent = n ? `${n} on` : "";
     $("#boardMeta").textContent = `${list.length} of ${ALL.length} open job${ALL.length === 1 ? "" : "s"} · refreshed ${fmtDate(TODAY)}`;
     if (!list.length) {
@@ -156,7 +159,9 @@
       return;
     }
     const count = key => ALL.reduce((m, j) => { [].concat(j[key]).forEach(v => { m[v] = (m[v] || 0) + 1; }); return m; }, {});
-    checks($("#fQual"), META.qualifications, "qual", count("qualification"));
+    const qualifications = count("qualification");
+    qualifications["graduate-diploma"] = ALL.filter(j => j.qualification === "graduate-diploma" || j.accepts_graduate_diploma).length;
+    checks($("#fQual"), META.qualifications, "qual", qualifications);
     checks($("#fNature"), META.natures.filter(n => count("nature")[n.id]), "nature", count("nature"));
     checks($("#fOrg"), META.orgTypes, "org", count("org_type"));
     const skills = Object.entries(count("skills")).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 40);

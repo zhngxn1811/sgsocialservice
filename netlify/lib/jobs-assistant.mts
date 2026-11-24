@@ -42,6 +42,7 @@ const LEVELS: [Qualification, RegExp][] = [
   ["doctorate", /\b(ph\.?\s?d|psy\.?\s?d|doctorate|doctoral)\b/i],
   ["masters", /\bmaster'?s?\b|\bmasters\b|\bpostgrad(uate)?\b|\bM\.?(SW|Sc|A|Couns|Psych)\b|\bMGC\b/i],
   ["honours", /\bhonou?rs\b|\bhons\b/i],
+  ["graduate-diploma", /\bgraduate diploma\b/i],
   ["bachelors", /\bbachelor'?s?\b|\bdegree\b|\bundergrad(uate)?\b|\buniversity\b|\b(NUS|NTU|SMU|SUSS|SIT|SUTD|SIM|JCU)\b/i],
   ["diploma", /\bdiploma\b|\bpoly(technic)?\b|\b(NP|SP|TP|RP|NYP)\b/],
 ];

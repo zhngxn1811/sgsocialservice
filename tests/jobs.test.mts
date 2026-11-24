@@ -14,6 +14,9 @@ test('minimum qualification: required beats preferred, lowest required wins', ()
   assert.equal(qualificationOf('Degree in Social Work required. Master\'s preferred.'), 'bachelors');
   assert.equal(qualificationOf('Master\'s degree in Clinical Psychology from a recognised university.'), 'masters');
   assert.equal(qualificationOf('Diploma or Degree in Psychology, Social Work or related field.'), 'diploma');
+  assert.equal(qualificationOf('Graduate Diploma in Counselling required.'), 'graduate-diploma');
+  assert.equal(qualificationOf('Degree or Graduate Diploma in Counselling.'), 'bachelors');
+  assert.equal(qualificationOf('Diploma or Graduate Diploma in Counselling.'), 'diploma');
   assert.equal(qualificationOf('Honours degree in Psychology (or equivalent).'), 'honours');
   assert.equal(qualificationOf('PhD or DClinPsy in Clinical Psychology.'), 'doctorate');
   assert.equal(qualificationOf('Postgraduate diploma in counselling.'), 'masters');
@@ -182,6 +185,34 @@ test('salary brackets match overlapping monthly pay and seniority matches minimu
     for (const [options, ids] of cases) {
       assert.deepEqual(Array.from(filter(listings, options), job => job.id), ids, JSON.stringify(options));
     }
+  }
+});
+
+test('experience ranges include their endpoints and exclude unstated experience', () => {
+  const listings = [null, 0, 3, 4, 5, 7, 8, 12, 15, 16].map(years =>
+    pub({ id: String(years), min_years: years }));
+  const ranges = [
+    ['0-3', ['0', '3']], ['5-7', ['5', '7']], ['8-12', ['8', '12']],
+    ['12-15', ['12', '15']], ['over-15', ['16']],
+  ] as const;
+  for (const filter of [filterJobs, browserJobs().filterJobs]) {
+    for (const [experienceRange, ids] of ranges) {
+      assert.deepEqual(Array.from(filter(listings, { experienceRange }), job => job.id), ids);
+    }
+    assert.equal(filter(listings, { experienceRange: '' }).length, listings.length);
+  }
+});
+
+test('Graduate Diploma filter matches a stated requirement or accepted alternative', () => {
+  const job = mapMcfJob(mcf())!;
+  const listings = [
+    pub({ id: 'required', qualification: 'graduate-diploma' }),
+    toPublic({ ...job, id: 'alternative', qualification: 'bachelors', requirements: 'Degree or Graduate Diploma in Counselling.' }),
+    toPublic({ ...job, id: 'preferred', qualification: 'bachelors', requirements: 'Degree required. Graduate Diploma preferred.' }),
+    pub({ id: 'ordinary', qualification: 'diploma' }),
+  ];
+  for (const filter of [filterJobs, browserJobs().filterJobs]) {
+    assert.deepEqual(Array.from(filter(listings, { qualification: ['graduate-diploma'] }), job => job.id).sort(), ['alternative', 'required']);
   }
 });
 

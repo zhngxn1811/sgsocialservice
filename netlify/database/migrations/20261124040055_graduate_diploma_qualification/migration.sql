@@ -1,0 +1,1 @@
+ALTER TABLE "jobs" DROP CONSTRAINT "jobs_qualification", ADD CONSTRAINT "jobs_qualification" CHECK ("qualification" in ('doctorate', 'masters', 'honours', 'graduate-diploma', 'bachelors', 'diploma', 'unspecified'));
