@@ -73,6 +73,7 @@ export const jobs = pgTable('jobs', {
   nature: text('nature').array().notNull().default(sql`'{}'::text[]`),
   skills: text('skills').array().notNull().default(sql`'{}'::text[]`),
   apply_url: text('apply_url').notNull(),
+  application_action: text('application_action').notNull().default('apply'),
   source_url: text('source_url').notNull().default(''),
   posted_at: date('posted_at', { mode: 'string' }),
   closes_at: date('closes_at', { mode: 'string' }),
@@ -90,5 +91,6 @@ export const jobs = pgTable('jobs', {
   check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'graduate-diploma', 'bachelors', 'diploma', 'unspecified')`),
   check('jobs_org_type', sql`${table.org_type} in ('healthcare', 'social-community', 'government', 'education', 'charity')`),
   check('jobs_apply_url_https', sql`${table.apply_url} like 'https://%'`),
+  check('jobs_application_action', sql`${table.application_action} in ('apply', 'register', 'check-window')`),
   check('jobs_title_required', sql`length(trim(${table.title})) > 0`),
 ]);

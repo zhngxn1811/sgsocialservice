@@ -9,7 +9,7 @@ import { getDb } from "../../db/index.js";
 import { jobs } from "../../db/schema.js";
 import { withCors } from "../lib/cors.mjs";
 import { buildSystem, pickJobs, validateMessages } from "../lib/jobs-assistant.mjs";
-import { isLive, toPublic, type JobRecord, type PublicJob } from "../lib/jobs.mjs";
+import { isLive, isVacancy, toPublic, type JobRecord, type PublicJob } from "../lib/jobs.mjs";
 import { assistantCapReached, countServerUse, jobsAssistantDailyCap, sgDay } from "../lib/usage.mjs";
 
 const MODEL = process.env.JOBS_CLAUDE_MODEL || process.env.CLAUDE_MODEL || "claude-sonnet-5-5";
@@ -21,7 +21,7 @@ const json = (status: number, body: unknown) => new Response(JSON.stringify(body
 // Loads today's open jobs. Swappable in tests.
 export async function loadOpenJobs(today: string): Promise<PublicJob[]> {
   const rows = await getDb().select().from(jobs).where(eq(jobs.status, "open")) as JobRecord[];
-  return rows.filter(j => isLive(j, today)).map(toPublic);
+  return rows.filter(j => isLive(j, today) && isVacancy(j)).map(toPublic);
 }
 
 export function makeHandler(load: (today: string) => Promise<PublicJob[]> = loadOpenJobs) {

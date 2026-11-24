@@ -240,6 +240,7 @@ export type JobRecord = {
   summary: string; description: string; requirements: string;
   qualification: Qualification; min_years: number | null; fresh_grad: boolean; nature: Nature[]; skills: string[];
   apply_url: string; source_url: string; posted_at: string | null; closes_at: string | null; status: "open" | "closed";
+  application_action?: "apply" | "register" | "check-window";
   closing_date_estimated: boolean;
 };
 
@@ -375,7 +376,7 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
 
 // ---------- filtering and sorting (API, board and assistant all use these) ----------
 
-export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean };
+export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "application_action" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean };
 export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   id: j.id, title: j.title, org: j.org, org_type: j.org_type, location: j.location, employment_type: j.employment_type,
   salary_min: j.salary_min, salary_max: j.salary_max, salary_type: j.salary_type, summary: j.summary,
@@ -383,8 +384,10 @@ export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   accepts_graduate_diploma: "requirements" in j
     ? sentences(j.requirements || j.description).some(s => GRADUATE_DIPLOMA.test(s) && !PREFERRED.test(s))
     : j.accepts_graduate_diploma,
-  apply_url: j.apply_url, source_name: j.source_name, posted_at: j.posted_at, closes_at: j.closes_at, closing_date_estimated: j.closing_date_estimated,
+  apply_url: j.apply_url, application_action: j.application_action, source_name: j.source_name, posted_at: j.posted_at, closes_at: j.closes_at, closing_date_estimated: j.closing_date_estimated,
 });
+
+export const isVacancy = (job: Pick<JobRecord, "application_action">) => (job.application_action ?? "apply") === "apply";
 
 export const isLive = (j: { status?: string; closes_at: string | null }, today: string) =>
   (j.status === undefined || j.status === "open") && (!j.closes_at || j.closes_at >= today);
