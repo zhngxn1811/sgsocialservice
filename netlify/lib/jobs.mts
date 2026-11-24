@@ -240,6 +240,7 @@ export type JobRecord = {
   summary: string; description: string; requirements: string;
   qualification: Qualification; min_years: number | null; fresh_grad: boolean; nature: Nature[]; skills: string[];
   apply_url: string; source_url: string; posted_at: string | null; closes_at: string | null; status: "open" | "closed";
+  closing_date_estimated: boolean;
 };
 
 // Is this listing one for the social and health services jobs board?
@@ -253,10 +254,15 @@ export function isRelevantMcf(job: McfJob): boolean {
   return SECTOR_TITLE.test(String(job.title || ""));
 }
 
+function mcfDates(job: McfJob) {
+  const posted = dateOnly(job.metadata?.newPostingDate) || dateOnly(job.metadata?.originalPostingDate);
+  const deadline = dateOnly(job.metadata?.expiryDate);
+  return { posted_at: posted, closes_at: deadline || (posted && defaultClosingDate(posted)), closing_date_estimated: !deadline && !!posted };
+}
+
 export function isOpenMcf(job: McfJob, today: string): boolean {
   if (String(job.status?.jobStatus || "").toLowerCase() !== "open") return false;
-  const exp = job.metadata?.expiryDate;
-  return !exp || exp.slice(0, 10) >= today;
+  return isLive(mcfDates(job), today);
 }
 
 export function mapMcfJob(job: McfJob, overrides: Record<string, string> = {}): JobRecord | null {
@@ -283,14 +289,25 @@ export function mapMcfJob(job: McfJob, overrides: Record<string, string> = {}): 
     qualification: qualificationOf(text, job.ssecEqa), min_years: minYears, fresh_grad: freshGradOf(text, minYears),
     nature: natureOf(title, text), skills: skillsOf(text, (job.skills || []).map(s => String(s.skill || ""))),
     apply_url: applyUrl, source_url: applyUrl,
-    posted_at: dateOnly(job.metadata?.newPostingDate || job.metadata?.originalPostingDate),
-    closes_at: dateOnly(job.metadata?.expiryDate),
+    ...mcfDates(job),
     status: "open",
   };
 }
 
 const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) && v > 0 ? Math.round(v) : null);
-const dateOnly = (v: unknown) => (typeof v === "string" && /^\d{4}-\d{2}-\d{2}/.test(v) ? v.slice(0, 10) : null);
+function isCalendarDate(value: string): boolean {
+  if (!/^(?!0000)\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
+const dateOnly = (value: unknown) => typeof value === "string" && isCalendarDate(value.slice(0, 10)) ? value.slice(0, 10) : null;
+
+function defaultClosingDate(posted: string): string {
+  const date = new Date(`${posted}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + 30);
+  return date.toISOString().slice(0, 10);
+}
 // "NEW HOPE COMMUNITY SERVICES LIMITED" -> "New Hope Community Services Limited". Leaves mixed-case names alone.
 export function titleCase(s: string): string {
   if (s !== s.toUpperCase()) return s;
@@ -321,9 +338,13 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
   if (!org) return { error: "Add the organisation." };
   const apply = str(input.apply_url, 500);
   if (!isHttpsUrl(apply)) return { error: "Add the application link (it must start with https://)." };
-  const closes = str(input.closes_at, 10);
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(closes)) return { error: "Add the closing date, so the job comes down when applications close." };
+  const posted = str(input.posted_at, 30) || today;
+  if (!isCalendarDate(posted)) return { error: "Enter a valid posting date." };
+  const deadline = str(input.closes_at, 30);
+  if (deadline && !isCalendarDate(deadline)) return { error: "Enter a valid closing date." };
+  const closes = deadline || defaultClosingDate(posted);
   if (closes < today) return { error: "That closing date has passed. Only add jobs still taking applications." };
+  if (closes < posted) return { error: "The closing date cannot be before the posting date." };
   const location = str(input.location, 120) || "Singapore";
   if (!/singapore/i.test(location)) return { error: "Only roles based in Singapore can be listed. Add Singapore to the location." };
   const source = str(input.source_url, 500);
@@ -335,7 +356,6 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
   const ot = str(input.org_type, 30);
   const nature = Array.isArray(input.nature) ? input.nature.filter((n): n is Nature => NATURES.some(x => x.id === n)).slice(0, 4) : [];
   const id = jobId(title, org, Date.now().toString(36));
-  const posted = str(input.posted_at, 10);
   return {
     job: {
       id, source: "manual", source_id: id, source_name: str(input.source_name, 60) || "Employer website",
@@ -348,14 +368,14 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
       fresh_grad: typeof input.fresh_grad === "boolean" ? input.fresh_grad : freshGradOf(text, minYears),
       nature: nature.length ? nature : natureOf(title, text), skills: skillsOf(text),
       apply_url: apply, source_url: isHttpsUrl(source) ? source : apply,
-      posted_at: /^\d{4}-\d{2}-\d{2}$/.test(posted) ? posted : today, closes_at: closes, status: "open",
+      posted_at: posted, closes_at: closes, closing_date_estimated: !deadline, status: "open",
     },
   };
 }
 
 // ---------- filtering and sorting (API, board and assistant all use these) ----------
 
-export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean };
+export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean };
 export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   id: j.id, title: j.title, org: j.org, org_type: j.org_type, location: j.location, employment_type: j.employment_type,
   salary_min: j.salary_min, salary_max: j.salary_max, salary_type: j.salary_type, summary: j.summary,
@@ -363,7 +383,7 @@ export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   accepts_graduate_diploma: "requirements" in j
     ? sentences(j.requirements || j.description).some(s => GRADUATE_DIPLOMA.test(s) && !PREFERRED.test(s))
     : j.accepts_graduate_diploma,
-  apply_url: j.apply_url, source_name: j.source_name, posted_at: j.posted_at, closes_at: j.closes_at,
+  apply_url: j.apply_url, source_name: j.source_name, posted_at: j.posted_at, closes_at: j.closes_at, closing_date_estimated: j.closing_date_estimated,
 });
 
 export const isLive = (j: { status?: string; closes_at: string | null }, today: string) =>

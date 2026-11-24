@@ -51,12 +51,13 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
   </table></div>
 
   <h2>Add a job by hand</h2>
-  <p class="muted">For roles on Careers@Gov, an employer's own careers page or anywhere else that isn't picked up automatically. Only add Singapore roles that are still taking applications. The job comes down on its closing date. Leave qualification, experience and type of organisation blank to have them worked out from the text.</p>
+  <p class="muted">Only add Singapore roles that are still taking applications. Use the employer's closing date if known. Otherwise, the job comes down after 30 days from the posting date (today if left blank). Leave qualification, experience and type of organisation blank to have them worked out from the text.</p>
   <form id="add" class="grid">
     <label>Job title<input name="title" required maxlength="200"></label>
     <label>Organisation<input name="org" required maxlength="200"></label>
     <label>Application link<input name="apply_url" type="url" required placeholder="https://"></label>
-    <label>Closing date<input name="closes_at" type="date" required></label>
+    <label>Posting date (optional)<input name="posted_at" type="date"></label>
+    <label>Closing date (if stated)<input name="closes_at" type="date"></label>
     <label>Where it's listed<input name="source_name" placeholder="e.g. Careers@Gov" maxlength="60"></label>
     <label>Listing link (if different)<input name="source_url" type="url" placeholder="https://"></label>
     <label>Location<input name="location" value="Singapore" maxlength="120"></label>
@@ -93,7 +94,7 @@ function render(){
     <td><a href="/jobs/${esc(d.id)}" target="_blank">${esc(d.title)}</a><div class="muted">${esc(d.org)} · ${esc(d.org_type)}</div></td>
     <td class="muted">${esc((d.nature||[]).join(", ")||"—")}</td>
     <td class="muted">${esc(d.qualification)} · ${d.min_years===null?"—":esc(d.min_years)+" yrs"}${d.fresh_grad?" · fresh grads":""}</td>
-    <td>${esc(d.closes_at||"—")}</td>
+    <td>${esc(d.closes_at||"—")}${d.closing_date_estimated?" (estimated)":""}</td>
     <td class="muted">${esc(d.source_name||d.source)}</td>
     <td><select data-id="${esc(d.id)}" aria-label="Status">${["open","closed"].map(s=>`<option ${s===d.status?"selected":""}>${s}</option>`).join("")}</select></td>
   </tr>`).join(""):`<tr><td colspan="6" class="muted">Nothing here.</td></tr>`;

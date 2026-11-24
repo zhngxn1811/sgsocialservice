@@ -208,7 +208,7 @@ The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social 
 
 **First run.** After the first deploy, go to **`/admin/jobs`**, sign in with your `ADMIN_KEY` and press **Refresh jobs now**. It takes a few minutes; reload the page to see the jobs arrive. After that it runs by itself every day.
 
-**Adding a job by hand.** On `/admin/jobs`, use **Add a job by hand**. A title, organisation, link to the application page (https) and closing date are required, and the location must be in Singapore. The job comes down by itself after its closing date. You can also close or reopen any job from the list.
+**Adding a job by hand.** On `/admin/jobs`, use **Add a job by hand**. A title, organisation and link to the application page (https) are required, and the location must be in Singapore. If the employer did not state a closing date, the board lists the job through 30 days after its posting date (or after the date it was added if you leave the posting date blank). Imported jobs with a posting date but no deadline use the same 30-day rule. Jobs come down automatically after their closing or listing date. You can also close or reopen any job from the list.
 
 **Organisation types.** Jobs are sorted into Healthcare, Social & community services, Government, Education or Charity from the employer's name and industry. If one is wrong, add the employer's name exactly as it appears on the listing (in capitals) to `content/job-org-types.json`, for example `"AGENCY FOR INTEGRATED CARE PTE. LTD.": "government"`, and redeploy.
 
