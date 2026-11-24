@@ -196,7 +196,7 @@ The `usage_daily` table is created by the migration in `netlify/database/migrati
 
 ## Jobs board
 
-The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social and health services, each with its own page at `/jobs/<job-id>` showing the description, requirements and an **Apply** button that goes to the original listing. It has its own AI assistant, separate from the directory assistant, that acts as a seasoned recruitment consultant: people describe the job they want and get a shortlist of real, open roles with links, plus advice on how to stand out.
+The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social and health services. Curated and imported jobs have a details page with an **Apply** button; approved public submissions link directly to the original listing. It has its own AI assistant, separate from the directory assistant, that acts as a seasoned recruitment consultant: people describe the job they want and get a shortlist of real, open roles with links, plus advice on how to stand out.
 
 **Where the jobs come from.** Every day at 6am Singapore time the site pulls social and health services jobs from MyCareersFuture's public job search (about 26 searches: social worker, counsellor, psychologist, case manager, youth worker and so on). Only Singapore-based roles that are still open are kept. Jobs that expire, or that disappear from MyCareersFuture, are closed automatically and their pages say so. JobStreet, LinkedIn, Indeed and Careers@Gov don't allow copying, so add roles from those by hand (below). Each listing's qualification, experience, fresh-grad friendliness, nature of work and type of organisation are read from the listing text, so they're a good guide but not perfect.
 
@@ -211,6 +211,8 @@ The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social 
 **First run.** After the first deploy, go to **`/admin/jobs`**, sign in with your `ADMIN_KEY` and press **Refresh jobs now**. It takes a few minutes; reload the page to see the jobs arrive. After that it runs by itself every day.
 
 **Adding a job by hand.** On `/admin/jobs`, use **Add a job by hand**. A title, organisation and link to the application page (https) are required, and the location must be in Singapore. If the employer did not state a closing date, the board lists the job through 30 days after its posting date (or after the date it was added if you leave the posting date blank). Imported jobs with a posting date but no deadline use the same 30-day rule. Jobs come down automatically after their closing or listing date. You can also close or reopen any job from the list.
+
+**Reviewing public submissions.** Visitors can use **Post a Job** on the board to submit a title, organisation and HTTPS link to an open role. On `/admin/jobs`, select **Pending review** and check the original listing before choosing **Approve and publish** or **Decline**. The board links out to the supplied website rather than hosting a job description or accepting applications. With no closing date supplied, the listing expires 30 days after submission.
 
 **Organisation types.** Jobs are sorted into Healthcare, Social & community services, Government, Education or Charity from the employer's name and industry. If one is wrong, add the employer's name exactly as it appears on the listing (in capitals) to `content/job-org-types.json`, for example `"AGENCY FOR INTEGRATED CARE PTE. LTD.": "government"`, and redeploy.
 

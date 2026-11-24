@@ -1,0 +1,2 @@
+ALTER TABLE "jobs" DROP CONSTRAINT "jobs_source", ADD CONSTRAINT "jobs_source" CHECK ("source" in ('mycareersfuture', 'manual', 'submission'));--> statement-breakpoint
+ALTER TABLE "jobs" DROP CONSTRAINT "jobs_status", ADD CONSTRAINT "jobs_status" CHECK ("status" in ('open', 'closed', 'pending'));

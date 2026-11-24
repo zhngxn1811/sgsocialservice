@@ -2,6 +2,17 @@
 .jobs-hero{padding-block:14px 6px}
 .jobs-hero h1{font-size:clamp(28px,4.4vw,40px);font-weight:700;max-width:24ch}
 .jobs-hero > p{color:var(--muted);margin:10px 0 0;max-width:68ch;font-size:17px}
+.job-post{max-width:740px;padding-block:clamp(24px,6vw,64px)}
+.job-post .panel{padding:clamp(20px,5vw,36px);border-top:4px solid var(--teal)}
+.job-post h1{font-size:clamp(28px,5vw,40px)}
+.job-post .lede{color:var(--muted);margin:8px 0 24px;max-width:60ch}
+.job-post-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.job-post-fields label > input{display:block;margin-top:6px}
+.job-post-wide{grid-column:1/-1}
+.job-post-wide .note{margin:6px 0 0}
+.job-post-status:not(:empty){background:var(--teal-soft);border-radius:8px;margin:16px 0 0;padding:10px 12px}
+.job-post-status[data-state="error"]{background:var(--warn-soft)}
+@media (max-width:540px){.job-post-fields{grid-template-columns:1fr}}
 
 /* assistant */
 .jobs-desk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:20px;padding-block:18px 28px;scroll-margin-top:60px}

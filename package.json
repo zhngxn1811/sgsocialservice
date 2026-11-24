@@ -22,7 +22,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --import tsx --experimental-test-module-mocks --test tests/*.test.mts",
-    "typecheck": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck netlify/functions/submissions.mts netlify/functions/track.mts netlify/functions/stats.mts netlify/lib/usage.mts netlify/lib/jobs.mts netlify/lib/jobs-sync.mts netlify/lib/job-page.mts netlify/lib/jobs-assistant.mts netlify/functions/jobs.mts netlify/functions/job-page.mts netlify/functions/jobs-assistant.mts netlify/functions/jobs-sync-background.mts netlify/functions/jobs-sync-scheduled.mts db/index.ts db/schema.ts drizzle.config.ts",
+    "typecheck": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck netlify/functions/submissions.mts netlify/functions/track.mts netlify/functions/stats.mts netlify/lib/usage.mts netlify/lib/jobs.mts netlify/lib/jobs-sync.mts netlify/lib/job-page.mts netlify/lib/jobs-assistant.mts netlify/functions/jobs.mts netlify/functions/job-submissions.mts netlify/functions/job-page.mts netlify/functions/jobs-assistant.mts netlify/functions/jobs-sync-background.mts netlify/functions/jobs-sync-scheduled.mts db/index.ts db/schema.ts drizzle.config.ts",
     "db:generate": "drizzle-kit generate"
   }
 }
