@@ -9,6 +9,7 @@ export const QUALIFICATIONS = [
   { id: "graduate-diploma", label: "Graduate Diploma", rank: 2.5 },
   { id: "bachelors", label: "Bachelor's degree", rank: 2 },
   { id: "diploma", label: "Diploma", rank: 1 },
+  { id: "o-levels", label: "O Levels", rank: 0.5 },
   { id: "unspecified", label: "Not stated", rank: 0 },
 ] as const;
 export type Qualification = (typeof QUALIFICATIONS)[number]["id"];

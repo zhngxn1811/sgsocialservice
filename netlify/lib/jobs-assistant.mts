@@ -45,6 +45,7 @@ const LEVELS: [Qualification, RegExp][] = [
   ["graduate-diploma", /\bgraduate diploma\b/i],
   ["bachelors", /\bbachelor'?s?\b|\bdegree\b|\bundergrad(uate)?\b|\buniversity\b|\b(NUS|NTU|SMU|SUSS|SIT|SUTD|SIM|JCU)\b/i],
   ["diploma", /\bdiploma\b|\bpoly(technic)?\b|\b(NP|SP|TP|RP|NYP)\b/],
+  ["o-levels", /\b(GCE\s?)?["'“]?O["'”]?[- ]?levels?\b|\bschool leaver\b/i],
 ];
 const ORG_WORDS: [OrgType, RegExp][] = [
   ["healthcare", /\bhospital|healthcare|health care|clinic|polyclinic|medical\b/i],
