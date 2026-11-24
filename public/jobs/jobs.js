@@ -68,7 +68,7 @@
   function card(j, labels, today) {
     const lab = (list, id) => (list.find(x => x.id === id) || {}).label || id;
     const left = j.closes_at ? daysUntil(j.closes_at, today) : null;
-    const closes = j.closes_at ? `<span class="${left !== null && left <= 7 ? "soon" : ""}">Apply by ${esc(fmtDate(j.closes_at))}</span>` : "";
+    const closes = j.closes_at ? `<span class="${left !== null && left <= 7 ? "soon" : ""}">${j.closing_date_estimated ? "Listed until" : "Apply by"} ${esc(fmtDate(j.closes_at))}</span>` : "";
     const pay = salary(j);
     return `<article class="job-card">
       <h3><a href="/jobs/${esc(j.id)}">${esc(j.title)}</a></h3>

@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 import {
-  filterJobs, freshGradOf, htmlToText, isOpenMcf, isRelevantMcf, jobId, manualJob, mapMcfJob, minYearsOf,
+  filterJobs, freshGradOf, htmlToText, isLive, isOpenMcf, isRelevantMcf, jobId, manualJob, mapMcfJob, minYearsOf,
   natureOf, orgTypeOf, qualificationOf, sortJobs, splitRequirements, titleCase, toPublic, type McfJob, type PublicJob,
 } from '../netlify/lib/jobs.mts';
 import { collectMcfJobs } from '../netlify/lib/jobs-sync.mts';
@@ -115,6 +115,40 @@ test('jobs added by hand must be current, Singapore-based and have an https appl
   assert.match((manualJob({ ...ok, closes_at: '2026-11-01' }, '2026-11-24') as { error: string }).error, /passed/);
   assert.match((manualJob({ ...ok, location: 'Kuala Lumpur' }, '2026-11-24') as { error: string }).error, /Singapore/);
   assert.match((manualJob({ ...ok, apply_url: 'javascript:alert(1)' }, '2026-11-24') as { error: string }).error, /https/);
+});
+
+test('manual jobs default to 30 calendar days but preserve an explicit closing date', () => {
+  const input = { title: 'Counsellor', org: 'Some Charity', apply_url: 'https://example.org/apply', posted_at: '2026-11-20' };
+  const estimated = manualJob(input, '2026-11-24');
+  assert.ok('job' in estimated);
+  assert.equal(estimated.job.closes_at, '2026-12-20');
+  assert.equal(toPublic(estimated.job).closing_date_estimated, true);
+  assert.equal(isLive(estimated.job, '2026-12-20'), true);
+  assert.equal(isLive(estimated.job, '2026-12-21'), false);
+
+  const explicit = manualJob({ ...input, closes_at: '2026-11-30' }, '2026-11-24');
+  assert.ok('job' in explicit);
+  assert.equal(explicit.job.closes_at, '2026-11-30');
+  assert.equal(explicit.job.closing_date_estimated, false);
+
+  const noDates = manualJob({ ...input, posted_at: '' }, '2026-12-20');
+  assert.ok('job' in noDates);
+  assert.equal(noDates.job.posted_at, '2026-12-20');
+  assert.equal(noDates.job.closes_at, '2027-01-19');
+
+  assert.match((manualJob({ ...input, posted_at: '2026-09-21' }, '2026-11-24') as { error: string }).error, /passed/);
+  assert.match((manualJob({ ...input, posted_at: '2026-11-31' }, '2026-11-24') as { error: string }).error, /valid posting date/);
+  assert.match((manualJob({ ...input, closes_at: '2026-12-32' }, '2026-11-24') as { error: string }).error, /valid closing date/);
+});
+
+test('portal jobs without a deadline expire after 30 days when a posting date is known', () => {
+  const raw = mcf({ metadata: { originalPostingDate: '2026-10-31T08:00:00+08:00' } });
+  assert.equal(mapMcfJob(raw)?.closes_at, '2026-11-30');
+  assert.equal(mapMcfJob(raw)?.closing_date_estimated, true);
+  assert.equal(isOpenMcf(raw, '2026-11-30'), true);
+  assert.equal(isOpenMcf(raw, '2026-12-01'), false);
+  assert.equal(mapMcfJob(mcf())?.closing_date_estimated, false);
+  assert.equal(mapMcfJob(mcf({ metadata: {} }))?.closes_at, null);
 });
 
 const pub = (o: Partial<PublicJob>): PublicJob => ({ ...toPublic(mapMcfJob(mcf())!), ...o });

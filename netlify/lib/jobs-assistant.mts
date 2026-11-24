@@ -117,7 +117,8 @@ export function jobLine(j: PublicJob, i: number, base: string): string {
     `qualification: ${labelFor.qualification(j.qualification)}`, `experience: ${experienceLabel(j.min_years, j.fresh_grad)}`,
     `fresh grads welcome: ${j.fresh_grad ? "yes" : "not stated"}`, `nature: ${j.nature.map(labelFor.nature).join(", ") || "not stated"}`,
     `employment: ${j.employment_type || "not stated"}`, ...(salary ? [`salary: ${salary}`] : []), `location: ${j.location}`,
-    `posted: ${j.posted_at || "not stated"}`, `applications close: ${j.closes_at || "not stated"}`,
+    `posted: ${j.posted_at || "not stated"}`, j.closing_date_estimated
+      ? `board listing ends: ${j.closes_at}; employer deadline not stated` : `applications close: ${j.closes_at || "not stated"}`,
     ...(j.skills.length ? [`skills: ${j.skills.slice(0, 8).join(", ")}`] : []),
     `summary: ${j.summary.replace(/\s+/g, " ")}`,
     `job page: ${base}/jobs/${j.id}`, `apply: ${j.apply_url}`,
@@ -147,7 +148,7 @@ Rules:
 - Do not ask for or repeat personal identifiers such as NRIC, phone numbers, emails or home addresses. If they paste a CV, use only their education and work details.
 - Only help with job searching, applications and careers in Singapore's social and health services. For anything else, say this assistant only helps with jobs in this sector.
 - If the person mentions distress, a crisis or thoughts of harming themselves, respond with care first and point them to national mindline 1771 or SOS 1767 (both 24 hours), or 995 in an emergency.
-- Today is ${today}. A job is open up to and including its closing date. Flag jobs closing within 7 days.
+- Today is ${today}. Flag jobs closing or leaving the board within 7 days. A board listing end date is not an employer's application deadline.
 - There is no word-count limit. Give as much detail as the person needs, and respect any length they ask for.
 - Write in Singapore English: warm, direct and free of jargon. Format: "## " headings, "- " bullets, **bold** only for job names, and [label](URL) links using only URLs from the JOBS list.
 

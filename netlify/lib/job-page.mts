@@ -93,7 +93,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/jobs/">Jobs board</a> <span aria-hidden="true">›</span> <span aria-current="page">${esc(job.title)}</span></nav>
   <h1>${esc(job.title)}</h1>
   <p class="job-org">${esc(job.org)}</p>
-  <div class="closed-note"><strong>This job is no longer taking applications.</strong> It closed or was taken down by the employer. <a href="/jobs/">See current jobs</a> or ask the jobs assistant for similar roles.</div>
+  <div class="closed-note">${job.closing_date_estimated ? "<strong>This job is no longer listed on the board.</strong> No employer deadline was recorded." : "<strong>This job is no longer taking applications.</strong> It closed or was taken down by the employer."} <a href="/jobs/">See current jobs</a> or ask the jobs assistant for similar roles.</div>
 </main>
 ` + FOOT,
     };
@@ -109,7 +109,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
     ...(salary ? [["Salary", salary] as [string, string]] : []),
     ["Location", job.location],
     ["Posted", fmtDate(job.posted_at) || "Not stated"],
-    ["Apply by", fmtDate(job.closes_at) || "Not stated"],
+    [job.closing_date_estimated ? "Listed until" : "Apply by", fmtDate(job.closes_at) || "Not stated"],
   ];
 
   const ld = {
@@ -118,7 +118,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
     title: job.title,
     description: textToHtml(`${job.description}\n${job.requirements ? `## Requirements\n${job.requirements}` : ""}`) || esc(job.summary),
     datePosted: job.posted_at || today,
-    ...(job.closes_at ? { validThrough: `${job.closes_at}T23:59:59+08:00` } : {}),
+    ...(job.closes_at && !job.closing_date_estimated ? { validThrough: `${job.closes_at}T23:59:59+08:00` } : {}),
     hiringOrganization: { "@type": "Organization", name: job.org },
     jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "Singapore", addressCountry: "SG" } },
     ...(employmentTypes(job.employment_type).length ? { employmentType: employmentTypes(job.employment_type) } : {}),
@@ -140,7 +140,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
     </div>
     <div class="apply-box">
       <a class="btn primary apply" href="${esc(job.apply_url)}" target="_blank" rel="noopener noreferrer">${esc(applyLabel)}</a>
-      ${job.closes_at ? `<p class="note">Applications close ${esc(fmtDate(job.closes_at))}</p>` : ""}
+      ${job.closes_at ? `<p class="note">${job.closing_date_estimated ? "Listed until" : "Applications close"} ${esc(fmtDate(job.closes_at))}${job.closing_date_estimated ? " (employer deadline not stated)" : ""}</p>` : ""}
     </div>
   </div>
   <div class="job-layout">

@@ -34,6 +34,18 @@ test('structured data lets search engines show the job until it closes', () => {
   assert.equal(ld.hiringOrganization.name, 'New Hope Community Services Limited');
 });
 
+test('estimated board expiry does not claim an employer set a deadline or closed applications', () => {
+  const estimated = job({ closing_date_estimated: true });
+  const live = renderJobPage(estimated, BASE, '2026-12-19');
+  assert.equal(live.status, 200);
+  assert.match(live.html, /Listed until.*employer deadline not stated/);
+  assert.doesNotMatch(live.html, /Applications close|validThrough/);
+  const expired = renderJobPage(estimated, BASE, '2026-12-20');
+  assert.equal(expired.status, 410);
+  assert.match(expired.html, /no longer listed on the board/);
+  assert.doesNotMatch(expired.html, /no longer taking applications/);
+});
+
 test('everything from the listing is escaped', () => {
   const { html } = renderJobPage(job({ title: '<img src=x onerror=alert(1)>', org: '"><script>x</script>', description: '## <b>Hi</b>\n- <i>item</i>', apply_url: 'https://e.org/a"onmouseover="x' }), BASE, '2026-11-24');
   assert.ok(!html.includes('<img src=x'));

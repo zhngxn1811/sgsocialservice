@@ -5,7 +5,7 @@
 // Why only MyCareersFuture automatically: it has a public jobs feed with each job's status and expiry
 // date, so we can tell when applications close. JobStreet, LinkedIn and Indeed don't allow automated
 // copying in their terms, and Careers@Gov has no public feed. Add roles from those by hand on
-// /admin/jobs.html with a closing date, and they come down on that date.
+// /admin/jobs.html; they come down after the stated or estimated closing date.
 import { and, eq, lt } from "drizzle-orm";
 import overridesFile from "../../content/job-org-types.json" with { type: "json" };
 import { jobs } from "../../db/schema.js";
