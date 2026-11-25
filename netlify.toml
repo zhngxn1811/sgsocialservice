@@ -15,6 +15,11 @@
   status = 200
 
 [[redirects]]
+  from = "/help/trauma-informed/"
+  to = "/help/trauma-sexual-violence/"
+  status = 301
+
+[[redirects]]
   from = "/recommend"
   to = "/recommend.html"
   status = 200

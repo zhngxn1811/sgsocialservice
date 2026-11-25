@@ -77,3 +77,24 @@ test('the Private Practice filter includes all four Heartscape Psychology listin
   search('Heartscape Psychology');
   assert.match(get('#count').textContent, /1–4 of 4 matching services/);
 });
+
+test('both assessment listings from Heartscape are in both requested filters', () => {
+  for (const cat of ['neurodivergence', 'psychological-assessment-intervention']) {
+    const { get, search } = setup();
+    get('#cats').listeners.click({ target: { closest: () => ({ dataset: { cat } }) } });
+    search('Heartscape Psychology');
+    assert.match(get('#count').textContent, /1–2 of 2 matching services/);
+    assert.match(get('#grid').innerHTML, /Heartscape Kids: Child and Adolescent Therapy and Assessments/);
+    assert.match(get('#grid').innerHTML, /Individual and Couples Therapy, and Assessments \(Adults\)/);
+  }
+});
+
+test('the Trauma & sexual violence filter includes both former Trauma-Informed listings', () => {
+  const { get, search } = setup();
+  assert.doesNotMatch(get('#cats').innerHTML, /data-cat="trauma-informed"/);
+  get('#cats').listeners.click({ target: { closest: () => ({ dataset: { cat: 'trauma' } }) } });
+  for (const name of ['Trauma-Informed Counselling and Psychotherapy', 'Youth Counselling & Therapy']) {
+    search(name);
+    assert.match(get('#count').textContent, /1–1 of 1 matching services/);
+  }
+});
