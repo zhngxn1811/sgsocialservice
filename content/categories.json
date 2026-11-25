@@ -42,8 +42,8 @@
   "trauma": {
     "slug": "trauma-sexual-violence",
     "title": "Trauma and sexual violence support in Singapore",
-    "description": "Support for survivors of sexual assault, harassment and trauma in Singapore: helplines, case support and accompaniment to police and medical services.",
-    "intro": "Helplines, case management and specialist support in Singapore for survivors of sexual violence, harassment and other trauma.",
+    "description": "Support for survivors of sexual violence, harassment and other trauma in Singapore, including helplines, case support and trauma-informed counselling.",
+    "intro": "Find helplines, case management, specialist support and trauma-informed counselling in Singapore for people affected by sexual violence, harassment and other trauma.",
     "social_title": "",
     "social_description": ""
   },
@@ -180,14 +180,6 @@
     "title": "Psychological assessment and intervention in Singapore",
     "description": "Find psychological assessment and intervention services in Singapore, with contact details and referral requirements to help plan appropriate care.",
     "intro": "Services offering psychological assessment and intervention in Singapore. Check each listing for eligibility, assessment options, therapy and referral requirements.",
-    "social_title": "",
-    "social_description": ""
-  },
-  "trauma-informed": {
-    "slug": "trauma-informed",
-    "title": "Trauma-informed counselling in Singapore",
-    "description": "Find trauma-informed counselling and psychotherapy in Singapore for PTSD, complex trauma, dissociation and dissociative identity disorder.",
-    "intro": "Explore trauma-informed counselling and psychotherapy services, with contact details and appointment hours to help you find support.",
     "social_title": "",
     "social_description": ""
   },

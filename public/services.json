@@ -94,10 +94,6 @@
       "label": "Legal help"
     },
     {
-      "id": "trauma-informed",
-      "label": "Trauma-Informed"
-    },
-    {
       "id": "private-practice",
       "label": "Private Practice"
     }
@@ -5320,8 +5316,7 @@
       "cats": [
         "mental",
         "trauma",
-        "private-practice",
-        "trauma-informed"
+        "private-practice"
       ],
       "desc": "Mental health counselling focusing on PTSD, complex trauma, dissociation and dissociative identity disorder (DID).",
       "tags": [
@@ -5608,7 +5603,7 @@
       "cats": [
         "mental",
         "youth",
-        "trauma-informed"
+        "trauma"
       ],
       "h24": false,
       "desc": "Trybe Counselling & Therapy supports young people aged 12–25 with mental health concerns such as anxiety, depression and addiction, as well as academic or career stress, relationship difficulties, life transitions, self-esteem and identity issues. Its trauma-informed therapists offer respectful, non-judgemental support and use evidence-based approaches that address thoughts, emotions, bodily responses and relationships. Approaches include Trauma-Focused Cognitive Behavioural Therapy, Solution-Focused Brief Therapy, Narrative Therapy, Expressive Arts Therapy, Play Therapy, Somatic Experiencing and EMDR. No referral is required. Message Trybe on WhatsApp to book an appointment or a free 15-minute discovery call to ask questions and see if the service is a good fit.",
@@ -5629,7 +5624,9 @@
       "cats": [
         "mental",
         "lgbtq",
-        "private-practice"
+        "private-practice",
+        "neurodivergence",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "A private psychology practice offering confidential, non-judgemental talk therapy for adults in person or online. It supports clients with emotional distress, adjustment difficulties, self-worth and relationship or family concerns, as well as anxiety, depression, OCD, PTSD and ADHD. Therapists tailor treatment using approaches such as CBT, Schema Therapy, Compassion Focused Therapy, ACT, DBT, Psychodynamic Therapy and Solution-Focused Brief Therapy. Couples therapy welcomes couples of all genders and sexual orientations. It starts with a structured relationship assessment and helps couples handle disagreements and reconnect after conflict. Psychological assessments cover adult ADHD, autism spectrum disorders, learning disorders, school and work placements, and IQ, with personalised recommendations.",
@@ -5652,7 +5649,9 @@
       "cats": [
         "mental",
         "youth",
-        "private-practice"
+        "private-practice",
+        "neurodivergence",
+        "psychological-assessment-intervention"
       ],
       "h24": false,
       "desc": "Psychologists and counsellors provide play-based, evidence-based therapy tailored to each child, helping them develop coping skills and working with parents, schools and other health professionals. Therapy covers ADHD, anxiety, autism spectrum disorder, conduct disorder, depression, OCD, oppositional defiant disorder (ODD), selective mutism, school refusal, separation anxiety, specific learning disorders, and adjustment to transitions and significant events. Assessments cover cognition and IQ, learning disorders, behaviour, development and autism spectrum disorder. Each assessment includes a report with recommendations for home, school and therapy.",
