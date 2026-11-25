@@ -10,6 +10,10 @@
       "label": "Mental health & counselling"
     },
     {
+      "id": "lgbtq",
+      "label": "LGBTQ+"
+    },
+    {
       "id": "healthcare",
       "label": "Healthcare"
     },
@@ -1119,16 +1123,116 @@
       "org": "Oogachaga",
       "cats": [
         "mental",
-        "family"
+        "family",
+        "lgbtq"
       ],
-      "desc": "Counselling for lesbian, gay, bisexual, transgender, questioning and queer (LGBTQ+) individuals, couples and families. WhatsApp support: Tuesday to Thursday 7pm to 10pm; Saturday 2pm to 5pm.",
-      "web": "https://oogachaga.com/",
+      "desc": "Counselling for LGBTQ+ individuals, couples and families. WhatsApp counselling is available Tuesday and Thursday, 7 pm to 10 pm, and Saturday, 2 pm to 5 pm. Email counselling is available daily.",
+      "web": "https://oogachaga.com/contact",
       "tags": [
         "LGBTQ+",
         "Counselling",
         "WhatsApp"
       ],
       "other": "WhatsApp: 8592 0609; Email: CARE@oogachaga.com"
+    },
+    {
+      "id": "brave-spaces-helpline",
+      "name": "Brave Spaces Helpline",
+      "org": "Brave Spaces",
+      "cats": ["mental", "lgbtq"],
+      "h24": false,
+      "desc": "Brave Spaces supports marginalised women, including lesbian, bisexual, trans and queer (LBTQ+) women, through a helpline, social services, workshops and events.",
+      "phone": "8788 8817",
+      "other": "WhatsApp: 8788 8817; Email: bravespacesg@gmail.com; Hotline operating hours: Us Therapy lists Tuesday and Thursday, 6 pm to 9 pm. Brave Spaces does not publish hours on its site, so confirm directly before referring.",
+      "web": "https://www.bravespaces.sg/",
+      "tags": ["LGBTQ+", "Women", "Helpline", "Islandwide"]
+    },
+    {
+      "id": "transbefrienders",
+      "name": "TransBefrienders",
+      "org": "TransBefrienders",
+      "cats": ["youth", "lgbtq"],
+      "h24": false,
+      "desc": "A charity supporting transgender and gender-diverse youth through befriending, a peer support group, binder support and life skills coaching. It also runs events and provides resources for educators.",
+      "other": "Email: info@transbefrienders.com",
+      "web": "https://www.transbefrienders.com/",
+      "tags": ["LGBTQ+", "Transgender", "Gender-diverse youth", "Befriending", "Islandwide"]
+    },
+    {
+      "id": "iash-lgbtq-counselling",
+      "name": "LGBTQ+ Counselling at IASH",
+      "org": "IASH (It All Starts Hear)",
+      "cats": ["mental", "lgbtq", "private-practice"],
+      "h24": false,
+      "desc": "A social enterprise offering affirming, non-judgemental counselling in Bishan or online. Counselling covers anxiety, stress, low mood, burnout, panic attacks, trauma, grief, dating and relationships, family concerns, and exploring identity or coming out at your own pace. Subsidies are available for eligible clients, including Blue CHAS card holders, charity referrals, self-paying students up to undergraduate level, teachers and frontline healthcare professionals. Subsidies exclude intern counselling and couples sessions.",
+      "address": "226 Bishan Street 23, B1-101, Singapore 570226",
+      "other": "WhatsApp: 8780 1095; Email: itallstartshearsg@gmail.com",
+      "web": "https://www.iash.sg/lgbtq-therapy-singapore",
+      "tags": ["LGBTQ+", "Subsidised counselling", "Central", "Bishan", "Online"]
+    },
+    {
+      "id": "lightingway-lgbtq-affirming-therapy",
+      "name": "LGBTQ Affirming Therapy",
+      "org": "LightingWay Counselling & Therapy",
+      "cats": ["mental", "lgbtq", "private-practice"],
+      "h24": false,
+      "desc": "Affirming counselling for individuals and couples with a counsellor registered with the Singapore Association for Counselling. Sessions cover coming out, religious or cultural conflict around identity, rejection and discrimination, gender dysphoria and transition-related stress, relationship challenges and shame. Sessions are available in English, Mandarin or a mix of both, in person or online.",
+      "address": "Centropod@Changi, 80 Changi Road, #02-07, Singapore 419715",
+      "other": "WhatsApp: 8910 8870; Operating hours: Evening and weekend appointments available.",
+      "web": "https://www.lightingwaytherapy.com.sg/lgbtqcounselling",
+      "tags": ["LGBTQ+", "Couples counselling", "Mandarin", "East", "Changi Road", "Online"]
+    },
+    {
+      "id": "counseling-perspective-lgbtqia-counselling",
+      "name": "LGBTQIA+ Counselling",
+      "org": "Counseling Perspective",
+      "cats": ["mental", "lgbtq", "private-practice"],
+      "h24": false,
+      "desc": "Counselling for people exploring their sexual orientation or identity, experiencing distress related to gender dysphoria, deciding whether to come out, or dealing with family or relationship issues, discrimination and mental health concerns. Approaches include CBT, EMDR and mindfulness-based methods. Sessions are available in Central and East Singapore or online.",
+      "phone": "9853 7253",
+      "address": "160 Robinson Road, SBF Center, #04-16, Singapore 068914",
+      "other": "WhatsApp: 9853 7253; Email: info@counselingperspective.com; Operating hours: Phone and WhatsApp daily, 7:30 am to 9 pm; Address: 9 Raffles Place, Republic Plaza I, #09-01, Singapore 048619; Address: 291 Joo Chiat Road, #05-03, Singapore 427543",
+      "web": "https://counselingperspective.sg/p/services-lgbt-counseling",
+      "tags": ["LGBTQ+", "Central", "East", "Online"]
+    },
+    {
+      "id": "listening-ear-lgbtqia-counselling",
+      "name": "LGBTQIA+ Counselling (Queer Affirmative Therapy)",
+      "org": "Listening Ear Counselling & Consultancy",
+      "cats": ["mental", "family", "lgbtq", "private-practice"],
+      "h24": false,
+      "desc": "In-person therapy for individuals, couples and families. It helps families support a gay or trans child, spouse or parent, and supports same-sex parents. Couples can work on intimacy, infidelity, addiction affecting the relationship, or navigating different HIV statuses. Trauma approaches include EMDR, Brainspotting and Somatic Experiencing.",
+      "phone": "8950 2162",
+      "address": "International Plaza, 10 Anson Road, #28-14, Singapore 079903",
+      "other": "WhatsApp: 8950 2162; Operating hours: Monday to Friday, 8 am to 8 pm, by appointment only. Closed on public holidays.",
+      "web": "https://listeningearclinic.com/lgbtq-counselling-singapore/",
+      "tags": ["LGBTQ+", "Couples & families", "Central", "Tanjong Pagar"]
+    },
+    {
+      "id": "us-therapy-lgbtqia-affirming-therapy",
+      "name": "LGBTQIA+ Affirming Therapy",
+      "org": "Us Therapy",
+      "cats": ["mental", "lgbtq", "private-practice"],
+      "h24": false,
+      "desc": "Affirming therapy at a psychology clinic in Newton or online, starting with an assessment. It covers identity, coming out, family and relationship concerns, discrimination and trauma, as well as depression, anxiety, suicidal thoughts, substance use, PTSD and eating disorders. Approaches include CBT, queer affirmative therapy, ACT, EMDR and Schema Therapy.",
+      "phone": "8118 5590 / 6980 8580",
+      "address": "10 Winstedt Road, #02-10/11, Singapore 227977",
+      "other": "Email: hello@us-therapy.sg; Operating hours: Monday to Saturday, 9 am to 8 pm for consultations. Administration closes at 5:30 pm.",
+      "web": "https://us-therapy.sg/issues/lgbtqia-affirming-therapy-singapore/",
+      "tags": ["LGBTQ+", "Central", "Newton", "Online"]
+    },
+    {
+      "id": "sofia-wellness-lgbtq-counselling",
+      "name": "LGBTQ+ Counselling",
+      "org": "Sofia Wellness Clinic",
+      "cats": ["mental", "family", "lgbtq", "private-practice"],
+      "h24": false,
+      "desc": "Individual, couples and family counselling on gender identity, sexual orientation, coming out, discrimination and bullying, and relationship or workplace concerns. Also supports parents of LGBTQ+ children. Sessions are available near Dhoby Ghaut or online.",
+      "phone": "6612 1124",
+      "address": "Singapore Shopping Centre, 190 Clemenceau Avenue, #02-07, Singapore 239924",
+      "other": "WhatsApp: 6612 1124; Email: hello@sofia.com.sg",
+      "web": "https://www.sofia.com.sg/lgbtq-counselling-singapore/",
+      "tags": ["LGBTQ+", "Couples & families", "Central", "Dhoby Ghaut", "Online"]
     },
     {
       "id": "grovve",
@@ -5523,7 +5627,8 @@
       "name": "Individual and Couples Therapy, and Assessments (Adults)",
       "org": "Heartscape Psychology",
       "cats": [
-        "mental"
+        "mental",
+        "lgbtq"
       ],
       "h24": false,
       "desc": "A private psychology practice offering confidential, non-judgemental talk therapy for adults in person or online. It supports clients with emotional distress, adjustment difficulties, self-worth and relationship or family concerns, as well as anxiety, depression, OCD, PTSD and ADHD. Therapists tailor treatment using approaches such as CBT, Schema Therapy, Compassion Focused Therapy, ACT, DBT, Psychodynamic Therapy and Solution-Focused Brief Therapy. Couples therapy welcomes couples of all genders and sexual orientations. It starts with a structured relationship assessment and helps couples handle disagreements and reconnect after conflict. Psychological assessments cover adult ADHD, autism spectrum disorders, learning disorders, school and work placements, and IQ, with personalised recommendations.",
@@ -5533,6 +5638,7 @@
       "tags": [
         "Adults",
         "Couples therapy",
+        "LGBTQ+",
         "Psychological assessments",
         "Central",
         "Online"

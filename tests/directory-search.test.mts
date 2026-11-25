@@ -57,3 +57,16 @@ test('search resets pagination and combines with category filters', () => {
     [s.name, s.org, s.desc, s.address, s.other, ...(s.tags || [])].join(' ').toLowerCase().includes('counselling'));
   assert.equal((get('#grid').innerHTML.match(/<article /g) || []).length, Math.min(6, expected.length));
 });
+
+test('the LGBTQ+ filter includes new and existing support services', () => {
+  const { get, search } = setup();
+  get('#cats').listeners.click({ target: { closest: () => ({ dataset: { cat: 'lgbtq' } }) } });
+  assert.match(get('#cats').innerHTML, /data-cat="lgbtq" aria-pressed="true">LGBTQ\+/);
+  for (const name of ['Oogachaga', 'Brave Spaces Helpline', 'TransBefrienders', 'Heartscape Psychology']) {
+    search(name);
+    assert.match(get('#count').textContent, /1–1 of 1 matching services/);
+    assert.ok(get('#grid').innerHTML.includes(name));
+  }
+  search('Samaritans of Singapore');
+  assert.match(get('#grid').innerHTML, /Nothing matches/);
+});
