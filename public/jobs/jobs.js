@@ -94,10 +94,18 @@
     </article>`;
   }
 
-  root.SGSSJobs = { filterJobs, sortJobs, card, esc };
+  function matchesHiringCard(hiringCard, filters) {
+    const natures = hiringCard.dataset.hiringNature.split(" ");
+    return (!filters.nature?.length || filters.nature.some(nature => natures.includes(nature))) &&
+      (!filters.orgType?.length || filters.orgType.includes(hiringCard.dataset.hiringOrg)) &&
+      (filters.q || "").toLowerCase().split(/\s+/).filter(Boolean).every(word => hiringCard.textContent.toLowerCase().includes(word));
+  }
+
+  root.SGSSJobs = { filterJobs, sortJobs, card, esc, matchesHiringCard };
   if (typeof document === "undefined") return;
 
   const $ = s => document.querySelector(s);
+  const hiringCards = [...document.querySelectorAll("[data-hiring-nature]")];
   let ALL = [], META = null, TODAY = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 
   // ---------- board ----------
@@ -146,6 +154,7 @@
   function render() {
     const f = state();
     saveUrl(f);
+    hiringCards.forEach(hiringCard => { hiringCard.hidden = !matchesHiringCard(hiringCard, f); });
     const list = filterJobs(ALL, f);
     const n = f.qualification.length + f.nature.length + f.orgType.length + f.jobType.length + !!f.experienceRange + f.fresh + f.internship + !!f.skill + !!f.salaryBracket + !!f.seniority;
     $("#filterCount").textContent = n ? `${n} on` : "";
@@ -179,8 +188,15 @@
     const qualifications = count("qualification");
     qualifications["graduate-diploma"] = ALL.filter(j => j.qualification === "graduate-diploma" || j.accepts_graduate_diploma).length;
     checks($("#fQual"), META.qualifications, "qual", qualifications);
-    checks($("#fNature"), META.natures.filter(n => count("nature")[n.id]), "nature", count("nature"));
-    checks($("#fOrg"), META.orgTypes, "org", count("org_type"));
+    const natures = count("nature");
+    const orgTypes = count("org_type");
+    for (const hiringCard of hiringCards) {
+      for (const nature of hiringCard.dataset.hiringNature.split(" ")) natures[nature] = (natures[nature] || 0) + 1;
+      const orgType = hiringCard.dataset.hiringOrg;
+      orgTypes[orgType] = (orgTypes[orgType] || 0) + 1;
+    }
+    checks($("#fNature"), META.natures.filter(n => natures[n.id]), "nature", natures);
+    checks($("#fOrg"), META.orgTypes, "org", orgTypes);
     const skills = Object.entries(count("skills")).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 40);
     $("#fSkill").insertAdjacentHTML("beforeend", skills.map(([s, n]) => `<option value="${esc(s)}">${esc(s)} (${n})</option>`).join(""));
     $("#jobSort").innerHTML = META.sorts.map(s => `<option value="${esc(s.id)}">${esc(s.label)}</option>`).join("");

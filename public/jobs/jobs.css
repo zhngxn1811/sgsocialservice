@@ -80,6 +80,7 @@
 .internship-programmes{padding-bottom:40px;scroll-margin-top:72px}
 .internship-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
 .internship-card{display:flex;flex-direction:column}
+.internship-card[hidden]{display:none}
 .internship-card .intake-status{font-size:14px;font-weight:700;color:var(--teal)}
 .internship-card[data-intake="rolling"]{border-inline-start:3px solid var(--teal)}
 .internship-card .actions{margin-top:auto;padding-top:4px}
