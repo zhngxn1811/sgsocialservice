@@ -15,6 +15,14 @@
     "social_title": "",
     "social_description": ""
   },
+  "lgbtq": {
+    "slug": "lgbtq-support",
+    "title": "LGBTQ+ support and counselling in Singapore",
+    "description": "Find LGBTQ+ support in Singapore, including helplines, peer support for trans youth and affirming counselling for individuals, couples and families.",
+    "intro": "Find community helplines, peer support for transgender and gender-diverse youth, and affirming counselling for LGBTQ+ individuals, couples and families. Check each listing for contact details, hours and online options.",
+    "social_title": "",
+    "social_description": ""
+  },
   "addictions": {
     "slug": "addictions",
     "title": "Gambling, alcohol and gaming addiction help in Singapore",
@@ -186,8 +194,8 @@
   "private-practice": {
     "slug": "private-practice",
     "title": "Private practice counselling in Singapore",
-    "description": "Find private practice counselling from RANGE Counselling Services and SimpliBeing in Singapore, with contact details and appointment information.",
-    "intro": "Find private practice services from RANGE Counselling Services and SimpliBeing, including counselling, psychotherapy and career support.",
+    "description": "Find private counselling, psychotherapy and LGBTQ+ affirming therapy in Singapore, with contact details and appointment information.",
+    "intro": "Find private practices in Singapore offering counselling, psychotherapy and other support. Check listings for specialisations, appointment options and any available subsidies.",
     "social_title": "",
     "social_description": ""
   }
