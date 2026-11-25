@@ -98,3 +98,11 @@ test('the Trauma & sexual violence filter includes both former Trauma-Informed l
     assert.match(get('#count').textContent, /1–1 of 1 matching services/);
   }
 });
+
+test('the Trauma & sexual violence filter includes Heartscape’s adult therapy and assessments', () => {
+  const { get, search } = setup();
+  get('#cats').listeners.click({ target: { closest: () => ({ dataset: { cat: 'trauma' } }) } });
+  search('Individual and Couples Therapy, and Assessments (Adults)');
+  assert.match(get('#grid').innerHTML, /Individual and Couples Therapy, and Assessments \(Adults\)/);
+  assert.match(get('#grid').innerHTML, /Heartscape Psychology/);
+});
