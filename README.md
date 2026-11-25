@@ -121,6 +121,8 @@ Category ids are `crisis`, `mental`, `addictions`, `substance`, `trauma`, `viole
 - **Netlify:** the free plan should cover a site like this at the start. Check netlify.com/pricing for current limits on function calls.
 - **Anthropic:** usage is billed by tokens, including automatic continuations for longer answers. Longer answers cost more. Your spend limit caps the total.
 
+The site-wide donation panel links to Buy Me a Coffee. Update `raised` in `public/donations.js` when the reported donation total changes; the progress bar and amount remaining update together on the next deploy. The monthly website goal and one-time mobile app goal are listed separately.
+
 ## Troubleshooting
 - **The assistant cannot finish:** check function logs and AI Gateway usage for provider errors or exhausted credits.
 - **Response length:** the assistant has no application word-count or service-count cap. It automatically continues when a generation reaches the per-request token budget, streaming the continuation into the same answer. Provider context, rate and account limits, and Netlify execution-time and response-size limits still apply; truly unlimited output is not possible. If a connection drops, the displayed partial answer is preserved; try again or request a more focused answer.

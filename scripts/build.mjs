@@ -144,6 +144,7 @@ ${shareTags(esc, base, url)}
 ${jsonLd(data)}
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
+<script src="/donations.js" defer></script>
 <script src="/track.js" defer></script>
 <script src="/profile.js" defer></script>
 </head>
