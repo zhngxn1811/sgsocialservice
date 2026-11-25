@@ -75,6 +75,7 @@
   }
 
   function card(j, labels, today) {
+    if (j.programmeCard) return j.programmeCard;
     const lab = (list, id) => (list.find(x => x.id === id) || {}).label || id;
     const left = j.closes_at ? daysUntil(j.closes_at, today) : null;
     const closes = j.closes_at ? `<span class="${left !== null && left <= 7 ? "soon" : ""}">${j.closing_date_estimated ? "Listed until" : "Apply by"} ${esc(fmtDate(j.closes_at))}</span>` : "";
@@ -94,19 +95,26 @@
     </article>`;
   }
 
-  function matchesHiringCard(hiringCard, filters) {
-    const natures = hiringCard.dataset.hiringNature.split(" ");
-    return (!filters.nature?.length || filters.nature.some(nature => natures.includes(nature))) &&
-      (!filters.orgType?.length || filters.orgType.includes(hiringCard.dataset.hiringOrg)) &&
-      (filters.q || "").toLowerCase().split(/\s+/).filter(Boolean).every(word => hiringCard.textContent.toLowerCase().includes(word));
+  function programmeListing(article) {
+    return {
+      title: article.querySelector("h3").textContent,
+      org: "",
+      summary: article.textContent.replace(/\s+/g, " ").trim(),
+      qualification: "unspecified",
+      nature: article.dataset.nature?.split(" ") || [],
+      org_type: article.dataset.orgType,
+      employment_type: article.dataset.employmentType,
+      skills: [],
+      programmeCard: article.outerHTML,
+    };
   }
 
-  root.SGSSJobs = { filterJobs, sortJobs, card, esc, matchesHiringCard };
+  root.SGSSJobs = { filterJobs, sortJobs, card, esc, programmeListing };
   if (typeof document === "undefined") return;
 
   const $ = s => document.querySelector(s);
-  const hiringCards = [...document.querySelectorAll("[data-hiring-nature]")];
-  let ALL = [], META = null, TODAY = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+  const programmes = [...$("#programmeListings").content.querySelectorAll("article")].map(programmeListing);
+  let ALL = programmes, META = null, TODAY = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 
   // ---------- board ----------
   function checks(el, items, name, counts) {
@@ -154,16 +162,16 @@
   function render() {
     const f = state();
     saveUrl(f);
-    hiringCards.forEach(hiringCard => { hiringCard.hidden = !matchesHiringCard(hiringCard, f); });
     const list = filterJobs(ALL, f);
     const n = f.qualification.length + f.nature.length + f.orgType.length + f.jobType.length + !!f.experienceRange + f.fresh + f.internship + !!f.skill + !!f.salaryBracket + !!f.seniority;
     $("#filterCount").textContent = n ? `${n} on` : "";
-    $("#boardMeta").textContent = `${list.length} of ${ALL.length} open job${ALL.length === 1 ? "" : "s"} · refreshed ${fmtDate(TODAY)}`;
+    $("#boardMeta").textContent = META ? `${list.length} of ${ALL.length} listings · refreshed ${fmtDate(TODAY)}`
+      : `Live jobs couldn't load. Showing ${list.length} of ${ALL.length} employer and programme listings.`;
     if (!list.length) {
       $("#jobList").innerHTML = `<p class="empty">${ALL.length ? "No jobs match these filters. Try removing one, or ask the jobs assistant for similar roles." : "No jobs are on the board right now. Check back tomorrow: the board refreshes every morning."}</p>`;
       return;
     }
-    if (f.sort === "qualification" || f.sort === "qualification-asc") {
+    if (META && (f.sort === "qualification" || f.sort === "qualification-asc")) {
       let html = "", last = null;
       for (const j of list) {
         if (j.qualification !== last) { last = j.qualification; html += `<h3 class="group-title">${esc((META.qualifications.find(q => q.id === last) || {}).label || last)}</h3>`; }
@@ -179,9 +187,10 @@
       const r = await fetch("/api/jobs");
       if (!r.ok) throw new Error();
       const d = await r.json();
-      ALL = d.jobs || []; META = d.meta; TODAY = d.updated || TODAY;
+      ALL = [...(d.jobs || []), ...programmes]; META = d.meta; TODAY = d.updated || TODAY;
     } catch {
-      $("#boardMeta").textContent = "Jobs couldn't load. Refresh the page to try again.";
+      loadUrl();
+      render();
       return;
     }
     const count = key => ALL.reduce((m, j) => { [].concat(j[key]).forEach(v => { m[v] = (m[v] || 0) + 1; }); return m; }, {});
@@ -190,11 +199,6 @@
     checks($("#fQual"), META.qualifications, "qual", qualifications);
     const natures = count("nature");
     const orgTypes = count("org_type");
-    for (const hiringCard of hiringCards) {
-      for (const nature of hiringCard.dataset.hiringNature.split(" ")) natures[nature] = (natures[nature] || 0) + 1;
-      const orgType = hiringCard.dataset.hiringOrg;
-      orgTypes[orgType] = (orgTypes[orgType] || 0) + 1;
-    }
     checks($("#fNature"), META.natures.filter(n => natures[n.id]), "nature", natures);
     checks($("#fOrg"), META.orgTypes, "org", orgTypes);
     const skills = Object.entries(count("skills")).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 40);

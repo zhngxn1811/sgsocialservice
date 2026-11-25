@@ -80,9 +80,8 @@
   <section class="wrap jobs-board" aria-labelledby="boardTitle">
     <div class="board-head">
       <div>
-        <h2 id="boardTitle">Open jobs</h2>
+        <h2 id="boardTitle">Jobs and opportunities</h2>
         <p class="meta" id="boardMeta">Loading jobs…</p>
-        <p class="meta"><a href="#internship-programmes">See who's hiring and upcoming internship intakes</a></p>
       </div>
       <div class="board-tools">
         <input id="jobQ" type="search" placeholder="Search titles, employers, skills" autocomplete="off" aria-label="Search jobs">
@@ -154,16 +153,8 @@
       </div>
     </div>
   </section>
-  <section class="wrap internship-programmes" id="internship-programmes" aria-labelledby="internshipTitle">
-    <div class="board-head">
-      <div>
-        <p class="eyebrow">Employer and programme pages</p>
-        <h2 id="internshipTitle">Hiring now &amp; upcoming intakes</h2>
-        <p class="meta">Check the organisation's careers or programme page for current openings before applying.</p>
-      </div>
-    </div>
-    <div class="internship-grid">
-      <article class="job-card internship-card" data-hiring-nature="counselling case-management research-policy" data-hiring-org="charity">
+  <template id="programmeListings">
+      <article class="job-card" data-nature="counselling case-management research-policy" data-org-type="charity" data-employment-type="Internship and other roles">
         <p class="intake-status">Hiring now · Charity</p>
         <h3>Samaritans of Singapore (SOS)</h3>
         <p>SOS provides suicide prevention and crisis support, including a 24-hour hotline.</p>
@@ -171,7 +162,7 @@
         <p>Email your resume to <a href="mailto:hrd@sos.org.sg">hrd@sos.org.sg</a> with the role name in the subject line.</p>
         <div class="actions"><a class="btn" href="https://www.sos.org.sg/about/careers/" aria-label="See openings at Samaritans of Singapore">See openings</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
       </article>
-      <article class="job-card internship-card" data-intake="rolling">
+      <article class="job-card" data-intake="rolling" data-nature="counselling case-management" data-org-type="charity" data-employment-type="Internship/Practicum">
         <p class="intake-status">Rolling intake</p>
         <h3>HealthServe internships</h3>
         <p>Support migrant workers through casework, social services or mental health programmes. Relevant student placements start at eight weeks; longer commitments are prioritised.</p>
@@ -179,33 +170,32 @@
         <p>Apply up to six months ahead. Check which placements are available.</p>
         <div class="actions"><a class="btn" href="https://healthserve.org.sg/internship-opportunities/">View HealthServe placements</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
       </article>
-      <article class="job-card internship-card">
+      <article class="job-card" data-nature="psychology research-policy" data-org-type="healthcare" data-employment-type="Internship">
         <p class="intake-status">Opens December 2026</p>
         <h3>IMH Child Mental Health</h3>
         <p>The February–July 2027 psychology internship is for third-year psychology majors at recognised universities who are over 21 at enrolment.</p>
         <p>IMH also considers graduate clinical and research attachments year-round for eligible applicants who have secured a supervisor.</p>
         <div class="actions"><a class="btn" href="https://www.nhghealth.com.sg/imh/about-us/careers/learn-and-grow-internships-and-attachments-for-aspiring-professionals">View IMH internships</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
       </article>
-      <article class="job-card internship-card">
+      <article class="job-card" data-nature="research-policy" data-org-type="government" data-employment-type="Internship">
         <p class="intake-status">Expected January 2027</p>
         <h3>MOH Summer Internship</h3>
         <p>Explore public health projects such as policy and research. You can register for an alert now; that is not an application.</p>
         <div class="actions"><a class="btn" href="https://www.moh.gov.sg/about-us/join-us/internships/">View MOH intake details</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
       </article>
-      <article class="job-card internship-card">
+      <article class="job-card" data-org-type="government" data-employment-type="Internship">
         <p class="intake-status">Opens February 2027</p>
         <h3>MINDEF Summer Internship</h3>
         <p>The undergraduate programme welcomes students from all disciplines and typically lasts at least eight weeks. Check available projects when applications open.</p>
         <div class="actions"><a class="btn" href="https://www.mindef.gov.sg/join-us/dxo/careers/scholarships-and-internships/">View MINDEF intake details</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
       </article>
-      <article class="job-card internship-card">
+      <article class="job-card" data-nature="psychology social-work" data-org-type="government" data-employment-type="Internship">
         <p class="intake-status">Expected February 2027</p>
         <h3>MSF Student Internship</h3>
         <p>MSF typically opens applications in February for May–August placements, which last eight to twelve weeks. Check the projects for roles relevant to psychology or social work.</p>
         <div class="actions"><a class="btn" href="https://www.msf.gov.sg/join-us/scholarships-internships">View MSF internship programme</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
       </article>
-    </div>
-  </section>
+  </template>
 </main>
 
 <footer><div class="wrap">SG Social Services is an independent, volunteer-run directory and jobs board, not affiliated with any employer or job portal. Jobs come from MyCareersFuture, other job portals and employer listings. Always read the original listing before applying. The assistant gives suggestions, not career guarantees. <a href="/privacy.html">Privacy</a> · <a href="/sitemap">Sitemap</a></div></footer>
