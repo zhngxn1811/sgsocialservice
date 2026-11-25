@@ -5665,26 +5665,6 @@
         "Psychological assessments",
         "Central"
       ]
-    },
-    {
-      "id": "heartscape-focused-brief-group-therapy",
-      "name": "Focused Brief Group Therapy (Process Group)",
-      "org": "Heartscape Psychology",
-      "cats": [
-        "mental",
-        "private-practice"
-      ],
-      "h24": false,
-      "desc": "A therapy group for people who experience recurring, distressing difficulties in their relationships. Members reflect on how they interact in the group and practise new ways of communicating. The group meets in person on Saturday mornings for eight weekly 90-minute sessions. Email the practice to express interest or refer someone.",
-      "phone": "6592 4460",
-      "other": "WhatsApp: 8012 0368; Email: admin@heartscapepsychology.com; Address: Royal Square Medical Centre, 101 Irrawaddy Road, #16-02, Singapore 329565; Address: 40 Carpenter Street, #04-01, Singapore 059919",
-      "web": "https://www.heartscapepsychology.com/services",
-      "tags": [
-        "Group therapy",
-        "Relationships",
-        "Communication",
-        "Central"
-      ]
     }
   ]
 }
