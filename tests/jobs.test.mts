@@ -174,32 +174,56 @@ test('filters and sorts', () => {
   assert.deepEqual(sortJobs(sample, 'experience').map(j => j.id), ['b', 'c', 'a']);
 });
 
+type ProgrammeArticle = Pick<HTMLElement, 'dataset' | 'textContent' | 'outerHTML'> & { querySelector: (selector: string) => { textContent: string } };
+
 function browserJobs() {
   const src = readFileSync(new URL('../public/jobs/jobs.js', import.meta.url), 'utf8');
   const ctx: { SGSSJobs?: {
     filterJobs: typeof filterJobs;
     sortJobs: typeof sortJobs;
     card: (j: PublicJob, m: unknown, t: string) => string;
-    matchesHiringCard: (card: { dataset: { hiringNature: string; hiringOrg: string }; textContent: string }, filters: Parameters<typeof filterJobs>[1]) => boolean;
+    programmeListing: (article: ProgrammeArticle) => PublicJob;
   } } = {};
   runInNewContext(src, { globalThis: ctx, window: undefined });
   return ctx.SGSSJobs!;
 }
 
-test('the SOS hiring card links to careers and matches the requested board filters', () => {
+test('employer and programme cards appear in the main results and use the board filters', () => {
   const html = readFileSync(new URL('../public/jobs/index.html', import.meta.url), 'utf8');
-  const [, hiringNature, hiringOrg, content] = html.match(/<article[^>]+data-hiring-nature="([^"]+)" data-hiring-org="([^"]+)"[^>]*>([\s\S]*?<h3>Samaritans of Singapore \(SOS\)<\/h3>[\s\S]*?)<\/article>/) ?? [];
-  assert.ok(content);
-  assert.match(content, /href="https:\/\/www\.sos\.org\.sg\/about\/careers\/"[^>]*>See openings<\/a>/);
-  assert.match(content, /href="mailto:hrd@sos\.org\.sg"/);
-  const hiringCard = { dataset: { hiringNature, hiringOrg }, textContent: content.replace(/<[^>]+>/g, '') };
-  const { matchesHiringCard } = browserJobs();
+  const [, template] = html.match(/<template id="programmeListings">([\s\S]*?)<\/template>/) ?? [];
+  assert.ok(template);
+  assert.doesNotMatch(html, /internship-programmes|Hiring now &amp; upcoming intakes/);
+  const client = browserJobs();
+  const programmes = Array.from(template.matchAll(/<article([^>]*)>([\s\S]*?)<\/article>/g), ([outerHTML, attrs, content]) => {
+    const [, title] = content.match(/<h3>([^<]+)<\/h3>/) ?? [];
+    assert.ok(title);
+    return client.programmeListing({
+      dataset: {
+        nature: attrs.match(/data-nature="([^"]+)"/)?.[1],
+        orgType: attrs.match(/data-org-type="([^"]+)"/)?.[1],
+        employmentType: attrs.match(/data-employment-type="([^"]+)"/)?.[1],
+      },
+      textContent: content.replace(/<[^>]+>/g, ''),
+      outerHTML,
+      querySelector: () => ({ textContent: title }),
+    });
+  });
+  assert.deepEqual(programmes.map(job => job.title), [
+    'Samaritans of Singapore (SOS)', 'HealthServe internships', 'IMH Child Mental Health',
+    'MOH Summer Internship', 'MINDEF Summer Internship', 'MSF Student Internship',
+  ]);
+  const combined = [...sample, ...programmes];
+  assert.equal(client.filterJobs(combined, {}).length, combined.length);
+  assert.equal(client.filterJobs(combined, { internship: true }).length, programmes.length);
+  const [sos] = programmes;
   for (const nature of ['counselling', 'case-management', 'research-policy']) {
-    assert.equal(matchesHiringCard(hiringCard, { nature: [nature], orgType: ['charity'] }), true, nature);
+    assert.ok(client.filterJobs(combined, { nature: [nature], orgType: ['charity'] }).includes(sos), nature);
   }
-  assert.equal(matchesHiringCard(hiringCard, { q: 'SOS Night Shift' }), true);
-  assert.equal(matchesHiringCard(hiringCard, { nature: ['social-work'] }), false);
-  assert.equal(matchesHiringCard(hiringCard, { orgType: ['healthcare'] }), false);
+  assert.equal(client.filterJobs(combined, { q: 'SOS Night Shift' })[0], sos);
+  assert.ok(!client.filterJobs(combined, { orgType: ['healthcare'] }).includes(sos));
+  const card = client.card(sos, {}, '2026-11-25');
+  assert.match(card, /href="https:\/\/www\.sos\.org\.sg\/about\/careers\/"[^>]*>See openings<\/a>/);
+  assert.match(card, /href="mailto:hrd@sos\.org\.sg"/);
 });
 
 test('the board page filters and sorts exactly like the server', () => {
