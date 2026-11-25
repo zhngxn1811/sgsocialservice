@@ -149,7 +149,12 @@
         <button class="linkbtn" type="button" id="clearFilters">Clear all filters</button>
       </details>
       <div>
-        <div class="job-list" id="jobList" aria-live="polite"></div>
+        <div class="job-list" id="jobList" aria-live="polite" tabindex="-1"></div>
+        <nav class="job-pages" id="jobPages" aria-label="Jobs board pages" hidden>
+          <button class="btn" id="prevJobPage" type="button" aria-controls="jobList">Previous</button>
+          <span id="jobPageStatus" role="status"></span>
+          <button class="btn" id="nextJobPage" type="button" aria-controls="jobList">Next</button>
+        </nav>
       </div>
     </div>
   </section>
