@@ -5628,7 +5628,8 @@
       "org": "Heartscape Psychology",
       "cats": [
         "mental",
-        "lgbtq"
+        "lgbtq",
+        "private-practice"
       ],
       "h24": false,
       "desc": "A private psychology practice offering confidential, non-judgemental talk therapy for adults in person or online. It supports clients with emotional distress, adjustment difficulties, self-worth and relationship or family concerns, as well as anxiety, depression, OCD, PTSD and ADHD. Therapists tailor treatment using approaches such as CBT, Schema Therapy, Compassion Focused Therapy, ACT, DBT, Psychodynamic Therapy and Solution-Focused Brief Therapy. Couples therapy welcomes couples of all genders and sexual orientations. It starts with a structured relationship assessment and helps couples handle disagreements and reconnect after conflict. Psychological assessments cover adult ADHD, autism spectrum disorders, learning disorders, school and work placements, and IQ, with personalised recommendations.",
@@ -5650,7 +5651,8 @@
       "org": "Heartscape Psychology",
       "cats": [
         "mental",
-        "youth"
+        "youth",
+        "private-practice"
       ],
       "h24": false,
       "desc": "Psychologists and counsellors provide play-based, evidence-based therapy tailored to each child, helping them develop coping skills and working with parents, schools and other health professionals. Therapy covers ADHD, anxiety, autism spectrum disorder, conduct disorder, depression, OCD, oppositional defiant disorder (ODD), selective mutism, school refusal, separation anxiety, specific learning disorders, and adjustment to transitions and significant events. Assessments cover cognition and IQ, learning disorders, behaviour, development and autism spectrum disorder. Each assessment includes a report with recommendations for home, school and therapy.",
@@ -5671,7 +5673,8 @@
       "org": "Heartscape Psychology",
       "cats": [
         "mental",
-        "family"
+        "family",
+        "private-practice"
       ],
       "h24": false,
       "desc": "A free peer support group for women navigating fertility concerns, pregnancy or the postpartum period. Participants connect and share experiences and information. The group meets monthly on Thursday evenings for 90 minutes, in person or online. Email the practice to join.",
@@ -5693,7 +5696,8 @@
       "name": "Focused Brief Group Therapy (Process Group)",
       "org": "Heartscape Psychology",
       "cats": [
-        "mental"
+        "mental",
+        "private-practice"
       ],
       "h24": false,
       "desc": "A therapy group for people who experience recurring, distressing difficulties in their relationships. Members reflect on how they interact in the group and practise new ways of communicating. The group meets in person on Saturday mornings for eight weekly 90-minute sessions. Email the practice to express interest or refer someone.",

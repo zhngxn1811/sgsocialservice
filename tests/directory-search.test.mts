@@ -70,3 +70,10 @@ test('the LGBTQ+ filter includes new and existing support services', () => {
   search('Samaritans of Singapore');
   assert.match(get('#grid').innerHTML, /Nothing matches/);
 });
+
+test('the Private Practice filter includes all four Heartscape Psychology listings', () => {
+  const { get, search } = setup();
+  get('#cats').listeners.click({ target: { closest: () => ({ dataset: { cat: 'private-practice' } }) } });
+  search('Heartscape Psychology');
+  assert.match(get('#count').textContent, /1–4 of 4 matching services/);
+});
