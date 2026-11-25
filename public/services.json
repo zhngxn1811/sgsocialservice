@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "categories": [
     {
       "id": "crisis",
@@ -5515,6 +5515,89 @@
         "Counselling",
         "Trauma-Informed",
         "East",
+        "Central"
+      ]
+    },
+    {
+      "id": "heartscape-adult-therapy-assessments",
+      "name": "Individual and Couples Therapy, and Assessments (Adults)",
+      "org": "Heartscape Psychology",
+      "cats": [
+        "mental"
+      ],
+      "h24": false,
+      "desc": "A private psychology practice offering confidential, non-judgemental talk therapy for adults in person or online. It supports clients with emotional distress, adjustment difficulties, self-worth and relationship or family concerns, as well as anxiety, depression, OCD, PTSD and ADHD. Therapists tailor treatment using approaches such as CBT, Schema Therapy, Compassion Focused Therapy, ACT, DBT, Psychodynamic Therapy and Solution-Focused Brief Therapy. Couples therapy welcomes couples of all genders and sexual orientations. It starts with a structured relationship assessment and helps couples handle disagreements and reconnect after conflict. Psychological assessments cover adult ADHD, autism spectrum disorders, learning disorders, school and work placements, and IQ, with personalised recommendations.",
+      "phone": "6592 4460",
+      "other": "WhatsApp: 8012 0368; Email: admin@heartscapepsychology.com; Address: Royal Square Medical Centre, 101 Irrawaddy Road, #16-02, Singapore 329565; Address: 40 Carpenter Street, #04-01, Singapore 059919",
+      "web": "https://www.heartscapepsychology.com/services",
+      "tags": [
+        "Adults",
+        "Couples therapy",
+        "Psychological assessments",
+        "Central",
+        "Online"
+      ]
+    },
+    {
+      "id": "heartscape-kids",
+      "name": "Heartscape Kids: Child and Adolescent Therapy and Assessments",
+      "org": "Heartscape Psychology",
+      "cats": [
+        "mental",
+        "youth"
+      ],
+      "h24": false,
+      "desc": "Psychologists and counsellors provide play-based, evidence-based therapy tailored to each child, helping them develop coping skills and working with parents, schools and other health professionals. Therapy covers ADHD, anxiety, autism spectrum disorder, conduct disorder, depression, OCD, oppositional defiant disorder (ODD), selective mutism, school refusal, separation anxiety, specific learning disorders, and adjustment to transitions and significant events. Assessments cover cognition and IQ, learning disorders, behaviour, development and autism spectrum disorder. Each assessment includes a report with recommendations for home, school and therapy.",
+      "phone": "6592 4460",
+      "other": "WhatsApp: 8012 0368; Email: admin@heartscapepsychology.com; Address: Royal Square Medical Centre, 101 Irrawaddy Road, #16-02, Singapore 329565; Address: 40 Carpenter Street, #04-01, Singapore 059919",
+      "web": "https://www.heartscapepsychology.com/services",
+      "tags": [
+        "Children",
+        "Youth",
+        "Play therapy",
+        "Psychological assessments",
+        "Central"
+      ]
+    },
+    {
+      "id": "heartscape-fertility-pregnancy-postpartum-support",
+      "name": "Fertility, Pregnancy and Postpartum Support Group",
+      "org": "Heartscape Psychology",
+      "cats": [
+        "mental",
+        "family"
+      ],
+      "h24": false,
+      "desc": "A free peer support group for women navigating fertility concerns, pregnancy or the postpartum period. Participants connect and share experiences and information. The group meets monthly on Thursday evenings for 90 minutes, in person or online. Email the practice to join.",
+      "phone": "6592 4460",
+      "other": "WhatsApp: 8012 0368; Email: admin@heartscapepsychology.com; Address: Royal Square Medical Centre, 101 Irrawaddy Road, #16-02, Singapore 329565; Address: 40 Carpenter Street, #04-01, Singapore 059919",
+      "web": "https://www.heartscapepsychology.com/services",
+      "tags": [
+        "Peer support",
+        "Fertility",
+        "Pregnancy",
+        "Postpartum",
+        "Free",
+        "Central",
+        "Online"
+      ]
+    },
+    {
+      "id": "heartscape-focused-brief-group-therapy",
+      "name": "Focused Brief Group Therapy (Process Group)",
+      "org": "Heartscape Psychology",
+      "cats": [
+        "mental"
+      ],
+      "h24": false,
+      "desc": "A therapy group for people who experience recurring, distressing difficulties in their relationships. Members reflect on how they interact in the group and practise new ways of communicating. The group meets in person on Saturday mornings for eight weekly 90-minute sessions. Email the practice to express interest or refer someone.",
+      "phone": "6592 4460",
+      "other": "WhatsApp: 8012 0368; Email: admin@heartscapepsychology.com; Address: Royal Square Medical Centre, 101 Irrawaddy Road, #16-02, Singapore 329565; Address: 40 Carpenter Street, #04-01, Singapore 059919",
+      "web": "https://www.heartscapepsychology.com/services",
+      "tags": [
+        "Group therapy",
+        "Relationships",
+        "Communication",
         "Central"
       ]
     }
