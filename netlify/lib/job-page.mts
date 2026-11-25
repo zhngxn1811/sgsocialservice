@@ -55,6 +55,7 @@ const HEAD = (title: string, description: string, url: string, extra = "") => `<
 ${extra}
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
+<script src="/donations.js" defer></script>
 <script src="/track.js" defer></script>
 </head>
 <body>
