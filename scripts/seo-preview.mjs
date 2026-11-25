@@ -58,6 +58,7 @@ export function seoPreviewHtml({ pages, issues, base, rules, esc, builtAt }) {
 <link rel="stylesheet" href="/site.css">
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
+<script src="/donations.js" defer></script>
 <style>
 /* Google-like colours, in both themes */
 :root{--g-link:#1a0dab;--g-text:#4d5156;--g-crumb:#202124;--g-card:#ffffff}
