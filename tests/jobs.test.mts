@@ -176,10 +176,31 @@ test('filters and sorts', () => {
 
 function browserJobs() {
   const src = readFileSync(new URL('../public/jobs/jobs.js', import.meta.url), 'utf8');
-  const ctx: { SGSSJobs?: { filterJobs: typeof filterJobs; sortJobs: typeof sortJobs; card: (j: PublicJob, m: unknown, t: string) => string } } = {};
+  const ctx: { SGSSJobs?: {
+    filterJobs: typeof filterJobs;
+    sortJobs: typeof sortJobs;
+    card: (j: PublicJob, m: unknown, t: string) => string;
+    matchesHiringCard: (card: { dataset: { hiringNature: string; hiringOrg: string }; textContent: string }, filters: Parameters<typeof filterJobs>[1]) => boolean;
+  } } = {};
   runInNewContext(src, { globalThis: ctx, window: undefined });
   return ctx.SGSSJobs!;
 }
+
+test('the SOS hiring card links to careers and matches the requested board filters', () => {
+  const html = readFileSync(new URL('../public/jobs/index.html', import.meta.url), 'utf8');
+  const [, hiringNature, hiringOrg, content] = html.match(/<article[^>]+data-hiring-nature="([^"]+)" data-hiring-org="([^"]+)"[^>]*>([\s\S]*?<h3>Samaritans of Singapore \(SOS\)<\/h3>[\s\S]*?)<\/article>/) ?? [];
+  assert.ok(content);
+  assert.match(content, /href="https:\/\/www\.sos\.org\.sg\/about\/careers\/"[^>]*>See openings<\/a>/);
+  assert.match(content, /href="mailto:hrd@sos\.org\.sg"/);
+  const hiringCard = { dataset: { hiringNature, hiringOrg }, textContent: content.replace(/<[^>]+>/g, '') };
+  const { matchesHiringCard } = browserJobs();
+  for (const nature of ['counselling', 'case-management', 'research-policy']) {
+    assert.equal(matchesHiringCard(hiringCard, { nature: [nature], orgType: ['charity'] }), true, nature);
+  }
+  assert.equal(matchesHiringCard(hiringCard, { q: 'SOS Night Shift' }), true);
+  assert.equal(matchesHiringCard(hiringCard, { nature: ['social-work'] }), false);
+  assert.equal(matchesHiringCard(hiringCard, { orgType: ['healthcare'] }), false);
+});
 
 test('the board page filters and sorts exactly like the server', () => {
   const client = browserJobs();
