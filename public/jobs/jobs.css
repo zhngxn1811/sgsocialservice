@@ -62,7 +62,9 @@
 .filters select{font-size:15px}
 .filters .filter-hint{margin:5px 0 0}
 .filters .linkbtn{margin-top:12px}
-.job-list{display:grid;gap:12px}
+.job-list{display:grid;gap:12px;scroll-margin-top:60px}
+.job-pages{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:16px}
+.job-pages .btn:disabled{cursor:default}
 .group-title{font-size:18px;margin:10px 0 0;padding-top:6px;border-top:1px solid var(--line)}
 .group-title:first-child{border-top:none;margin-top:0;padding-top:0}
 .job-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:8px;min-width:0}

@@ -1,6 +1,7 @@
 // Jobs board (/jobs/): loads open jobs from /api/jobs, filters and sorts them in the browser,
 // and runs the AI jobs assistant (/api/jobs-assistant). The conversation stays in this tab only.
 (function (root) {
+  const PAGE_SIZE = 10;
   const RANK = { doctorate: 5, masters: 4, honours: 3, "graduate-diploma": 2.5, bachelors: 2, diploma: 1, "o-levels": 0.5, unspecified: 0 };
   const SALARY_BRACKETS = [
     ["under-3000", 0, 3000], ["3000-3999", 3000, 4000], ["4000-4999", 4000, 5000],
@@ -109,12 +110,20 @@
     };
   }
 
-  root.SGSSJobs = { filterJobs, sortJobs, card, esc, programmeListing };
+  function paginateJobs(list, requestedPage) {
+    const pageCount = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+    const page = Math.max(1, Math.min(requestedPage, pageCount));
+    const start = (page - 1) * PAGE_SIZE;
+    return { page, pageCount, listings: list.slice(start, start + PAGE_SIZE) };
+  }
+
+  root.SGSSJobs = { filterJobs, sortJobs, card, esc, programmeListing, paginateJobs };
   if (typeof document === "undefined") return;
 
   const $ = s => document.querySelector(s);
   const programmes = [...$("#programmeListings").content.querySelectorAll("article")].map(programmeListing);
   let ALL = programmes, META = null, TODAY = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+  let page = 1;
 
   // ---------- board ----------
   function checks(el, items, name, counts) {
@@ -163,6 +172,12 @@
     const f = state();
     saveUrl(f);
     const list = filterJobs(ALL, f);
+    const { page: currentPage, pageCount, listings } = paginateJobs(list, page);
+    page = currentPage;
+    $("#jobPages").hidden = pageCount <= 1;
+    $("#jobPageStatus").textContent = `Page ${page} of ${pageCount}`;
+    $("#prevJobPage").disabled = page === 1;
+    $("#nextJobPage").disabled = page === pageCount;
     const n = f.qualification.length + f.nature.length + f.orgType.length + f.jobType.length + !!f.experienceRange + f.fresh + f.internship + !!f.skill + !!f.salaryBracket + !!f.seniority;
     $("#filterCount").textContent = n ? `${n} on` : "";
     $("#boardMeta").textContent = META ? `${list.length} of ${ALL.length} listings · refreshed ${fmtDate(TODAY)}`
@@ -173,13 +188,13 @@
     }
     if (META && (f.sort === "qualification" || f.sort === "qualification-asc")) {
       let html = "", last = null;
-      for (const j of list) {
+      for (const j of listings) {
         if (j.qualification !== last) { last = j.qualification; html += `<h3 class="group-title">${esc((META.qualifications.find(q => q.id === last) || {}).label || last)}</h3>`; }
         html += card(j, META, TODAY);
       }
       $("#jobList").innerHTML = html;
     } else {
-      $("#jobList").innerHTML = list.map(j => card(j, META, TODAY)).join("");
+      $("#jobList").innerHTML = listings.map(j => card(j, META, TODAY)).join("");
     }
   }
   async function loadJobs() {
@@ -209,13 +224,26 @@
     render();
   }
   let t;
-  $("#jobQ").addEventListener("input", () => { clearTimeout(t); t = setTimeout(render, 150); });
-  ["#jobSort", "#fYears", "#fSkill", "#fSalary", "#fSeniority"].forEach(s => $(s).addEventListener("change", render));
-  $("#filters").addEventListener("change", e => { if (e.target.matches("input[type=checkbox]")) render(); });
+  function resetPage() {
+    clearTimeout(t);
+    page = 1;
+    render();
+  }
+  function changePage(offset) {
+    page += offset;
+    render();
+    $("#jobList").focus({ preventScroll: true });
+    $("#jobList").scrollIntoView({ block: "start" });
+  }
+  $("#prevJobPage").addEventListener("click", () => changePage(-1));
+  $("#nextJobPage").addEventListener("click", () => changePage(1));
+  $("#jobQ").addEventListener("input", () => { clearTimeout(t); t = setTimeout(resetPage, 150); });
+  ["#jobSort", "#fYears", "#fSkill", "#fSalary", "#fSeniority"].forEach(s => $(s).addEventListener("change", resetPage));
+  $("#filters").addEventListener("change", e => { if (e.target.matches("input[type=checkbox]")) resetPage(); });
   $("#clearFilters").addEventListener("click", () => {
     document.querySelectorAll("#filters input[type=checkbox]").forEach(i => { i.checked = false; });
     ["#fYears", "#fSkill", "#fSalary", "#fSeniority", "#jobQ"].forEach(s => { $(s).value = ""; });
-    render();
+    resetPage();
   });
   loadJobs();
 

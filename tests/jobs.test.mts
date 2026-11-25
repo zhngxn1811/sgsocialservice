@@ -183,10 +183,27 @@ function browserJobs() {
     sortJobs: typeof sortJobs;
     card: (j: PublicJob, m: unknown, t: string) => string;
     programmeListing: (article: ProgrammeArticle) => PublicJob;
+    paginateJobs: (list: PublicJob[], page: number) => { page: number; pageCount: number; listings: PublicJob[] };
   } } = {};
   runInNewContext(src, { globalThis: ctx, window: undefined });
   return ctx.SGSSJobs!;
 }
+
+test('the board paginates sorted matches in sets of ten', () => {
+  const client = browserJobs();
+  const jobs = Array.from({ length: 23 }, (_, index) => pub({ title: `Role ${String(index).padStart(2, '0')}` })).reverse();
+  const matches = client.filterJobs(jobs, { q: 'role', sort: 'newest' });
+  const first = client.paginateJobs(matches, 1);
+  const second = client.paginateJobs(matches, 2);
+  const last = client.paginateJobs(matches, 4);
+  assert.equal(first.pageCount, 3);
+  assert.equal(last.page, 3);
+  assert.deepEqual([first.listings.length, second.listings.length, last.listings.length], [10, 10, 3]);
+  assert.deepEqual([...first.listings, ...second.listings, ...last.listings], [...jobs].reverse());
+  assert.equal(client.paginateJobs(matches.slice(0, 10), 2).pageCount, 1);
+  const empty = client.paginateJobs([], 2);
+  assert.deepEqual([empty.page, empty.pageCount, empty.listings.length], [1, 1, 0]);
+});
 
 test('employer and programme cards appear in the main results and use the board filters', () => {
   const html = readFileSync(new URL('../public/jobs/index.html', import.meta.url), 'utf8');
