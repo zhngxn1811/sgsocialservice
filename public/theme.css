@@ -64,3 +64,73 @@
 .theme-toggle[hidden] { display: none; }
 .theme-toggle:hover { border-color: var(--teal); background: var(--teal-soft); }
 .theme-toggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+.donation-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  box-sizing: border-box;
+  width: min(calc(100% - 32px), 920px);
+  margin: 36px auto;
+  padding: clamp(16px, 3vw, 32px);
+  scroll-margin-top: 24px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--teal);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+  font: 400 16px/1.5 var(--body, "Source Sans 3", system-ui, sans-serif);
+}
+.donation-panel h2 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font: 700 clamp(20px, 3vw, 28px)/1.15 var(--display, "Bricolage Grotesque", system-ui, sans-serif);
+}
+.crisis ~ .donation-panel { scroll-margin-top: 120px; }
+.donation-panel p { margin: 0; color: var(--muted); }
+.donation-button, .donation-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 700;
+}
+.donation-panel .donation-button {
+  margin-top: 14px;
+  background: var(--teal);
+  color: var(--surface);
+  text-decoration: none;
+}
+.donation-panel .donation-button:hover { text-decoration: underline; }
+.donation-shortcut { color: var(--teal); }
+.donation-button:focus-visible, .donation-shortcut:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.donation-goals {
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--teal-soft);
+}
+.donation-goals strong { color: var(--ink); }
+.donation-monthly progress {
+  display: block;
+  width: 100%;
+  height: 12px;
+  margin: 8px 0 6px;
+  accent-color: var(--teal);
+}
+.donation-panel .donation-app {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2px 12px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 640px) {
+  .donation-panel { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
