@@ -78,6 +78,22 @@ test('the tracker stores counts only, and folds repeats into one +n', async () =
   assert.ok(search.conflict.target && search.conflict.set.count, 'adds to the existing daily counter');
 });
 
+test('only approved search topic ids are stored, with blank keys supported for older clients', async () => {
+  writes = [];
+  const result = await send({ events: [
+    { metric: 'search', key: 'financial', query: 'must not be stored' },
+    { metric: 'search_no_results', key: 'financial' },
+    { metric: 'search', key: 'a-person-name' },
+    { metric: 'search_no_results', key: 'constructor' },
+    { metric: 'search' },
+  ] });
+  assert.equal(result.status, 204);
+  assert.deepEqual(writes.map(({ values }) => [values.metric, values.key, values.count]), [
+    ['search', 'financial', 1], ['search_no_results', 'financial', 1], ['search', '', 1],
+  ]);
+  assert.ok(writes.every(({ values }) => !Object.hasOwn(values, 'query')));
+});
+
 test('page views share a Singapore hour counter without storing page names in it', async () => {
   const events = usage.cleanEvents({ events: [
     { metric: 'pageview', key: 'home' }, { metric: 'pageview', key: 'jobs' }, { metric: 'search' },
@@ -171,6 +187,12 @@ test('the dashboard gets a full summary for 7, 30 or 90 days', async () => {
     { day: period.to, source: 'web', metric: 'pageview_hour', key: '08', count: 4 },
     { day: period.from, source: 'web', metric: 'pageview_hour', key: '08', count: 3 },
     { day: period.prevTo, source: 'web', metric: 'pageview_hour', key: '08', count: 10 },
+    { day: period.to, source: 'web', metric: 'search', key: 'financial', count: 5 },
+    { day: period.from, source: 'web', metric: 'search', key: 'financial', count: 1 },
+    { day: period.from, source: 'web', metric: 'search_no_results', key: 'financial', count: 2 },
+    { day: period.to, source: 'web', metric: 'search', key: 'unclassified', count: 10 },
+    { day: period.to, source: 'web', metric: 'search', key: '', count: 20 },
+    { day: period.prevTo, source: 'web', metric: 'search', key: 'financial', count: 3 },
   ];
   submissionRows = [];
   const get = async (q: string) => (await stats(new Request(`https://example.test/api/stats${q}`, { headers: { 'x-admin-key': 'test-key' } }))).json();
@@ -179,8 +201,16 @@ test('the dashboard gets a full summary for 7, 30 or 90 days', async () => {
   assert.equal(s.daily.length, 7);
   assert.equal(s.totals.visits, 12);
   assert.equal(s.totals.pageviews, 4);
+  assert.equal(s.totals.searches, 36);
+  assert.equal(s.previous.searches, 3);
+  assert.deepEqual(s.searchTopics, [
+    { key: 'financial', label: 'Financial, food & housing support', searches: 6, noResults: 2 },
+    { key: 'unclassified', label: 'Unclassified', searches: 10, noResults: 0 },
+  ]);
   assert.deepEqual(s.pageviewsByHour, Array.from({ length: 24 }, (_, hour) => ({ hour, count: hour === 8 ? 7 : 0 })));
-  assert.equal((await get('?days=90')).pageviewsByHour[8].count, 17);
+  const longer = await get('?days=90');
+  assert.equal(longer.pageviewsByHour[8].count, 17);
+  assert.equal(longer.searchTopics[0].searches, 9);
   assert.equal((await get('?days=365')).range.days, 30, 'unknown periods fall back to 30 days');
 });
 

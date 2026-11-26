@@ -172,6 +172,7 @@ Open **`/admin/stats`** and sign in with your `ADMIN_KEY` (the same key as the s
 
 - **Visits** (counted once per browser session), **searches**, **assistant uses** and **submissions**
 - page views, and **searches with no results**, a hint at gaps in the directory
+- **search topics**: directory search and no-result counts grouped by broad topic in the browser, available only from when topic tracking began
 - a **visits per day** chart (hover or tap for that day's details)
 - **interest by presenting issue**: issue page views plus filter uses
 - a daily table, a **CSV download**, and **Copy summary for a report**, a ready-made sentence for funding applications

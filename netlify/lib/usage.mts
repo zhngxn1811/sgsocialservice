@@ -3,6 +3,7 @@
 import { and, eq, sql } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { usageDaily } from "../../db/schema.js";
+import { SEARCH_TOPIC_LABELS } from "../../public/search-topics.js";
 
 export const METRICS = ["visit", "pageview", "pageview_hour", "search", "search_no_results", "filter", "assistant", "profile", "profile_shown", "profile_skip", "assistant_role",
   "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"] as const;
@@ -70,6 +71,7 @@ export function cleanEvents(input: unknown): UsageEvent[] {
     const key = (e as { key?: unknown }).key ?? "";
     if (typeof metric !== "string" || !(METRICS as readonly string[]).includes(metric) || SERVER_ONLY.has(metric)) continue;
     if (typeof key !== "string" || (key !== "" && !KEY.test(key))) continue;
+    if ((metric === "search" || metric === "search_no_results") && key !== "" && !Object.hasOwn(SEARCH_TOPIC_LABELS, key)) continue;
     // Pop-up answers must be from the fixed lists; anything else is dropped.
     if (metric === "profile") { const [role, agency, extra] = key.split(":"); if (extra !== undefined || !isRole(role) || !isAgency(agency)) continue; }
     if (metric === "assistant_role" && !isRole(key)) continue;
@@ -183,6 +185,7 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
   const daily = new Map<string, Totals & { day: string }>();
   for (let d = period.from; d <= period.to; d = addDays(d, 1)) daily.set(d, { day: d, ...zero() });
   const pages = new Map<string, number>(), filters = new Map<string, number>();
+  const searchTopics = new Map<string, { key: string; label: string; searches: number; noResults: number }>();
   const pageviewsByHour = Array.from({ length: 24 }, (_, hour) => ({ hour, count: 0 }));
   const roles = new Map<string, number>(), agencies = new Map<string, number>(), assistantByRole = new Map<string, number>();
   const combos = new Map<string, number>(), countries = new Map<string, number>();
@@ -200,6 +203,11 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
       if (r.metric === "pageview" && r.key) bump(pages, r.key, n);
       if (r.metric === "pageview_hour" && /^(?:[01][0-9]|2[0-3])$/.test(r.key)) pageviewsByHour[Number(r.key)].count += n;
       if (r.metric === "filter" && r.key) bump(filters, r.key, n);
+      if ((r.metric === "search" || r.metric === "search_no_results") && n > 0 && Object.hasOwn(SEARCH_TOPIC_LABELS, r.key)) {
+        const topic = searchTopics.get(r.key) ?? { key: r.key, label: SEARCH_TOPIC_LABELS[r.key], searches: 0, noResults: 0 };
+        topic[r.metric === "search" ? "searches" : "noResults"] += n;
+        searchTopics.set(r.key, topic);
+      }
       if (r.metric === "profile" && r.key) {
         const [role, agency] = r.key.split(":");
         bump(roles, role, n); bump(agencies, agency, n); bump(combos, r.key, n);
@@ -220,6 +228,7 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
   const asked = totals.profiles + totals.profileSkips;
   return {
     range: period, totals, previous, daily: [...daily.values()], pageviewsByHour, pages: sorted(pages), filters: sorted(filters),
+    searchTopics: [...searchTopics.values()].sort((first, second) => Number(first.key === "unclassified") - Number(second.key === "unclassified") || second.searches - first.searches || first.label.localeCompare(second.label)),
     visitors: {
       thisMonth: uniqueThisMonth,           // different browsers since the 1st of this month
       monthFrom: period.monthFrom,

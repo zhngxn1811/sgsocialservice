@@ -2,13 +2,16 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
+import { classifySearchTopic } from '../public/search-topics.js';
 
 const page = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
 const renderer = readFileSync(new URL('../public/render.js', import.meta.url), 'utf8');
 const directory = JSON.parse(readFileSync(new URL('../public/services.json', import.meta.url), 'utf8'));
 
-function setup() {
+function setup(loaded = true) {
   const elements = new Map<string, any>();
+  const events: string[][] = [];
+  let pending: (() => void) | undefined;
   const get = (selector: string) => {
     if (!elements.has(selector)) elements.set(selector, {
       value: '', innerHTML: '', textContent: '', listeners: {},
@@ -18,16 +21,49 @@ function setup() {
     return elements.get(selector);
   };
   const source = page.slice(page.indexOf('let CATS=[]'), page.indexOf('fetch("/api/services")'));
-  runInNewContext(`${renderer}\nwindow={};\n${source}\nS=data.services;CATS=data.categories;renderGrid();`, {
-    data: directory, URL, document: { querySelector: get }, window: undefined,
-    setTimeout: () => 1, clearTimeout() {},
+  runInNewContext(`window=globalThis;\n${renderer}\n${source}\nS=data.services;CATS=data.categories;directoryLoaded=loaded;renderGrid();`, {
+    data: directory, loaded, classifySearchTopic, URL, document: { querySelector: get },
+    sgssTrack: (...event: string[]) => events.push(event),
+    setTimeout: (callback: () => void) => { pending = callback; return 1; },
+    clearTimeout: () => { pending = undefined; },
   });
   const search = (query: string) => {
     get('#q').value = query;
     get('#q').listeners.input();
   };
-  return { get, search };
+  const settle = () => { const callback = pending; pending = undefined; callback?.(); };
+  return { get, search, events, settle };
 }
+
+test('search tracking sends only a broad topic after typing pauses', () => {
+  const { search, events, settle } = setup();
+  search('family');
+  search('ＦＡＭＩＬＹ—violence test-only private text');
+  assert.deepEqual(events, []);
+  settle();
+  assert.deepEqual(events, [['search', 'violence'], ['search_no_results', 'violence']]);
+  search('counselling');
+  settle();
+  assert.deepEqual(events.at(-1), ['search', 'mental']);
+  search('counselling');
+  settle();
+  assert.equal(events.length, 3);
+  search('showcase-private-text');
+  settle();
+  assert.deepEqual(events.slice(-2), [['search', 'unclassified'], ['search_no_results', 'unclassified']]);
+  assert.equal(classifySearchTopic('legalistic'), 'unclassified');
+});
+
+test('unfinished searches and searches before the directory is ready are not counted', () => {
+  const ready = setup();
+  ready.search('co');
+  ready.settle();
+  assert.deepEqual(ready.events, []);
+  const loading = setup(false);
+  loading.search('counselling');
+  loading.settle();
+  assert.deepEqual(loading.events, []);
+});
 
 test('search updates listings with missing tags and clears back to six results', () => {
   const { get, search } = setup();
