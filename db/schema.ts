@@ -24,7 +24,7 @@ export const submissions = pgTable('submissions', {
 
 // Site usage, counted per day. Privacy-friendly by design: only counters are stored.
 // No cookies, IP addresses, browser details, search words or case text are ever saved.
-//   metric: visit, pageview, search, search_no_results, filter, assistant,
+//   metric: visit, pageview, pageview_hour (key: Singapore hour "00"–"23"), search, search_no_results, filter, assistant,
 //           profile (optional pop-up answer, key "role:agency"), profile_shown, profile_skip, assistant_role,
 //           visitor_day / visitor_new / visitor_month (one per browser per day, ever, or month),
 //           country (key: two-letter country of a visit, from Netlify; no IP stored), assistant_capped,
@@ -39,7 +39,7 @@ export const usageDaily = pgTable('usage_daily', {
   count: integer('count').notNull().default(0),
 }, table => [
   primaryKey({ columns: [table.day, table.source, table.metric, table.key] }),
-  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped')`),
+  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'pageview_hour', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped')`),
   check('usage_daily_count_positive', sql`${table.count} >= 0`),
   index('usage_daily_day_idx').on(table.day),
 ]);
