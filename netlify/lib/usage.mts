@@ -4,10 +4,10 @@ import { and, eq, sql } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { usageDaily } from "../../db/schema.js";
 
-export const METRICS = ["visit", "pageview", "search", "search_no_results", "filter", "assistant", "profile", "profile_shown", "profile_skip", "assistant_role",
+export const METRICS = ["visit", "pageview", "pageview_hour", "search", "search_no_results", "filter", "assistant", "profile", "profile_shown", "profile_skip", "assistant_role",
   "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"] as const;
 // Counted on the server only. The browser can't send these.
-const SERVER_ONLY = new Set(["assistant", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"]);
+const SERVER_ONLY = new Set(["pageview_hour", "assistant", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"]);
 // Sent once per browser (per day, ever, or per month). The browser only remembers the date it last sent them.
 const VISITOR = new Set(["visitor_day", "visitor_new", "visitor_month"]);
 
@@ -48,8 +48,9 @@ const KEY = /^[a-z0-9]([a-z0-9:-]{0,58}[a-z0-9])?$/;
 export const MAX_EVENTS = 5;
 
 // Days run on Singapore time, so "today" matches the dashboard reader's day.
+const sgTime = (date: Date) => new Date(date.getTime() + 8 * 60 * 60 * 1000).toISOString();
 export function sgDay(date = new Date()): string {
-  return new Date(date.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  return sgTime(date).slice(0, 10);
 }
 
 // Search engines and link previewers shouldn't count as people.
@@ -80,15 +81,19 @@ export function cleanEvents(input: unknown): UsageEvent[] {
 
 type Db = { insert: (table: typeof usageDaily) => any };
 
-export async function recordUsage(db: Db, events: UsageEvent[], source = "web", day = sgDay()): Promise<void> {
+export async function recordUsage(db: Db, events: UsageEvent[], source = "web", now = new Date()): Promise<void> {
+  const local = sgTime(now), day = local.slice(0, 10), hour = local.slice(11, 13);
   // Fold repeats in one request into a single +n per counter.
   const counts = new Map<string, { metric: Metric; key: string; n: number }>();
+  let pageviews = 0;
   for (const e of events) {
+    if (e.metric === "pageview") pageviews += 1;
     const id = `${e.metric}|${e.key}`;
     const c = counts.get(id) ?? { metric: e.metric, key: e.key, n: 0 };
     c.n += 1;
     counts.set(id, c);
   }
+  if (pageviews) counts.set(`pageview_hour|${hour}`, { metric: "pageview_hour", key: hour, n: pageviews });
   for (const c of counts.values()) {
     await db.insert(usageDaily)
       .values({ day, source, metric: c.metric, key: c.key, count: c.n })
@@ -178,6 +183,7 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
   const daily = new Map<string, Totals & { day: string }>();
   for (let d = period.from; d <= period.to; d = addDays(d, 1)) daily.set(d, { day: d, ...zero() });
   const pages = new Map<string, number>(), filters = new Map<string, number>();
+  const pageviewsByHour = Array.from({ length: 24 }, (_, hour) => ({ hour, count: 0 }));
   const roles = new Map<string, number>(), agencies = new Map<string, number>(), assistantByRole = new Map<string, number>();
   const combos = new Map<string, number>(), countries = new Map<string, number>();
   let uniqueThisMonth = 0;
@@ -192,6 +198,7 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
     if (inCurrent(r.day)) {
       if (field) { totals[field] += n; daily.get(r.day)![field] += n; }
       if (r.metric === "pageview" && r.key) bump(pages, r.key, n);
+      if (r.metric === "pageview_hour" && /^(?:[01][0-9]|2[0-3])$/.test(r.key)) pageviewsByHour[Number(r.key)].count += n;
       if (r.metric === "filter" && r.key) bump(filters, r.key, n);
       if (r.metric === "profile" && r.key) {
         const [role, agency] = r.key.split(":");
@@ -212,7 +219,7 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
   const sorted = (m: Map<string, number>) => [...m].map(([key, count]) => ({ key, count })).sort((a, b) => b.count - a.count || a.key.localeCompare(b.key));
   const asked = totals.profiles + totals.profileSkips;
   return {
-    range: period, totals, previous, daily: [...daily.values()], pages: sorted(pages), filters: sorted(filters),
+    range: period, totals, previous, daily: [...daily.values()], pageviewsByHour, pages: sorted(pages), filters: sorted(filters),
     visitors: {
       thisMonth: uniqueThisMonth,           // different browsers since the 1st of this month
       monthFrom: period.monthFrom,

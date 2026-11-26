@@ -41,6 +41,10 @@
 .chart text{font:12px var(--body);fill:var(--muted)}
 .chart .val{font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}
 .chart .lbl{fill:var(--ink);font-size:13px}
+.hour-peak{margin:0 0 14px;color:var(--muted);font-size:14px}
+.hour-peak b{color:var(--ink)}
+.hour-peak::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--accent);margin-right:8px}
+.hour-data{margin-top:12px;font-size:14px}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:8px;padding:8px 10px;font-size:13px;line-height:1.45;white-space:nowrap;transform:translate(-50%,calc(-100% - 12px));z-index:2}
 .tip b{font-weight:700}
 .empty{color:var(--muted);padding:18px 0;margin:0}
@@ -95,6 +99,17 @@ th{color:var(--muted);font-weight:600}
         <h2>Visits per day</h2>
         <p class="sub">A visit is someone opening the site, counted once per browser session. Hover or tap a day for more.</p>
         <div class="chart" id="visitsChart"></div>
+      </div>
+
+      <div class="card">
+        <h2>Busiest hours</h2>
+        <p class="sub">Page views grouped by hour of day in Singapore time (SGT), across the selected date range. Only page views recorded since hourly tracking began are included.</p>
+        <p class="hour-peak" id="hourPeak" hidden></p>
+        <div class="chart" id="hoursChart"></div>
+        <details class="hour-data" id="hourData" hidden>
+          <summary>View hourly counts</summary>
+          <table id="hourTable" aria-label="Hourly page views in Singapore time"></table>
+        </details>
       </div>
 
       <div class="card">
@@ -198,11 +213,37 @@ function render(){
   $("#capLine").innerHTML=cap?(cap.limit?`<span>Assistant daily limit: <b>${fmt(cap.usedToday)}</b> of <b>${fmt(cap.limit)}</b> used today${cap.usedToday>=cap.limit?' <span class="capwarn">(limit reached)</span>':""}</span>`:'<span>Assistant daily limit: <b>off</b></span>')+
     `<span>Turned away by the limit in this period <b>${fmt(t.assistantCapped)}</b></span>`+(t.jobsAssistantCapped?`<span>Jobs assistant turned away by its limit <b>${fmt(t.jobsAssistantCapped)}</b></span>`:""):"";
   $("#minor").innerHTML=`<span>Page views <b>${fmt(t.pageviews)}</b></span><span>Searches with no results <b>${fmt(t.noResults)}</b> (possible gaps in the directory)</span>`;
-  drawVisits(); drawCountries(); drawIssues(); drawAudience(); drawSubmissions(); drawTable();
+  drawVisits(); drawHours(); drawCountries(); drawIssues(); drawAudience(); drawSubmissions(); drawTable();
 }
 
 /* ---------- Visits per day: one series, 2px line, light wash, end dot + label, crosshair tooltip ---------- */
 function niceMax(v){if(v<=5)return 5;const p=Math.pow(10,Math.floor(Math.log10(v)));const m=v/p;return (m<=1?1:m<=2?2:m<=5?5:10)*p;}
+const hourLabel=hour=>`${String(hour).padStart(2,"0")}:00`;
+const hourRange=hour=>`${hourLabel(hour)}–${hourLabel((hour+1)%24)}`;
+function drawHours(){
+  const box=$("#hoursChart"), rows=data.pageviewsByHour||[];
+  const peak=Math.max(0,...rows.map(row=>row.count));
+  $("#hourPeak").hidden=$("#hourData").hidden=!peak;
+  if(!peak){
+    box.innerHTML='<p class="empty">No hourly page views recorded in this date range yet.</p>';
+    $("#hourPeak").textContent="";
+    $("#hourTable").innerHTML="";
+    return;
+  }
+  const peaks=rows.filter(row=>row.count===peak);
+  const peakLabels=peaks.slice(0,3).map(row=>hourRange(row.hour)).join(", ");
+  $("#hourPeak").innerHTML=`<b>${peaks.length===1?"Peak hour":"Tied peak hours"}: ${peakLabels}${peaks.length>3?` + ${peaks.length-3} more`:""} SGT</b> · ${fmt(peak)} page ${peak===1?"view":"views"}${peaks.length>1?" each":""}`;
+  $("#hourTable").innerHTML=`<thead><tr><th scope="col">Hour (SGT)</th><th scope="col">Page views</th></tr></thead><tbody>${rows.map(({hour,count})=>`<tr><th scope="row">${hourRange(hour)}${count===peak?" (peak)":""}</th><td>${fmt(count)}</td></tr>`).join("")}</tbody>`;
+  const width=Math.max(260,box.clientWidth), height=176, top=14, bottom=148, right=8;
+  const max=niceMax(peak), left=Math.max(32,fmt(max).length*7+10), step=(width-left-right)/24;
+  const bar=Math.min(26,step*.72), x=hour=>left+step*(hour+.5), y=count=>bottom-(count/max)*(bottom-top);
+  const labelEvery=width<440?6:4;
+  box.innerHTML=`<svg viewBox="0 0 ${width} ${height}" aria-hidden="true">
+    ${[0,Math.floor(max/2),max].map(count=>`<line x1="${left}" x2="${width-right}" y1="${y(count)}" y2="${y(count)}" stroke="var(--line)"/><text x="${left-7}" y="${y(count)+4}" text-anchor="end">${fmt(count)}</text>`).join("")}
+    ${rows.map(({hour,count})=>`<rect x="${x(hour)-bar/2}" y="${y(count)}" width="${bar}" height="${bottom-y(count)}" rx="2" fill="${count===peak?"var(--accent)":"var(--teal)"}"/><rect x="${x(hour)-step/2}" y="${top}" width="${step}" height="${bottom-top}" fill="transparent"><title>${hourRange(hour)} SGT: ${fmt(count)} page ${count===1?"view":"views"}</title></rect>`).join("")}
+    ${rows.filter(row=>row.hour%labelEvery===0).map(({hour})=>`<text x="${x(hour)-step/2}" y="${height-8}">${hourLabel(hour)}</text>`).join("")}
+  </svg>`;
+}
 function drawVisits(){
   const box=$("#visitsChart"), rows=data.daily;
   if(!rows.some(r=>r.visits||r.pageviews)){box.innerHTML='<p class="empty">No visits counted in this period yet. Counting starts once this update is live.</p>';return;}
@@ -344,7 +385,7 @@ function audienceSentence(){
   if(!top.length)return"";
   return ` Of the ${fmt(a.responses)} people who answered our optional question, the most common ${top.length===1?"role was":"roles were"} ${top.map(r=>`${r.label.toLowerCase()} (${pct(r.count,a.responses)}%)`).join(" and ")}.`;
 }
-let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(data){drawVisits();drawCountries();drawIssues();drawAudience();}},150);});
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(data){drawVisits();drawHours();drawCountries();drawIssues();drawAudience();}},150);});
 </script>
 </body>
 </html>

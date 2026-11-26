@@ -60,6 +60,7 @@ test('only known counters with tidy keys are accepted', () => {
     { metric: 'pageview', key: 'home' }, { metric: 'filter', key: 'violence' }, { metric: 'search', key: '' },
   ]);
   assert.deepEqual(usage.cleanEvents({ events: [{ metric: 'evil', key: 'x' }, { metric: 'visit', key: '' }] }), [{ metric: 'visit', key: '' }]);
+  assert.deepEqual(usage.cleanEvents({ events: [{ metric: 'pageview_hour', key: '12' }] }), []);
   assert.equal(usage.cleanEvents({ events: Array(20).fill({ metric: 'search' }) }).length, usage.MAX_EVENTS);
   assert.deepEqual(usage.cleanEvents(null), []);
 });
@@ -68,12 +69,26 @@ test('the tracker stores counts only, and folds repeats into one +n', async () =
   writes = [];
   const res = await send({ events: [{ metric: 'pageview', key: 'help:legal-help' }, { metric: 'search' }, { metric: 'search' }] });
   assert.equal(res.status, 204);
-  assert.equal(writes.length, 2);
+  assert.equal(writes.length, 3);
+  assert.equal(writes.find(w => w.values.metric === 'pageview_hour')?.values.count, 1);
   const search = writes.find(w => w.values.metric === 'search')!;
   assert.equal(search.values.count, 2);
   assert.deepEqual(Object.keys(search.values).sort(), ['count', 'day', 'key', 'metric', 'source']);
   assert.equal(search.values.source, 'web');
   assert.ok(search.conflict.target && search.conflict.set.count, 'adds to the existing daily counter');
+});
+
+test('page views share a Singapore hour counter without storing page names in it', async () => {
+  const events = usage.cleanEvents({ events: [
+    { metric: 'pageview', key: 'home' }, { metric: 'pageview', key: 'jobs' }, { metric: 'search' },
+  ] });
+  writes = [];
+  await usage.recordUsage(db, events, 'web', new Date('2026-11-15T15:59:00Z'));
+  await usage.recordUsage(db, events, 'web', new Date('2026-11-15T16:00:00Z'));
+  assert.deepEqual(writes.map(w => w.values).filter(row => row.metric === 'pageview_hour'), [
+    { day: '2026-11-15', source: 'web', metric: 'pageview_hour', key: '23', count: 2 },
+    { day: '2026-11-16', source: 'web', metric: 'pageview_hour', key: '00', count: 2 },
+  ]);
 });
 
 test('search engines and link previews are not counted', async () => {
@@ -149,13 +164,23 @@ test('the numbers need the admin key', async () => {
 });
 
 test('the dashboard gets a full summary for 7, 30 or 90 days', async () => {
-  usageRows = [{ day: usage.sgDay(), source: 'web', metric: 'visit', key: '', count: 12 }];
+  const period = usage.periodFor(7);
+  usageRows = [
+    { day: period.to, source: 'web', metric: 'visit', key: '', count: 12 },
+    { day: period.to, source: 'web', metric: 'pageview', key: 'home', count: 4 },
+    { day: period.to, source: 'web', metric: 'pageview_hour', key: '08', count: 4 },
+    { day: period.from, source: 'web', metric: 'pageview_hour', key: '08', count: 3 },
+    { day: period.prevTo, source: 'web', metric: 'pageview_hour', key: '08', count: 10 },
+  ];
   submissionRows = [];
   const get = async (q: string) => (await stats(new Request(`https://example.test/api/stats${q}`, { headers: { 'x-admin-key': 'test-key' } }))).json();
   const s = await get('?days=7');
   assert.equal(s.range.days, 7);
   assert.equal(s.daily.length, 7);
   assert.equal(s.totals.visits, 12);
+  assert.equal(s.totals.pageviews, 4);
+  assert.deepEqual(s.pageviewsByHour, Array.from({ length: 24 }, (_, hour) => ({ hour, count: hour === 8 ? 7 : 0 })));
+  assert.equal((await get('?days=90')).pageviewsByHour[8].count, 17);
   assert.equal((await get('?days=365')).range.days, 30, 'unknown periods fall back to 30 days');
 });
 
