@@ -29,7 +29,7 @@
         const high = j.salary_max || j.salary_min;
         if (j.salary_type?.trim().toLowerCase() !== "monthly" || !low || !high || high < bracket[1] || low >= bracket[2]) return false;
       }
-      const seniority = j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior";
+      const seniority = j.seniority ?? (j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior");
       if (f.seniority && f.seniority !== seniority) return false;
       if (f.qualification?.length && !f.qualification.includes(j.qualification) &&
           !(j.accepts_graduate_diploma && f.qualification.includes("graduate-diploma"))) return false;

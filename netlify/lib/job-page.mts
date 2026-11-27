@@ -104,6 +104,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
   const facts: [string, string][] = [
     ["Qualification", labelFor.qualification(job.qualification)],
     ["Experience", experienceLabel(job.min_years, job.fresh_grad)],
+    ...(job.seniority ? [["Level", { entry: "Entry", mid: "Mid", senior: "Senior" }[job.seniority]] as [string, string]] : []),
     ["Fresh grads", job.fresh_grad ? "Welcome to apply" : "Not stated"],
     ["Nature of work", job.nature.map(labelFor.nature).join(", ") || "Not stated"],
     ["Organisation type", labelFor.orgType(job.org_type)],
@@ -138,6 +139,7 @@ export function renderJobPage(job: JobRecord, base: string, today: string): { st
   const applyLabel = job.application_action === "register" ? "How to register"
     : job.application_action === "check-window" ? "Check application windows"
     : emailApplication ? "Apply by email" : job.source === "submission" ? "Open application page"
+    : /^Indeed\b/.test(job.source_name) ? "Apply on Indeed"
     : job.source === "mycareersfuture" ? "Apply on MyCareersFuture" : `Apply${job.source_name ? ` on ${job.source_name}` : ""}`;
   const html = HEAD(title, desc, url, vacancy ? jsonLd(ld) : "") + `<main class="wrap job-page">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/jobs/">Jobs board</a> <span aria-hidden="true">›</span> <span aria-current="page">${esc(job.title)}</span></nav>

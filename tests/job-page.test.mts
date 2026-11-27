@@ -23,6 +23,17 @@ test('job page shows the description, requirements, facts and an apply button to
   assert.ok(!html.includes('<script>alert'));
 });
 
+test('a refreshed job shows its listed level and links to the current source', () => {
+  const { html } = renderJobPage(job({
+    seniority: 'senior', min_years: null, source_name: 'Indeed (posted via RecruiterPal)',
+    apply_url: 'https://to.indeed.com/example',
+  }), BASE, '2026-11-24');
+  assert.match(html, /<dt>Level<\/dt><dd>Senior<\/dd>/);
+  assert.match(html, /href="https:\/\/to\.indeed\.com\/example"[^>]*>Apply on Indeed<\/a>/);
+  assert.match(html, /From Indeed \(posted via RecruiterPal\)/);
+  assert.doesNotMatch(html, /Apply on MyCareersFuture|monthsOfExperience/);
+});
+
 test('structured data lets search engines show the job until it closes', () => {
   const { html } = renderJobPage(job(), BASE, '2026-11-24');
   const ld = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)![1]);
