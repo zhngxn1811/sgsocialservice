@@ -226,13 +226,14 @@ test('employer and programme cards appear in the main results and use the board 
     });
   });
   assert.deepEqual(programmes.map(job => job.title), [
-    'Samaritans of Singapore (SOS)', 'HealthServe internships', 'IMH Child Mental Health',
+    'Samaritans of Singapore (SOS)', 'HealthServe internships', 'Fei Yue Community Services student placements',
+    'NuLife counselling practicum', 'IMH Child Mental Health',
     'MOH Summer Internship', 'MINDEF Summer Internship', 'MSF Student Internship',
   ]);
   const combined = [...sample, ...programmes];
   assert.equal(client.filterJobs(combined, {}).length, combined.length);
   assert.equal(client.filterJobs(combined, { internship: true }).length, programmes.length);
-  const [sos] = programmes;
+  const [sos, healthserve, feiYue, nuLife] = programmes;
   for (const nature of ['counselling', 'case-management', 'research-policy']) {
     assert.ok(client.filterJobs(combined, { nature: [nature], orgType: ['charity'] }).includes(sos), nature);
   }
@@ -241,6 +242,12 @@ test('employer and programme cards appear in the main results and use the board 
   const card = client.card(sos, {}, '2026-11-25');
   assert.match(card, /href="https:\/\/www\.sos\.org\.sg\/about\/careers\/"[^>]*>See openings<\/a>/);
   assert.match(card, /href="mailto:hrd@sos\.org\.sg"/);
+  const socialWorkPlacements = client.filterJobs(programmes, { internship: true, nature: ['social-work'] });
+  assert.ok(socialWorkPlacements.includes(healthserve));
+  assert.ok(socialWorkPlacements.includes(feiYue));
+  assert.ok(client.filterJobs(programmes, { internship: true, nature: ['counselling'] }).includes(nuLife));
+  assert.match(client.card(feiYue, {}, '2026-11-27'), /href="https:\/\/fycs\.org\/internship-opportunities\/"/);
+  assert.match(client.card(nuLife, {}, '2026-11-27'), /href="https:\/\/nulife\.org\.sg\/contact-us\/"/);
 });
 
 test('the board page filters and sorts exactly like the server', () => {

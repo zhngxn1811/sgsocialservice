@@ -41,6 +41,15 @@
 .chart text{font:12px var(--body);fill:var(--muted)}
 .chart .val{font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}
 .chart .lbl{fill:var(--ink);font-size:13px}
+.issue-pie-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:clamp(18px,4vw,40px);align-items:start}
+.issue-pie{width:min(100%,320px);aspect-ratio:1;border-radius:50%;justify-self:center;border:1px solid var(--line)}
+.issue-legend{list-style:none;margin:0;padding:0;font-size:14px}
+.issue-legend li{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:10px;padding:7px 0;align-items:start}
+.issue-legend li+li{border-top:1px solid var(--line)}
+.issue-swatch{width:12px;height:12px;border-radius:3px;margin-top:5px}
+.issue-breakdown{display:block;color:var(--muted);font-size:13px}
+.issue-share{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+@media (max-width:620px){.issue-pie-layout{grid-template-columns:minmax(0,1fr)}.issue-pie{width:min(100%,240px)}}
 .hour-peak{margin:0 0 14px;color:var(--muted);font-size:14px}
 .hour-peak b{color:var(--ink)}
 .hour-peak::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--accent);margin-right:8px}
@@ -317,7 +326,7 @@ function drawCountries(){
   drawBars($("#countriesChart"),rows,"No country counts yet. They start once this update is live.");
 }
 
-/* ---------- Interest by presenting issue: horizontal bars, value at the tip ---------- */
+/* ---------- Interest by presenting issue ---------- */
 function issueRows(){
   const views=new Map(data.pages.filter(p=>p.key.startsWith("help:")).map(p=>[p.key.slice(5),p.count]));
   const filters=new Map(data.filters.map(f=>[f.key,f.count]));
@@ -325,7 +334,28 @@ function issueRows(){
     .map(r=>({...r,total:r.views+r.filters})).filter(r=>r.total>0).sort((a,b)=>b.total-a.total);
 }
 function drawIssues(){
-  drawBars($("#issuesChart"),issueRows().map(r=>({label:r.label,value:r.total,tip:`${fmt(r.views)} page views · ${fmt(r.filters)} filter uses`})),"No issue pages viewed or filters used in this period yet.");
+  const box=$("#issuesChart"), rows=issueRows();
+  if(!rows.length){box.innerHTML='<p class="empty">No issue pages viewed or filters used in this period yet.</p>';return;}
+  const total=rows.reduce((sum,row)=>sum+row.total,0);
+  const shareFormat=new Intl.NumberFormat("en-SG",{style:"percent",maximumFractionDigits:1});
+  let cumulative=0;
+  const slices=rows.map((row,index)=>{
+    const start=cumulative/total*100;
+    cumulative+=row.total;
+    const color=`hsl(${(176+index*137.508)%360} 48% ${[39,52,62][index%3]}%)`;
+    return {...row,color,stop:`${color} ${start}% ${cumulative/total*100}%`};
+  });
+  const background=slices.length===1?slices[0].color:`conic-gradient(${slices.map(slice=>slice.stop).join(",")})`;
+  box.innerHTML=`<div class="issue-pie-layout">
+    <div class="issue-pie" aria-hidden="true" style="background:${background}"></div>
+    <ul class="issue-legend" role="list" aria-label="Presenting issue breakdown">
+      ${slices.map(slice=>`<li>
+        <span class="issue-swatch" aria-hidden="true" style="background:${slice.color}"></span>
+        <span>${esc(slice.label)}<span class="issue-breakdown">${fmt(slice.views)} page views · ${fmt(slice.filters)} filter uses</span></span>
+        <span class="issue-share"><b>${fmt(slice.total)}</b><span class="issue-breakdown">${slice.total/total<0.001?"&lt;0.1%":shareFormat.format(slice.total/total)}</span></span>
+      </li>`).join("")}
+    </ul>
+  </div>`;
 }
 // Horizontal bars, value at the tip, sorted largest first. Used by every bar chart on this page.
 function drawBars(box,rows,emptyText){
@@ -408,7 +438,7 @@ function audienceSentence(){
   if(!top.length)return"";
   return ` Of the ${fmt(a.responses)} people who answered our optional question, the most common ${top.length===1?"role was":"roles were"} ${top.map(r=>`${r.label.toLowerCase()} (${pct(r.count,a.responses)}%)`).join(" and ")}.`;
 }
-let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(data){drawVisits();drawHours();drawCountries();drawIssues();drawAudience();}},150);});
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(data){drawVisits();drawHours();drawCountries();drawAudience();}},150);});
 </script>
 </body>
 </html>
