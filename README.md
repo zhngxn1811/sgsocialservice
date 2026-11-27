@@ -121,7 +121,7 @@ Category ids are `crisis`, `mental`, `addictions`, `substance`, `trauma`, `viole
 - **Netlify:** the free plan should cover a site like this at the start. Check netlify.com/pricing for current limits on function calls.
 - **Anthropic:** usage is billed by tokens, including automatic continuations for longer answers. Longer answers cost more. Your spend limit caps the total.
 
-The site-wide donation panel links to Buy Me a Coffee. Update `raised` in `public/donations.js` when the reported donation total changes; the progress bar and amount remaining update together on the next deploy. The monthly website goal and one-time mobile app goal are listed separately.
+The site-wide donation panel links to Buy Me a Coffee. Update `raised` in `public/donations.js` when the reported donation total changes; the progress bar and amount remaining update together on the next deploy. The 2027 website goal and one-time mobile app goal are listed separately.
 
 ## Troubleshooting
 - **The assistant cannot finish:** check function logs and AI Gateway usage for provider errors or exhausted credits.

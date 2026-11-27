@@ -1,25 +1,25 @@
 (() => {
-  const raised = 30;
-  const monthlyGoal = 105;
+  const raised = 105;
+  const annualGoal = 1501.50;
   const appGoal = 145;
-  const money = amount => `S$${amount.toLocaleString('en-SG', { minimumFractionDigits: Number.isInteger(amount) ? 0 : 2 })}`;
-  const remaining = Math.max(monthlyGoal - raised, 0);
+  const money = amount => `S$${amount.toLocaleString('en-SG', { minimumFractionDigits: Number.isInteger(amount) ? 0 : 2, maximumFractionDigits: 2 })}`;
+  const remaining = Math.max(annualGoal - raised, 0);
   const panel = document.createElement('section');
   panel.id = 'support-sg-social-services';
   panel.className = 'donation-panel';
   panel.setAttribute('aria-labelledby', 'donation-title');
   panel.innerHTML = `
     <div class="donation-intro">
-      <h2 id="donation-title">Help keep SG Social Services free for everyone</h2>
+      <h2 id="donation-title">Make sure SG Social Services remains free for all in 2027</h2>
       <p>Donations help cover the cost of running this volunteer-run website.</p>
       <a class="donation-button" href="https://buymeacoffee.com/sgsocialservices">Donate on Buy Me a Coffee <span aria-hidden="true">↗</span></a>
     </div>
     <div class="donation-goals">
-      <div class="donation-monthly">
-        <p><strong id="donation-progress-label">Monthly website costs</strong></p>
-        <p id="donation-progress-details"><strong>${money(raised)} donated</strong> of ${money(monthlyGoal)} needed per month</p>
-        <progress value="${Math.min(raised, monthlyGoal)}" max="${monthlyGoal}" aria-labelledby="donation-progress-label" aria-describedby="donation-progress-details"></progress>
-        <p>${remaining ? `${money(remaining)} still needed` : 'Monthly goal reached'}</p>
+      <div class="donation-campaign">
+        <p><strong id="donation-progress-label">2027 website costs</strong></p>
+        <p id="donation-progress-details"><strong>${money(raised)} donated</strong> of ${money(annualGoal)} needed</p>
+        <progress value="${Math.min(raised, annualGoal)}" max="${annualGoal}" aria-labelledby="donation-progress-label" aria-describedby="donation-progress-details"></progress>
+        <p>${remaining ? `${money(remaining)} still needed` : '2027 goal reached'}</p>
       </div>
       <p class="donation-app"><strong>Mobile app goal</strong><span>${money(appGoal)} needed (one-time)</span></p>
     </div>`;
