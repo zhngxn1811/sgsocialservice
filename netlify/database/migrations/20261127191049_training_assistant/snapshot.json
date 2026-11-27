@@ -1,9 +1,9 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "47e79ed9-fbe2-416c-8fb1-5c329ab14948",
+  "id": "fa0f4411-2eee-455e-bc43-617c5043744e",
   "prevIds": [
-    "f823c3ea-c22b-41fb-9577-061d39428ba4"
+    "7b74d0b8-bebd-47ad-b9b7-659b706e4850"
   ],
   "ddl": [
     {
@@ -259,6 +259,19 @@
       "table": "jobs"
     },
     {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "seniority",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
       "type": "boolean",
       "typeSchema": null,
       "notNull": true,
@@ -315,6 +328,19 @@
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
+      "default": "'apply'",
+      "generated": null,
+      "identity": null,
+      "name": "application_action",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
       "default": "''",
       "generated": null,
       "identity": null,
@@ -350,6 +376,19 @@
       "table": "jobs"
     },
     {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "closing_date_estimated",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
       "type": "text",
       "typeSchema": null,
       "notNull": true,
@@ -358,6 +397,19 @@
       "generated": null,
       "identity": null,
       "name": "status",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "curated",
       "entityType": "columns",
       "schema": "public",
       "table": "jobs"
@@ -397,6 +449,45 @@
       "generated": null,
       "identity": null,
       "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "link_checked_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "0",
+      "generated": null,
+      "identity": null,
+      "name": "link_missing_count",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "link_missing_code",
       "entityType": "columns",
       "schema": "public",
       "table": "jobs"
@@ -754,21 +845,28 @@
       "entityType": "pks"
     },
     {
-      "value": "\"source\" in ('mycareersfuture', 'manual')",
+      "value": "\"source\" in ('mycareersfuture', 'manual', 'submission')",
       "name": "jobs_source",
       "entityType": "checks",
       "schema": "public",
       "table": "jobs"
     },
     {
-      "value": "\"status\" in ('open', 'closed')",
+      "value": "\"status\" in ('open', 'closed', 'pending')",
       "name": "jobs_status",
       "entityType": "checks",
       "schema": "public",
       "table": "jobs"
     },
     {
-      "value": "\"qualification\" in ('doctorate', 'masters', 'honours', 'bachelors', 'diploma', 'unspecified')",
+      "value": "\"seniority\" in ('entry', 'mid', 'senior')",
+      "name": "jobs_seniority",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "value": "\"qualification\" in ('doctorate', 'masters', 'honours', 'graduate-diploma', 'bachelors', 'diploma', 'o-levels', 'unspecified')",
       "name": "jobs_qualification",
       "entityType": "checks",
       "schema": "public",
@@ -782,8 +880,15 @@
       "table": "jobs"
     },
     {
-      "value": "\"apply_url\" like 'https://%'",
-      "name": "jobs_apply_url_https",
+      "value": "\"apply_url\" like 'https://%' or \"apply_url\" like 'mailto:%'",
+      "name": "jobs_application_url",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "jobs"
+    },
+    {
+      "value": "\"application_action\" in ('apply', 'register', 'check-window')",
+      "name": "jobs_application_action",
       "entityType": "checks",
       "schema": "public",
       "table": "jobs"
@@ -824,7 +929,7 @@
       "table": "submissions"
     },
     {
-      "value": "\"metric\" in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped', 'training_assistant', 'training_assistant_capped')",
+      "value": "\"metric\" in ('visit', 'pageview', 'pageview_hour', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped', 'training_assistant', 'training_assistant_capped')",
       "name": "usage_daily_metric",
       "entityType": "checks",
       "schema": "public",
