@@ -300,6 +300,20 @@ test('salary brackets match overlapping monthly pay and seniority matches minimu
   }
 });
 
+test('a listed seniority overrides the experience fallback without changing experience filters', () => {
+  const listings = [
+    pub({ id: 'senior-role', seniority: 'senior', min_years: null }),
+    pub({ id: 'mid-role', seniority: 'mid', min_years: null }),
+    pub({ id: 'inferred-mid', min_years: 3 }),
+  ];
+  assert.equal(toPublic(listings[0]).seniority, 'senior');
+  for (const filter of [filterJobs, browserJobs().filterJobs]) {
+    assert.deepEqual(Array.from(filter(listings, { seniority: 'senior' }), job => job.id), ['senior-role']);
+    assert.deepEqual(Array.from(filter(listings, { seniority: 'mid' }), job => job.id), ['mid-role', 'inferred-mid']);
+    assert.deepEqual(Array.from(filter(listings, { experienceRange: '0-3' }), job => job.id), ['inferred-mid']);
+  }
+});
+
 test('experience ranges include their endpoints and exclude unstated experience', () => {
   const listings = [null, 0, 3, 4, 5, 7, 8, 12, 15, 16].map(years =>
     pub({ id: String(years), min_years: years }));

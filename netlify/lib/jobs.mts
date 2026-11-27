@@ -254,6 +254,7 @@ export type JobRecord = {
   qualification: Qualification; min_years: number | null; fresh_grad: boolean; nature: Nature[]; skills: string[];
   apply_url: string; source_url: string; posted_at: string | null; closes_at: string | null; status: "open" | "closed" | "pending";
   application_action?: "apply" | "register" | "check-window";
+  seniority?: "entry" | "mid" | "senior" | null;
   closing_date_estimated: boolean;
 };
 
@@ -390,13 +391,14 @@ export function manualJob(input: ManualInput, today: string, overrides: Record<s
 
 // ---------- filtering and sorting (API, board and assistant all use these) ----------
 
-export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "fresh_grad" | "nature" | "skills" | "apply_url" | "application_action" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean; external_listing?: boolean };
+export type PublicJob = Pick<JobRecord, "id" | "title" | "org" | "org_type" | "location" | "employment_type" | "salary_min" | "salary_max" | "salary_type" | "summary" | "qualification" | "min_years" | "seniority" | "fresh_grad" | "nature" | "skills" | "apply_url" | "application_action" | "source_name" | "posted_at" | "closes_at"> & { accepts_graduate_diploma?: boolean; closing_date_estimated?: boolean; external_listing?: boolean };
 
 export const isLinkOnlySubmission = (job: JobRecord) => job.source === "submission" && !job.description && !job.requirements;
 export const toPublic = (j: JobRecord | PublicJob): PublicJob => ({
   id: j.id, title: j.title, org: j.org, org_type: j.org_type, location: j.location, employment_type: j.employment_type,
   salary_min: j.salary_min, salary_max: j.salary_max, salary_type: j.salary_type, summary: j.summary,
   qualification: j.qualification, min_years: j.min_years, fresh_grad: j.fresh_grad, nature: j.nature, skills: j.skills,
+  ...(j.seniority ? { seniority: j.seniority } : {}),
   accepts_graduate_diploma: "requirements" in j
     ? sentences(j.requirements || j.description).some(s => GRADUATE_DIPLOMA.test(s) && !PREFERRED.test(s))
     : j.accepts_graduate_diploma,
@@ -439,7 +441,7 @@ export function filterJobs<T extends PublicJob>(list: T[], f: JobFilters): T[] {
       const high = j.salary_max || j.salary_min;
       if (j.salary_type?.trim().toLowerCase() !== "monthly" || !low || !high || high < bracket[1] || low >= bracket[2]) return false;
     }
-    const seniority = j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior";
+    const seniority = j.seniority ?? (j.min_years == null ? "unspecified" : j.min_years < 2 ? "entry" : j.min_years < 5 ? "mid" : "senior");
     if (f.seniority && f.seniority !== seniority) return false;
     if (f.qualification?.length && !f.qualification.includes(j.qualification) &&
         !(j.accepts_graduate_diploma && f.qualification.includes("graduate-diploma"))) return false;

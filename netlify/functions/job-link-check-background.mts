@@ -14,7 +14,7 @@ export default async (req: Request) => {
   const live = and(eq(jobs.status, "open"), or(isNull(jobs.closes_at), gte(jobs.closes_at, today)));
   const due = or(isNull(jobs.link_checked_at), lt(jobs.link_checked_at, dueBefore));
   const rows = await db.select({ id: jobs.id, url: jobs.apply_url, count: jobs.link_missing_count })
-    .from(jobs).where(and(live, due, ne(jobs.source, "mycareersfuture"), sql`${jobs.apply_url} like 'https://%'`))
+    .from(jobs).where(and(live, due, or(ne(jobs.source, "mycareersfuture"), sql`${jobs.source_name} like 'Indeed%'`), sql`${jobs.apply_url} like 'https://%'`))
     .orderBy(sql`${jobs.link_checked_at} asc nulls first`, asc(jobs.id)).limit(240);
 
   for (let offset = 0; offset < rows.length; offset += 8) {
