@@ -11,7 +11,7 @@
   panel.innerHTML = `
     <div class="donation-intro">
       <h2 id="donation-title">Make sure SG Social Services remains free for all in 2027</h2>
-      <p>Donations help cover the cost of running this volunteer-run website.</p>
+      <p>Your donations ensure that our site infrastructure and AI Assistants can keep running effortlessly, and so that we can continue developing additional features on this platform!</p>
       <a class="donation-button" href="https://buymeacoffee.com/sgsocialservices">Donate on Buy Me a Coffee <span aria-hidden="true">↗</span></a>
     </div>
     <div class="donation-goals">
