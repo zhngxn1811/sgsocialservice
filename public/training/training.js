@@ -6,7 +6,7 @@
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const isHttps = u => /^https:\/\/[^\s"'<>]+$/.test(String(u || ""));
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const LEVEL_ORDER = { foundation: 0, intermediate: 1, advanced: 2, qualification: 3 };
+  const LEVEL_ORDER = { foundation: 0, intermediate: 1, advanced: 2, qualification: 3, postgraduate: 4 };
   const FILTER_KEYS = ["approach", "profession", "level", "format", "provider", "funding"];
 
   function daysUntil(day, today) {
@@ -60,7 +60,9 @@
     const soon = isUpcoming(c, today) && daysUntil(c.next_date, today) <= 45;
     const facts = [lab(tax.levels, c.level), lab(tax.formats, c.format), c.duration, c.cpd].filter(Boolean);
     const accred = (c.accreditation || []).length
-      ? `<ul class="accred" aria-label="Accreditation">${c.accreditation.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "";
+      ? `<ul class="accred" aria-label="Accreditation and recognition">${c.accreditation.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "";
+    const recognition = isHttps(c.recognition_url)
+      ? `<p class="recognition"><a href="${esc(c.recognition_url)}" target="_blank" rel="noopener noreferrer">Check ${accred ? "programme recognition" : "registration criteria"}</a></p>` : "";
     const fees = (c.fees || []).length
       ? `<dl class="fees">${c.fees.map(f => `<div><dt>${esc(f.label)}</dt><dd>${esc(f.amount)}</dd></div>`).join("")}</dl>` : "";
     const feeNote = c.fees_note ? `<p class="fee-note">${esc(c.fees_note)}</p>` : "";
@@ -72,7 +74,7 @@
       <p class="provider">${esc(c.provider)}</p>
       <div class="tags">${c.approaches.slice(0, 3).map(a => `<span class="tag">${esc(lab(tax.approaches, a))}</span>`).join("")}</div>
       <p>${esc(c.summary)}</p>
-      ${accred}
+      ${accred}${recognition}
       <p class="next${soon ? " soon" : ""}"><strong>Next run:</strong> ${esc(c.next_run)}</p>
       <div class="facts">${facts.map(x => `<span>${esc(x)}</span>`).join("")}<span>For ${esc(c.professions.map(p => lab(tax.professions, p).toLowerCase()).join(", "))}</span></div>
       <div class="money">${fees}${feeNote}${grants}</div>
@@ -136,7 +138,7 @@
     FILTER_KEYS.forEach(k => f[k].length && p.set(k, f[k].join(",")));
     if (sort !== "upcoming") p.set("sort", sort);
     const qs = p.toString();
-    try { window.history.replaceState(null, "", qs ? `?${qs}` : location.pathname); } catch (e) {}
+    try { window.history.replaceState(null, "", `${location.pathname}${qs ? `?${qs}` : ""}${location.hash}`); } catch (e) {}
   }
 
   function readUrl() {
@@ -168,10 +170,14 @@
   }
 
   function renderCalendars(cals) {
-    $("#calendarList").innerHTML = cals.filter(c => isHttps(c.url)).map(c => `<article class="hiring-card">
-      <h3>${esc(c.name)}</h3><p>${esc(c.about)}</p>
-      <div class="actions"><a class="btn" href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Open calendar</a></div>
-    </article>`).join("");
+    const calendars = cals.filter(calendar => isHttps(calendar.url));
+    $("#calendarList").innerHTML = calendars.map((calendar, index) => `<li>
+      <a class="calendar-link" href="${esc(calendar.url)}" target="_blank" rel="noopener noreferrer" aria-labelledby="calendar-name-${index}" aria-describedby="calendar-description-${index}">
+        <span><span class="calendar-name" id="calendar-name-${index}">${esc(calendar.name)}<span class="sr-only"> (opens in a new tab)</span></span><span class="calendar-description" id="calendar-description-${index}">${esc(calendar.about)}</span></span>
+        <span class="calendar-action" aria-hidden="true"><span>Open calendar</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h6v6m0-6-8 8m7 0v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span>
+      </a>
+    </li>`).join("");
+    $("#training-calendars").hidden = calendars.length === 0;
   }
 
   async function start() {
@@ -195,6 +201,8 @@
         render();
       });
       if (window.matchMedia("(max-width: 800px)").matches) $("#filters").open = false;
+      if (location.hash === "#training-calendars") $("#training-calendars:not([hidden])")?.scrollIntoView();
+      if (location.hash === "#training-courses") $("#training-courses").scrollIntoView();
     } catch (e) {
       $("#boardMeta").textContent = "Courses couldn't load. Please refresh the page.";
     }
