@@ -1,6 +1,6 @@
 (() => {
   const raised = 105;
-  const annualGoal = 1501.50;
+  const annualGoal = 1692.24;
   const appGoal = 145;
   const money = amount => `S$${amount.toLocaleString('en-SG', { minimumFractionDigits: Number.isInteger(amount) ? 0 : 2, maximumFractionDigits: 2 })}`;
   const remaining = Math.max(annualGoal - raised, 0);
