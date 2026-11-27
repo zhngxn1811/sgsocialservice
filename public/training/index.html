@@ -54,6 +54,7 @@
     <h1 id="pageTitle">Find training for the way you want to practise</h1>
     <p>Courses for social workers, counsellors and psychologists in Singapore, from foundation skills to specialist approaches like CBT, motivational interviewing, play therapy, trauma-informed care and supervision. Filter them yourself, or tell the training assistant what you'd like to learn and get a learning plan picked for you. Every course links to the provider's own page, where you register.</p>
     <p class="note">Fees, accreditation and grants are shown as each provider publishes them. They change often, and what you pay depends on your age, citizenship and employer, so always confirm on the provider's page before you register.</p>
+    <p class="qualification-pathway"><a href="/training/?level=postgraduate#training-courses">Browse postgraduate programmes <span aria-hidden="true">→</span></a><span>Find counselling, social work and applied psychology pathways. A qualification does not grant professional registration on its own.</span></p>
   </section>
 
   <section class="wrap jobs-desk" id="assistant" aria-labelledby="asstTitle">
@@ -84,7 +85,7 @@
     <div class="approach-chips" id="approachChips" role="list"></div>
   </section>
 
-  <section class="wrap jobs-board" aria-labelledby="boardTitle">
+  <section class="wrap jobs-board" id="training-courses" aria-labelledby="boardTitle">
     <div class="board-head">
       <div>
         <h2 id="boardTitle">Courses</h2>
@@ -106,7 +107,7 @@
       <details class="panel filters" id="filters" open>
         <summary>Filters <span class="note" id="filterCount"></span></summary>
         <fieldset><legend>Dates</legend><label class="check"><input type="checkbox" id="fUpcoming"> Confirmed upcoming run only</label></fieldset>
-        <fieldset><legend>Accreditation</legend><label class="check"><input type="checkbox" id="fAccredited"> Accredited, or counts towards CPD or registration</label></fieldset>
+        <fieldset><legend>Accreditation and recognition</legend><label class="check"><input type="checkbox" id="fAccredited"> Recognised, accredited or counts towards CPD or registration</label></fieldset>
         <fieldset id="fApproach"><legend>Approach or topic</legend></fieldset>
         <fieldset id="fProfession"><legend>Who it's for</legend></fieldset>
         <fieldset id="fLevel"><legend>Level</legend></fieldset>
@@ -117,10 +118,17 @@
       </details>
       <div>
         <div class="job-list" id="courseList" aria-live="polite"></div>
-        <section class="calendars" aria-labelledby="calTitle">
-          <h2 id="calTitle">Training calendars to keep an eye on</h2>
-          <p class="lead">These providers add new runs all year. Their calendars always have the latest dates.</p>
-          <div class="hiring-list" id="calendarList"></div>
+        <section class="calendars" id="training-calendars" aria-labelledby="calTitle" hidden>
+          <header class="calendars-header">
+            <span class="calendars-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18m-12 5h2m3 0h2"/></svg>
+            </span>
+            <div>
+              <h2 id="calTitle">Training calendars to keep an eye on</h2>
+              <p>Providers add new runs throughout the year. Check their calendars for the latest dates.</p>
+            </div>
+          </header>
+          <ul class="calendar-list" id="calendarList" role="list"></ul>
         </section>
       </div>
     </div>

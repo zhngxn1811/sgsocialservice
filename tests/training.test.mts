@@ -86,3 +86,19 @@ test('cards escape text and only link to https pages', () => {
   assert.match(ok, /href="https:\/\/sasw\.org\.sg\/programme\/asist-suicide-first-aid" target="_blank" rel="noopener noreferrer">View course/);
   assert.match(ok, /class="next soon"/, 'a run within 45 days is highlighted');
 });
+
+test('postgraduate pathways distinguish programme recognition from registration criteria', () => {
+  const programmes = T.filterCourses(data.courses, { level: ['postgraduate'] }, TODAY);
+  const recognised = T.filterCourses(programmes, { accredited: true }, TODAY);
+  const psychology = T.filterCourses(programmes, { profession: ['psychologists'] }, TODAY);
+  assert.ok(recognised.some((course: any) => course.recognition_url.includes('sacsingapore.org')));
+  assert.ok(recognised.some((course: any) => course.recognition_url.includes('sasw.org.sg')));
+  assert.ok(psychology.length > 0);
+  for (const course of psychology) {
+    assert.ok(!recognised.includes(course));
+    assert.match(T.card(course, data.taxonomy, TODAY), /Check registration criteria/);
+  }
+  for (const course of programmes) assert.match(course.recognition_url, /^https:\/\//);
+  assert.match(T.card(recognised[0], data.taxonomy, TODAY), /Check programme recognition/);
+  assert.doesNotMatch(T.card({ ...recognised[0], recognition_url: 'javascript:alert(1)' }, data.taxonomy, TODAY), /javascript:/);
+});
