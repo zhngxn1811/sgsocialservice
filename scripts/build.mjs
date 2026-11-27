@@ -17,7 +17,7 @@ import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { RULES, SITE_NAME, checkSeo, readStaticMeta, resolveMeta, validateDirectory } from "./seo.mjs";
+import { RULES, SITE_NAME, checkSeo, resolveMeta, validateDirectory } from "./seo.mjs";
 import { seoPreviewHtml } from "./seo-preview.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -34,7 +34,7 @@ function between(html, start, end, what) {
 
 function replaceMarker(html, name, content) {
   const re = new RegExp(`<!-- build:${name}\\b[^>]*-->`);
-  if (!re.test(html)) throw new Error(`Build: marker "build:${name}" is missing from the page template`);
+  if (!re.test(html)) throw new Error(`Build: marker "build:${name}" is missing from public/index.html`);
   return html.replace(re, () => content);
 }
 
@@ -144,7 +144,6 @@ ${shareTags(esc, base, url)}
 ${jsonLd(data)}
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
-<script src="/donations.js" defer></script>
 <script src="/track.js" defer></script>
 <script src="/profile.js" defer></script>
 </head>
@@ -210,6 +209,7 @@ function sitemap(base, pages, date) {
     { loc: `${base}/`, priority: "1.0" },
     ...pages.map(p => ({ loc: `${base}/help/${p.slug}/`, priority: "0.8" })),
     { loc: `${base}/jobs/`, priority: "0.9" },
+    { loc: `${base}/training/`, priority: "0.8" },
     { loc: `${base}/privacy.html`, priority: "0.3" },
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -293,13 +293,7 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
     await writeFile(path.join(outDir, "privacy.html"), privacy);
   }
 
-  const sitemapSource = await readFile(path.join(pub, "sitemap.html"), "utf8");
-  let sitemapPage = replaceMarker(sitemapSource, "head", `<link rel="canonical" href="${esc(base)}/sitemap">`);
-  sitemapPage = replaceMarker(sitemapPage, "browse", browseNav(pages, esc));
-  sitemapPage = replaceMarker(sitemapPage, "footer", footer);
-  await writeFile(path.join(outDir, "sitemap.html"), sitemapPage);
-
-  // XML sitemap, and point robots.txt at it.
+  // Sitemap, and point robots.txt at it.
   await writeFile(path.join(outDir, "sitemap.xml"), sitemap(base, pages, today));
   const robots = existsSync(path.join(pub, "robots.txt")) ? await readFile(path.join(pub, "robots.txt"), "utf8") : "User-agent: *\nAllow: /\n";
   await writeFile(path.join(outDir, "robots.txt"), robots.trimEnd() + `\n\nSitemap: ${base}/sitemap.xml\n`);
@@ -307,7 +301,6 @@ export async function build({ root = ROOT, outDir = path.join(root, "dist"), sit
   // SEO checks, shown in the deploy log and on /admin/seo. Warnings never stop a deploy.
   const seoPages = [
     { name: "Home", path: "/", meta: homeMeta },
-    { name: "Jobs Board", path: "/jobs/", meta: readStaticMeta(await readFile(path.join(pub, "jobs", "index.html"), "utf8")) },
     ...pages.map(p => ({ name: p.label, path: `/help/${p.slug}/`, meta: p.meta })),
     { name: "Privacy", path: "/privacy.html", meta: privacyMeta },
   ];

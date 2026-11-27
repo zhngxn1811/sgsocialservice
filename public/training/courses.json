@@ -1,0 +1,2184 @@
+{
+  "_how_to_use": "Training courses shown on /training/. One entry per course. Summaries are written in our own words from the provider's page. 'fees' lists amounts exactly as the provider publishes them (label + amount, GST as stated in 'fees_note'); leave it empty when the provider doesn't publish fees and say where to find them in 'fees_note'. 'accreditation' lists recognition stated by the provider (CPD hours, registration hours, WSQ, recognised programmes). 'grants' lists each funding scheme with who qualifies, as the provider states it. 'funding' holds the matching filter ids. 'next_date' is the start of the next confirmed run (YYYY-MM-DD) or null; 'next_run' is the text shown. 'checked' is when someone last opened the provider's page.",
+  "updated": "2026-11-28",
+  "taxonomy": {
+    "approaches": [
+      {
+        "id": "counselling-skills",
+        "label": "Counselling skills"
+      },
+      {
+        "id": "cbt",
+        "label": "CBT"
+      },
+      {
+        "id": "mi",
+        "label": "Motivational interviewing"
+      },
+      {
+        "id": "play-therapy",
+        "label": "Play therapy"
+      },
+      {
+        "id": "gestalt",
+        "label": "Gestalt therapy"
+      },
+      {
+        "id": "trauma",
+        "label": "Trauma-informed care"
+      },
+      {
+        "id": "suicide-crisis",
+        "label": "Suicide and crisis intervention"
+      },
+      {
+        "id": "mental-health",
+        "label": "Mental health"
+      },
+      {
+        "id": "case-formulation",
+        "label": "Assessment and case formulation"
+      },
+      {
+        "id": "multicultural",
+        "label": "Multicultural practice"
+      },
+      {
+        "id": "casework",
+        "label": "Casework and case management"
+      },
+      {
+        "id": "groupwork",
+        "label": "Groupwork"
+      },
+      {
+        "id": "community-work",
+        "label": "Community work"
+      },
+      {
+        "id": "family",
+        "label": "Family work"
+      },
+      {
+        "id": "child-protection",
+        "label": "Child protection"
+      },
+      {
+        "id": "grief",
+        "label": "Grief and loss"
+      },
+      {
+        "id": "supervision",
+        "label": "Clinical supervision"
+      },
+      {
+        "id": "ethics",
+        "label": "Ethics"
+      },
+      {
+        "id": "self-care",
+        "label": "Self-care"
+      },
+      {
+        "id": "financial-capability",
+        "label": "Financial capability"
+      },
+      {
+        "id": "tech",
+        "label": "Tech and AI"
+      }
+    ],
+    "professions": [
+      {
+        "id": "social-workers",
+        "label": "Social workers"
+      },
+      {
+        "id": "counsellors",
+        "label": "Counsellors"
+      },
+      {
+        "id": "psychologists",
+        "label": "Psychologists"
+      },
+      {
+        "id": "practitioners",
+        "label": "Social service practitioners"
+      },
+      {
+        "id": "healthcare",
+        "label": "Healthcare staff"
+      }
+    ],
+    "levels": [
+      {
+        "id": "foundation",
+        "label": "Foundation"
+      },
+      {
+        "id": "intermediate",
+        "label": "Intermediate"
+      },
+      {
+        "id": "advanced",
+        "label": "Advanced"
+      },
+      {
+        "id": "qualification",
+        "label": "Certificate or diploma"
+      }
+    ],
+    "formats": [
+      {
+        "id": "in-person",
+        "label": "In person"
+      },
+      {
+        "id": "online",
+        "label": "Online"
+      },
+      {
+        "id": "blended",
+        "label": "Blended"
+      }
+    ],
+    "providers": [
+      {
+        "id": "ssi",
+        "label": "NCSS Social Service Institute"
+      },
+      {
+        "id": "professional-body",
+        "label": "Professional bodies (SASW, SPS, SAC)"
+      },
+      {
+        "id": "university",
+        "label": "Universities"
+      },
+      {
+        "id": "healthcare",
+        "label": "Hospitals"
+      },
+      {
+        "id": "specialist",
+        "label": "Specialist centres"
+      }
+    ],
+    "funding": [
+      {
+        "id": "swda",
+        "label": "SkillsFuture course fee funding"
+      },
+      {
+        "id": "sfc",
+        "label": "SkillsFuture Credit"
+      },
+      {
+        "id": "mces",
+        "label": "Mid-Career Enhanced Subsidy (40+)"
+      },
+      {
+        "id": "etss",
+        "label": "Enhanced Training Support for SMEs"
+      },
+      {
+        "id": "pcg",
+        "label": "Professional Capability Grant (PCG)"
+      },
+      {
+        "id": "free",
+        "label": "Free"
+      }
+    ]
+  },
+  "calendars": [
+    {
+      "name": "NCSS Social Service Institute",
+      "about": "Short courses, certificates and diplomas for the social service sector, plus free e-learning.",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/"
+    },
+    {
+      "name": "SASW training calendar",
+      "about": "Social work training, from ethics and supervision to trauma and groupwork.",
+      "url": "https://sasw.org.sg/training-programmes/"
+    },
+    {
+      "name": "SPS events",
+      "about": "CPD workshops for psychologists, including supervision training.",
+      "url": "https://singaporepsychologicalsociety.org/events"
+    },
+    {
+      "name": "SAC events and CPD",
+      "about": "Talks and workshops that count towards Registered Counsellor CPD hours.",
+      "url": "https://sacsingapore.org/events/"
+    },
+    {
+      "name": "MySkillsFuture course directory",
+      "about": "Search any course code (TGS-...) to check SkillsFuture funding.",
+      "url": "https://www.myskillsfuture.gov.sg/"
+    }
+  ],
+  "courses": [
+    {
+      "id": "ssi-counselling-skills-intro",
+      "title": "Counselling Skills and Practice: Introduction",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "An introduction to core counselling skills for social service professionals who support clients one to one.",
+      "approaches": [
+        "counselling-skills"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers",
+        "counsellors"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "",
+      "next_run": "See SSI for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2020500644",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        },
+        {
+          "name": "SkillsFuture course fee funding",
+          "detail": "SSI courses with a TGS course code can also be funded through SkillsFuture (SWDA). Check the course on MySkillsFuture."
+        }
+      ]
+    },
+    {
+      "id": "ssi-mi-intro",
+      "title": "Motivational Interviewing: An Introduction for Social Service Practitioners",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "The spirit and core skills of motivational interviewing, for helping clients work through ambivalence about change.",
+      "approaches": [
+        "mi",
+        "counselling-skills"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers",
+        "counsellors"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "",
+      "next_run": "Last ran 12 to 13 Oct 2026. See SSI for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2020500646",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        },
+        {
+          "name": "SkillsFuture course fee funding",
+          "detail": "SSI courses with a TGS course code can also be funded through SkillsFuture (SWDA). Check the course on MySkillsFuture."
+        }
+      ]
+    },
+    {
+      "id": "ssi-case-management-intro",
+      "title": "Case Management in Practice: Introduction",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "The basics of case management in Singapore's social service sector, from intake to coordinating support.",
+      "approaches": [
+        "casework"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "",
+      "next_run": "Registration open (see SSI)",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2020500648",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        },
+        {
+          "name": "SkillsFuture course fee funding",
+          "detail": "SSI courses with a TGS course code can also be funded through SkillsFuture (SWDA). Check the course on MySkillsFuture."
+        }
+      ]
+    },
+    {
+      "id": "ssi-para-counselling",
+      "title": "Certificate in Para-Counselling in Community Setting",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "A certificate for practitioners who use counselling skills in their work without being trained counsellors.",
+      "approaches": [
+        "counselling-skills"
+      ],
+      "professions": [
+        "practitioners"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "3 months",
+      "next_run": "See SSI for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2022013234",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        },
+        {
+          "name": "SkillsFuture course fee funding",
+          "detail": "SSI courses with a TGS course code can also be funded through SkillsFuture (SWDA). Check the course on MySkillsFuture."
+        }
+      ]
+    },
+    {
+      "id": "ssi-pc-casework",
+      "title": "Professional Certificate in Casework",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "Three modules covering engagement and assessment, planning and intervention, and case review and evaluation.",
+      "approaches": [
+        "casework"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "7 days",
+      "next_run": "See SSI for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2020501407",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        },
+        {
+          "name": "SkillsFuture course fee funding",
+          "detail": "SSI courses with a TGS course code can also be funded through SkillsFuture (SWDA). Check the course on MySkillsFuture."
+        }
+      ]
+    },
+    {
+      "id": "ssi-pc-group-work",
+      "title": "Professional Certificate in Group Work",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "Two modules on assessing and planning groupwork, then running group interventions.",
+      "approaches": [
+        "groupwork"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "2 modules",
+      "next_run": "See SSI for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2020503304",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        },
+        {
+          "name": "SkillsFuture course fee funding",
+          "detail": "SSI courses with a TGS course code can also be funded through SkillsFuture (SWDA). Check the course on MySkillsFuture."
+        }
+      ]
+    },
+    {
+      "id": "ssi-loss-grief",
+      "title": "Understanding and Supporting People in Journey of Loss and Grief",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "How loss affects clients, how to support them through grief, and self-care for the worker.",
+      "approaches": [
+        "grief",
+        "self-care"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers",
+        "counsellors"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "",
+      "next_run": "24 to 25 Nov 2026 (see SSI for later runs)",
+      "next_date": null,
+      "funding": [
+        "pcg"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "ssi-self-care",
+      "title": "Applying Self-Care Techniques for Social Service Professionals",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "Practical self-care for people doing emotionally demanding work in the sector.",
+      "approaches": [
+        "self-care"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers",
+        "counsellors"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "",
+      "next_run": "See SSI for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "ssi-higher-diploma",
+      "title": "Higher Diploma in Social Service",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "For new entrants and existing staff aiming to become Social Work Associates, with a pathway into SUSS's Bachelor of Social Work.",
+      "approaches": [
+        "casework",
+        "community-work"
+      ],
+      "professions": [
+        "practitioners"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "18 months",
+      "next_run": "See SSI for intakes",
+      "next_date": null,
+      "funding": [
+        "pcg"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/continuing-education-training/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SSI shows fees when you register on its Training Management System (tms.ssi.gov.sg).",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "Subsidies of up to 90% for staff of NCSS member or MSF-funded social service agencies. You need at least 75% attendance and must pass all assessments, or you pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "ssi-free-elearning",
+      "title": "Complimentary e-learning for social service professionals",
+      "provider": "NCSS Social Service Institute",
+      "provider_type": "ssi",
+      "summary": "More than 100 hours of free online courses on the skills social service professionals asked for most, to learn at your own pace.",
+      "approaches": [
+        "counselling-skills",
+        "casework",
+        "self-care"
+      ],
+      "professions": [
+        "practitioners",
+        "social-workers",
+        "counsellors"
+      ],
+      "level": "foundation",
+      "format": "online",
+      "duration": "Self-paced",
+      "next_run": "Available any time",
+      "next_date": null,
+      "funding": [
+        "free"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.ncss.gov.sg/programmes/training-development/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Fee",
+          "amount": "Free"
+        }
+      ],
+      "fees_note": "",
+      "accreditation": [],
+      "grants": []
+    },
+    {
+      "id": "sasw-asist",
+      "title": "ASIST: Suicide First Aid",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "Applied Suicide Intervention Skills Training, an internationally recognised two-day workshop on recognising and responding to suicide risk.",
+      "approaches": [
+        "suicide-crisis"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "practitioners",
+        "healthcare"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "5 & 6 Jan 2027 (register by 22 Dec 2026)",
+      "next_date": "2027-01-05",
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/programme/asist-suicide-first-aid",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Employer or self-sponsored",
+          "amount": "$650"
+        },
+        {
+          "label": "SASW member",
+          "amount": "$585"
+        },
+        {
+          "label": "After approved PCG claim",
+          "amount": "$357.50"
+        }
+      ],
+      "fees_note": "As listed by SASW.",
+      "accreditation": [
+        "ASIST by LivingWorks Education, an internationally recognised training"
+      ],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sasw-supervision-basic",
+      "title": "Certificate in Supervision for the Social Services (Basic)",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "Prepares social workers and allied professionals to take on a supervisory role. For those with at least 2.5 years of direct practice who supervise or are starting to.",
+      "approaches": [
+        "supervision"
+      ],
+      "professions": [
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "5 days",
+      "next_run": "7, 14, 21, 28 Jan & 4 Feb 2027 (register by 24 Dec 2026)",
+      "next_date": "2027-01-07",
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/training-programmes/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Employer or self-sponsored",
+          "amount": "$1,650"
+        },
+        {
+          "label": "SASW member",
+          "amount": "$1,485"
+        },
+        {
+          "label": "After approved PCG claim",
+          "amount": "$660"
+        }
+      ],
+      "fees_note": "Fees as listed for the Oct 2026 run. Check SASW for the Jan 2027 run.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sasw-supervision-intermediate",
+      "title": "Certificate in Supervision for the Social Service (Intermediate)",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "The next step after the basic supervision certificate, for supervisors building their practice.",
+      "approaches": [
+        "supervision"
+      ],
+      "professions": [
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "advanced",
+      "format": "in-person",
+      "duration": "5 days",
+      "next_run": "See SASW for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/training-programmes/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SASW lists fees on each course page. Check the page for this run.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sasw-trauma-informed",
+      "title": "Working Effectively with Traumatised Clients and Families: A Trauma-Informed Care Approach",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "Trauma-informed care for frontline helpers, including counsellors, social workers, psychotherapists and students.",
+      "approaches": [
+        "trauma",
+        "family"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "practitioners"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "13 & 20 Jan 2027 (register by 1 Jan 2027)",
+      "next_date": "2027-01-13",
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/training-programmes/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SASW lists fees on each course page. Check the page for this run.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sasw-ethics",
+      "title": "Understanding & Applying Social Work Ethics",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "Making ethical decisions and managing dilemmas in practice. Recommended for Registered Social Workers (provisional) and other helping professionals.",
+      "approaches": [
+        "ethics"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "psychologists",
+        "healthcare"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "15 & 22 Jan 2027",
+      "next_date": "2027-01-15",
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/programme/understanding-applying-social-work-ethics/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Employer or self-sponsored",
+          "amount": "$1,100"
+        },
+        {
+          "label": "SASW member",
+          "amount": "$990"
+        },
+        {
+          "label": "After approved PCG claim",
+          "amount": "$620"
+        }
+      ],
+      "fees_note": "As listed by SASW.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sasw-community-work",
+      "title": "Community Work Practice in the Social Service",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "Community assessment, mobilisation and building social capital, for practitioners with at least a year of direct practice.",
+      "approaches": [
+        "community-work"
+      ],
+      "professions": [
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "11 & 12 Jan 2027 (register by 28 Dec 2026)",
+      "next_date": "2027-01-11",
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/training-programmes/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SASW lists fees on each course page. Check the page for this run.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sasw-groupwork-intro",
+      "title": "Introduction to Groupwork Skills",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "For practitioners new to groupwork who want to plan and facilitate groups with purpose.",
+      "approaches": [
+        "groupwork"
+      ],
+      "professions": [
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "3 days",
+      "next_run": "10, 11 & 12 Feb 2027 (register by 27 Jan 2027)",
+      "next_date": "2027-02-10",
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/training-programmes/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SASW lists fees on each course page. Check the page for this run.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sasw-child-centric",
+      "title": "Child-Centric Practice",
+      "provider": "Singapore Association of Social Workers (SASW)",
+      "provider_type": "professional-body",
+      "summary": "Putting children's needs and voices at the centre of social work practice.",
+      "approaches": [
+        "child-protection",
+        "family"
+      ],
+      "professions": [
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "See SASW for the next run",
+      "next_date": null,
+      "funding": [
+        "pcg",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sasw.org.sg/programme/child-centric-practice",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$990"
+        },
+        {
+          "label": "SASW member",
+          "amount": "$900"
+        },
+        {
+          "label": "After approved PCG claim",
+          "amount": "$693"
+        }
+      ],
+      "fees_note": "Fees for the May 2026 run. Check SASW for the next run.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Professional Capability Grant (PCG)",
+          "detail": "For participants employed and sponsored by a social service agency affiliated to NCSS. You need at least 75% attendance, or you or your employer pay the full fee."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Singapore Citizens aged 25 and above can use it if self-sponsored. Not available to organisation-sponsored participants."
+        }
+      ]
+    },
+    {
+      "id": "sps-supervision",
+      "title": "Supervision workshops for psychologists",
+      "provider": "Singapore Psychological Society (SPS)",
+      "provider_type": "professional-body",
+      "summary": "A recurring series on competency-based, reflective and group supervision, aligned with SPS's supervisor competency framework.",
+      "approaches": [
+        "supervision"
+      ],
+      "professions": [
+        "psychologists",
+        "counsellors"
+      ],
+      "level": "advanced",
+      "format": "blended",
+      "duration": "1 to 2 days",
+      "next_run": "2026 series has ended. See SPS events for 2027",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://singaporepsychologicalsociety.org/events",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Early registration (2026)",
+          "amount": "$290"
+        },
+        {
+          "label": "SPS members (2026)",
+          "amount": "$320"
+        },
+        {
+          "label": "Non-members (2026)",
+          "amount": "$370"
+        }
+      ],
+      "fees_note": "Last published fees, for a one-day workshop in the 2026 series. 2027 fees aren't out yet.",
+      "accreditation": [
+        "7 to 14 SPS CPD hours per workshop"
+      ],
+      "grants": []
+    },
+    {
+      "id": "sac-cpd-events",
+      "title": "SAC professional development talks and workshops",
+      "provider": "Singapore Association for Counselling (SAC)",
+      "provider_type": "professional-body",
+      "summary": "Short Association events, such as AI in clinical practice and managing school refusal. Most count towards the CPD hours Registered Counsellors need at renewal.",
+      "approaches": [
+        "counselling-skills",
+        "tech"
+      ],
+      "professions": [
+        "counsellors"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "2 to 3 hours",
+      "next_run": "See SAC events",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sacsingapore.org/events/",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "Low-cost events. Member rates apply to all SAC events.",
+      "accreditation": [
+        "Most events count towards SAC Registered Counsellor CPD hours"
+      ],
+      "grants": []
+    },
+    {
+      "id": "nus-gc-play-therapy",
+      "title": "Graduate Certificate in Child Counselling and Play Therapy",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Two courses over 12 days for social workers, counsellors, psychologists, teachers and allied health staff who work with children and families.",
+      "approaches": [
+        "play-therapy",
+        "counselling-skills",
+        "family"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "psychologists",
+        "healthcare"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "84 hours over 12 days",
+      "next_run": "Course 1: 25 Feb 2027. Course 2: Aug to Sep 2027 (apply by 15 Dec 2026)",
+      "next_date": "2027-02-25",
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/swk/gc-child-counselling-play-therapy/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$5,886"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$1,765.80"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$685.80"
+        }
+      ],
+      "fees_note": "Per course, two courses in the certificate. Fees include GST. Applications open 22 Oct to 15 Dec 2026.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-swm5209-supervision",
+      "title": "SWM5209 Theory and Practice of Social Work Supervision",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "A graduate module that can stack towards the Master of Social Work. Weekly Thursday classes.",
+      "approaches": [
+        "supervision"
+      ],
+      "professions": [
+        "social-workers"
+      ],
+      "level": "advanced",
+      "format": "in-person",
+      "duration": "Jan to May 2027, weekly",
+      "next_run": "Jan to May 2027, Thursdays",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/swk/continuing-professional-education",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "Graduate module fees are on the NUS Lifelong Learning portal.",
+      "accreditation": [
+        "Stackable towards the NUS Master of Social Work"
+      ],
+      "grants": []
+    },
+    {
+      "id": "nus-trauma-crisis",
+      "title": "Assisting Individuals in Crisis and Trauma-Informed Care Practices",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Crisis communication and the five principles of trauma-informed care, taught with IMH social workers. For practitioners with at least a year of practice.",
+      "approaches": [
+        "trauma",
+        "suicide-crisis"
+      ],
+      "professions": [
+        "social-workers",
+        "healthcare"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "Next run to be announced (last ran Nov 2026)",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2025059536",
+      "url": "https://fass.nus.edu.sg/swk/events/trauma-informed-care/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$2,071"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$621.30"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$241.30"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS. They may change without notice.",
+      "accreditation": [
+        "Certificate of Completion from the International Critical Incident Stress Foundation (ICISF)"
+      ],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-pc-mental-health",
+      "title": "Professional Certificate in Mental Health",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Five short courses on mental health social work, taught by IMH medical social workers. Each course can also be taken on its own.",
+      "approaches": [
+        "mental-health",
+        "family"
+      ],
+      "professions": [
+        "social-workers"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "5 short courses",
+      "next_run": "See NUS for the next run",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/swk/pc-in-mental-health-ssg/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee, per course",
+          "amount": "$1,035.50 to $2,071"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding, per course",
+          "amount": "$560.50 to $1,121"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding, per course",
+          "amount": "$370.50 to $741"
+        }
+      ],
+      "fees_note": "Five courses, each priced separately. Fees include GST. For workers with at least 3 years' experience with clients who have mental health conditions.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-foundational-mental-health",
+      "title": "Foundational Module in Mental Health for Social Workers",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Common mental health conditions, screening and when to escalate care. For social workers after their first year of practice.",
+      "approaches": [
+        "mental-health"
+      ],
+      "professions": [
+        "social-workers"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "Next run to be announced (last ran Nov 2026)",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2024050003",
+      "url": "https://fass.nus.edu.sg/swk/events/short-course-foundational-mental-health/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$1,853"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$555.90"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$215.90"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS. They may change without notice.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-gestalt-children",
+      "title": "Fundamentals of Gestalt Therapy with Children and Adolescents",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "An introduction to Gestalt therapy with young people, for practitioners in health, mental health and the helping professions.",
+      "approaches": [
+        "gestalt",
+        "play-therapy"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "psychologists"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "Next run to be announced",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/swk/events/fundamentals-gestalt-therapy/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$1,962"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$1,062"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$702"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS. They may change without notice.",
+      "accreditation": [
+        "Accredited with West Coast Institute. Hours count towards Certified Gestalt Therapist with Children and Adolescents"
+      ],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-gestalt-oaklander",
+      "title": "Gestalt Play Therapy: The Oaklander Approach",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Violet Oaklander's approach to Gestalt play therapy with children and adolescents.",
+      "approaches": [
+        "gestalt",
+        "play-therapy"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "psychologists"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "Next run to be announced",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2025056401",
+      "url": "https://fass.nus.edu.sg/swk/events/gestalt-therapy-oaklander/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$1,962"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$1,062"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$702"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS. They may change without notice.",
+      "accreditation": [
+        "Accredited with West Coast Institute. Hours count towards Certified Gestalt Therapist with Children and Adolescents"
+      ],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-gestalt-intermediate",
+      "title": "Intermediate Training in Gestalt Play Therapy",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Four days of deeper Gestalt play therapy practice for those who've done the fundamentals.",
+      "approaches": [
+        "gestalt",
+        "play-therapy"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "psychologists"
+      ],
+      "level": "advanced",
+      "format": "in-person",
+      "duration": "4 days (28 hours)",
+      "next_run": "Next run to be announced (last ran Oct 2026)",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2025056063",
+      "url": "https://fass.nus.edu.sg/swk/events/short-course-intermediate-training-in-gestalt-play-therapy/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$4,142"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$2,242"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$1,482"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS. They may change without notice.",
+      "accreditation": [
+        "Accredited with West Coast Institute. Hours count towards Certified Gestalt Therapist with Children and Adolescents"
+      ],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-ethical-reasoning",
+      "title": "Strengthening Ethical Reasoning in Social Work Practice",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Three days on reasoning through ethical dilemmas, for helping professionals in health and social services.",
+      "approaches": [
+        "ethics"
+      ],
+      "professions": [
+        "social-workers",
+        "healthcare"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "3 days",
+      "next_run": "Next run to be announced (last ran Nov 2026)",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2025056403",
+      "url": "https://fass.nus.edu.sg/swk/events/short-course-ethical-reasoning/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$2,779.50"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$1,504.50"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$994.50"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS. They may change without notice.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-pc-child-protection",
+      "title": "Professional Certificate in Child Protection",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Four courses over seven days for social workers, school counsellors and student welfare officers working on child protection.",
+      "approaches": [
+        "child-protection",
+        "family"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "7 days",
+      "next_run": "Next run to be announced",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/swk/pc-in-child-protection/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee, per course",
+          "amount": "$926.50 to $1,853"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding, per course",
+          "amount": "$501.50 to $1,003"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding, per course",
+          "amount": "$331.50 to $663"
+        }
+      ],
+      "fees_note": "Four courses, each priced separately (2026 fees). Fees include GST.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-behavioural-health",
+      "title": "Using Skills-Based Behavioural Health Approaches in Managing Chronic Conditions",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Behavioural health skills for supporting clients with chronic illness, for workers with at least a year of experience.",
+      "approaches": [
+        "cbt",
+        "mi",
+        "mental-health"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "practitioners"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "3 days",
+      "next_run": "Next run to be announced",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2024050587",
+      "url": "https://fass.nus.edu.sg/swk/events/short-course-skills-behavioural-health/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$2,779.50"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$833.85"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$323.85"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS. They may change without notice.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-fcab-intermediate",
+      "title": "Financial Capability and Asset Building: Social Work (Intermediate)",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Helping lower-income and financially vulnerable families build financial capability, for social work-trained practitioners.",
+      "approaches": [
+        "financial-capability",
+        "casework"
+      ],
+      "professions": [
+        "social-workers"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "3 days",
+      "next_run": "Next run to be announced",
+      "next_date": null,
+      "funding": [
+        "swda"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2024043298",
+      "url": "https://fass.nus.edu.sg/swk/events/financial-capability-intermediate/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$3,106.50"
+        },
+        {
+          "label": "Singapore Citizen under 40 or PR, after funding",
+          "amount": "$931.95"
+        },
+        {
+          "label": "Singapore Citizen 40 and above, after funding",
+          "amount": "$361.95"
+        }
+      ],
+      "fees_note": "Fees include GST. Social workers at family service centres get priority and should register as self-sponsored.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SkillsFuture (SWDA) course fee funding",
+          "detail": "Reduced fees for Singapore Citizens and PRs, shown above. You must achieve a 'Competent' grade in the assessment, or you may have to pay the full fee."
+        }
+      ]
+    },
+    {
+      "id": "nus-ai-social-work",
+      "title": "Artificial Intelligence for Social Work",
+      "provider": "NUS Department of Social Work",
+      "provider_type": "university",
+      "summary": "Using AI tools responsibly in social work and counselling practice.",
+      "approaches": [
+        "tech"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "practitioners"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "2 days",
+      "next_run": "Next run to be announced",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/swk/events/artificial-intelligence-social-work/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee",
+          "amount": "$1,853"
+        },
+        {
+          "label": "Preferential rate for social workers and social service practitioners",
+          "amount": "$1,297.10"
+        }
+      ],
+      "fees_note": "Fees include GST, as listed by NUS.",
+      "accreditation": [],
+      "grants": []
+    },
+    {
+      "id": "nus-psy-case-formulations",
+      "title": "Professional Certificate in Professional Practice and Case Formulations",
+      "provider": "NUS Department of Psychology",
+      "provider_type": "university",
+      "summary": "Two workshops on ethics and case formulation in practitioner psychology. Usually needs a psychology degree with honours.",
+      "approaches": [
+        "case-formulation",
+        "ethics"
+      ],
+      "professions": [
+        "psychologists"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "2 workshops",
+      "next_run": "Both workshops TBC in 2027",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/psy/?p=10845",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Full fee, per workshop",
+          "amount": "$2,779.50"
+        },
+        {
+          "label": "Preferential rate, per workshop",
+          "amount": "$1,945.65"
+        }
+      ],
+      "fees_note": "Fees include GST. The preferential rate is for public healthcare and community sector staff, government ministries, and full-time students.",
+      "accreditation": [],
+      "grants": []
+    },
+    {
+      "id": "nus-psy-complex-case",
+      "title": "Professional Certificate in Complex Case Formulations",
+      "provider": "NUS Department of Psychology",
+      "provider_type": "university",
+      "summary": "Two workshops on formulating complex cases, for early to mid-career clinicians with a master's in applied psychology.",
+      "approaches": [
+        "case-formulation"
+      ],
+      "professions": [
+        "psychologists"
+      ],
+      "level": "advanced",
+      "format": "in-person",
+      "duration": "2 workshops",
+      "next_run": "Both workshops TBC in 2027",
+      "next_date": null,
+      "funding": [
+        "swda",
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://fass.nus.edu.sg/psy/complexcaseformulations",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Workshop I, after funding (Singapore learners)",
+          "amount": "$603.25 to $1,553.25"
+        },
+        {
+          "label": "Workshop II, after funding (Singapore learners)",
+          "amount": "$241.30 to $621.30"
+        }
+      ],
+      "fees_note": "Net fees include GST and depend on your funding tier. Confirm which applies to you with NUS.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "SSG course fee funding",
+          "detail": "You must pass all assessments to keep the funding."
+        },
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Self-sponsored Singaporeans aged 25 and above can use it."
+        }
+      ]
+    },
+    {
+      "id": "suss-theories-techniques",
+      "title": "Theories and Techniques in Counselling",
+      "provider": "Singapore University of Social Sciences (SUSS)",
+      "provider_type": "university",
+      "summary": "An overview of the major counselling theories, from person-centred to cognitive and behavioural approaches, plus working with clients in crisis.",
+      "approaches": [
+        "counselling-skills",
+        "cbt"
+      ],
+      "professions": [
+        "counsellors",
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "foundation",
+      "format": "blended",
+      "duration": "4 days",
+      "next_run": "See SUSS for the next intake",
+      "next_date": null,
+      "funding": [
+        "mces",
+        "etss"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.suss.edu.sg/courses/short-course/detail/theories-and-techniques-in-counselling",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Course fee",
+          "amount": "$2,400"
+        }
+      ],
+      "fees_note": "Fees are reviewed every year. SUSS shows the funded amounts when you apply. You need to be working at a social service agency when you apply.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Mid-Career Enhanced Subsidy",
+          "detail": "Singaporeans aged 40 and above may get subsidies of up to 90% of the course fee."
+        },
+        {
+          "name": "Enhanced Training Support for SMEs",
+          "detail": "SME-sponsored Singapore Citizens and PRs aged 21 and above may get subsidies of up to 90%."
+        }
+      ]
+    },
+    {
+      "id": "suss-micro-skills",
+      "title": "Micro and Advanced Skills in Counselling",
+      "provider": "Singapore University of Social Sciences (SUSS)",
+      "provider_type": "university",
+      "summary": "Hands-on practice of micro-counselling skills like empathy, paraphrasing and questioning, in a training lab. Open to career switchers.",
+      "approaches": [
+        "counselling-skills"
+      ],
+      "professions": [
+        "counsellors",
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "4 days",
+      "next_run": "See SUSS for the next intake",
+      "next_date": null,
+      "funding": [
+        "mces",
+        "etss"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.suss.edu.sg/courses/short-course/detail/micro-and-advanced-skills-in-counselling",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Course fee",
+          "amount": "$2,400"
+        }
+      ],
+      "fees_note": "Fees are reviewed every year. SUSS shows the funded amounts when you apply.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Mid-Career Enhanced Subsidy",
+          "detail": "Singaporeans aged 40 and above may get subsidies of up to 90% of the course fee."
+        },
+        {
+          "name": "Enhanced Training Support for SMEs",
+          "detail": "SME-sponsored Singapore Citizens and PRs aged 21 and above may get subsidies of up to 90%."
+        }
+      ]
+    },
+    {
+      "id": "suss-practicum-specialised",
+      "title": "Practicum: Specialised Counselling Skills",
+      "provider": "Singapore University of Social Sciences (SUSS)",
+      "provider_type": "university",
+      "summary": "Strengthens practice skills and helps you develop your own counselling style.",
+      "approaches": [
+        "counselling-skills"
+      ],
+      "professions": [
+        "counsellors",
+        "practitioners"
+      ],
+      "level": "advanced",
+      "format": "in-person",
+      "duration": "4-month practicum with 50 clinical hours and 9 hours of supervision",
+      "next_run": "See SUSS for the next intake",
+      "next_date": null,
+      "funding": [
+        "mces",
+        "etss"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.suss.edu.sg/courses/short-course/detail/practicum-specialised-counselling-skills",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Course fee",
+          "amount": "$2,400"
+        }
+      ],
+      "fees_note": "Fees are reviewed every year. SUSS shows the funded amounts when you apply. Needs a degree, work at a social service agency, and four foundational modules.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Mid-Career Enhanced Subsidy",
+          "detail": "Singaporeans aged 40 and above may get subsidies of up to 90% of the course fee."
+        },
+        {
+          "name": "Enhanced Training Support for SMEs",
+          "detail": "SME-sponsored Singapore Citizens and PRs aged 21 and above may get subsidies of up to 90%."
+        }
+      ]
+    },
+    {
+      "id": "suss-multicultural",
+      "title": "Counselling in a Multicultural Context",
+      "provider": "Singapore University of Social Sciences (SUSS)",
+      "provider_type": "university",
+      "summary": "Multicultural counselling competencies, ethics and culturally appropriate interventions in a Singapore context.",
+      "approaches": [
+        "multicultural",
+        "ethics"
+      ],
+      "professions": [
+        "counsellors",
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "advanced",
+      "format": "in-person",
+      "duration": "4 days",
+      "next_run": "See SUSS for the next intake",
+      "next_date": null,
+      "funding": [
+        "mces",
+        "etss"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.suss.edu.sg/courses/short-course/detail/counselling-in-a-multicultural-context",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SUSS doesn't list the fee on the course page. Contact SUSS Academy.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Mid-Career Enhanced Subsidy",
+          "detail": "Singaporeans aged 40 and above may get subsidies of up to 90% of the course fee."
+        },
+        {
+          "name": "Enhanced Training Support for SMEs",
+          "detail": "SME-sponsored Singapore Citizens and PRs aged 21 and above may get subsidies of up to 90%."
+        }
+      ]
+    },
+    {
+      "id": "suss-understanding-mental-health",
+      "title": "Understanding Mental Health",
+      "provider": "Singapore University of Social Sciences (SUSS)",
+      "provider_type": "university",
+      "summary": "Mental health basics, Singapore's mental health services and referral pathways, for frontline and social service staff.",
+      "approaches": [
+        "mental-health"
+      ],
+      "professions": [
+        "practitioners",
+        "healthcare"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "3 days",
+      "next_run": "See SUSS for the next intake",
+      "next_date": null,
+      "funding": [
+        "mces",
+        "etss"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2026061826",
+      "url": "https://www.suss.edu.sg/courses/short-course/detail/understanding-mental-health",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SUSS doesn't list the fee on the course page. Contact SUSS Academy.",
+      "accreditation": [],
+      "grants": [
+        {
+          "name": "Mid-Career Enhanced Subsidy",
+          "detail": "Singaporeans aged 40 and above may get subsidies of up to 90% of the course fee."
+        },
+        {
+          "name": "Enhanced Training Support for SMEs",
+          "detail": "SME-sponsored Singapore Citizens and PRs aged 21 and above may get subsidies of up to 90%."
+        }
+      ]
+    },
+    {
+      "id": "nie-group-supervision-cp",
+      "title": "CPC0001 Practicum Group Supervision for Counselling Psychologists",
+      "provider": "NIE, Nanyang Technological University",
+      "provider_type": "university",
+      "summary": "Group supervision led by an SRP-approved supervisor, so counselling psychologists can clock hours towards registration with the Singapore Register of Psychologists.",
+      "approaches": [
+        "supervision",
+        "case-formulation"
+      ],
+      "professions": [
+        "psychologists"
+      ],
+      "level": "advanced",
+      "format": "online",
+      "duration": "10 hours (five 2-hour Zoom sessions)",
+      "next_run": "See NIE for the next run",
+      "next_date": null,
+      "funding": [
+        "sfc"
+      ],
+      "cpd": "",
+      "course_code": "TGS-2025055015",
+      "url": "https://www.ntu.edu.sg/nie/admissions/continuing-education-training/cpc0001-counselling-psychologists",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Total payable (incl. 9% GST)",
+          "amount": "$1,309.09"
+        }
+      ],
+      "fees_note": "As listed by NIE.",
+      "accreditation": [
+        "Led by an SRP-approved supervisor. Hours count towards registration with the Singapore Register of Psychologists"
+      ],
+      "grants": [
+        {
+          "name": "SkillsFuture Credit",
+          "detail": "Can be used to offset the course fee."
+        },
+        {
+          "name": "NTU/NIE Alumni Course Credits",
+          "detail": "NTU and NIE alumni can use their alumni course credits."
+        }
+      ]
+    },
+    {
+      "id": "sgh-essential-counselling",
+      "title": "Essential Counselling Skills",
+      "provider": "Singapore General Hospital (PGAHI)",
+      "provider_type": "healthcare",
+      "summary": "The nuts and bolts of counselling and a problem-solving structure for helping conversations, taught by SGH medical social workers with role plays.",
+      "approaches": [
+        "counselling-skills"
+      ],
+      "professions": [
+        "healthcare",
+        "practitioners"
+      ],
+      "level": "foundation",
+      "format": "in-person",
+      "duration": "1 day",
+      "next_run": "See the PGAHI training calendar (last ran Oct 2026)",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://www.sgh.com.sg/pgahi/training-calendar",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Regular",
+          "amount": "$800"
+        },
+        {
+          "label": "SingHealth staff",
+          "amount": "$720"
+        }
+      ],
+      "fees_note": "Fees include 9% GST, from the Oct 2026 run.",
+      "accreditation": [],
+      "grants": []
+    },
+    {
+      "id": "sos-sisw",
+      "title": "Suicide Intervention Skills Workshop (SISW)",
+      "provider": "Samaritans of Singapore (SOS)",
+      "provider_type": "specialist",
+      "summary": "Two days on engaging people at risk of suicide, assessing risk, intervening and safety planning, for social service and mental health professionals.",
+      "approaches": [
+        "suicide-crisis"
+      ],
+      "professions": [
+        "social-workers",
+        "counsellors",
+        "psychologists",
+        "healthcare"
+      ],
+      "level": "intermediate",
+      "format": "in-person",
+      "duration": "17 hours over 2 days",
+      "next_run": "See SOS for the next run",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sos.org.sg/support-those-in-distress/professional-training",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SOS doesn't publish fees online. Contact the SOS Academy.",
+      "accreditation": [],
+      "grants": []
+    },
+    {
+      "id": "sos-para-counselling-wsq",
+      "title": "Para-Counselling to Support Persons at Risk of Suicide (WSQ)",
+      "provider": "Samaritans of Singapore (SOS)",
+      "provider_type": "specialist",
+      "summary": "Communication frameworks and questioning techniques for supporting people at risk of suicide, with e-learning and two classroom days.",
+      "approaches": [
+        "suicide-crisis",
+        "counselling-skills"
+      ],
+      "professions": [
+        "practitioners"
+      ],
+      "level": "foundation",
+      "format": "blended",
+      "duration": "16.5 hours over 2 days, plus e-learning",
+      "next_run": "See SOS for the next run",
+      "next_date": null,
+      "funding": [],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://sos.org.sg/support-those-in-distress/professional-training",
+      "checked": "2026-11-28",
+      "fees": [],
+      "fees_note": "SOS doesn't publish fees online. Contact the SOS Academy.",
+      "accreditation": [
+        "WSQ certification on completing training and assessment"
+      ],
+      "grants": []
+    },
+    {
+      "id": "ccc-gdip-counselling",
+      "title": "Graduate Diploma in Counselling Practice",
+      "provider": "Counselling and Care Centre",
+      "provider_type": "specialist",
+      "summary": "A year-long, 300-hour programme recognised by the Singapore Association for Counselling as preparation for Registered Counsellor status. More than half the time is supervised clinical practice. Needs a degree in counselling, psychology or social work and 2 years of counselling work.",
+      "approaches": [
+        "counselling-skills",
+        "supervision"
+      ],
+      "professions": [
+        "counsellors",
+        "social-workers",
+        "practitioners"
+      ],
+      "level": "qualification",
+      "format": "in-person",
+      "duration": "300 hours over 12 months, part time",
+      "next_run": "Yearly intake in July (applications close in the third week of April)",
+      "next_date": null,
+      "funding": [
+        "swda",
+        "etss",
+        "pcg"
+      ],
+      "cpd": "",
+      "course_code": "",
+      "url": "https://counsel.org.sg/",
+      "checked": "2026-11-28",
+      "fees": [
+        {
+          "label": "Total course fee before subsidy (incl. GST)",
+          "amount": "$16,513.50"
+        },
+        {
+          "label": "Module 1 SSG subsidy",
+          "amount": "50% to 67%, where applicable"
+        }
+      ],
+      "fees_note": "From the July 2026 intake brochure. Application and insurance fees are extra. Applications for each July intake close in the third week of April.",
+      "accreditation": [
+        "Fully recognised by the Singapore Association for Counselling (SAC) as preparation for Registered Counsellor status"
+      ],
+      "grants": [
+        {
+          "name": "SkillsFuture funding (Module 1)",
+          "detail": "Self-sponsored applicants get a SkillsFuture subsidy, higher for those aged 40 and above. Company-sponsored applicants may also get Enhanced Training Support for SMEs."
+        },
+        {
+          "name": "Professional Capability Grant (Module 2)",
+          "detail": "Agencies apply to NCSS for PCG funding before Module 2 starts."
+        }
+      ]
+    }
+  ]
+}

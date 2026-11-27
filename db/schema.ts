@@ -24,11 +24,12 @@ export const submissions = pgTable('submissions', {
 
 // Site usage, counted per day. Privacy-friendly by design: only counters are stored.
 // No cookies, IP addresses, browser details, search words or case text are ever saved.
-//   metric: visit, pageview, pageview_hour (key: Singapore hour "00"–"23"), search, search_no_results, filter, assistant,
+//   metric: visit, pageview, search, search_no_results, filter, assistant,
 //           profile (optional pop-up answer, key "role:agency"), profile_shown, profile_skip, assistant_role,
 //           visitor_day / visitor_new / visitor_month (one per browser per day, ever, or month),
 //           country (key: two-letter country of a visit, from Netlify; no IP stored), assistant_capped,
 //           jobs_assistant / jobs_assistant_capped (the jobs board assistant, counted separately)
+//           training_assistant / training_assistant_capped (the training page assistant, counted separately)
 //   key:    what the count is about, e.g. "home", "help:legal-help" or a category id ("" if none)
 //   source: "web" for the website ("app" is reserved for the mobile apps)
 export const usageDaily = pgTable('usage_daily', {
@@ -39,7 +40,7 @@ export const usageDaily = pgTable('usage_daily', {
   count: integer('count').notNull().default(0),
 }, table => [
   primaryKey({ columns: [table.day, table.source, table.metric, table.key] }),
-  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'pageview_hour', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped')`),
+  check('usage_daily_metric', sql`${table.metric} in ('visit', 'pageview', 'search', 'search_no_results', 'filter', 'assistant', 'profile', 'profile_shown', 'profile_skip', 'assistant_role', 'visitor_day', 'visitor_new', 'visitor_month', 'country', 'assistant_capped', 'jobs_assistant', 'jobs_assistant_capped', 'training_assistant', 'training_assistant_capped')`),
   check('usage_daily_count_positive', sql`${table.count} >= 0`),
   index('usage_daily_day_idx').on(table.day),
 ]);
@@ -52,7 +53,7 @@ export const JOB_QUALIFICATIONS = ['doctorate', 'masters', 'honours', 'bachelors
 export const JOB_ORG_TYPES = ['healthcare', 'social-community', 'government', 'education', 'charity'] as const;
 export const jobs = pgTable('jobs', {
   id: text('id').primaryKey(), // also the page address: /jobs/<id>
-  source: text('source').notNull(),
+  source: text('source').notNull(), // 'mycareersfuture' or 'manual'
   source_id: text('source_id').notNull(), // the portal's own id (for manual jobs, the same as id)
   source_name: text('source_name').notNull().default(''), // shown to readers, e.g. "MyCareersFuture", "Careers@Gov"
   title: text('title').notNull(),
@@ -69,33 +70,24 @@ export const jobs = pgTable('jobs', {
   requirements: text('requirements').notNull().default(''),
   qualification: text('qualification').notNull().default('unspecified'),
   min_years: integer('min_years'),
-  seniority: text('seniority').$type<'entry' | 'mid' | 'senior'>(),
   fresh_grad: boolean('fresh_grad').notNull().default(false),
   nature: text('nature').array().notNull().default(sql`'{}'::text[]`),
   skills: text('skills').array().notNull().default(sql`'{}'::text[]`),
   apply_url: text('apply_url').notNull(),
-  application_action: text('application_action').notNull().default('apply'),
   source_url: text('source_url').notNull().default(''),
   posted_at: date('posted_at', { mode: 'string' }),
   closes_at: date('closes_at', { mode: 'string' }),
-  closing_date_estimated: boolean('closing_date_estimated').notNull().default(false),
   status: text('status').notNull().default('open'),
-  curated: boolean('curated').notNull().default(false),
   last_seen_at: timestamp('last_seen_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   created_at: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updated_at: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-  link_checked_at: timestamp('link_checked_at', { withTimezone: true, mode: 'string' }),
-  link_missing_count: integer('link_missing_count').notNull().default(0),
-  link_missing_code: integer('link_missing_code'),
 }, table => [
   uniqueIndex('jobs_source_id_idx').on(table.source, table.source_id),
   index('jobs_status_closes_idx').on(table.status, table.closes_at),
-  check('jobs_source', sql`${table.source} in ('mycareersfuture', 'manual', 'submission')`),
-  check('jobs_status', sql`${table.status} in ('open', 'closed', 'pending')`),
-  check('jobs_seniority', sql`${table.seniority} in ('entry', 'mid', 'senior')`),
-  check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'graduate-diploma', 'bachelors', 'diploma', 'o-levels', 'unspecified')`),
+  check('jobs_source', sql`${table.source} in ('mycareersfuture', 'manual')`),
+  check('jobs_status', sql`${table.status} in ('open', 'closed')`),
+  check('jobs_qualification', sql`${table.qualification} in ('doctorate', 'masters', 'honours', 'bachelors', 'diploma', 'unspecified')`),
   check('jobs_org_type', sql`${table.org_type} in ('healthcare', 'social-community', 'government', 'education', 'charity')`),
-  check('jobs_application_url', sql`${table.apply_url} like 'https://%' or ${table.apply_url} like 'mailto:%'`),
-  check('jobs_application_action', sql`${table.application_action} in ('apply', 'register', 'check-window')`),
+  check('jobs_apply_url_https', sql`${table.apply_url} like 'https://%'`),
   check('jobs_title_required', sql`length(trim(${table.title})) > 0`),
 ]);

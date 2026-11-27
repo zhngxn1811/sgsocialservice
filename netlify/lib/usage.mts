@@ -3,12 +3,11 @@
 import { and, eq, sql } from "drizzle-orm";
 import { getDb } from "../../db/index.js";
 import { usageDaily } from "../../db/schema.js";
-import { SEARCH_TOPIC_LABELS } from "../../public/search-topics.js";
 
-export const METRICS = ["visit", "pageview", "pageview_hour", "search", "search_no_results", "filter", "assistant", "profile", "profile_shown", "profile_skip", "assistant_role",
-  "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"] as const;
+export const METRICS = ["visit", "pageview", "search", "search_no_results", "filter", "assistant", "profile", "profile_shown", "profile_skip", "assistant_role",
+  "visitor_day", "visitor_new", "visitor_month", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped", "training_assistant", "training_assistant_capped"] as const;
 // Counted on the server only. The browser can't send these.
-const SERVER_ONLY = new Set(["pageview_hour", "assistant", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped"]);
+const SERVER_ONLY = new Set(["assistant", "country", "assistant_capped", "jobs_assistant", "jobs_assistant_capped", "training_assistant", "training_assistant_capped"]);
 // Sent once per browser (per day, ever, or per month). The browser only remembers the date it last sent them.
 const VISITOR = new Set(["visitor_day", "visitor_new", "visitor_month"]);
 
@@ -49,9 +48,8 @@ const KEY = /^[a-z0-9]([a-z0-9:-]{0,58}[a-z0-9])?$/;
 export const MAX_EVENTS = 5;
 
 // Days run on Singapore time, so "today" matches the dashboard reader's day.
-const sgTime = (date: Date) => new Date(date.getTime() + 8 * 60 * 60 * 1000).toISOString();
 export function sgDay(date = new Date()): string {
-  return sgTime(date).slice(0, 10);
+  return new Date(date.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 10);
 }
 
 // Search engines and link previewers shouldn't count as people.
@@ -71,7 +69,6 @@ export function cleanEvents(input: unknown): UsageEvent[] {
     const key = (e as { key?: unknown }).key ?? "";
     if (typeof metric !== "string" || !(METRICS as readonly string[]).includes(metric) || SERVER_ONLY.has(metric)) continue;
     if (typeof key !== "string" || (key !== "" && !KEY.test(key))) continue;
-    if ((metric === "search" || metric === "search_no_results") && key !== "" && !Object.hasOwn(SEARCH_TOPIC_LABELS, key)) continue;
     // Pop-up answers must be from the fixed lists; anything else is dropped.
     if (metric === "profile") { const [role, agency, extra] = key.split(":"); if (extra !== undefined || !isRole(role) || !isAgency(agency)) continue; }
     if (metric === "assistant_role" && !isRole(key)) continue;
@@ -83,19 +80,15 @@ export function cleanEvents(input: unknown): UsageEvent[] {
 
 type Db = { insert: (table: typeof usageDaily) => any };
 
-export async function recordUsage(db: Db, events: UsageEvent[], source = "web", now = new Date()): Promise<void> {
-  const local = sgTime(now), day = local.slice(0, 10), hour = local.slice(11, 13);
+export async function recordUsage(db: Db, events: UsageEvent[], source = "web", day = sgDay()): Promise<void> {
   // Fold repeats in one request into a single +n per counter.
   const counts = new Map<string, { metric: Metric; key: string; n: number }>();
-  let pageviews = 0;
   for (const e of events) {
-    if (e.metric === "pageview") pageviews += 1;
     const id = `${e.metric}|${e.key}`;
     const c = counts.get(id) ?? { metric: e.metric, key: e.key, n: 0 };
     c.n += 1;
     counts.set(id, c);
   }
-  if (pageviews) counts.set(`pageview_hour|${hour}`, { metric: "pageview_hour", key: hour, n: pageviews });
   for (const c of counts.values()) {
     await db.insert(usageDaily)
       .values({ day, source, metric: c.metric, key: c.key, count: c.n })
@@ -128,7 +121,12 @@ type ReadDb = { select: (cols: any) => any };
 export function jobsAssistantDailyCap(raw: string | undefined = env("JOBS_ASSISTANT_DAILY_CAP")): number {
   return assistantDailyCap(raw);
 }
-type CappedMetric = "assistant" | "jobs_assistant";
+// The training page assistant has its own cap, so a busy day on one page can't use up another's.
+export function trainingAssistantDailyCap(raw: string | undefined = env("TRAINING_ASSISTANT_DAILY_CAP")): number {
+  return jobsAssistantDailyCap(raw);
+}
+
+type CappedMetric = "assistant" | "jobs_assistant" | "training_assistant";
 export async function assistantUsedToday(db: ReadDb, day = sgDay(), metric: CappedMetric = "assistant"): Promise<number> {
   const [row] = await db.select({ n: sql<number>`coalesce(sum(${usageDaily.count}), 0)::int` }).from(usageDaily)
     .where(and(eq(usageDaily.day, day), eq(usageDaily.metric, metric)));
@@ -142,7 +140,7 @@ export async function assistantCapReached(cap = assistantDailyCap(), day = sgDay
 
 // Counts one use of a server-side feature (the assistant). Never sees or stores what was asked.
 // Errors are swallowed: counting must never delay or break the feature itself.
-export function countServerUse(metric: "assistant" | "assistant_capped" | "jobs_assistant" | "jobs_assistant_capped", waitUntil?: (p: Promise<unknown>) => void): void {
+export function countServerUse(metric: "assistant" | "assistant_capped" | "jobs_assistant" | "jobs_assistant_capped" | "training_assistant" | "training_assistant_capped", waitUntil?: (p: Promise<unknown>) => void): void {
   let p: Promise<unknown>;
   try { p = recordUsage(getDb(), [{ metric, key: "" }]).catch(() => {}); } catch { return; }
   waitUntil?.(p);
@@ -152,13 +150,14 @@ export function countServerUse(metric: "assistant" | "assistant_capped" | "jobs_
 
 export type UsageRow = { day: string; source: string; metric: string; key: string; count: number };
 export type SubmissionRow = { created_at: string; kind: string; status?: string };
-const TOTAL_KEYS = ["visits", "pageviews", "searches", "noResults", "assistant", "submissions", "profiles", "profileShown", "profileSkips", "visitorDays", "newVisitors", "assistantCapped", "jobsAssistant", "jobsAssistantCapped"] as const;
+const TOTAL_KEYS = ["visits", "pageviews", "searches", "noResults", "assistant", "submissions", "profiles", "profileShown", "profileSkips", "visitorDays", "newVisitors", "assistantCapped", "jobsAssistant", "jobsAssistantCapped", "trainingAssistant", "trainingAssistantCapped"] as const;
 type Totals = Record<(typeof TOTAL_KEYS)[number], number>;
 const METRIC_TO_TOTAL: Record<string, keyof Totals> = {
   visit: "visits", pageview: "pageviews", search: "searches", search_no_results: "noResults", assistant: "assistant",
   profile: "profiles", profile_shown: "profileShown", profile_skip: "profileSkips",
   visitor_day: "visitorDays", visitor_new: "newVisitors", assistant_capped: "assistantCapped",
   jobs_assistant: "jobsAssistant", jobs_assistant_capped: "jobsAssistantCapped",
+  training_assistant: "trainingAssistant", training_assistant_capped: "trainingAssistantCapped",
 };
 
 const addDays = (day: string, n: number) => {
@@ -180,13 +179,11 @@ const labelled = (m: Map<string, number>, labels: Record<string, string>): Count
   [...m].map(([key, count]) => ({ key, label: labels[key] ?? key, count })).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 
 export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: ReturnType<typeof periodFor>) {
-  const zero = (): Totals => ({ visits: 0, pageviews: 0, searches: 0, noResults: 0, assistant: 0, submissions: 0, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0, jobsAssistant: 0, jobsAssistantCapped: 0 });
+  const zero = (): Totals => ({ visits: 0, pageviews: 0, searches: 0, noResults: 0, assistant: 0, submissions: 0, profiles: 0, profileShown: 0, profileSkips: 0, visitorDays: 0, newVisitors: 0, assistantCapped: 0, jobsAssistant: 0, jobsAssistantCapped: 0, trainingAssistant: 0, trainingAssistantCapped: 0 });
   const totals = zero(), previous = zero();
   const daily = new Map<string, Totals & { day: string }>();
   for (let d = period.from; d <= period.to; d = addDays(d, 1)) daily.set(d, { day: d, ...zero() });
   const pages = new Map<string, number>(), filters = new Map<string, number>();
-  const searchTopics = new Map<string, { key: string; label: string; searches: number; noResults: number }>();
-  const pageviewsByHour = Array.from({ length: 24 }, (_, hour) => ({ hour, count: 0 }));
   const roles = new Map<string, number>(), agencies = new Map<string, number>(), assistantByRole = new Map<string, number>();
   const combos = new Map<string, number>(), countries = new Map<string, number>();
   let uniqueThisMonth = 0;
@@ -201,13 +198,7 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
     if (inCurrent(r.day)) {
       if (field) { totals[field] += n; daily.get(r.day)![field] += n; }
       if (r.metric === "pageview" && r.key) bump(pages, r.key, n);
-      if (r.metric === "pageview_hour" && /^(?:[01][0-9]|2[0-3])$/.test(r.key)) pageviewsByHour[Number(r.key)].count += n;
       if (r.metric === "filter" && r.key) bump(filters, r.key, n);
-      if ((r.metric === "search" || r.metric === "search_no_results") && n > 0 && Object.hasOwn(SEARCH_TOPIC_LABELS, r.key)) {
-        const topic = searchTopics.get(r.key) ?? { key: r.key, label: SEARCH_TOPIC_LABELS[r.key], searches: 0, noResults: 0 };
-        topic[r.metric === "search" ? "searches" : "noResults"] += n;
-        searchTopics.set(r.key, topic);
-      }
       if (r.metric === "profile" && r.key) {
         const [role, agency] = r.key.split(":");
         bump(roles, role, n); bump(agencies, agency, n); bump(combos, r.key, n);
@@ -227,8 +218,7 @@ export function summarise(rows: UsageRow[], subs: SubmissionRow[], period: Retur
   const sorted = (m: Map<string, number>) => [...m].map(([key, count]) => ({ key, count })).sort((a, b) => b.count - a.count || a.key.localeCompare(b.key));
   const asked = totals.profiles + totals.profileSkips;
   return {
-    range: period, totals, previous, daily: [...daily.values()], pageviewsByHour, pages: sorted(pages), filters: sorted(filters),
-    searchTopics: [...searchTopics.values()].sort((first, second) => Number(first.key === "unclassified") - Number(second.key === "unclassified") || second.searches - first.searches || first.label.localeCompare(second.label)),
+    range: period, totals, previous, daily: [...daily.values()], pages: sorted(pages), filters: sorted(filters),
     visitors: {
       thisMonth: uniqueThisMonth,           // different browsers since the 1st of this month
       monthFrom: period.monthFrom,

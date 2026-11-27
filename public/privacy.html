@@ -10,13 +10,11 @@
 
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Source Sans 3",system-ui,sans-serif}
 main{max-width:680px;margin:0 auto;padding:32px 16px 48px}
-footer{max-width:680px;margin:0 auto;padding:0 16px 28px;font-size:14px}
 h1{font-size:28px;margin:0 0 6px}h2{font-size:19px;margin:28px 0 6px}
 a{color:var(--teal)}p.meta{color:var(--muted);margin:0 0 20px}
 </style>
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
-<script src="/donations.js" defer></script>
 </head>
 <body>
 <main>
@@ -38,11 +36,14 @@ a{color:var(--teal)}p.meta{color:var(--muted);margin:0 0 20px}
 <p>The SG Social Services app for Android and iOS works the same way as this website. Services you save with the star, and your light or dark appearance choice, are kept only on your phone and are never sent to us. The app keeps a copy of the directory on your phone so it works offline. It doesn't use accounts, location, contacts, advertising or tracking.</p>
 
 <h2 id="jobs">The jobs board and jobs assistant</h2>
-<p>The board lists jobs from public sources and from employers. We store employer submissions for review and publish approved job descriptions, qualifications and application links, including any recruitment email address supplied for that purpose. Jobseekers apply directly to the employer or through another job portal. We don't collect job applications, CVs or jobseekers' contact details, and we don't share anything about jobseekers with employers.</p>
+<p>Jobs on the board are copied from public listings, mostly MyCareersFuture, and checked every day. Each one links to the original listing, where you apply. We don't take applications, CVs or contact details, and we don't share anything about you with employers.</p>
 <p>What you type into the jobs assistant is sent to Anthropic's Claude model to pick out suitable jobs and write your recommendations. It isn't saved on our side: the conversation lives in your browser tab and is gone when you press "Start over" or close the page. Anthropic doesn't use it to train its models. Please leave out your NRIC, phone number, email and address; the assistant refuses messages that contain them. We only count how many times the jobs assistant was used each day.</p>
 
+<h2 id="training">The training directory and training assistant</h2>
+<p>Course details on the training page are summarised from each provider's own website. What you type into the training assistant is sent to Anthropic's Claude model to suggest courses. It isn't saved on our side: the conversation stays in your browser tab and is gone when you press "Start over" or close the page. Please leave out your NRIC, phone number, email and address. We only count how many times the training assistant was used each day.</p>
+
 <h2>Visit counts</h2>
-<p>To show funders and partners that the directory is used, the site keeps simple daily counts: how many visits and page views there were, how many searches were made, which presenting-issue pages and filters were used, and how many times the assistant was used. It also counts total page views by hour (Singapore time) to show when the site is busiest. Your browser groups directory searches into broad topics, such as financial support, so we can count which topics people look for and which searches return no results. Only the topic, not the words you typed, is sent to analytics. We don't use cookies for this, and we don't store your IP address, device details, the words you search for or anything you type into the assistant. If your browser has Do Not Track or Global Privacy Control switched on, you aren't counted at all.</p>
+<p>To show funders and partners that the directory is used, the site keeps simple daily counts: how many visits and page views there were, how many searches were made, which presenting-issue pages and filters were used, and how many times the assistant was used. That's all. We don't use cookies for this, and we don't store your IP address, device details, the words you search for or anything you type into the assistant. If your browser has Do Not Track or Global Privacy Control switched on, you aren't counted at all.</p>
 <p>We also count roughly how many different people visit, and which country visits come from. For the first, your browser remembers the last date it was counted (for example "19 November 2026") so it isn't counted twice in a day or month; that date stays on your device and only "+1 visitor" is sent to us. For the second, our host, Netlify, works out the country from your connection and we add 1 to that country's count. We never see or store your IP address or anything more precise than the country.</p>
 
 <h2 id="about-you">The optional question about you</h2>
@@ -59,6 +60,5 @@ a{color:var(--teal)}p.meta{color:var(--muted);margin:0 0 20px}
 <h2>Not professional advice</h2>
 <p>The assistant suggests services from this directory. It isn't clinical, legal or financial advice. Always confirm details with the service and use your professional judgement and your agency's protocols, especially where there is risk.</p>
 </main>
-<footer><a href="/sitemap">Sitemap</a></footer>
 </body>
 </html>

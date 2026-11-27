@@ -121,8 +121,6 @@ Category ids are `crisis`, `mental`, `addictions`, `substance`, `trauma`, `viole
 - **Netlify:** the free plan should cover a site like this at the start. Check netlify.com/pricing for current limits on function calls.
 - **Anthropic:** usage is billed by tokens, including automatic continuations for longer answers. Longer answers cost more. Your spend limit caps the total.
 
-The site-wide donation panel links to Buy Me a Coffee. Update `raised` in `public/donations.js` when the reported donation total changes; the progress bar and amount remaining update together on the next deploy. The 2027 website goal and one-time mobile app goal are listed separately.
-
 ## Troubleshooting
 - **The assistant cannot finish:** check function logs and AI Gateway usage for provider errors or exhausted credits.
 - **Response length:** the assistant has no application word-count or service-count cap. It automatically continues when a generation reaches the per-request token budget, streaming the continuation into the same answer. Provider context, rate and account limits, and Netlify execution-time and response-size limits still apply; truly unlimited output is not possible. If a connection drops, the displayed partial answer is preserved; try again or request a more focused answer.
@@ -136,7 +134,7 @@ On every deploy, Netlify runs `scripts/build.mjs`, which copies `public/` into `
 
 - **Listings written into the HTML.** All of `services.json` is in the home page before any JavaScript runs. The page then filters and searches live as before. Built and live cards come from the same file (`public/render.js`), so they always match.
 - **A page per presenting issue** at `/help/<slug>/`, e.g. `/help/domestic-family-violence/`. Each has its own title, Google description and intro, all in `content/categories.json`. Edit the wording there. Avoid changing a `slug` once Google has indexed the page, because it changes the address. A new category in `services.json` gets a page automatically, and categories with no listings are skipped.
-- **`/sitemap`**, linked from the footer, lists the main pages and all generated presenting-issue pages. The separate **`sitemap.xml`** is linked from `robots.txt`.
+- **`sitemap.xml`**, linked from `robots.txt`.
 - **Share previews**: `public/og-image.png` shows when the site is posted on LinkedIn, WhatsApp or X.
 - **Structured data** (JSON-LD) describing the site, each issue page and its services.
 - **Icons**: favicon, iPhone home-screen icon and `site.webmanifest`, so "Add to Home Screen" looks like an app.
@@ -154,8 +152,6 @@ Links in the sitemap and share tags use your site's main address, which Netlify 
 4. Save. Netlify redeploys in about a minute.
 5. Open **`/admin/seo`** on your site to see every page as it appears in Google and as a share card, with character counts and anything to fix.
 
-The Jobs Board preview uses the search and social tags in `public/jobs/index.html`.
-
 The rules (in `scripts/seo.mjs`): titles up to 60 characters, descriptions between 70 and 155, social titles up to 70, and every page with its own title and description. The site name is added to a title only when it still fits. Anything outside the rules shows as a suggestion in the deploy log and on `/admin/seo`, but never stops a deploy.
 
 **Safety net:** if an edit breaks `services.json` (a missing name, a category that doesn't exist, a duplicate ID, a bad link, or invalid formatting), the build stops with a clear message and the live site stays as it was. Fix the listing in Pages CMS and save again.
@@ -172,7 +168,6 @@ Open **`/admin/stats`** and sign in with your `ADMIN_KEY` (the same key as the s
 
 - **Visits** (counted once per browser session), **searches**, **assistant uses** and **submissions**
 - page views, and **searches with no results**, a hint at gaps in the directory
-- **search topics**: directory search and no-result counts grouped by broad topic in the browser, available only from when topic tracking began
 - a **visits per day** chart (hover or tap for that day's details)
 - **interest by presenting issue**: issue page views plus filter uses
 - a daily table, a **CSV download**, and **Copy summary for a report**, a ready-made sentence for funding applications
@@ -199,13 +194,13 @@ The `usage_daily` table is created by the migration in `netlify/database/migrati
 
 ## Jobs board
 
-The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social and health services. Curated, imported and approved employer jobs have a details page with an **Apply** button. Older link-only submissions still go directly to the original listing. The board has its own AI assistant, separate from the directory assistant, that acts as a seasoned recruitment consultant: people describe the job they want and get a shortlist of real, open roles with links, plus advice on how to stand out.
+The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social and health services, each with its own page at `/jobs/<job-id>` showing the description, requirements and an **Apply** button that goes to the original listing. It has its own AI assistant, separate from the directory assistant, that acts as a seasoned recruitment consultant: people describe the job they want and get a shortlist of real, open roles with links, plus advice on how to stand out.
 
 **Where the jobs come from.** Every day at 6am Singapore time the site pulls social and health services jobs from MyCareersFuture's public job search (about 26 searches: social worker, counsellor, psychologist, case manager, youth worker and so on). Only Singapore-based roles that are still open are kept. Jobs that expire, or that disappear from MyCareersFuture, are closed automatically and their pages say so. JobStreet, LinkedIn, Indeed and Careers@Gov don't allow copying, so add roles from those by hand (below). Each listing's qualification, experience, fresh-grad friendliness, nature of work and type of organisation are read from the listing text, so they're a good guide but not perfect.
 
 **Settings** (Site configuration > Environment variables):
 
-- `ADMIN_KEY`: required. The daily refresh, scheduled link checks and jobs admin page use it.
+- `ADMIN_KEY`: required. The daily refresh and the jobs admin page use it.
 - `ANTHROPIC_API_KEY`: the same key the directory assistant uses.
 - `JOBS_ASSISTANT_DAILY_CAP`: optional, how many jobs assistant answers a day before it pauses until midnight. Default 150. It's counted separately from the directory assistant's cap.
 - `JOBS_CLAUDE_MODEL`: optional, to use a different model for the jobs assistant. Defaults to `CLAUDE_MODEL`, then `claude-sonnet-5-5`.
@@ -213,17 +208,26 @@ The jobs board lives at **`/jobs/`**. It lists open roles in Singapore's social 
 
 **First run.** After the first deploy, go to **`/admin/jobs`**, sign in with your `ADMIN_KEY` and press **Refresh jobs now**. It takes a few minutes; reload the page to see the jobs arrive. After that it runs by itself every day.
 
-**Adding a job by hand.** On `/admin/jobs`, use **Add a job by hand**. A title, organisation and application link (HTTPS or `mailto:`) are required, and the location must be in Singapore. If the employer did not state a closing date, the board lists the job through 30 days after its posting date (or after the date it was added if you leave the posting date blank). Imported jobs with a posting date but no deadline use the same 30-day rule. Jobs come down automatically after their closing or listing date. You can also close or reopen any job from the list.
+**Adding a job by hand.** On `/admin/jobs`, use **Add a job by hand**. A title, organisation, link to the application page (https) and closing date are required, and the location must be in Singapore. The job comes down by itself after its closing date. You can also close or reopen any job from the list.
 
-**Hiring and programme cards.** The cards in `public/jobs/index.html` are separate from the live jobs list. Employer cards can opt into work-type and organisation filters using `data-hiring-nature` and `data-hiring-org`. When openings or intake dates change, check the official page, update the status and application link as needed, and update both the displayed checked date and its `datetime` attribute. These cards are reviewed manually, not by the job link checker.
-
-**Reviewing public submissions.** Employers can use **Post a Job** on the board to submit a title, organisation, job description, qualifications and an HTTPS or `mailto:` application link. On `/admin/jobs`, use the **Submissions awaiting review** table to read the listing, verify the application destination and choose **Approve and publish** or **Decline**. The site publishes approved listings but does not accept applications. With no closing date supplied, the listing expires 30 days after submission.
-
-**Checking application links.** Starting at 7am Singapore time daily on production, the link checker rotates through live curated and submitted jobs with HTTPS application links. Admins can also run **Check due links now**. After two confirmed HTTP 404 or 410 results without an intervening success, a job appears under **Flagged application links**. A successful check clears the flag; a timeout, blocked request or other inconclusive result leaves it unchanged. The checker does not detect custom expired-job pages that return HTTP 200 or verify email delivery. Admins verify flagged links and close jobs manually. MyCareersFuture jobs continue to use their separate feed refresh.
+**"Hiring now" organisations.** Some employers put their openings only on their own careers sites (Rainbow Centre, MINDS, SingHealth, MSF and so on), often on sites that can't be read automatically. These show on the board as "Hiring now" cards that link to the employer's careers page, and the jobs assistant can suggest them too, without claiming any particular role is open. The list is in `content/hiring-now.json`: add or edit an entry and redeploy. Each card hides itself 120 days after its `checked` date, so when you re-check an employer's page, update the date. If you make a mistake in the file, `npm test` says which entry and what's wrong.
 
 **Organisation types.** Jobs are sorted into Healthcare, Social & community services, Government, Education or Charity from the employer's name and industry. If one is wrong, add the employer's name exactly as it appears on the listing (in capitals) to `content/job-org-types.json`, for example `"AGENCY FOR INTEGRATED CARE PTE. LTD.": "government"`, and redeploy.
 
 **Privacy.** The jobs assistant doesn't save conversations; they stay in the visitor's browser tab. It refuses messages containing an NRIC, phone number or email address. Only daily usage counts are kept, shown as "Jobs assistant" on `/admin/stats`.
+
+## Training directory and training assistant
+
+The training page lives at **`/training/`**. It lists courses for social workers, counsellors and psychologists from SSI, SASW, SPS, SAC, universities, hospitals and specialist centres, with fees, accreditation and funding or grant eligibility as each provider publishes them. The course list is the file `public/training/courses.json`. Edit it and redeploy to add or update courses; `npm test` checks every entry.
+
+The page has its own AI assistant, separate from the directory and jobs assistants. It acts as a senior clinical supervisor and professional development adviser, asks what the person wants to learn, and suggests courses from the list in a sensible order, with links, fees, funding and accreditation.
+
+**Settings** (optional):
+
+- `TRAINING_ASSISTANT_DAILY_CAP`: how many training assistant answers a day before it pauses until midnight. Default 150, counted separately from the other assistants.
+- `TRAINING_CLAUDE_MODEL`: to use a different model for the training assistant. Defaults to `CLAUDE_MODEL`, then `claude-sonnet-5-5`.
+
+Daily use shows as "Training assistant uses" on `/admin/stats`. Conversations aren't stored.
 
 ## Mobile apps
 

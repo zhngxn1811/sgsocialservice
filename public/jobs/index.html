@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Social and health services jobs in Singapore | SG Social Services Jobs</title>
-<meta name="description" content="Open jobs in Singapore's social and health services: social work, counselling, psychology, care coordination, youth and community roles. Filter by qualification, experience and salary, or ask the AI jobs assistant for your best matches.">
+<meta name="description" content="Open jobs in Singapore's social and health services: social work, counselling, psychology, care coordination, youth and community roles. Filter by qualification and experience, or ask the AI jobs assistant for your best matches.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -25,7 +25,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js"></script>
-<script src="/donations.js" defer></script>
 <script src="/track.js" defer></script>
 <script src="/md.js" defer></script>
 <script src="/jobs/jobs.js" defer></script>
@@ -43,8 +42,8 @@
       </div>
     </a>
     <div class="header-actions"><button class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark mode" hidden><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></svg><span>Dark mode</span></button>
-    <a class="btn teal" href="/">Service Directory</a>
-    <a class="btn primary" href="/jobs/post.html">Post a Job</a></div>
+    <a class="btn" href="/training/">Training</a>
+    <a class="btn" href="/">Service directory</a></div>
   </div>
 </header>
 
@@ -81,7 +80,7 @@
   <section class="wrap jobs-board" aria-labelledby="boardTitle">
     <div class="board-head">
       <div>
-        <h2 id="boardTitle">Jobs and opportunities</h2>
+        <h2 id="boardTitle">Open jobs</h2>
         <p class="meta" id="boardMeta">Loading jobs…</p>
       </div>
       <div class="board-tools">
@@ -93,54 +92,19 @@
     <div class="board-layout">
       <details class="panel filters" id="filters" open>
         <summary>Filters <span class="note" id="filterCount"></span></summary>
-        <fieldset>
-          <legend><label for="fSalary" style="margin:0">Desired salary (S$/month)</label></legend>
-          <select id="fSalary" aria-describedby="salaryHint">
-            <option value="">Any salary</option>
-            <option value="under-3000">Below S$3,000</option>
-            <option value="3000-3999">S$3,000–3,999</option>
-            <option value="4000-4999">S$4,000–4,999</option>
-            <option value="5000-5999">S$5,000–5,999</option>
-            <option value="6000-plus">S$6,000 and above</option>
-          </select>
-          <p class="note filter-hint" id="salaryHint">Matches advertised monthly pay that overlaps your bracket.</p>
-        </fieldset>
-        <fieldset>
-          <legend><label for="fSeniority" style="margin:0">Seniority</label></legend>
-          <select id="fSeniority" aria-describedby="seniorityHint">
-            <option value="">Any seniority</option>
-            <option value="entry">Entry level</option>
-            <option value="mid">Mid level</option>
-            <option value="senior">Senior level</option>
-            <option value="unspecified">Seniority not stated</option>
-          </select>
-          <p class="note filter-hint" id="seniorityHint">Uses the listed level when available. Otherwise, based on minimum experience (0–1 years for entry, 2–4 for mid, 5+ for senior).</p>
-        </fieldset>
         <fieldset id="fQual"><legend>Qualification required</legend></fieldset>
         <fieldset>
           <legend><label for="fYears" style="margin:0">Experience required</label></legend>
           <select id="fYears">
             <option value="">Any</option>
-            <option value="0-3">0-3 years</option>
-            <option value="5-7">5-7 years</option>
-            <option value="8-12">8-12 years</option>
-            <option value="12-15">12-15 years</option>
-            <option value="over-15">over 15 years</option>
+            <option value="0">None needed</option>
+            <option value="1">Up to 1 year</option>
+            <option value="2">Up to 2 years</option>
+            <option value="3">Up to 3 years</option>
+            <option value="5">Up to 5 years</option>
           </select>
         </fieldset>
-        <fieldset>
-          <legend>Entry Level</legend>
-          <label class="check"><input type="checkbox" id="fFresh"> Fresh grads welcome</label>
-          <label class="check"><input type="checkbox" id="fInternship"> Internship/Practicum</label>
-        </fieldset>
-        <fieldset>
-          <legend>Job Type</legend>
-          <label class="check"><input type="checkbox" name="jobType" value="full-time"> Full-Time</label>
-          <label class="check"><input type="checkbox" name="jobType" value="part-time"> Part-Time</label>
-          <label class="check"><input type="checkbox" name="jobType" value="locum"> Locum</label>
-          <label class="check"><input type="checkbox" name="jobType" value="contract"> Contract</label>
-          <label class="check"><input type="checkbox" name="jobType" value="freelance"> Freelance</label>
-        </fieldset>
+        <fieldset><legend>Fresh grads</legend><label class="check"><input type="checkbox" id="fFresh"> Fresh grads welcome</label></fieldset>
         <fieldset id="fNature"><legend>Nature of work</legend></fieldset>
         <fieldset id="fOrg"><legend>Type of organisation</legend></fieldset>
         <fieldset>
@@ -150,74 +114,17 @@
         <button class="linkbtn" type="button" id="clearFilters">Clear all filters</button>
       </details>
       <div>
-        <div class="job-list" id="jobList" aria-live="polite" tabindex="-1"></div>
-        <nav class="job-pages" id="jobPages" aria-label="Jobs board pages" hidden>
-          <button class="btn" id="prevJobPage" type="button" aria-controls="jobList">Previous</button>
-          <span id="jobPageStatus" role="status"></span>
-          <button class="btn" id="nextJobPage" type="button" aria-controls="jobList">Next</button>
-        </nav>
+        <div class="job-list" id="jobList" aria-live="polite"></div>
+        <section class="hiring-now" id="hiringNow" aria-labelledby="hiringTitle" hidden>
+          <h2 id="hiringTitle">Also hiring on their own careers pages</h2>
+          <p class="lead">These organisations list openings on their own sites. Their jobs aren't copied here one by one, so open their page to see what's available and apply there.</p>
+          <div class="hiring-list" id="hiringList"></div>
+        </section>
       </div>
     </div>
   </section>
-  <template id="programmeListings">
-      <article class="job-card" data-nature="counselling case-management research-policy" data-org-type="charity" data-employment-type="Internship and other roles">
-        <p class="intake-status">Hiring now · Charity</p>
-        <h3>Samaritans of Singapore (SOS)</h3>
-        <p>SOS provides suicide prevention and crisis support, including a 24-hour hotline.</p>
-        <p><strong>Roles include:</strong> Crisis Support Executive (2-year) · Crisis Support Executive (Night Shift) · Strategy and Research Intern</p>
-        <p>Email your resume to <a href="mailto:hrd@sos.org.sg">hrd@sos.org.sg</a> with the role name in the subject line.</p>
-        <div class="actions"><a class="btn" href="https://www.sos.org.sg/about/careers/" aria-label="See openings at Samaritans of Singapore">See openings</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
-      </article>
-      <article class="job-card" data-intake="rolling" data-nature="counselling psychology social-work case-management community-programmes" data-org-type="charity" data-employment-type="Internship/Practicum">
-        <p class="intake-status">Rolling intake</p>
-        <h3>HealthServe internships</h3>
-        <p><strong>Casework and mental health programmes:</strong> Students in psychology, social work or counselling can support migrant workers for at least eight weeks. Longer commitments are prioritised.</p>
-        <p><strong>Counselling practicum:</strong> At least four months for students enrolled in an SAC-recognised counselling Graduate Certificate, Diploma or Master’s programme. Check the basic counselling skills requirement and confirm which languages qualify: Tamil, Bengali, Burmese, Thai or Chinese (including dialects) are listed.</p>
-        <p>Placements are unpaid. Apply up to six months ahead and confirm availability with HealthServe.</p>
-        <div class="actions"><a class="btn" href="https://healthserve.org.sg/internship-opportunities/">View HealthServe placements</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
-      </article>
-      <article class="job-card" data-nature="social-work youth-work special-needs counselling psychology research-policy" data-org-type="social-community" data-employment-type="Internship/Practicum">
-        <p class="intake-status">Direct applications · Intake dates not published</p>
-        <h3>Fei Yue Community Services student placements</h3>
-        <p>Choose from social work, youth work, early intervention (EIPIC), family support or applied research. Family support welcomes psychology and counselling students.</p>
-        <p>Download the Placement Request Form and email it with your résumé. Check with Fei Yue about eligibility for your course and year of study.</p>
-        <div class="actions"><a class="btn" href="https://fycs.org/internship-opportunities/">Get the placement request form</a><span class="note">Checked <time datetime="2026-11-27">27 Nov 2026</time></span></div>
-      </article>
-      <article class="job-card" data-nature="counselling" data-org-type="social-community" data-employment-type="Internship/Practicum">
-        <p class="intake-status">Enquire about availability</p>
-        <h3>NuLife counselling practicum</h3>
-        <p>NuLife offers supervised internships for counselling and social science students, with opportunities to log practicum hours.</p>
-        <p>Use the contact form to ask about current openings and whether the placement meets your school’s requirements.</p>
-        <div class="actions"><a class="btn" href="https://nulife.org.sg/contact-us/">Contact NuLife</a><a href="https://nulife.org.sg/how-to-help/">Programme details</a><span class="note">Checked <time datetime="2026-11-27">27 Nov 2026</time></span></div>
-      </article>
-      <article class="job-card" data-nature="psychology research-policy" data-org-type="healthcare" data-employment-type="Internship">
-        <p class="intake-status">Opens December 2026</p>
-        <h3>IMH Child Mental Health</h3>
-        <p>The February–July 2027 psychology internship is for third-year psychology majors at recognised universities who are over 21 at enrolment.</p>
-        <p>IMH also considers graduate clinical and research attachments year-round for eligible applicants who have secured a supervisor.</p>
-        <div class="actions"><a class="btn" href="https://www.nhghealth.com.sg/imh/about-us/careers/learn-and-grow-internships-and-attachments-for-aspiring-professionals">View IMH internships</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
-      </article>
-      <article class="job-card" data-nature="research-policy" data-org-type="government" data-employment-type="Internship">
-        <p class="intake-status">Expected January 2027</p>
-        <h3>MOH Summer Internship</h3>
-        <p>Explore public health projects such as policy and research. You can register for an alert now; that is not an application.</p>
-        <div class="actions"><a class="btn" href="https://www.moh.gov.sg/about-us/join-us/internships/">View MOH intake details</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
-      </article>
-      <article class="job-card" data-org-type="government" data-employment-type="Internship">
-        <p class="intake-status">Opens February 2027</p>
-        <h3>MINDEF Summer Internship</h3>
-        <p>The undergraduate programme welcomes students from all disciplines and typically lasts at least eight weeks. Check available projects when applications open.</p>
-        <div class="actions"><a class="btn" href="https://www.mindef.gov.sg/join-us/dxo/careers/scholarships-and-internships/">View MINDEF intake details</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
-      </article>
-      <article class="job-card" data-nature="psychology social-work" data-org-type="government" data-employment-type="Internship">
-        <p class="intake-status">Expected February 2027</p>
-        <h3>MSF Student Internship</h3>
-        <p>MSF typically opens applications in February for May–August placements, which last eight to twelve weeks. Check the projects for roles relevant to psychology or social work.</p>
-        <div class="actions"><a class="btn" href="https://www.msf.gov.sg/join-us/scholarships-internships">View MSF internship programme</a><span class="note">Checked <time datetime="2026-11-25">25 Nov 2026</time></span></div>
-      </article>
-  </template>
 </main>
 
-<footer><div class="wrap">SG Social Services is an independent, volunteer-run directory and jobs board, not affiliated with any employer or job portal. Jobs come from MyCareersFuture, other job portals and employer listings. Always read the original listing before applying. The assistant gives suggestions, not career guarantees. <a href="/privacy.html">Privacy</a> · <a href="/sitemap">Sitemap</a></div></footer>
+<footer><div class="wrap">SG Social Services is an independent, volunteer-run directory and jobs board, not affiliated with any employer or job portal. Jobs come from MyCareersFuture and employers' own listings, and are checked daily. Always read the original listing before applying. The assistant gives suggestions, not career guarantees. <a href="/privacy.html">Privacy</a></div></footer>
 </body>
 </html>

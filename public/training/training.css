@@ -1,0 +1,37 @@
+/* Training directory: reuses the jobs board layout (jobs.css) and adds a few pieces. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.approach-chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 22px}
+.approach-chips button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.approach-chips button:hover{border-color:var(--teal)}
+.approach-chips button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.approach-chips .n{font-family:var(--mono);font-size:12px;opacity:.7;margin-left:4px}
+.course-card .provider{color:var(--muted);font-size:14px;margin:0}
+.course-card .next{font-size:14px;margin:0}
+.course-card .next strong{font-weight:700}
+.course-card .next.soon strong{color:var(--teal)}
+.course-card .funding{display:flex;flex-wrap:wrap;gap:6px}
+.course-card .fund{font-size:12px;border-radius:6px;padding:2px 8px;background:var(--warn-soft);color:var(--accent)}
+.course-card .code{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.calendars{margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.calendars h2{font-size:20px;margin:0 0 4px}
+.calendars .lead{color:var(--muted);font-size:14px;margin:0 0 14px}
+.training-tools{flex-wrap:nowrap}
+.training-tools input{min-width:0}
+@media (max-width:800px){
+  .approach-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:thin}
+  .approach-chips button{flex:0 0 auto}
+  .training-tools{flex-wrap:wrap}
+}
+.course-card .accred{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.course-card .accred li{font-size:13px;font-weight:600;color:var(--ink);padding-left:22px;position:relative}
+.course-card .accred li::before{content:"";position:absolute;left:0;top:2px;width:15px;height:15px;border-radius:50%;background:var(--teal-soft);box-shadow:inset 0 0 0 1.5px var(--teal)}
+.course-card .accred li::after{content:"";position:absolute;left:5px;top:5px;width:4px;height:7px;border:solid var(--teal);border-width:0 1.8px 1.8px 0;transform:rotate(45deg)}
+.course-card .money{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.course-card .fees{margin:0;display:grid;gap:3px}
+.course-card .fees div{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.course-card .fees dt{color:var(--muted)}
+.course-card .fees dd{margin:0;font-weight:700;font-family:var(--mono);font-size:13px;white-space:nowrap}
+.course-card .fee-note{font-size:13px;color:var(--muted);margin:0}
+.course-card .grants summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--teal)}
+.course-card .grants ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+@media (max-width:520px){.course-card .fees div{flex-direction:column;gap:0}.course-card .fees dd{white-space:normal}}

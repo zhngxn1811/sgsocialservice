@@ -1,43 +1,27 @@
-# Jobs board: how to add this to your GitHub repo
+# Training directory and training assistant
 
-This folder has the same layout as your repo. Copy everything into the repo, commit and push, and Netlify will deploy it and create the `jobs` table by itself.
+Adds `/training/` with course listings (fees, accreditation and grants) and its own AI training assistant. This package includes the jobs board files it builds on, so upload the jobs board package first if you haven't.
 
-## 1. New files (copy straight in)
+## New files (copy straight in)
+- `public/training/` (page, script, styles, `courses.json` course list)
+- `netlify/lib/training-assistant.mts` (the assistant's instructions are in `buildSystem` here)
+- `netlify/functions/training-assistant.mts` (`/api/training-assistant`)
+- `netlify/database/migrations/20261127185420_training_assistant/` (lets the stats count training assistant use)
+- `tests/training.test.mts`, `tests/training-assistant.test.mts`
 
-- `public/jobs/` (board page, styles, script), `public/md.js`, `public/admin/jobs.html`
-- `netlify/functions/jobs.mts`, `job-page.mts`, `jobs-assistant.mts`, `jobs-sync-background.mts`, `jobs-sync-scheduled.mts`
-- `netlify/lib/jobs.mts`, `jobs-sync.mts`, `job-page.mts`, `jobs-assistant.mts` (the jobs assistant's instructions are in `buildSystem` here)
-- `netlify/database/migrations/20261123161613_jobs_board/`
-- `content/job-org-types.json`
-- `tests/jobs.test.mts`, `tests/job-page.test.mts`, `tests/jobs-assistant.test.mts`, `tests/fixtures/mcf.mts`
-
-## 2. Changed files (check before overwriting)
-
-These already exist in your repo. If you haven't edited them since my last copy, just overwrite them. If you have, apply `jobs-board-changes.patch` instead (`git apply jobs-board-changes.patch` from the repo root), which only adds the jobs bits:
-
-- `db/schema.ts`: adds the `jobs` table and two new usage counters
-- `netlify/lib/usage.mts`: separate daily cap and counts for the jobs assistant
-- `public/track.js`: counts board and job page views
-- `public/admin/stats.html`: shows jobs assistant use
-- `public/privacy.html`: new "jobs board and jobs assistant" section
-- `scripts/build.mjs`: adds `/jobs/` to the sitemap
+## Changed files (these also contain the jobs board changes)
+If you've already uploaded the jobs board package and haven't edited these since, overwrite them:
+- `db/schema.ts`, `netlify/lib/usage.mts`, `tests/usage.test.mts`: training assistant counters and daily cap
+- `public/admin/stats.html`: shows "Training assistant uses"
+- `public/privacy.html`: new training assistant section
+- `public/jobs/index.html`: "Training" button in the header
+- `scripts/build.mjs`: adds `/training/` to the sitemap
 - `package.json`: typecheck covers the new files
-- `tests/usage.test.mts`, `README.md`
+- `README.md`: training section
+- `public/md.js`: unchanged from the jobs board package; included in case you need it
 
-`netlify/functions/assistant.mjs` (the directory assistant) is **not** touched.
+## Settings
+Nothing new is required. It uses the same `ANTHROPIC_API_KEY`. Optional: `TRAINING_ASSISTANT_DAILY_CAP` (default 150) and `TRAINING_CLAUDE_MODEL`.
 
-## 3. Add a link from the homepage
-
-`index.html` isn't included, so your current homepage stays as it is. Put this inside `<div class="header-actions">`, before the Dark mode button:
-
-```html
-<a class="btn" href="/jobs/">Jobs board</a>
-```
-
-## 4. After deploying
-
-1. Check `ADMIN_KEY` and `ANTHROPIC_API_KEY` are set in Netlify (they already are if the directory works).
-2. Open `/admin/jobs`, sign in, press **Refresh jobs now**, wait a few minutes and reload.
-3. Open `/jobs/` and try the assistant.
-
-From then on, jobs refresh every day at 6am.
+## Updating courses
+Edit `public/training/courses.json` and run `npm test`. Copy fees exactly as providers list them, say which run they're from, list only accreditation the provider states, and describe who qualifies for each grant. The assistant reads the same file, so it updates with the page.

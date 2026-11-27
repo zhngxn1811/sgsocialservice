@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Training courses for social workers, counsellors and psychologists | SG Social Services</title>
+<meta name="description" content="Training courses in Singapore for social workers, counsellors and psychologists: counselling skills, CBT, motivational interviewing, play therapy, trauma-informed care, supervision and more, from SSI, SASW, SPS, SAC, universities and specialist centres.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/jobs/jobs.css">
+<link rel="stylesheet" href="/training/training.css">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#18262B" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#E6ECEA" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="SG Social Services">
+<meta property="og:title" content="Training courses for Singapore's helping professionals">
+<meta property="og:description" content="Find courses by approach (CBT, MI, play therapy, trauma-informed care, supervision and more) from SSI, SASW, SPS, SAC, universities and specialist centres.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_SG">
+<meta property="og:image" content="/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/theme.css">
+<script src="/theme.js"></script>
+<script src="/track.js" defer></script>
+<script src="/md.js" defer></script>
+<script src="/training/training.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand brand-link" href="/training/">
+      <div class="mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.4-7-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7 2.8C19 16.6 12 21 12 21Z" fill="var(--accent-ink)"/></svg>
+      </div>
+      <div>
+        <span class="name">SG Social Services Training</span>
+        <p>Courses for Singapore's helping professionals</p>
+      </div>
+    </a>
+    <div class="header-actions"><button class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark mode" hidden><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></svg><span>Dark mode</span></button>
+    <a class="btn" href="/jobs/">Jobs board</a>
+    <a class="btn" href="/">Service directory</a></div>
+  </div>
+</header>
+
+<main>
+  <section class="wrap jobs-hero" aria-labelledby="pageTitle">
+    <p class="eyebrow">Training directory</p>
+    <h1 id="pageTitle">Find training for the way you want to practise</h1>
+    <p>Courses for social workers, counsellors and psychologists in Singapore, from foundation skills to specialist approaches like CBT, motivational interviewing, play therapy, trauma-informed care and supervision. Filter them yourself, or tell the training assistant what you'd like to learn and get a learning plan picked for you. Every course links to the provider's own page, where you register.</p>
+    <p class="note">Fees, accreditation and grants are shown as each provider publishes them. They change often, and what you pay depends on your age, citizenship and employer, so always confirm on the provider's page before you register.</p>
+  </section>
+
+  <section class="wrap jobs-desk" id="assistant" aria-labelledby="asstTitle">
+    <div class="panel">
+      <p class="eyebrow">AI training assistant</p>
+      <h2 id="asstTitle">Tell us what you'd like to learn</h2>
+      <p class="lede">Share your role or studies, how long you've been practising, what you want to get better at, and any limits like budget, who's paying or online only. The assistant suggests courses in a sensible order, with fees, funding you may qualify for, and accreditation.</p>
+      <label for="trainAsk">What would you like to learn?</label>
+      <textarea id="trainAsk" placeholder="Example: Social worker at a family service centre, 3 years in. I work with a lot of families affected by family violence and want to get better at trauma work and, later, supervision. My agency is an NCSS member and can sponsor. I'm 34. Prefer weekday courses."></textarea>
+      <div class="privacy"><strong>Leave out contact and ID details.</strong> No NRIC, phone numbers, emails or addresses. Your role, experience and goals are enough. Nothing you type is stored.</div>
+      <div class="row">
+        <button class="btn teal" id="trainAskBtn" type="button">Suggest courses</button>
+        <button class="btn" id="trainResetBtn" type="button">Start over</button>
+      </div>
+      <p class="note" style="margin-top:12px">You can reply to refine the plan, for example "only funded courses" or "what counts towards SAC CPD?"</p>
+    </div>
+    <div class="panel chat-panel">
+      <div class="chat-head"><h2>Your learning plan</h2><span class="note" id="chatStatus" aria-live="polite"></span></div>
+      <div class="chat-log" id="chatLog" tabindex="0" aria-label="Training assistant suggestions" aria-live="polite">
+        <p class="placeholder">Your suggested courses will appear here, in the order to take them, with links, fees and funding.</p>
+      </div>
+      <p class="disclaim" style="margin:0;padding:10px 16px">AI suggestions from the courses on this page. Confirm fees, funding eligibility and dates with each provider before registering.</p>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="approachTitle">
+    <h2 id="approachTitle" class="sr-only">Browse by approach</h2>
+    <div class="approach-chips" id="approachChips" role="list"></div>
+  </section>
+
+  <section class="wrap jobs-board" aria-labelledby="boardTitle">
+    <div class="board-head">
+      <div>
+        <h2 id="boardTitle">Courses</h2>
+        <p class="meta" id="boardMeta">Loading courses…</p>
+      </div>
+      <div class="board-tools training-tools">
+        <input id="courseQ" type="search" placeholder="Search courses, approaches, providers" autocomplete="off" aria-label="Search courses">
+        <label for="courseSort" style="margin:0">Sort</label>
+        <select id="courseSort">
+          <option value="upcoming">Next run first</option>
+          <option value="title">A to Z</option>
+          <option value="provider">By provider</option>
+          <option value="level">By level</option>
+          <option value="fee">Lowest published fee</option>
+        </select>
+      </div>
+    </div>
+    <div class="board-layout">
+      <details class="panel filters" id="filters" open>
+        <summary>Filters <span class="note" id="filterCount"></span></summary>
+        <fieldset><legend>Dates</legend><label class="check"><input type="checkbox" id="fUpcoming"> Confirmed upcoming run only</label></fieldset>
+        <fieldset><legend>Accreditation</legend><label class="check"><input type="checkbox" id="fAccredited"> Accredited, or counts towards CPD or registration</label></fieldset>
+        <fieldset id="fApproach"><legend>Approach or topic</legend></fieldset>
+        <fieldset id="fProfession"><legend>Who it's for</legend></fieldset>
+        <fieldset id="fLevel"><legend>Level</legend></fieldset>
+        <fieldset id="fFormat"><legend>Format</legend></fieldset>
+        <fieldset id="fProvider"><legend>Provider</legend></fieldset>
+        <fieldset id="fFunding"><legend>Funding and grants</legend></fieldset>
+        <button class="linkbtn" type="button" id="clearFilters">Clear all filters</button>
+      </details>
+      <div>
+        <div class="job-list" id="courseList" aria-live="polite"></div>
+        <section class="calendars" aria-labelledby="calTitle">
+          <h2 id="calTitle">Training calendars to keep an eye on</h2>
+          <p class="lead">These providers add new runs all year. Their calendars always have the latest dates.</p>
+          <div class="hiring-list" id="calendarList"></div>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">SG Social Services is an independent, volunteer-run directory. It is not affiliated with any listed provider. Course details are summarised from each provider's own page and checked by hand; confirm dates, fees and funding with the provider. Know a course that should be here? Use "Recommend a service" on the <a href="/">directory home page</a>. <a href="/privacy.html">Privacy</a></div></footer>
+</body>
+</html>
